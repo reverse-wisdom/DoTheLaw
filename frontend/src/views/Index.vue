@@ -4,13 +4,33 @@
       <div class="md-layout">
         <div class="md-layout-item">
           <div class="image-wrapper">
-            <img :src="leaf4" alt="leaf4" class="leaf4" v-show="leafShow" />
-            <img :src="leaf3" alt="leaf3" class="leaf3" v-show="leafShow" />
-            <img :src="leaf2" alt="leaf2" class="leaf2" v-show="leafShow" />
-            <img :src="leaf1" alt="leaf1" class="leaf1" v-show="leafShow" />
             <div class="brand">
-              <h1>Vue Material Kit</h1>
-              <h3>A Badass Vue.js UI Kit made with Material Design.</h3>
+              <img :src="logo" alt="logo" />
+              <!-- <v-text-field label="검색" placeholder="검색어입력" background-color="blue" filled rounded solo solo-inverted></v-text-field>
+
+              <v-btn color="primary" depressed elevation="23" raised>검색</v-btn> -->
+              <div>
+                <section class="webdesigntuts-workshop">
+                  <form action="" method="">
+                    <input type="search" placeholder="검색어입력" />
+                    <button>검색</button>
+                  </form>
+                </section>
+              </div>
+              <!-- 리스트 -->
+
+              <v-list>
+                <v-list-item-group v-model="model">
+                  <v-list-item v-for="(item, i) in items" :key="i">
+                    <v-list-item-icon>
+                      <v-icon v-text="item.icon"></v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title v-text="item.text"></v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
             </div>
           </div>
         </div>
@@ -40,6 +60,7 @@
             mdi-domain
           </v-icon>
         </div>
+
         <!-- 테스트 영역 end -->
 
         <div class="container">
@@ -141,6 +162,25 @@
         </div>
       </div>
     </div>
+    <div id="fp-nav" class="right" style="margin-top: -53.5px;">
+      <ul>
+        <li>
+          <a href="#allsearch" class="active"><span></span></a>
+        </li>
+        <li>
+          <a href="#network" class=""><span></span></a>
+        </li>
+        <li>
+          <a href="#statistics"><span></span></a>
+        </li>
+        <li>
+          <a href="#infomation"><span></span></a>
+        </li>
+        <li>
+          <a href="#footer"><span></span></a>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -172,23 +212,11 @@ export default {
   props: {
     image: {
       type: String,
-      default: require('@/assets/img/vue-mk-header.jpg'),
+      default: require('@/assets/img/bigstock.jpg'),
     },
-    leaf4: {
+    logo: {
       type: String,
-      default: require('@/assets/img/leaf4.png'),
-    },
-    leaf3: {
-      type: String,
-      default: require('@/assets/img/leaf3.png'),
-    },
-    leaf2: {
-      type: String,
-      default: require('@/assets/img/leaf2.png'),
-    },
-    leaf1: {
-      type: String,
-      default: require('@/assets/img/leaf1.png'),
+      default: require('@/assets/img/logo.png'),
     },
     signup: {
       type: String,
@@ -208,7 +236,6 @@ export default {
       firstname: null,
       email: null,
       password: null,
-      leafShow: false,
       singleSelect: false,
       selected: [],
       headers: [
@@ -261,17 +288,22 @@ export default {
           category: 'Candy',
         },
       ],
+
+      items: [
+        {
+          text: '1. 명예훼손',
+        },
+        {
+          text: '2. 도로교통법',
+        },
+        {
+          text: '3. 모욕죄',
+        },
+      ],
+      model: 1,
     };
   },
-  methods: {
-    leafActive() {
-      if (window.innerWidth < 768) {
-        this.leafShow = false;
-      } else {
-        this.leafShow = true;
-      }
-    },
-  },
+  methods: {},
   computed: {
     headerStyle() {
       return {
@@ -283,13 +315,6 @@ export default {
         backgroundImage: `url(${this.signup})`,
       };
     },
-  },
-  mounted() {
-    this.leafActive();
-    window.addEventListener('resize', this.leafActive);
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.leafActive);
   },
 };
 </script>
@@ -303,6 +328,150 @@ export default {
 @media all and (min-width: 991px) {
   .btn-container {
     display: flex;
+  }
+}
+@import url(https://fonts.googleapis.com/css?family=Cabin:400);
+
+// .webdesigntuts-workshop {
+//   background: #151515;
+//   height: 100%;
+//   position: absolute;
+//   text-align: center;
+//   width: 100%;
+// }
+
+.webdesigntuts-workshop:before,
+.webdesigntuts-workshop:after {
+  content: '';
+  display: block;
+  height: 1px;
+  left: 50%;
+  margin: 0 0 0 -400px;
+  position: absolute;
+  width: 800px;
+}
+
+.webdesigntuts-workshop:before {
+  background: #444;
+  background: linear-gradient(left, #151515, #444, #151515);
+  top: 192px;
+}
+
+.webdesigntuts-workshop:after {
+  background: #000;
+  background: linear-gradient(left, #151515, #000, #151515);
+  top: 191px;
+}
+
+.webdesigntuts-workshop form {
+  background: #111;
+  background: linear-gradient(#1b1b1b, #111);
+  border: 1px solid #000;
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 1px #272727;
+  display: inline-block;
+  font-size: 0px;
+  margin: 150px auto 0;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.webdesigntuts-workshop input {
+  background: #222;
+  background: linear-gradient(#333, #222);
+  border: 1px solid #444;
+  border-radius: 5px 0 0 5px;
+  box-shadow: 0 2px 0 #000;
+  color: #888;
+  display: block;
+  float: left;
+  font-family: 'Cabin', helvetica, arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  height: 40px;
+  margin: 0;
+  padding: 0 10px;
+  text-shadow: 0 -1px 0 #000;
+  width: 200px;
+}
+
+.ie .webdesigntuts-workshop input {
+  line-height: 40px;
+}
+
+.webdesigntuts-workshop input::-webkit-input-placeholder {
+  color: #888;
+}
+
+.webdesigntuts-workshop input:-moz-placeholder {
+  color: #888;
+}
+
+.webdesigntuts-workshop input:focus {
+  animation: glow 800ms ease-out infinite alternate;
+  background: #222922;
+  background: linear-gradient(#333933, #222922);
+  border-color: #393;
+  box-shadow: 0 0 5px rgba(0, 255, 0, 0.2), inset 0 0 5px rgba(0, 255, 0, 0.1), 0 2px 0 #000;
+  color: #efe;
+  outline: none;
+}
+
+.webdesigntuts-workshop input:focus::-webkit-input-placeholder {
+  color: #efe;
+}
+
+.webdesigntuts-workshop input:focus:-moz-placeholder {
+  color: #efe;
+}
+
+.webdesigntuts-workshop button {
+  background: #222;
+  background: linear-gradient(#333, #222);
+  box-sizing: border-box;
+  border: 1px solid #444;
+  border-left-color: #000;
+  border-radius: 0 5px 5px 0;
+  box-shadow: 0 2px 0 #000;
+  color: #fff;
+  display: block;
+  float: left;
+  font-family: 'Cabin', helvetica, arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  height: 40px;
+  line-height: 40px;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  text-shadow: 0 -1px 0 #000;
+  width: 80px;
+}
+
+.webdesigntuts-workshop button:hover,
+.webdesigntuts-workshop button:focus {
+  background: #292929;
+  background: linear-gradient(#393939, #292929);
+  color: #5f5;
+  outline: none;
+}
+
+.webdesigntuts-workshop button:active {
+  background: #292929;
+  background: linear-gradient(#393939, #292929);
+  box-shadow: 0 1px 0 #000, inset 1px 0 1px #222;
+  top: 1px;
+}
+
+@keyframes glow {
+  0% {
+    border-color: #393;
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.2), inset 0 0 5px rgba(0, 255, 0, 0.1), 0 2px 0 #000;
+  }
+  100% {
+    border-color: #6f6;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.6), inset 0 0 10px rgba(0, 255, 0, 0.4), 0 2px 0 #000;
   }
 }
 </style>
