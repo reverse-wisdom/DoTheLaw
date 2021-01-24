@@ -17,16 +17,16 @@ pipeline {
         stage('Docker build') {
             agent any
             steps {
-                sh 'docker build -t basePJT:latest .'
+                sh 'docker build -t base-pjt:latest .'
             }
         }
         stage('Docker run') {
             agent any
             steps {
-                sh 'docker ps -f name=basePJT -q | xargs --no-run-if-empty docker container stop'
-                sh 'docker container ls -a -fname=basePJT -q | xargs -r docker container rm'
+                sh 'docker ps -f name=base-pjt -q | xargs --no-run-if-empty docker container stop'
+                sh 'docker container ls -a -fname=base-pjt -q | xargs -r docker container rm'
                 sh 'docker rmi $(docker images -f "dangling=true" -q)'
-                sh 'docker run -d --name basePJT -p 8080:8080 basePJT:latest'
+                sh 'docker run -d --name base-pjt -p 8080:8080 base-pjt:latest'
             }
         }
     }
