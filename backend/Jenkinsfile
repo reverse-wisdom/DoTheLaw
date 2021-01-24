@@ -17,7 +17,7 @@ pipeline {
         stage('Docker build') {
             agent any
             steps {
-                sh 'docker build -t base-pjt:latest .'
+                sh 'docker build -t base-pjt:latest ./backend'
             }
         }
         stage('Docker run') {
