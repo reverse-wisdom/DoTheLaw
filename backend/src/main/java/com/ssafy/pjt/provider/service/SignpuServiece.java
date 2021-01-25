@@ -3,6 +3,8 @@ package com.ssafy.pjt.provider.service;
 import java.sql.SQLException;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,14 +25,7 @@ public class SignpuServiece implements SignUseCase{
 	@Autowired
 	private MemberRepository memberRepository;
 	@Override
-	public void joinMember(SignupRequsetDTO member) throws SQLException {
-//		Member memberDto = new Member();
-//		memberDto.setEmail(member.getEmail());
-//		memberDto.setPassword(new BCryptPasswordEncoder().encode(member.getPassword()));
-//		memberDto.setPhone(member.getPhone());
-//		memberDto.setName(member.getName());
-//		memberDto.setRole(member.getRole().getCode());
-		  
+	public void joinMember(SignupRequsetDTO member) throws SQLException {		  
 		member.setPassword(new BCryptPasswordEncoder().encode(member.getPassword()));
 		member.setRolecode(member.getRole().getCode());
 		sqlSession.getMapper(SignUpRepository.class).joinMember(member);
@@ -39,6 +34,14 @@ public class SignpuServiece implements SignUseCase{
 	public boolean check(String email, String name) {
 		Optional<Member> userOpt = memberRepository.findByEmailOrName(email, name);		
 		if(!userOpt.isPresent()) {
+			return true;
+		}
+		return false;
+	}
+	@Override
+	public boolean checkEmail(String email) {
+		Optional<Member> userOpt = memberRepository.findByEmail(email);		
+		if(userOpt.isPresent()) {
 			return true;
 		}
 		return false;
