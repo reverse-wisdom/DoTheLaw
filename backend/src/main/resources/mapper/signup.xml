@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="com.ssafy.pjt.core.repository.SignUpRepository">
+
+	<insert id="joinMember" parameterType="SignupRequsetDTO">		
+		INSERT INTO MEMBER (EMAIL, PASSWORD, PHONE, NAME, ROLE) 
+		VALUES (#{email}, #{password}, #{phone}, #{name},#{rolecode});
+		
+	</insert>
+	
+</mapper>

@@ -19,7 +19,6 @@ public enum Role {
     }
 
     public static Role of(String code) {
-    	System.out.println("Role");
         return Arrays.stream(Role.values())
                 .filter(r -> r.getCode().equals(code))
                 .findAny()
