@@ -58,6 +58,16 @@
                   </div>
                 </router-link>
               </li>
+              <li class="md-list-item">
+                <router-link to="/login" class="md-list-item-router md-list-item-container md-button-clean">
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">account_circle</i>
+                      로그인
+                    </md-button>
+                  </div>
+                </router-link>
+              </li>
 
               <li class="md-list-item">
                 <router-link to="/board" class="md-list-item-router md-list-item-container md-button-clean">

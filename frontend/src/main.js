@@ -3,9 +3,18 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import Vuetify from 'vuetify';
+import store from '@/store/index';
 import 'vuetify/dist/vuetify.min.css';
+import VueSweetalert2 from 'vue-sweetalert2';
 
 import MaterialKit from './plugins/material-kit';
+
+const options = {
+  confirmButtonColor: '#41b882',
+  cancelButtonColor: '#ff7674',
+};
+
+Vue.use(VueSweetalert2, options); // alert API
 
 Vue.config.productionTip = false;
 

@@ -1,31 +1,75 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { getAuthFromCookie, getEmailFromCookie, getPwdFromCookie, saveAuthToCookie, saveEmailToCookie, savePwdToCookie } from '@/utils/cookies';
+import { loginUser } from '@/api/auth';
+// import { editUser, searchUser } from '../api/auth';
 import createPersistedState from 'vuex-persistedstate';
+import router from '../router'; // store vuex에서 라우터 사용시 다시 import 해줘야함!!
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
-    authToken: null,
+    email: getEmailFromCookie() || '',
+    token: getAuthFromCookie() || '',
+    password: getPwdFromCookie() || '',
+    nickname: '',
   },
-  getters: {},
+  getters: {
+    isLogin(state) {
+      return state.email !== '';
+    },
+  },
   mutations: {
-    LOGIN(state, { authToken }) {
-      state.authToken = authToken;
+    setEmail(state, email) {
+      state.email = email;
     },
-    LOGOUT(state) {
-      state.authToken = null;
+    setPassword(state, password) {
+      state.password = password;
     },
+    setNickname(state, nickname) {
+      state.nickname = nickname;
+    },
+
+    clearPwd(state) {
+      state.password = '';
+    },
+    clearEmail(state) {
+      state.email = '';
+    },
+    setToken(state, token) {
+      state.token = token;
+    },
+    clearToken(state) {
+      state.token = '';
+    },
+    // async updateNickname(state, userData) {
+    //   const {data} = await editUser(userData);
+    //   console.log(data.object.nickname)
+    //   state.nickname = userData.nickname
+    // }
   },
   actions: {
-    LOGIN({ commit }, { email, password }) {
-      // return axios.post(`${resourceHost}/login`, { email, password }).then(({ data }) => commit("LOGIN", data));
-    },
-    LOGOUT({ commit }) {
-      commit('LOGOUT');
+    async LOGIN({ commit }, userData) {
+      const { data } = await loginUser(userData);
+      // const response = await searchUser(userData.email);
+      console.log(userData);
+
+      console.log(data.message);
+      if (data.code == 'LOGIN_SUCCESS') {
+        commit('setToken', data['message']);
+        commit('setEmail', userData.email);
+        commit('setPassword', userData.password);
+        // commit('setNickname', response.data.object.nickname);
+        saveAuthToCookie(data.token);
+        saveEmailToCookie(userData.email);
+        savePwdToCookie(userData.password);
+        router.push('/');
+        // return data;
+      } else {
+        alert('로그인 실패! 이메일 및 비밀번호를 확인해 주세요!');
+      }
     },
   },
-  // state 값을 localStorage에 저장하는 플러그인
-  // 새로고침 시에도 state 값 유지
-  plugins: [createPersistedState()],
 });
