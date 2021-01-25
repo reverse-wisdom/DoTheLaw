@@ -40,14 +40,37 @@
       <div class="section section-basic">
         <!-- 테스트 영역 start-->
 
+        <!-- 토큰값 체크 -->
+        <div class="section">
+          <div class="container text-center">
+            <md-button class="md-info" style="margin:auto;" @click="tokenTest()">토큰값 확인</md-button>
+
+            <p>{{ testToken }}</p>
+            <p>{{ $store.state.email }}</p>
+            <md-button class="md-info" style="margin:auto;" @click="logoutUser()">로그아웃</md-button>
+          </div>
+        </div>
+
+        <!-- 판례 API 테스트 -->
+        <div class="section">
+          <div class="container text-center">
+            <form class="form" @submit="searchLaw()" onSubmit="return false;">
+              <input id="searchWord" type="text" placeholder="판례명" @keydown.enter="searchLaw()" />
+              <md-button class="md-info" style="margin:auto;" @click="searchLaw()">검색</md-button>
+            </form>
+          </div>
+        </div>
+
+        <!-- 판례 출력 테스트 -->
         <div class="container">
           <v-icon>mdi-home</v-icon>
           <v-data-table
             :headers="headers"
-            :items="desserts"
+            :items="laws"
             :items-per-page="5"
-            item-key="name"
+            item-key="no"
             class="elevation-1"
+            @click:row="handleClick"
             :footer-props="{
               showFirstLastPage: true,
               firstIcon: 'mdi-arrow-collapse-left',
@@ -55,158 +78,93 @@
               prevIcon: 'mdi-minus',
               nextIcon: 'mdi-plus',
             }"
-          ></v-data-table>
-          <v-icon large color="green darken-2">
-            mdi-domain
-          </v-icon>
+          >
+            <!-- v-html 사용하기위한 slot 템플릿 -->
+            <template v-slot:[`item.name`]="{ item }">
+              <div v-html="item.name"></div>
+            </template>
+          </v-data-table>
+        </div>
+
+        <!-- 모달 판례번호기반 판례상세내용 요청 테스트-->
+        <div class="md-layout">
+          <div class="md-layout-item md-size-33">
+            <modal v-if="classicModal" @close="classicModalHide">
+              <template slot="header">
+                <h4 class="modal-title">판결문제목</h4>
+                <md-button class="md-simple md-just-icon md-round modal-default-button" @click="classicModalHide">
+                  <md-icon>clear</md-icon>
+                </md-button>
+              </template>
+
+              <template slot="body">
+                <table class="styled-table kor" style="width: 100%; table-layout: fixed;">
+                  <span v-html="detailLaw.PrecService.판결요지._cdata"></span>
+                </table>
+              </template>
+
+              <template slot="footer">
+                <md-button class="md-danger md-simple" @click="classicModalHide">닫기</md-button>
+              </template>
+            </modal>
+          </div>
         </div>
 
         <!-- 테스트 영역 end -->
 
-        <div class="container">
-          <div class="title">
-            <h2>Basic Elements</h2>
-          </div>
-          <basic-elements></basic-elements>
-        </div>
-      </div>
-      <div class="section section-navbars">
-        <div class="container">
-          <small-navigation></small-navigation>
-        </div>
-        <navigation></navigation>
-      </div>
-      <div class="section section-tabs">
-        <div class="container">
-          <tabs></tabs>
-        </div>
-      </div>
-      <div class="section section-white">
-        <div class="container">
-          <nav-pills></nav-pills>
-        </div>
-      </div>
-      <div class="section section-notifications">
-        <div class="container">
-          <div class="title">
-            <h3>Notifications</h3>
+        <!-- 임시 채우는 값들 -->
+        <div class="section">
+          <div class="container text-center">
+            <div class="md-layout">
+              <div class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center">
+                <h2>Completed with examples</h2>
+                <h4>
+                  The kit comes with three pre-built pages to help you get started faster. You can change the text and images and you're good to go. More importantly, looking at them will give you a
+                  picture of what you can built with this powerful kit.
+                </h4>
+              </div>
+            </div>
           </div>
         </div>
-        <notifications></notifications>
-      </div>
-      <div class="section">
-        <div class="container">
-          <typography-images></typography-images>
+        <div class="section">
+          <div class="container text-center">
+            <div class="md-layout">
+              <div class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center">
+                <h2>Completed with examples</h2>
+                <h4>
+                  The kit comes with three pre-built pages to help you get started faster. You can change the text and images and you're good to go. More importantly, looking at them will give you a
+                  picture of what you can built with this powerful kit.
+                </h4>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="section section-javascript">
-        <div class="container">
-          <javascript-components></javascript-components>
-        </div>
-      </div>
-      <div class="section">
-        <div class="container text-center">
-          <div class="md-layout">
-            <div class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center">
-              <h2>Completed with examples</h2>
-              <h4>
-                The kit comes with three pre-built pages to help you get started faster. You can change the text and images and you're good to go. More importantly, looking at them will give you a
-                picture of what you can built with this powerful kit.
-              </h4>
+        <div class="section">
+          <div class="container text-center">
+            <div class="md-layout">
+              <div class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center">
+                <h2>Completed with examples</h2>
+                <h4>
+                  The kit comes with three pre-built pages to help you get started faster. You can change the text and images and you're good to go. More importantly, looking at them will give you a
+                  picture of what you can built with this powerful kit.
+                </h4>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="section section-signup page-header" :style="signupImage">
-        <div class="container">
-          <div class="md-layout">
-            <div class="md-layout-item md-size-33 md-medium-size-40 md-small-size-50 md-xsmall-size-70 mx-auto text-center">
-              <login-card header-color="green">
-                <h4 slot="title" class="card-title">Login</h4>
-                <md-button slot="buttons" href="javascript:void(0)" class="md-just-icon md-simple md-white">
-                  <i class="fab fa-facebook-square"></i>
-                </md-button>
-                <md-button slot="buttons" href="javascript:void(0)" class="md-just-icon md-simple md-white">
-                  <i class="fab fa-twitter"></i>
-                </md-button>
-                <md-button slot="buttons" href="javascript:void(0)" class="md-just-icon md-simple md-white">
-                  <i class="fab fa-google-plus-g"></i>
-                </md-button>
-                <p slot="description" class="description">Or Be Classical</p>
-                <md-field class="md-form-group" slot="inputs">
-                  <md-icon>face</md-icon>
-                  <label>First Name...</label>
-                  <md-input v-model="firstname"></md-input>
-                </md-field>
-                <md-field class="md-form-group" slot="inputs">
-                  <md-icon>email</md-icon>
-                  <label>Email...</label>
-                  <md-input v-model="email" type="email"></md-input>
-                </md-field>
-                <md-field class="md-form-group" slot="inputs">
-                  <md-icon>lock_outline</md-icon>
-                  <label>Password...</label>
-                  <md-input v-model="password"></md-input>
-                </md-field>
-                <md-button slot="footer" class="md-simple md-success md-lg">
-                  Get Started
-                </md-button>
-              </login-card>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="md-layout">
-        <div class="md-layout-item text-center">
-          <md-button href="#/login" class="md-simple md-success md-lg">View Login Page</md-button>
-        </div>
-      </div>
-    </div>
-    <div id="fp-nav" class="right" style="margin-top: -53.5px;">
-      <ul>
-        <li>
-          <a href="#allsearch" class="active"><span></span></a>
-        </li>
-        <li>
-          <a href="#network" class=""><span></span></a>
-        </li>
-        <li>
-          <a href="#statistics"><span></span></a>
-        </li>
-        <li>
-          <a href="#infomation"><span></span></a>
-        </li>
-        <li>
-          <a href="#footer"><span></span></a>
-        </li>
-      </ul>
     </div>
   </div>
 </template>
 
 <script>
-import BasicElements from './components/BasicElementsSection';
-import Navigation from './components/NavigationSection';
-import SmallNavigation from './components/SmallNavigationSection';
-import Tabs from './components/TabsSection';
-import NavPills from './components/NavPillsSection';
-import Notifications from './components/NotificationsSection';
-import TypographyImages from './components/TypographyImagesSection';
-import JavascriptComponents from './components/JavascriptComponentsSection';
-import { LoginCard } from '@/components';
+import axios from 'axios';
+import convert from 'xml-js';
+import { Modal } from '@/components';
+
+const LAWS_API_KEY = 'dbm01049';
 
 export default {
-  components: {
-    BasicElements,
-    Navigation,
-    SmallNavigation,
-    Tabs,
-    NavPills,
-    Notifications,
-    TypographyImages,
-    JavascriptComponents,
-    LoginCard,
-  },
   name: 'index',
   bodyClass: 'index-page',
   props: {
@@ -218,76 +176,33 @@ export default {
       type: String,
       default: require('@/assets/img/logo.png'),
     },
-    signup: {
-      type: String,
-      default: require('@/assets/img/city.jpg'),
-    },
-    landing: {
-      type: String,
-      default: require('@/assets/img/landing.jpg'),
-    },
-    profile: {
-      type: String,
-      default: require('@/assets/img/profile.jpg'),
-    },
+  },
+  components: {
+    Modal,
   },
   data() {
     return {
-      firstname: null,
-      email: null,
-      password: null,
-      singleSelect: false,
-      selected: [],
+      query: '',
+      values: [],
+      classicModal: false,
+      detailLaw: {},
+      testToken: '',
+
       headers: [
         {
-          text: 'Dessert (100g serving)',
+          text: '판례일련번호',
           align: 'start',
+          value: 'no',
+        },
+        {
+          text: '사건명',
           value: 'name',
         },
-        { text: 'Category', value: 'category' },
+
+        { text: '법원명', value: 'category' },
       ],
-      desserts: [
-        {
-          name: 'Frozen Yogurt',
-          category: 'Ice cream',
-        },
-        {
-          name: 'Ice cream sandwich',
-          category: 'Ice cream',
-        },
-        {
-          name: 'Eclair',
-          category: 'Cookie',
-        },
-        {
-          name: 'Cupcake',
-          category: 'Pastry',
-        },
-        {
-          name: 'Gingerbread',
-          category: 'Cookie',
-        },
-        {
-          name: 'Jelly bean',
-          category: 'Candy',
-        },
-        {
-          name: 'Lollipop',
-          category: 'Candy',
-        },
-        {
-          name: 'Honeycomb',
-          category: 'Toffee',
-        },
-        {
-          name: 'Donut',
-          category: 'Pastry',
-        },
-        {
-          name: 'KitKat',
-          category: 'Candy',
-        },
-      ],
+
+      laws: [],
 
       items: [
         {
@@ -300,10 +215,62 @@ export default {
           text: '3. 모욕죄',
         },
       ],
+
       model: 1,
     };
   },
-  methods: {},
+  methods: {
+    searchLaw() {
+      var searchWord = document.getElementById('searchWord').value;
+
+      axios
+        .get('https://www.law.go.kr/DRF/lawSearch.do?OC=' + LAWS_API_KEY + '&target=prec&type=XML&mobileYn=Y&display=100&query=' + searchWord)
+        .then(({ data }) => {
+          var xml = data;
+          var json = convert.xml2json(xml, { compact: true });
+          let $vm = this;
+          // console.log(JSON.parse(json).PrecSearch.prec[0]);
+          // console.log(JSON.parse(json).PrecSearch);
+          JSON.parse(json).PrecSearch.prec.forEach(function(entry) {
+            $vm.laws.push({
+              no: entry.판례일련번호._text,
+              name: entry.사건명._cdata,
+              category: entry.법원명._text,
+            });
+          });
+          console.log(this.laws);
+        })
+        .catch();
+    },
+    handleClick(data) {
+      this.classicModal = true;
+
+      axios
+        .get('https://www.law.go.kr/DRF/lawService.do?OC=' + LAWS_API_KEY + '&target=prec&type=xml&ID=' + data.no)
+        .then(({ data }) => {
+          var xml = data;
+          var json = convert.xml2json(xml, { compact: true });
+          this.detailLaw = JSON.parse(json);
+          console.log(this.detailLaw.PrecService.판결요지._cdata);
+        })
+        .catch();
+    },
+    classicModalHide() {
+      this.classicModal = false;
+    },
+
+    tokenTest() {
+      this.testToken = this.$store.state.token;
+    },
+    logoutUser() {
+      this.$store.commit('clearEmail');
+      this.$store.commit('clearToken');
+      // deleteCookie('til_auth');
+      // deleteCookie('til_pwd');
+      // deleteCookie('til_email');
+      this.$router.push('/');
+    },
+  },
   computed: {
     headerStyle() {
       return {
@@ -316,6 +283,8 @@ export default {
       };
     },
   },
+
+  mounted() {},
 };
 </script>
 <style lang="scss">
