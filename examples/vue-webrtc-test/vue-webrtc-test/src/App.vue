@@ -2,18 +2,20 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <vue-webrtc width="100%" roomId="roomId"> </vue-webrtc>
+    <web-rtc-view> </web-rtc-view>
   </div>
 </template>
 
 <script>
 // import HelloWorld from "./components/HelloWorld.vue";
+import WebRtcView from "./components/WebRtcView.vue";
 
 export default {
   name: "App",
   components: {
     // HelloWorld,
-  },
+    WebRtcView
+  }
 };
 </script>
 
