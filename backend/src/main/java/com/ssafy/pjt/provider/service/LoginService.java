@@ -45,7 +45,7 @@ public class LoginService implements LoginUseCase {
                 .orElse(Role.UNKNOWN);
 
         MemberDTO memberDTO = MemberDTO.builder()
-                .userName("eddy")
+                .name("eddy")
                 .email(email)
                 .role(role)
                 .build();
