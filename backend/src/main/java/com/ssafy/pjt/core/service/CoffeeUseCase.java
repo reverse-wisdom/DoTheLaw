@@ -6,5 +6,5 @@ import java.util.Optional;
 import com.ssafy.pjt.core.service.dto.CoffeeDTO;
 
 public interface CoffeeUseCase {
-    Optional<List<CoffeeDTO>> findAll();
+    Optional<List<CoffeeDTO>> findAll(String coffee);
 }

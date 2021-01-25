@@ -13,9 +13,9 @@ import java.util.Optional;
 public class CoffeeService implements CoffeeUseCase {
 
     @Override
-    public Optional<List<CoffeeDTO>> findAll() {
+    public Optional<List<CoffeeDTO>> findAll(String coffee) {
         return Optional.of(
-                Arrays.asList(CoffeeDTO.builder().name("latte").price(1200).build(), CoffeeDTO.builder().name("americano").price(900).build())
+                Arrays.asList(CoffeeDTO.builder().name(coffee).price(1200).build())
         );
     }
 }
