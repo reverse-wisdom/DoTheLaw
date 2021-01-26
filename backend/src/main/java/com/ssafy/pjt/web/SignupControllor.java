@@ -16,20 +16,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.pjt.core.entity.Member;
-import com.ssafy.pjt.provider.service.SignpuServiece;
+import com.ssafy.pjt.provider.service.SignupServiece;
 import com.ssafy.pjt.web.dto.SignupRequsetDTO;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/singup")
+@RequestMapping("/api/v1/signup")
 @CrossOrigin(origins = { "http://localhost:8080" })
 @RequiredArgsConstructor
 public class SignupControllor {
 
 	@Autowired
-	private SignpuServiece signpuServiece;
+	private SignupServiece signpuServiece;
 	
 	
     @ApiOperation(value = "회원가입")
