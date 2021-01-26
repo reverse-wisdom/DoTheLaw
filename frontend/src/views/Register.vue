@@ -1,12 +1,12 @@
 <template>
-  <!-- 로그인 페이지 -->
+  <!-- 회원가입 페이지 -->
   <div class="wrapper">
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
         <hr />
         <div class="container">
-          <login-table></login-table>
+          <register-insert></register-insert>
         </div>
       </div>
     </div>
@@ -14,15 +14,21 @@
 </template>
 
 <script>
-import LoginTable from './components/LoginTable.vue';
+import RegisterInsert from './components/RegisterInsert.vue';
 
 export default {
-  components: { LoginTable },
+  components: { RegisterInsert },
   bodyClass: 'profile-page',
+  data() {
+    return {};
+  },
   props: {
     header: {
       type: String,
       default: require('@/assets/img/jj02.gif'),
+    },
+    city: {
+      type: String,
     },
   },
   computed: {

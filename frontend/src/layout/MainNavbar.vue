@@ -1,21 +1,11 @@
 <template>
-  <md-toolbar
-    id="toolbar"
-    md-elevation="0"
-    class="md-transparent md-absolute"
-    :class="extraNavClasses"
-    :color-on-scroll="colorOnScroll"
-  >
+  <md-toolbar id="toolbar" md-elevation="0" class="md-transparent md-absolute" :class="extraNavClasses" :color-on-scroll="colorOnScroll">
     <div class="md-toolbar-row md-collapse-lateral">
       <div class="md-toolbar-section-start">
-        <h3 class="md-title">Vue Material Kit</h3>
+        <h3 class="md-title">法대로 합시다</h3>
       </div>
       <div class="md-toolbar-section-end">
-        <md-button
-          class="md-just-icon md-simple md-toolbar-toggle"
-          :class="{ toggled: toggledClass }"
-          @click="toggleNavbarMobile()"
-        >
+        <md-button class="md-just-icon md-simple md-toolbar-toggle" :class="{ toggled: toggledClass }" @click="toggleNavbarMobile()">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -23,39 +13,34 @@
 
         <div class="md-collapse">
           <div class="md-collapse-wrapper">
-            <mobile-menu nav-mobile-section-start="false">
-              <!-- Here you can add your items from the section-start of your toolbar -->
-            </mobile-menu>
+            <mobile-menu nav-mobile-section-start="false"></mobile-menu>
             <md-list>
-              <li class="md-list-item" v-if="!showDownload">
-                <a
-                  href="javascript:void(0)"
-                  class="md-list-item-router md-list-item-container md-button-clean dropdown"
-                >
+              <li class="md-list-item">
+                <a href="javascript:void(0)" class="md-list-item-router md-list-item-container md-button-clean dropdown">
                   <div class="md-list-item-content">
                     <drop-down direction="down">
-                      <md-button
-                        slot="title"
-                        class="md-button md-button-link md-white md-simple dropdown-toggle"
-                        data-toggle="dropdown"
-                      >
-                        <i class="material-icons">apps</i>
-                        <p>Components</p>
+                      <md-button slot="title" class="md-button md-button-link md-white md-simple dropdown-toggle" data-toggle="dropdown">
+                        <i class="material-icons">dashboard</i>
+                        <p>추가정보</p>
                       </md-button>
                       <ul class="dropdown-menu dropdown-with-icons">
                         <li>
-                          <a href="#/">
-                            <i class="material-icons">layers</i>
-                            <p>All Components</p>
-                          </a>
+                          <router-link to="/nearstore">
+                            <i class="material-icons">store</i>
+                            상권정보
+                          </router-link>
                         </li>
                         <li>
-                          <a
-                            href="https://demos.creative-tim.com/vue-material-kit/documentation/"
-                          >
-                            <i class="material-icons">content_paste</i>
-                            <p>Documentation</p>
-                          </a>
+                          <router-link to="/coronaclinic">
+                            <i class="material-icons">masks</i>
+                            코로나 선별 진료소
+                          </router-link>
+                        </li>
+                        <li>
+                          <router-link to="/safehospital">
+                            <i class="material-icons">local_hospital</i>
+                            국민 안심 병원
+                          </router-link>
                         </li>
                       </ul>
                     </drop-down>
@@ -63,94 +48,48 @@
                 </a>
               </li>
 
-              <md-list-item
-                href="https://demos.creative-tim.com/vue-material-kit/documentation/"
-                target="_blank"
-                v-if="showDownload"
-              >
-                <i class="material-icons">content_paste</i>
-                <p>Documentation</p>
-              </md-list-item>
-
-              <md-list-item
-                href="javascript:void(0)"
-                @click="scrollToElement()"
-                v-if="showDownload"
-              >
-                <i class="material-icons">cloud_download</i>
-                <p>Download</p>
-              </md-list-item>
-
-              <li class="md-list-item" v-else>
-                <a
-                  href="javascript:void(0)"
-                  class="md-list-item-router md-list-item-container md-button-clean dropdown"
-                >
+              <li class="md-list-item">
+                <router-link to="/notice" class="md-list-item-router md-list-item-container md-button-clean">
                   <div class="md-list-item-content">
-                    <drop-down direction="down">
-                      <md-button
-                        slot="title"
-                        class="md-button md-button-link md-white md-simple dropdown-toggle"
-                        data-toggle="dropdown"
-                      >
-                        <i class="material-icons">view_carousel</i>
-                        <p>Examples</p>
-                      </md-button>
-                      <ul class="dropdown-menu dropdown-with-icons">
-                        <li>
-                          <a href="#/landing">
-                            <i class="material-icons">view_day</i>
-                            <p>Landing Page</p>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#/login">
-                            <i class="material-icons">fingerprint</i>
-                            <p>Login Page</p>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#/profile">
-                            <i class="material-icons">account_circle</i>
-                            <p>Profile Page</p>
-                          </a>
-                        </li>
-                      </ul>
-                    </drop-down>
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">announcement</i>
+                      공지사항
+                    </md-button>
                   </div>
-                </a>
+                </router-link>
+              </li>
+              <li class="md-list-item">
+                <router-link to="/login" class="md-list-item-router md-list-item-container md-button-clean">
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">account_circle</i>
+                      로그인
+                    </md-button>
+                  </div>
+                </router-link>
               </li>
 
-              <md-list-item
-                href="https://twitter.com/CreativeTim"
-                target="_blank"
-              >
-                <i class="fab fa-twitter"></i>
-                <p class="hidden-lg">Twitter</p>
-                <md-tooltip md-direction="bottom"
-                  >Follow us on Twitter</md-tooltip
-                >
-              </md-list-item>
-              <md-list-item
-                href="https://www.facebook.com/CreativeTim"
-                target="_blank"
-              >
-                <i class="fab fa-facebook-square"></i>
-                <p class="hidden-lg">Facebook</p>
-                <md-tooltip md-direction="bottom"
-                  >Like us on Facebook</md-tooltip
-                >
-              </md-list-item>
-              <md-list-item
-                href="https://www.instagram.com/CreativeTimOfficial"
-                target="_blank"
-              >
-                <i class="fab fa-instagram"></i>
-                <p class="hidden-lg">Instagram</p>
-                <md-tooltip md-direction="bottom"
-                  >Follow us on Instagram</md-tooltip
-                >
-              </md-list-item>
+              <li class="md-list-item">
+                <router-link to="/board" class="md-list-item-router md-list-item-container md-button-clean">
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">assignment_turned_in</i>
+                      게시판
+                    </md-button>
+                  </div>
+                </router-link>
+              </li>
+
+              <li class="md-list-item">
+                <router-link to="/register" class="md-list-item-router md-list-item-container md-button-clean">
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">person_add</i>
+                      회원가입
+                    </md-button>
+                  </div>
+                </router-link>
+              </li>
             </md-list>
           </div>
         </div>
@@ -173,56 +112,48 @@ function resizeThrottler(actualResizeHandler) {
   }
 }
 
-import MobileMenu from "@/layout/MobileMenu";
+import MobileMenu from '@/layout/MobileMenu';
 export default {
   components: {
-    MobileMenu
+    MobileMenu,
   },
   props: {
     type: {
       type: String,
-      default: "white",
+      default: 'white',
       validator(value) {
-        return [
-          "white",
-          "default",
-          "primary",
-          "danger",
-          "success",
-          "warning",
-          "info"
-        ].includes(value);
-      }
+        return ['white', 'default', 'primary', 'danger', 'success', 'warning', 'info'].includes(value);
+      },
     },
     colorOnScroll: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
   data() {
     return {
-      extraNavClasses: "",
-      toggledClass: false
+      extraNavClasses: '',
+      toggledClass: false,
     };
   },
   computed: {
     showDownload() {
-      const excludedRoutes = ["login", "landing", "profile"];
-      return excludedRoutes.every(r => r !== this.$route.name);
-    }
+      const excludedRoutes = ['login', 'landing', 'profile'];
+      return excludedRoutes.every((r) => r !== this.$route.name);
+    },
   },
   methods: {
     bodyClick() {
-      let bodyClick = document.getElementById("bodyClick");
+      let bodyClick = document.getElementById('bodyClick');
 
       if (bodyClick === null) {
-        let body = document.querySelector("body");
-        let elem = document.createElement("div");
-        elem.setAttribute("id", "bodyClick");
+        let body = document.querySelector('body');
+        let elem = document.createElement('div');
+        elem.setAttribute('id', 'bodyClick');
         body.appendChild(elem);
 
-        let bodyClick = document.getElementById("bodyClick");
-        bodyClick.addEventListener("click", this.toggleNavbarMobile);
+        let bodyClick = document.getElementById('bodyClick');
+        bodyClick.addEventListener('click', this.toggleNavbarMobile);
       } else {
         bodyClick.remove();
       }
@@ -233,17 +164,16 @@ export default {
       this.bodyClick();
     },
     handleScroll() {
-      let scrollValue =
-        document.body.scrollTop || document.documentElement.scrollTop;
-      let navbarColor = document.getElementById("toolbar");
+      let scrollValue = document.body.scrollTop || document.documentElement.scrollTop;
+      let navbarColor = document.getElementById('toolbar');
       this.currentScrollValue = scrollValue;
       if (this.colorOnScroll > 0 && scrollValue > this.colorOnScroll) {
         this.extraNavClasses = `md-${this.type}`;
-        navbarColor.classList.remove("md-transparent");
+        navbarColor.classList.remove('md-transparent');
       } else {
         if (this.extraNavClasses) {
-          this.extraNavClasses = "";
-          navbarColor.classList.add("md-transparent");
+          this.extraNavClasses = '';
+          navbarColor.classList.add('md-transparent');
         }
       }
     },
@@ -251,17 +181,17 @@ export default {
       resizeThrottler(this.handleScroll);
     },
     scrollToElement() {
-      let element_id = document.getElementById("downloadSection");
+      let element_id = document.getElementById('downloadSection');
       if (element_id) {
-        element_id.scrollIntoView({ block: "end", behavior: "smooth" });
+        element_id.scrollIntoView({ block: 'end', behavior: 'smooth' });
       }
-    }
+    },
   },
   mounted() {
-    document.addEventListener("scroll", this.scrollListener);
+    document.addEventListener('scroll', this.scrollListener);
   },
   beforeDestroy() {
-    document.removeEventListener("scroll", this.scrollListener);
-  }
+    document.removeEventListener('scroll', this.scrollListener);
+  },
 };
 </script>
