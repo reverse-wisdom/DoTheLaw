@@ -2,12 +2,12 @@ import { instance } from './index';
 
 // 회원가입 API
 function registerUser(userData) {
-  return instance.post('api/v1/singup', userData);
+  return instance.post('api/member/singup', userData);
 }
 
 // 로그인 API
 function loginUser(userData) {
-  return instance.post('api/v1/login', userData);
+  return instance.post('api/member/login', userData);
 }
 
 //회원정보 조회
