@@ -1,7 +1,5 @@
 package com.ssafy.pjt.web;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,45 +13,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.pjt.core.entity.Member;
-import com.ssafy.pjt.provider.service.SignupServiece;
+import com.ssafy.pjt.provider.service.SignupService;
 import com.ssafy.pjt.web.dto.SignupRequsetDTO;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/signup")
+@RequestMapping("/api/member")
 @CrossOrigin(origins = { "http://localhost:8080" })
 @RequiredArgsConstructor
 public class SignupControllor {
 
 	@Autowired
-	private SignupServiece signpuServiece;
+	private SignupService service;
 	
 	
     @ApiOperation(value = "회원가입")
-    @PostMapping
+    @PostMapping("/signup")
 	private ResponseEntity<String> join(@Valid @RequestBody SignupRequsetDTO signupRequsetDTO) {
     	
-    	if(signpuServiece.check(signupRequsetDTO.getEmail(), signupRequsetDTO.getName())) {
+    	if(service.check(signupRequsetDTO.getEmail(), signupRequsetDTO.getName())) {
     		try {			   			
-    			signpuServiece.joinMember(signupRequsetDTO);
-    			return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+    			service.joinMember(signupRequsetDTO);
+    			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 
     		} catch (Exception e) {
     			e.printStackTrace();
     		}
     	}		
-		return new ResponseEntity<String>("FAIL", HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
 	}
     
     @ApiOperation(value = "이메일 중복체크")
     @GetMapping("/check")
 	private ResponseEntity<String> checkEmail(@RequestParam(required = true) final String email) {    	
-    	if(signpuServiece.checkEmail(email)) {   
-    		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+    	if(service.checkEmail(email)) {   
+    		return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     	}		
-		return new ResponseEntity<String>("FAIL", HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
 	}
 }

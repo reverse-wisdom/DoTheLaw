@@ -1,7 +1,5 @@
 package com.ssafy.pjt.core.service;
 
-import java.sql.SQLException;
-
 import com.ssafy.pjt.web.dto.SignupRequsetDTO;
 
 public interface SignupUseCase {
