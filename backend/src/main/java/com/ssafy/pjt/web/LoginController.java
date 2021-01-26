@@ -64,7 +64,6 @@ public class LoginController {
                 .role(socialsignupRequsetDTO.getRole())
                 .build();
         if (signupService.checkEmail(socialsignupRequsetDTO.getEmail())) { //DB에 있을 때
-        	System.out.println("있을때");
             JwtAuthToken jwtAuthToken = (JwtAuthToken) loginService.createAuthToken(memberDTO);
 
             return CommonResponse.builder()
@@ -79,7 +78,7 @@ public class LoginController {
         	signupRequsetDTO.setEmail(socialsignupRequsetDTO.getEmail());
         	signupRequsetDTO.setPassword(socialsignupRequsetDTO.getId());
         	signupRequsetDTO.setName(socialsignupRequsetDTO.getName());
-        	signupRequsetDTO.setRole(Role.USER);
+        	signupRequsetDTO.setRole(socialsignupRequsetDTO.getRole());
         	
         	try {
 				signupService.joinMember(signupRequsetDTO);
