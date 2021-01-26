@@ -17,7 +17,8 @@ pipeline {
         stage('Docker build') {
             agent any
             steps {
-                sh 'docker build -t base-pjt:latest ./backend'
+                sh 'docker build -t base-pjt-back:latest ./backend'
+		sh 'docker build -t base-pjt-front:latest ./frontend'
             }
         }
         stage('Docker run') {
@@ -26,6 +27,7 @@ pipeline {
                 sh 'docker ps -f name=base-pjt -q | xargs --no-run-if-empty docker container stop'
                 sh 'docker container ls -a -fname=base-pjt -q | xargs -r docker container rm'
                 sh 'docker rmi $(docker images -f "dangling=true" -q)'
+		sh 'docker run -d --name base-pjt-front -p 8888:80 base-pjt-front:latest'
                 sh 'docker run -d --name base-pjt -p 8080:8080 base-pjt:latest'
             }
         }
