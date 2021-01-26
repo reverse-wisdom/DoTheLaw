@@ -19,14 +19,14 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/login")
+@RequestMapping("/api/member")
 @CrossOrigin(origins = { "http://localhost:8080" })
 @RequiredArgsConstructor
 public class LoginController {
 
     private final LoginService loginService;
     @ApiOperation(value = "로그인")
-    @PostMapping
+    @PostMapping("/login")
     public CommonResponse login(@RequestBody LoginRequestDTO loginRequestDTO) {
         Optional<MemberDTO> optionalMemberDTO = loginService.login(loginRequestDTO.getEmail(), loginRequestDTO.getPassword());
 

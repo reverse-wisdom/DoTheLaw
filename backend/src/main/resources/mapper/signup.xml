@@ -5,7 +5,7 @@
 	<mapper namespace="com.ssafy.pjt.core.repository.SignUpRepository">
 
 	<insert id="joinMember" parameterType="SignupRequsetDTO">		
-		INSERT INTO MEMBER (EMAIL, PASSWORD, PHONE, NAME, ROLE) 
+		INSERT INTO member (email, password, phone, name, role) 
 		VALUES (#{email}, #{password}, #{phone}, #{name},#{rolecode});		
 	</insert>
 	

@@ -3,23 +3,19 @@ package com.ssafy.pjt.provider.service;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import javax.validation.Valid;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.pjt.core.entity.Member;
 import com.ssafy.pjt.core.repository.MemberRepository;
 import com.ssafy.pjt.core.repository.SignUpRepository;
 import com.ssafy.pjt.core.service.SignupUseCase;
-import com.ssafy.pjt.core.service.dto.MemberDTO;
 import com.ssafy.pjt.web.dto.SignupRequsetDTO;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 @Service
-public class SignupServiece implements SignupUseCase{
+public class SignupService implements SignupUseCase{
 	@Autowired
 	private SqlSession sqlSession;	
 	@Autowired
