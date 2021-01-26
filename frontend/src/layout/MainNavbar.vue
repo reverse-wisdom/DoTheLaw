@@ -2,7 +2,12 @@
   <md-toolbar id="toolbar" md-elevation="0" class="md-transparent md-absolute" :class="extraNavClasses" :color-on-scroll="colorOnScroll">
     <div class="md-toolbar-row md-collapse-lateral">
       <div class="md-toolbar-section-start">
-        <h3 class="md-title">法대로 합시다</h3>
+        <h3 class="md-title">
+          <router-link to="/" class="md-title kor">
+            <i class="material-icons">gavel</i>
+            法대로 합시다
+          </router-link>
+        </h3>
       </div>
       <div class="md-toolbar-section-end">
         <md-button class="md-just-icon md-simple md-toolbar-toggle" :class="{ toggled: toggledClass }" @click="toggleNavbarMobile()">

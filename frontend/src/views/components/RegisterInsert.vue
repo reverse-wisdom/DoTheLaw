@@ -48,7 +48,6 @@
 <script>
 import { LoginCard } from '@/components';
 import { registerUser, emailCheck } from '@/api/auth';
-const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   components: { LoginCard },
