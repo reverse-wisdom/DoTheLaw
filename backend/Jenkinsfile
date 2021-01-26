@@ -24,11 +24,13 @@ pipeline {
         stage('Docker run') {
             agent any
             steps {
-                sh 'docker ps -f name=base-pjt -q | xargs --no-run-if-empty docker container stop'
-                sh 'docker container ls -a -fname=base-pjt -q | xargs -r docker container rm'
+                sh 'docker ps -f name=base-pjt-back -q | xargs --no-run-if-empty docker container stop'
+                sh 'docker container ls -a -fname=base-pjt-back -q | xargs -r docker container rm'
+		sh 'docker ps -f name=base-pjt-front -q | xargs --no-run-if-empty docker container stop'
+		sh 'docker container ls -a -fname=base-pjt-front -q | xargs -r docker container rm'
                 sh 'docker rmi $(docker images -f "dangling=true" -q)'
-		sh 'docker run -d --name base-pjt-front -p 8888:80 base-pjt-front:latest'
-                sh 'docker run -d --name base-pjt-back -p 8080:8080 base-pjt:latest'
+		sh 'docker run -d --name base-pjt-front -p 80:80 base-pjt-front:latest'
+                sh 'docker run -d --name base-pjt-back -p 8080:8080 base-pjt-back:latest'
             }
         }
     }
