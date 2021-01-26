@@ -2,7 +2,7 @@ import { instance } from './index';
 
 // 회원가입 API
 function registerUser(userData) {
-  return instance.post('api/member/singup', userData);
+  return instance.post('api/member/signup', userData);
 }
 
 // 로그인 API
@@ -20,7 +20,7 @@ function searchUser(userEmail) {
 }
 //이메일 중복 체크
 function emailCheck(userEmail) {
-  return instance.get('api/v1/singup/check', {
+  return instance.get('api/member/check', {
     params: {
       email: userEmail,
     },
@@ -40,4 +40,5 @@ function signoutUser(userData) {
     },
   });
 }
+
 export { registerUser, loginUser, searchUser, editUser, signoutUser, emailCheck };

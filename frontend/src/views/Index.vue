@@ -6,17 +6,15 @@
           <div class="image-wrapper">
             <div class="brand">
               <img :src="logo" alt="logo" />
-              <!-- <v-text-field label="검색" placeholder="검색어입력" background-color="blue" filled rounded solo solo-inverted></v-text-field>
+              <br />
 
-              <v-btn color="primary" depressed elevation="23" raised>검색</v-btn> -->
-              <div>
-                <section class="webdesigntuts-workshop">
-                  <form action="" method="">
-                    <input type="search" placeholder="검색어입력" />
-                    <button>검색</button>
-                  </form>
-                </section>
-              </div>
+              <form @submit="searchLaw()" onSubmit="return false;">
+                <fieldset>
+                  <input type="search" class="searchInput" id="searchWord" placeholder="판례명" @keydown.enter="searchLaw()" />
+                  <button class="searchBtn" @click="searchLaw()"><i class="fa fa-search"></i></button>
+                </fieldset>
+              </form>
+
               <!-- 리스트 -->
 
               <v-list>
@@ -43,23 +41,15 @@
         <!-- 토큰값 체크 -->
         <div class="section">
           <div class="container text-center">
-            <md-button class="md-info" style="margin:auto;" @click="tokenTest()">토큰값 확인</md-button>
+            <md-button class="md-info" style="margin: auto" @click="tokenTest()">토큰값 확인</md-button>
 
             <p>{{ testToken }}</p>
             <p>{{ $store.state.email }}</p>
-            <md-button class="md-info" style="margin:auto;" @click="logoutUser()">로그아웃</md-button>
+            <md-button class="md-info" style="margin: auto" @click="logoutUser()">로그아웃</md-button>
           </div>
         </div>
 
         <!-- 판례 API 테스트 -->
-        <div class="section">
-          <div class="container text-center">
-            <form class="form" @submit="searchLaw()" onSubmit="return false;">
-              <input id="searchWord" type="text" placeholder="판례명" @keydown.enter="searchLaw()" />
-              <md-button class="md-info" style="margin:auto;" @click="searchLaw()">검색</md-button>
-            </form>
-          </div>
-        </div>
 
         <!-- 판례 출력 테스트 -->
         <div class="container">
@@ -98,7 +88,7 @@
               </template>
 
               <template slot="body">
-                <table class="styled-table kor" style="width: 100%; table-layout: fixed;">
+                <table class="styled-table kor" style="width: 100%; table-layout: fixed">
                   <span v-html="detailLaw.PrecService.판결요지._cdata"></span>
                 </table>
               </template>
@@ -108,6 +98,15 @@
               </template>
             </modal>
           </div>
+        </div>
+        <div class="section">
+          <div class="icon icon-success">
+            <md-icon>local_post_office</md-icon>
+          </div>
+          <h4 class="info-title kor">실시간 법원/검찰 뉴스</h4>
+          <md-button class="md-success" @click="forceRerender">새로고침</md-button>
+          <!-- 뉴스 RSS파싱 컴포넌트 -->
+          <RSSParser :key="componentKey" style="margin-top:-20px; padding: auto; text-center" />
         </div>
 
         <!-- 테스트 영역 end -->
@@ -131,10 +130,7 @@
             <div class="md-layout">
               <div class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center">
                 <h2>Completed with examples</h2>
-                <h4>
-                  The kit comes with three pre-built pages to help you get started faster. You can change the text and images and you're good to go. More importantly, looking at them will give you a
-                  picture of what you can built with this powerful kit.
-                </h4>
+                <h4>동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세</h4>
               </div>
             </div>
           </div>
@@ -161,8 +157,8 @@
 import axios from 'axios';
 import convert from 'xml-js';
 import { Modal } from '@/components';
-
-const LAWS_API_KEY = 'dbm01049';
+import RSSParser from './components/RSSParser';
+const LAWS_API_KEY = process.env.VUE_APP_LAWS_API_KEY;
 
 export default {
   name: 'index',
@@ -179,6 +175,7 @@ export default {
   },
   components: {
     Modal,
+    RSSParser,
   },
   data() {
     return {
@@ -187,6 +184,7 @@ export default {
       classicModal: false,
       detailLaw: {},
       testToken: '',
+      componentKey: 0,
 
       headers: [
         {
@@ -220,8 +218,15 @@ export default {
     };
   },
   methods: {
+    // RSS 뉴스 새로고침 버튼
+    // :key "componentKey" 변수를 활용해 컴포넌트 강제새로고침 생성
+    forceRerender() {
+      this.componentKey += 1;
+    },
+
     searchLaw() {
       var searchWord = document.getElementById('searchWord').value;
+      this.laws = [];
 
       axios
         .get('https://www.law.go.kr/DRF/lawSearch.do?OC=' + LAWS_API_KEY + '&target=prec&type=XML&mobileYn=Y&display=100&query=' + searchWord)
@@ -287,160 +292,123 @@ export default {
   mounted() {},
 };
 </script>
+
 <style lang="scss">
-.section-download {
-  .md-button + .md-button {
-    margin-left: 5px;
-  }
+.md-card-actions.text-center {
+  display: flex;
+  justify-content: center !important;
 }
 
-@media all and (min-width: 991px) {
-  .btn-container {
-    display: flex;
-  }
-}
-@import url(https://fonts.googleapis.com/css?family=Cabin:400);
-
-// .webdesigntuts-workshop {
-//   background: #151515;
-//   height: 100%;
-//   position: absolute;
-//   text-align: center;
-//   width: 100%;
-// }
-
-.webdesigntuts-workshop:before,
-.webdesigntuts-workshop:after {
-  content: '';
-  display: block;
-  height: 1px;
-  left: 50%;
-  margin: 0 0 0 -400px;
-  position: absolute;
-  width: 800px;
+.md-layout {
+  margin-top: 15px;
 }
 
-.webdesigntuts-workshop:before {
-  background: #444;
-  background: linear-gradient(left, #151515, #444, #151515);
-  top: 192px;
+.kor {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+.trans {
+  top: 50%;
+  transform: translateY(-200%);
+  transform: translateX(10%);
+  color: white;
+  text-align: left;
 }
 
-.webdesigntuts-workshop:after {
-  background: #000;
-  background: linear-gradient(left, #151515, #000, #151515);
-  top: 191px;
+// 검색창 디자인
+
+#form-buscar > .form-group > .input-group > .form-control {
+  height: 40px;
+}
+#form-buscar > .form-group > .input-group > .input-group-btn > .btn {
+  height: 40px;
+  font-size: 16px;
+  font-weight: 300;
+}
+#form-buscar > .form-group > .input-group > .input-group-btn > .btn .glyphicon {
+  margin-right: 12px;
 }
 
-.webdesigntuts-workshop form {
-  background: #111;
-  background: linear-gradient(#1b1b1b, #111);
-  border: 1px solid #000;
-  border-radius: 5px;
-  box-shadow: inset 0 0 0 1px #272727;
+#form-buscar > .form-group > .input-group > .form-control {
+  font-size: 16px;
+  font-weight: 300;
+}
+
+#form-buscar > .form-group > .input-group > .form-control:focus {
+  border-color: #33a444;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px rgba(0, 109, 0, 0.8);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px rgba(0, 109, 0, 0.8);
+}
+
+//
+fieldset {
+  position: relative;
   display: inline-block;
-  font-size: 0px;
-  margin: 150px auto 0;
-  padding: 20px;
-  position: relative;
-  z-index: 1;
+  padding: 0 0 0 40px;
+  background: #ceb980;
+  border: none;
+  border-radius: 5px;
 }
 
-.webdesigntuts-workshop input {
-  background: #222;
-  background: linear-gradient(#333, #222);
-  border: 1px solid #444;
-  border-radius: 5px 0 0 5px;
-  box-shadow: 0 2px 0 #000;
-  color: #888;
-  display: block;
-  float: left;
-  font-family: 'Cabin', helvetica, arial, sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  height: 40px;
-  margin: 0;
-  padding: 0 10px;
-  text-shadow: 0 -1px 0 #000;
+.searchInput,
+.searchBtn {
+  position: relative;
   width: 200px;
-}
-
-.ie .webdesigntuts-workshop input {
-  line-height: 40px;
-}
-
-.webdesigntuts-workshop input::-webkit-input-placeholder {
-  color: #888;
-}
-
-.webdesigntuts-workshop input:-moz-placeholder {
-  color: #888;
-}
-
-.webdesigntuts-workshop input:focus {
-  animation: glow 800ms ease-out infinite alternate;
-  background: #222922;
-  background: linear-gradient(#333933, #222922);
-  border-color: #393;
-  box-shadow: 0 0 5px rgba(0, 255, 0, 0.2), inset 0 0 5px rgba(0, 255, 0, 0.1), 0 2px 0 #000;
-  color: #efe;
-  outline: none;
-}
-
-.webdesigntuts-workshop input:focus::-webkit-input-placeholder {
-  color: #efe;
-}
-
-.webdesigntuts-workshop input:focus:-moz-placeholder {
-  color: #efe;
-}
-
-.webdesigntuts-workshop button {
-  background: #222;
-  background: linear-gradient(#333, #222);
-  box-sizing: border-box;
-  border: 1px solid #444;
-  border-left-color: #000;
-  border-radius: 0 5px 5px 0;
-  box-shadow: 0 2px 0 #000;
-  color: #fff;
-  display: block;
-  float: left;
-  font-family: 'Cabin', helvetica, arial, sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  height: 40px;
-  line-height: 40px;
-  margin: 0;
+  height: 50px;
   padding: 0;
-  position: relative;
-  text-shadow: 0 -1px 0 #000;
-  width: 80px;
+  display: inline-block;
+  float: left;
 }
 
-.webdesigntuts-workshop button:hover,
-.webdesigntuts-workshop button:focus {
-  background: #292929;
-  background: linear-gradient(#393939, #292929);
-  color: #5f5;
-  outline: none;
+.searchInput {
+  color: #000000;
+  z-index: 2;
+  border: 0 none;
+}
+.searchInput:focus {
+  outline: 0 none;
+}
+.searchInput:focus + .searchBtn {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+.searchInput:focus + .searchBtn .fa {
+  -webkit-transform: translate(0px, 0);
+  -ms-transform: translate(0px, 0);
+  transform: translate(0px, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  color: #fff;
 }
 
-.webdesigntuts-workshop button:active {
-  background: #292929;
-  background: linear-gradient(#393939, #292929);
-  box-shadow: 0 1px 0 #000, inset 1px 0 1px #222;
-  top: 1px;
+.searchBtn {
+  z-index: 1;
+  width: 50px;
+  border: 0 none;
+  background: #ceb980;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+  -webkit-transform: translate(-50px, 0);
+  -ms-transform: translate(-50px, 0);
+  transform: translate(-50px, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
 }
 
-@keyframes glow {
-  0% {
-    border-color: #393;
-    box-shadow: 0 0 5px rgba(0, 255, 0, 0.2), inset 0 0 5px rgba(0, 255, 0, 0.1), 0 2px 0 #000;
-  }
-  100% {
-    border-color: #6f6;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.6), inset 0 0 10px rgba(0, 255, 0, 0.4), 0 2px 0 #000;
-  }
+.fa-search {
+  font-size: 1.4rem;
+  color: #29abe2;
+  z-index: 3;
+  top: 25%;
+  -webkit-transform: translate(-190px, 0);
+  -ms-transform: translate(-190px, 0);
+  transform: translate(-190px, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 </style>

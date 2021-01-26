@@ -5,7 +5,6 @@ import Login from './views/Login.vue';
 import MainNavbar from './layout/MainNavbar.vue';
 import MainFooter from './layout/MainFooter.vue';
 import Register from './views/Register.vue';
-import Experience from './views/Experience.vue';
 
 Vue.use(Router);
 
@@ -33,14 +32,6 @@ export default new Router({
       path: '/login',
       name: 'login',
       components: { default: Login, header: MainNavbar, footer: MainFooter },
-      props: {
-        header: { colorOnScroll: 400 },
-      },
-    },
-    {
-      path: '/experience',
-      name: 'experience',
-      components: { default: Experience, header: MainNavbar },
       props: {
         header: { colorOnScroll: 400 },
       },
