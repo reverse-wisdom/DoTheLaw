@@ -53,6 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/member/login/**").permitAll() // 로그인
                 .antMatchers("/api/member/signup/**").permitAll() // 회원가입
                 
+                .antMatchers("/api/rss/**").permitAll() // RSS 파싱 관련
+                
                 .antMatchers("/swagger-resources/**").permitAll() //swagger
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
