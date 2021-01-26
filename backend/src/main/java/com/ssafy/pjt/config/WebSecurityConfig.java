@@ -50,15 +50,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/login/**").permitAll()
-                .antMatchers("/api/v1/singup/**").permitAll()
+                .antMatchers("/api/v1/login/**").permitAll() // 로그인
+                .antMatchers("/api/v1/singup/**").permitAll() // 회원가입
                 
-                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll() //swagger
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
                 .antMatchers("/webjars/**").permitAll()
                 
-                .antMatchers("/api/v1/coffees/**").hasAnyAuthority(Role.USER.getCode())
+                .antMatchers("/api/v1/coffees/**").hasAnyAuthority(Role.USER.getCode()) //test
                 .anyRequest().authenticated()
 
                 .and()

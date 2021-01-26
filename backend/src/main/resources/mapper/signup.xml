@@ -6,8 +6,7 @@
 
 	<insert id="joinMember" parameterType="SignupRequsetDTO">		
 		INSERT INTO MEMBER (EMAIL, PASSWORD, PHONE, NAME, ROLE) 
-		VALUES (#{email}, #{password}, #{phone}, #{name},#{rolecode});
-		
+		VALUES (#{email}, #{password}, #{phone}, #{name},#{rolecode});		
 	</insert>
 	
 </mapper>
