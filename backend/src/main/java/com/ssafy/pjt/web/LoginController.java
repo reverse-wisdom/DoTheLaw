@@ -53,11 +53,11 @@ public class LoginController {
         }
     }
     
-    @ApiOperation(value = "구글 소셜로그인")
+    @ApiOperation(value = "소셜로그인")
     @PostMapping("/social")
     public CommonResponse SocialLogin(@Valid @RequestBody SocialSignupRequsetDTO socialsignupRequsetDTO) {
     	//소셜 아이디 구분하기
-    	socialsignupRequsetDTO.setEmail("google_"+socialsignupRequsetDTO.getEmail());
+    	socialsignupRequsetDTO.setEmail(socialsignupRequsetDTO.getType().trim()+"_"+socialsignupRequsetDTO.getEmail());
     	MemberDTO memberDTO = MemberDTO.builder()
                 .name(socialsignupRequsetDTO.getName())
                 .email(socialsignupRequsetDTO.getEmail())
