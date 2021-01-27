@@ -43,11 +43,18 @@
         <!-- 토큰값 체크 -->
         <div class="section">
           <div class="container text-center">
-            <md-button class="md-info" style="margin:auto;" @click="tokenTest()">토큰값 확인</md-button>
+            <md-button class="md-info" style="margin:auto;" @click="tokenTest()"
+              >토큰값 확인</md-button
+            >
 
             <p>{{ testToken }}</p>
             <p>{{ $store.state.email }}</p>
-            <md-button class="md-info" style="margin:auto;" @click="logoutUser()">로그아웃</md-button>
+            <md-button
+              class="md-info"
+              style="margin:auto;"
+              @click="logoutUser()"
+              >로그아웃</md-button
+            >
           </div>
         </div>
 
@@ -55,8 +62,18 @@
         <div class="section">
           <div class="container text-center">
             <form class="form" @submit="searchLaw()" onSubmit="return false;">
-              <input id="searchWord" type="text" placeholder="판례명" @keydown.enter="searchLaw()" />
-              <md-button class="md-info" style="margin:auto;" @click="searchLaw()">검색</md-button>
+              <input
+                id="searchWord"
+                type="text"
+                placeholder="판례명"
+                @keydown.enter="searchLaw()"
+              />
+              <md-button
+                class="md-info"
+                style="margin:auto;"
+                @click="searchLaw()"
+                >검색</md-button
+              >
             </form>
           </div>
         </div>
@@ -92,19 +109,27 @@
             <modal v-if="classicModal" @close="classicModalHide">
               <template slot="header">
                 <h4 class="modal-title">판결문제목</h4>
-                <md-button class="md-simple md-just-icon md-round modal-default-button" @click="classicModalHide">
+                <md-button
+                  class="md-simple md-just-icon md-round modal-default-button"
+                  @click="classicModalHide"
+                >
                   <md-icon>clear</md-icon>
                 </md-button>
               </template>
 
               <template slot="body">
-                <table class="styled-table kor" style="width: 100%; table-layout: fixed;">
+                <table
+                  class="styled-table kor"
+                  style="width: 100%; table-layout: fixed;"
+                >
                   <span v-html="detailLaw.PrecService.판결요지._cdata"></span>
                 </table>
               </template>
 
               <template slot="footer">
-                <md-button class="md-danger md-simple" @click="classicModalHide">닫기</md-button>
+                <md-button class="md-danger md-simple" @click="classicModalHide"
+                  >닫기</md-button
+                >
               </template>
             </modal>
           </div>
@@ -116,10 +141,14 @@
         <div class="section">
           <div class="container text-center">
             <div class="md-layout">
-              <div class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center">
+              <div
+                class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center"
+              >
                 <h2>Completed with examples</h2>
                 <h4>
-                  The kit comes with three pre-built pages to help you get started faster. You can change the text and images and you're good to go. More importantly, looking at them will give you a
+                  The kit comes with three pre-built pages to help you get
+                  started faster. You can change the text and images and you're
+                  good to go. More importantly, looking at them will give you a
                   picture of what you can built with this powerful kit.
                 </h4>
               </div>
@@ -129,10 +158,14 @@
         <div class="section">
           <div class="container text-center">
             <div class="md-layout">
-              <div class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center">
+              <div
+                class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center"
+              >
                 <h2>Completed with examples</h2>
                 <h4>
-                  The kit comes with three pre-built pages to help you get started faster. You can change the text and images and you're good to go. More importantly, looking at them will give you a
+                  The kit comes with three pre-built pages to help you get
+                  started faster. You can change the text and images and you're
+                  good to go. More importantly, looking at them will give you a
                   picture of what you can built with this powerful kit.
                 </h4>
               </div>
@@ -142,10 +175,14 @@
         <div class="section">
           <div class="container text-center">
             <div class="md-layout">
-              <div class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center">
+              <div
+                class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center"
+              >
                 <h2>Completed with examples</h2>
                 <h4>
-                  The kit comes with three pre-built pages to help you get started faster. You can change the text and images and you're good to go. More importantly, looking at them will give you a
+                  The kit comes with three pre-built pages to help you get
+                  started faster. You can change the text and images and you're
+                  good to go. More importantly, looking at them will give you a
                   picture of what you can built with this powerful kit.
                 </h4>
               </div>
@@ -158,23 +195,23 @@
 </template>
 
 <script>
-import axios from 'axios';
-import convert from 'xml-js';
-import { Modal } from '@/components';
+import axios from "axios";
+import convert from "xml-js";
+import { Modal } from "@/components";
 
-const LAWS_API_KEY = 'dbm01049';
+const LAWS_API_KEY = "dbm01049";
 
 export default {
-  name: 'index',
-  bodyClass: 'index-page',
+  name: "index",
+  bodyClass: "index-page",
   props: {
     image: {
       type: String,
-      default: require('@/assets/img/bigstock.jpg'),
+      default: require("@/assets/img/bigstock.jpg"),
     },
     logo: {
       type: String,
-      default: require('@/assets/img/logo.png'),
+      default: require("@/assets/img/logo.png"),
     },
   },
   components: {
@@ -182,37 +219,37 @@ export default {
   },
   data() {
     return {
-      query: '',
+      query: "",
       values: [],
       classicModal: false,
       detailLaw: {},
-      testToken: '',
+      testToken: "",
 
       headers: [
         {
-          text: '판례일련번호',
-          align: 'start',
-          value: 'no',
+          text: "판례일련번호",
+          align: "start",
+          value: "no",
         },
         {
-          text: '사건명',
-          value: 'name',
+          text: "사건명",
+          value: "name",
         },
 
-        { text: '법원명', value: 'category' },
+        { text: "법원명", value: "category" },
       ],
 
       laws: [],
 
       items: [
         {
-          text: '1. 명예훼손',
+          text: "1. 명예훼손",
         },
         {
-          text: '2. 도로교통법',
+          text: "2. 도로교통법",
         },
         {
-          text: '3. 모욕죄',
+          text: "3. 모욕죄",
         },
       ],
 
@@ -221,10 +258,15 @@ export default {
   },
   methods: {
     searchLaw() {
-      var searchWord = document.getElementById('searchWord').value;
+      var searchWord = document.getElementById("searchWord").value;
 
       axios
-        .get('https://www.law.go.kr/DRF/lawSearch.do?OC=' + LAWS_API_KEY + '&target=prec&type=XML&mobileYn=Y&display=100&query=' + searchWord)
+        .get(
+          "https://www.law.go.kr/DRF/lawSearch.do?OC=" +
+            LAWS_API_KEY +
+            "&target=prec&type=XML&mobileYn=Y&display=100&query=" +
+            searchWord
+        )
         .then(({ data }) => {
           var xml = data;
           var json = convert.xml2json(xml, { compact: true });
@@ -246,7 +288,12 @@ export default {
       this.classicModal = true;
 
       axios
-        .get('https://www.law.go.kr/DRF/lawService.do?OC=' + LAWS_API_KEY + '&target=prec&type=xml&ID=' + data.no)
+        .get(
+          "https://www.law.go.kr/DRF/lawService.do?OC=" +
+            LAWS_API_KEY +
+            "&target=prec&type=xml&ID=" +
+            data.no
+        )
         .then(({ data }) => {
           var xml = data;
           var json = convert.xml2json(xml, { compact: true });
@@ -263,12 +310,10 @@ export default {
       this.testToken = this.$store.state.token;
     },
     logoutUser() {
-      this.$store.commit('clearEmail');
-      this.$store.commit('clearToken');
-      // deleteCookie('til_auth');
-      // deleteCookie('til_pwd');
-      // deleteCookie('til_email');
-      this.$router.push('/');
+      this.$store.commit("clearEmail");
+      this.$store.commit("clearToken");
+      deleteCookie(all);
+      this.$router.push("/");
     },
   },
   computed: {
@@ -311,7 +356,7 @@ export default {
 
 .webdesigntuts-workshop:before,
 .webdesigntuts-workshop:after {
-  content: '';
+  content: "";
   display: block;
   height: 1px;
   left: 50%;
@@ -355,7 +400,7 @@ export default {
   color: #888;
   display: block;
   float: left;
-  font-family: 'Cabin', helvetica, arial, sans-serif;
+  font-family: "Cabin", helvetica, arial, sans-serif;
   font-size: 13px;
   font-weight: 400;
   height: 40px;
@@ -382,7 +427,8 @@ export default {
   background: #222922;
   background: linear-gradient(#333933, #222922);
   border-color: #393;
-  box-shadow: 0 0 5px rgba(0, 255, 0, 0.2), inset 0 0 5px rgba(0, 255, 0, 0.1), 0 2px 0 #000;
+  box-shadow: 0 0 5px rgba(0, 255, 0, 0.2), inset 0 0 5px rgba(0, 255, 0, 0.1),
+    0 2px 0 #000;
   color: #efe;
   outline: none;
 }
@@ -406,7 +452,7 @@ export default {
   color: #fff;
   display: block;
   float: left;
-  font-family: 'Cabin', helvetica, arial, sans-serif;
+  font-family: "Cabin", helvetica, arial, sans-serif;
   font-size: 13px;
   font-weight: 400;
   height: 40px;
@@ -436,11 +482,13 @@ export default {
 @keyframes glow {
   0% {
     border-color: #393;
-    box-shadow: 0 0 5px rgba(0, 255, 0, 0.2), inset 0 0 5px rgba(0, 255, 0, 0.1), 0 2px 0 #000;
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.2), inset 0 0 5px rgba(0, 255, 0, 0.1),
+      0 2px 0 #000;
   }
   100% {
     border-color: #6f6;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.6), inset 0 0 10px rgba(0, 255, 0, 0.4), 0 2px 0 #000;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.6),
+      inset 0 0 10px rgba(0, 255, 0, 0.4), 0 2px 0 #000;
   }
 }
 </style>

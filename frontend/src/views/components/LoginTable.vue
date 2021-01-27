@@ -19,13 +19,19 @@
       <md-button slot="footer" class="md-info md-wd " @click="login()">
         로그인
       </md-button>
-      <md-button
-        slot="footer"
-        id="google-signin-btn"
-        class="g-signin2"
-        data-onsuccess="onSignIn"
-      >
-      </md-button>
+      <div slot="footer" class="mt-3">간편 로그인</div>
+      <div slot="footer" class="md-info md-wd mt-3">
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      </div>
+      <div slot="footer" class="md-info md-wd mt-3">
+        <a id="reauthenticate-popup-btn" @click="loginFormWithKakao">
+          <img
+            src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg"
+            width="40px"
+          />
+        </a>
+        <p id="reauthenticate-popup-result"></p>
+      </div>
     </login-card>
   </div>
 </template>
@@ -44,6 +50,7 @@ export default {
       message: "",
       id: "",
       name: "",
+      type: "",
     };
   },
   created() {
@@ -80,8 +87,9 @@ export default {
     socialLogin() {
       const userData = {
         id: this.id,
-        email: this.googleEmail,
+        email: this.socialEmail,
         name: this.name,
+        type: this.type,
         role: "USER",
       };
       console.log(userData);
@@ -98,11 +106,44 @@ export default {
       // console.log("Family Name: " + profile.getFamilyName());
       // console.log("Image URL: " + profile.getImageUrl());
       // console.log("Email: " + profile.getEmail());
-      this.googleEmail = profile.getEmail();
+      this.socialEmail = profile.getEmail();
       // The ID token you need to pass to your backend:
       var id_token = googleUser.getAuthResponse().id_token;
       // console.log("ID Token: " + id_token);
+      this.type = "google";
       this.socialLogin();
+    },
+    loginFormWithKakao() {
+      //로그인 성공
+      var $vm = this;
+      Kakao.Auth.loginForm({
+        success: function(authObj) {
+          //로그인 성공 이후 데이터 받아오기
+          Kakao.API.request({
+            url: "/v2/user/me",
+            success: function(res) {
+              console.log(res);
+              $vm.id = res.id;
+              $vm.socialEmail = res.kakao_account.email;
+              $vm.name = res.kakao_account.profile.nickname;
+              $vm.type = "kakao";
+              $vm.socialLogin();
+            },
+            fail: function(error) {
+              alert(
+                "login success, but failed to request user information: " +
+                  JSON.stringify(error)
+              );
+            },
+          });
+        },
+        fail: function(err) {
+          this.showResult(JSON.stringify(err));
+        },
+      });
+    },
+    showResult(result) {
+      document.getElementById("reauthenticate-popup-result").innerText = result;
     },
   },
 };

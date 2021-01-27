@@ -11,9 +11,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
-    email: getEmailFromCookie() || '',
-    token: getAuthFromCookie() || '',
-    password: getPwdFromCookie() || '',
+    email:  '',
+    token: '',
+    password: '',
     nickname: '',
     name: ""
   },
@@ -66,9 +66,9 @@ export default new Vuex.Store({
         commit('setEmail', userData.email);
         commit('setPassword', userData.password);
         // commit('setNickname', response.data.object.nickname);
-        saveAuthToCookie(data.token);
-        saveEmailToCookie(userData.email);
-        savePwdToCookie(userData.password);
+        // saveAuthToCookie(data.token);
+        // saveEmailToCookie(userData.email);
+        // savePwdToCookie(userData.password);
         router.push('/');
         // return data;
       } else {
