@@ -8,10 +8,10 @@
               <img :src="logo" alt="logo" />
               <br />
 
-              <form @submit="searchLaw()" onSubmit="return false;">
+              <form @submit="detailSearch()" onSubmit="return false;" autocomplete="off">
                 <fieldset>
-                  <input type="search" class="searchInput" id="searchWord" placeholder="판례명" @keydown.enter="searchLaw()" />
-                  <button class="searchBtn" @click="searchLaw()"><i class="fa fa-search"></i></button>
+                  <input type="search" class="searchInput" id="searchWord" placeholder="판례명" @keydown.enter="detailSearch()" />
+                  <button class="searchBtn" @click="detailSearch()"><i class="fa fa-search"></i></button>
                 </fieldset>
               </form>
 
@@ -223,30 +223,35 @@ export default {
     forceRerender() {
       this.componentKey += 1;
     },
-
-    searchLaw() {
-      var searchWord = document.getElementById('searchWord').value;
-      this.laws = [];
-
-      axios
-        .get('https://www.law.go.kr/DRF/lawSearch.do?OC=' + LAWS_API_KEY + '&target=prec&type=XML&mobileYn=Y&display=100&query=' + searchWord)
-        .then(({ data }) => {
-          var xml = data;
-          var json = convert.xml2json(xml, { compact: true });
-          let $vm = this;
-          // console.log(JSON.parse(json).PrecSearch.prec[0]);
-          // console.log(JSON.parse(json).PrecSearch);
-          JSON.parse(json).PrecSearch.prec.forEach(function(entry) {
-            $vm.laws.push({
-              no: entry.판례일련번호._text,
-              name: entry.사건명._cdata,
-              category: entry.법원명._text,
-            });
-          });
-          console.log(this.laws);
-        })
-        .catch();
+    detailSearch() {
+      var query = document.getElementById('searchWord').value;
+      var router = this.$router;
+      router.push({ name: 'search', query: { searchWord: query } });
     },
+
+    // searchLaw() {
+    //   var searchWord = document.getElementById('searchWord').value;
+    //   this.laws = [];
+
+    //   axios
+    //     .get('https://www.law.go.kr/DRF/lawSearch.do?OC=' + LAWS_API_KEY + '&target=prec&type=XML&mobileYn=Y&display=100&query=' + searchWord)
+    //     .then(({ data }) => {
+    //       var xml = data;
+    //       var json = convert.xml2json(xml, { compact: true });
+    //       let $vm = this;
+    //       // console.log(JSON.parse(json).PrecSearch.prec[0]);
+    //       // console.log(JSON.parse(json).PrecSearch);
+    //       JSON.parse(json).PrecSearch.prec.forEach(function(entry) {
+    //         $vm.laws.push({
+    //           no: entry.판례일련번호._text,
+    //           name: entry.사건명._cdata,
+    //           category: entry.법원명._text,
+    //         });
+    //       });
+    //       console.log(this.laws);
+    //     })
+    //     .catch();
+    // }
     handleClick(data) {
       this.classicModal = true;
 
