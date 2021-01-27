@@ -19,5 +19,5 @@ public class SocialSignupRequsetDTO {
     private Role role;
     private String rolecode;
     private String id;
-    
+    private String type;
 }
