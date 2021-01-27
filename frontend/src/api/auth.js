@@ -10,6 +10,11 @@ function loginUser(userData) {
   return instance.post('api/member/login', userData);
 }
 
+// 소셜 로그인 API
+function socialLoginUser(userData) {
+  return instance.post('api/member/social', userData);
+}
+
 //회원정보 조회
 function searchUser(userEmail) {
   return instance.get('account/search', {
@@ -18,6 +23,7 @@ function searchUser(userEmail) {
     },
   });
 }
+
 //이메일 중복 체크
 function emailCheck(userEmail) {
   return instance.get('api/v1/singup/check', {
@@ -40,4 +46,4 @@ function signoutUser(userData) {
     },
   });
 }
-export { registerUser, loginUser, searchUser, editUser, signoutUser, emailCheck };
+export { registerUser, loginUser, socialLoginUser, searchUser, editUser, signoutUser, emailCheck };
