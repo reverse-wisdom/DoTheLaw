@@ -11,14 +11,14 @@ pipeline {
             }
             options { skipDefaultCheckout(false) }
             steps {
-                sh 'mvn -B -DskipTests -f ./backend/pom.xml clean package'
+                sh 'mvn -B -DskipTests -f ../backend/pom.xml clean package'
             }
         }
         stage('Docker build') {
             agent any
             steps {
-                sh 'docker build -t base-pjt-back:latest ./jenkins/backend'
-		sh 'docker build -t base-pjt-front:latest ./jenkins/frontend'
+                sh 'docker build -t base-pjt-back:latest ../backend'
+		sh 'docker build -t base-pjt-front:latest ../frontend'
             }
         }
         stage('Docker run') {
