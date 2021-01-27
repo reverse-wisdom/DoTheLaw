@@ -25,7 +25,7 @@
 import { Circle8 } from 'vue-loading-spinner'; // npm 스피너 컴포넌트
 // import { newsParsing } from '@/api/service';
 import axios from 'axios';
-const SERVER_URL = process.env.VUE_APP_API_URL;
+// const SERVER_URL = process.env.VUE_APP_API_URL;
 
 export default {
   components: { Circle8 },
@@ -58,14 +58,17 @@ export default {
     // console.log(data);
 
     this.loadCheck = false;
-    axios.get(SERVER_URL + 'api/rss/news').then(({ data }) => {
-      for (let i = 0; i < data.length; i++) {
-        this.news.push({
-          title: data[i].title,
-          link: data[i].link,
-        });
-        this.loadCheck = true;
-        console.log('rss 로딩 완료');
+    axios.get('/api/rss/news').then(({ data }) => {
+      if (data['items']) {
+        data = data['items'];
+        for (let i = 0; i < data.length; i++) {
+          this.news.push({
+            title: data[i].title,
+            link: data[i].link,
+          });
+          this.loadCheck = true;
+          console.log('rss 로딩 완료');
+        }
       }
     });
   },
