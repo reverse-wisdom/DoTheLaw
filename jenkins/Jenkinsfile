@@ -17,8 +17,8 @@ pipeline {
         stage('Docker build') {
             agent any
             steps {
-                sh 'docker build -t base-pjt-back:latest ./backend'
-		sh 'docker build -t base-pjt-front:latest ./frontend'
+                sh 'docker build -t base-pjt-back:latest ./jenkins/backend'
+		sh 'docker build -t base-pjt-front:latest ./jenkins/frontend'
             }
         }
         stage('Docker run') {
