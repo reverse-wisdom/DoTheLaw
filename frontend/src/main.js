@@ -5,6 +5,7 @@ import Vuetify from 'vuetify';
 import store from '@/store/index';
 import 'vuetify/dist/vuetify.min.css';
 import VueSweetalert2 from 'vue-sweetalert2';
+import VueCookies from 'vue-cookies';
 
 import MaterialKit from './plugins/material-kit';
 
@@ -19,6 +20,7 @@ Vue.config.productionTip = false;
 
 Vue.use(MaterialKit);
 Vue.use(Vuetify);
+Vue.use(VueCookies);
 
 const NavbarStore = {
   showNavbar: false,

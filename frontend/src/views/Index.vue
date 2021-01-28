@@ -46,59 +46,12 @@
             <p>{{ testToken }}</p>
             <p>{{ $store.state.email }}</p>
             <md-button class="md-info" style="margin: auto" @click="logoutUser()">로그아웃</md-button>
+            <md-button class="md-info" style="margin: auto" @click="checkCookie()">쿠키체크</md-button>
+            쿠키값:
+            <p>{{ cookie }}</p>
           </div>
         </div>
 
-        <!-- 판례 API 테스트 -->
-
-        <!-- 판례 출력 테스트 -->
-        <div class="container">
-          <v-icon>mdi-home</v-icon>
-          <v-data-table
-            :headers="headers"
-            :items="laws"
-            :items-per-page="5"
-            item-key="no"
-            class="elevation-1"
-            @click:row="handleClick"
-            :footer-props="{
-              showFirstLastPage: true,
-              firstIcon: 'mdi-arrow-collapse-left',
-              lastIcon: 'mdi-arrow-collapse-right',
-              prevIcon: 'mdi-minus',
-              nextIcon: 'mdi-plus',
-            }"
-          >
-            <!-- v-html 사용하기위한 slot 템플릿 -->
-            <template v-slot:[`item.name`]="{ item }">
-              <div v-html="item.name"></div>
-            </template>
-          </v-data-table>
-        </div>
-
-        <!-- 모달 판례번호기반 판례상세내용 요청 테스트-->
-        <div class="md-layout">
-          <div class="md-layout-item md-size-33">
-            <modal v-if="classicModal" @close="classicModalHide">
-              <template slot="header">
-                <h4 class="modal-title">판결문제목</h4>
-                <md-button class="md-simple md-just-icon md-round modal-default-button" @click="classicModalHide">
-                  <md-icon>clear</md-icon>
-                </md-button>
-              </template>
-
-              <template slot="body">
-                <table class="styled-table kor" style="width: 100%; table-layout: fixed">
-                  <span v-html="detailLaw.PrecService.판결요지._cdata"></span>
-                </table>
-              </template>
-
-              <template slot="footer">
-                <md-button class="md-danger md-simple" @click="classicModalHide">닫기</md-button>
-              </template>
-            </modal>
-          </div>
-        </div>
         <div class="section">
           <div class="icon icon-success">
             <md-icon>local_post_office</md-icon>
@@ -112,18 +65,6 @@
         <!-- 테스트 영역 end -->
 
         <!-- 임시 채우는 값들 -->
-        <div class="section">
-          <div class="container text-center">
-            <div class="md-layout">
-              <div class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center">
-                <h2>WebRTC 미팅으로 바로가기</h2>
-                <h4>
-                  <md-button class="md-success" @click="goWebRTC">webRTC로 이동</md-button>
-                </h4>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="section">
           <div class="container text-center">
             <div class="md-layout">
@@ -166,11 +107,9 @@
 </template>
 
 <script>
-import axios from 'axios';
-import convert from 'xml-js';
-import { Modal } from '@/components';
 import RSSParser from './components/RSSParser';
 const LAWS_API_KEY = process.env.VUE_APP_LAWS_API_KEY;
+import { deleteCookie } from '@/utils/cookies';
 
 export default {
   name: 'index',
@@ -186,31 +125,13 @@ export default {
     },
   },
   components: {
-    Modal,
     RSSParser,
   },
   data() {
     return {
       query: '',
-      values: [],
-      classicModal: false,
-      detailLaw: {},
       testToken: '',
       componentKey: 0,
-
-      headers: [
-        {
-          text: '판례일련번호',
-          align: 'start',
-          value: 'no',
-        },
-        {
-          text: '사건명',
-          value: 'name',
-        },
-
-        { text: '법원명', value: 'category' },
-      ],
 
       laws: [],
 
@@ -227,6 +148,7 @@ export default {
       ],
 
       model: 1,
+      cookie: '',
     };
   },
   methods: {
@@ -240,60 +162,47 @@ export default {
       var router = this.$router;
       router.push({ name: 'search', query: { searchWord: query } });
     },
-
-    // searchLaw() {
-    //   var searchWord = document.getElementById('searchWord').value;
-    //   this.laws = [];
-
-    //   axios
-    //     .get('https://www.law.go.kr/DRF/lawSearch.do?OC=' + LAWS_API_KEY + '&target=prec&type=XML&mobileYn=Y&display=100&query=' + searchWord)
-    //     .then(({ data }) => {
-    //       var xml = data;
-    //       var json = convert.xml2json(xml, { compact: true });
-    //       let $vm = this;
-    //       // console.log(JSON.parse(json).PrecSearch.prec[0]);
-    //       // console.log(JSON.parse(json).PrecSearch);
-    //       JSON.parse(json).PrecSearch.prec.forEach(function(entry) {
-    //         $vm.laws.push({
-    //           no: entry.판례일련번호._text,
-    //           name: entry.사건명._cdata,
-    //           category: entry.법원명._text,
-    //         });
-    //       });
-    //       console.log(this.laws);
-    //     })
-    //     .catch();
-    // }
-    handleClick(data) {
-      this.classicModal = true;
-
-      axios
-        .get('https://www.law.go.kr/DRF/lawService.do?OC=' + LAWS_API_KEY + '&target=prec&type=xml&ID=' + data.no)
-        .then(({ data }) => {
-          var xml = data;
-          var json = convert.xml2json(xml, { compact: true });
-          this.detailLaw = JSON.parse(json);
-          console.log(this.detailLaw.PrecService.판결요지._cdata);
-        })
-        .catch();
-    },
-    classicModalHide() {
-      this.classicModal = false;
-    },
-
     tokenTest() {
       this.testToken = this.$store.state.token;
     },
     logoutUser() {
       this.$store.commit('clearEmail');
       this.$store.commit('clearToken');
-      // deleteCookie('til_auth');
-      // deleteCookie('til_pwd');
-      // deleteCookie('til_email');
-      this.$router.push('/');
+      this.$store.commit('clearNickname');
+      this.$store.commit('clearPwd');
+      this.$store.commit('clearName');
+      localStorage.clear();
+      sessionStorage.clear();
+
+      // 쿠키날리기
+      // deleteCookie(all);
+      // this.deleteAllCookies();
+      $cookies.keys().forEach((cookie) => $cookies.remove(cookie));
+      // this.$router.push('/');
+      // this.$router.go(0);
+      // var auth2 = window.gapi.auth2.getAuthInstance();
+      // if (auth2 != null) {
+      //   auth2.sighOut(0);
+      //   auth2.disconnect();
+      // }
+
+      this.$router.go(this.$router.currentRoute);
     },
-    goWebRTC() {
-      this.$router.push('/webrtc');
+    deleteAllCookies() {
+      var cookies = document.cookie.split(';');
+
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf('=');
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      }
+    },
+    checkCookie() {
+      this.cookie = '';
+      // console.log($cookies.keys());
+      console.log($cookies.isKey(''));
+      this.cookie = $cookies.keys();
     },
   },
   computed: {
@@ -309,7 +218,10 @@ export default {
     },
   },
 
-  mounted() {},
+  mounted() {
+    // console.log(this.$cookies.get('NID'));
+    // console.log(this.$cookies.keys().join('\n'));
+  },
 };
 </script>
 
