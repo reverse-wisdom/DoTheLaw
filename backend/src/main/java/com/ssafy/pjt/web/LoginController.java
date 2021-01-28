@@ -20,7 +20,7 @@ import com.ssafy.pjt.provider.security.JwtAuthToken;
 import com.ssafy.pjt.provider.service.LoginService;
 import com.ssafy.pjt.provider.service.SignupService;
 import com.ssafy.pjt.web.dto.LoginRequestDTO;
-import com.ssafy.pjt.web.dto.SignupRequsetDTO;
+import com.ssafy.pjt.web.dto.SignupRequestDTO;
 import com.ssafy.pjt.web.dto.SocialSignupRequsetDTO;
 
 import io.swagger.annotations.ApiOperation;
@@ -74,7 +74,7 @@ public class LoginController {
 
         } else {// DB에 없을때
         	//데이터 베이스에 저장용
-        	SignupRequsetDTO signupRequsetDTO = new SignupRequsetDTO();
+        	SignupRequestDTO signupRequsetDTO = new SignupRequestDTO();
         	signupRequsetDTO.setEmail(socialsignupRequsetDTO.getEmail());
         	signupRequsetDTO.setPassword(socialsignupRequsetDTO.getId());
         	signupRequsetDTO.setName(socialsignupRequsetDTO.getName());
