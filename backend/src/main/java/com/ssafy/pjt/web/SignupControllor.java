@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.pjt.provider.service.SignupService;
-import com.ssafy.pjt.web.dto.SignupRequsetDTO;
+import com.ssafy.pjt.web.dto.SignupRequestDTO;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -31,11 +31,11 @@ public class SignupControllor {
 	
     @ApiOperation(value = "회원가입")
     @PostMapping("/signup")
-	private ResponseEntity<String> join(@Valid @RequestBody SignupRequsetDTO signupRequsetDTO) {
+	private ResponseEntity<String> join(@Valid @RequestBody SignupRequestDTO signupRequestDTO) {
     	
-    	if(service.check(signupRequsetDTO.getEmail(), signupRequsetDTO.getName())) {
+    	if(service.check(signupRequestDTO.getEmail(), signupRequestDTO.getName())) {
     		try {			   			
-    			service.joinMember(signupRequsetDTO);
+    			service.joinMember(signupRequestDTO);
     			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 
     		} catch (Exception e) {

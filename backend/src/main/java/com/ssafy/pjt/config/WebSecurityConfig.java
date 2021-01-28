@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v2/api-docs").permitAll()
                 .antMatchers("/webjars/**").permitAll()
                 
-                .antMatchers("/api/v1/coffees/**").hasAnyAuthority(Role.USER.getCode()) //test
+                .antMatchers("/api/v1/coffees/**").hasAnyAuthority(Role.USER.getCode(), Role.LAWYER.getCode(), Role.ADMIN.getCode()) //test
                 .anyRequest().authenticated()
 
                 .and()

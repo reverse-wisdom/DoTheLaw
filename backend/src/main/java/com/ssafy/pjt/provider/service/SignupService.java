@@ -11,24 +11,24 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.pjt.core.entity.Member;
 import com.ssafy.pjt.core.repository.MemberRepository;
-import com.ssafy.pjt.core.repository.SignUpRepository;
+import com.ssafy.pjt.core.repository.mapper.SignUpMapper;
 import com.ssafy.pjt.core.service.SignupUseCase;
 import com.ssafy.pjt.core.service.dto.MemberDTO;
-import com.ssafy.pjt.web.dto.SignupRequsetDTO;
+import com.ssafy.pjt.web.dto.SignupRequestDTO;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class SignupService implements SignupUseCase{
 	@Autowired
-	private SqlSession sqlSession;	
+	private SignUpMapper mapper;	
 	@Autowired
 	private MemberRepository memberRepository;
 	@Override
-	public void joinMember(SignupRequsetDTO member) throws SQLException {		  
+	public void joinMember(SignupRequestDTO member) throws SQLException {		  
 		member.setPassword(new BCryptPasswordEncoder().encode(member.getPassword()));
 		member.setRolecode(member.getRole().getCode());
-		sqlSession.getMapper(SignUpRepository.class).joinMember(member);
+		mapper.joinMember(member);
 	}
 	@Override
 	public boolean check(String email, String name) {
