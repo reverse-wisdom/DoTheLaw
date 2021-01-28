@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { getAuthFromCookie, getEmailFromCookie, getPwdFromCookie, saveAuthToCookie, saveEmailToCookie, savePwdToCookie } from '@/utils/cookies';
-import { loginUser } from '@/api/auth';
+// import { getAuthFromCookie, getEmailFromCookie, getPwdFromCookie, saveAuthToCookie, saveEmailToCookie, savePwdToCookie,deleteCookie } from '@/utils/cookies';
+import { loginUser, socialLoginUser } from '@/api/auth';
 // import { editUser, searchUser } from '../api/auth';
 import createPersistedState from 'vuex-persistedstate';
 import router from '../router'; // store vuex에서 라우터 사용시 다시 import 해줘야함!!
@@ -11,10 +11,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
-    email: getEmailFromCookie() || '',
-    token: getAuthFromCookie() || '',
-    password: getPwdFromCookie() || '',
+    email: '',
+    token: '',
+    password: '',
     nickname: '',
+    name: '',
   },
   getters: {
     isLogin(state) {
@@ -31,9 +32,17 @@ export default new Vuex.Store({
     setNickname(state, nickname) {
       state.nickname = nickname;
     },
-
+    setName(state, name) {
+      state.name = name;
+    },
     clearPwd(state) {
       state.password = '';
+    },
+    clearNickname(state) {
+      state.nickname = '';
+    },
+    clearName(state) {
+      state.Name = '';
     },
     clearEmail(state) {
       state.email = '';
@@ -62,11 +71,22 @@ export default new Vuex.Store({
         commit('setEmail', userData.email);
         commit('setPassword', userData.password);
         // commit('setNickname', response.data.object.nickname);
-        saveAuthToCookie(data.token);
-        saveEmailToCookie(userData.email);
-        savePwdToCookie(userData.password);
+        // saveAuthToCookie(data.token);
+        // saveEmailToCookie(userData.email);
+        // savePwdToCookie(userData.password);
         router.push('/');
-        // return data;
+      } else {
+        alert('로그인 실패! 이메일 및 비밀번호를 확인해 주세요!');
+      }
+    },
+    async SOCIALLOGIN({ commit }, userData) {
+      const { data } = await socialLoginUser(userData);
+      if (data.code == 'LOGIN_SUCCESS') {
+        commit('setToken', data['message']);
+        commit('setEmail', userData.email);
+        commit('setPassword', userData.password);
+        commit('setName', userData.name);
+        router.push('/');
       } else {
         alert('로그인 실패! 이메일 및 비밀번호를 확인해 주세요!');
       }

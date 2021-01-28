@@ -6,7 +6,6 @@ import Search from './views/Search.vue';
 import MainNavbar from './layout/MainNavbar.vue';
 import MainFooter from './layout/MainFooter.vue';
 import Register from './views/Register.vue';
-import WebrtcView from './views/WebRtcView.vue';
 
 Vue.use(Router);
 
@@ -45,11 +44,6 @@ export default new Router({
       props: {
         header: { colorOnScroll: 100 },
       },
-	},
-	{
-      path: '/webrtc',
-      name: 'webrtc',
-      components: { default: WebrtcView, header: undefined, footer: undefined },
     },
   ],
   scrollBehavior: (to) => {
