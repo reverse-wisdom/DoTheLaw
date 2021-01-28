@@ -38,7 +38,7 @@
             </v-card>
 
             <br />
-            <v-card class="mx-auto" max-width="400" tile>
+            <v-card class="mx-auto" max-width="500" tile>
               <v-subheader>판례목록</v-subheader>
               <v-list style="max-height: 400px" class="overflow-y-auto">
                 <template v-for="content in contents">
@@ -55,22 +55,49 @@
             </v-card>
           </v-col>
           <v-col cols="12" md="8" class="mr">
-            <v-card class="pa-2" outlined tile>
-              <h2>판례보여주는 공간</h2>
-              <div class="container text-center">
+            <v-card class="pa-2 overflow-y-auto" max-height="1024" max-width="1200" outlined tile>
+              <div class="container">
                 <md-button class="md-info" style="margin: auto">
                   <i class="material-icons">search</i>
                   변호사찾기
                 </md-button>
-              </div>
-              <div class="container text-center">
                 <md-button class="md-info" style="margin: auto">
                   <i class="material-icons">search</i>
                   커뮤니티에 검색
                 </md-button>
               </div>
+              <div class="container text-center"></div>
               <br />
-              <span v-html="judgment.PrecService.판결요지._cdata"></span>
+
+              <template v-if="render">
+                <h3 v-html="judgment.PrecService.사건명._cdata"></h3>
+                <v-simple-table>
+                  <tbody>
+                    <tr>
+                      <td>선고일자</td>
+                      <td>{{ judgment.PrecService.선고일자._text }}</td>
+                    </tr>
+                    <tr>
+                      <td>법원명</td>
+                      <td>{{ judgment.PrecService.법원명._text }}</td>
+                    </tr>
+                    <tr>
+                      <td>사건종류명</td>
+                      <td>{{ judgment.PrecService.사건종류명._text }}</td>
+                    </tr>
+                    <tr>
+                      <td>사건종류코드</td>
+                      <td>{{ judgment.PrecService.사건종류코드._text }}</td>
+                    </tr>
+                  </tbody>
+                </v-simple-table>
+
+                <md-radio v-model="radio" :value="judgment.PrecService.판결요지._cdata">판결요지</md-radio>
+                <md-radio v-model="radio" :value="judgment.PrecService.참조조문._cdata">참조조문</md-radio>
+                <md-radio v-model="radio" :value="judgment.PrecService.판례내용._cdata">판례내용</md-radio>
+
+                <p v-html="radio"></p>
+              </template>
             </v-card>
           </v-col>
           <!-- <v-col cols="6" md="4">
@@ -109,6 +136,9 @@ export default {
       contents: [],
       search: null,
       judgment: {},
+      render: false,
+      judgment_detail: '',
+      radio: false,
       dicts: [
         { no: 1, title: '상고', content: '상고(上告)는 상소의 한 가지로서, 제2심 판결에 불복할 때에 하는 신청이다.' },
         { no: 2, title: '항소', content: '항소(抗訴, Berufung)은 상소의 한 가지로서, 제1심 판결에 불복할 때에 하는 신청이다.' },
@@ -162,6 +192,7 @@ export default {
     },
     detailJudgment(data) {
       console.log(data);
+      this.render = false;
       this.judgment = {};
       axios
         .get('https://www.law.go.kr/DRF/lawService.do?OC=' + LAWS_API_KEY + '&target=prec&type=xml&ID=' + data)
@@ -169,7 +200,8 @@ export default {
           var xml = data;
           var json = convert.xml2json(xml, { compact: true });
           this.judgment = JSON.parse(json);
-          console.log(this.judgment.PrecService.판결요지._cdata);
+          this.render = true;
+          this.radio = this.judgment.PrecService.판결요지._cdata;
         })
         .catch();
     },
