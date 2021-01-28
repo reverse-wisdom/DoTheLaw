@@ -30,21 +30,21 @@
                       </md-button>
                       <ul class="dropdown-menu dropdown-with-icons">
                         <li>
-                          <router-link to="/nearstore">
+                          <router-link to="/">
                             <i class="material-icons">store</i>
-                            상권정보
+                            ssafy
                           </router-link>
                         </li>
                         <li>
-                          <router-link to="/coronaclinic">
+                          <router-link to="/">
                             <i class="material-icons">masks</i>
-                            코로나 선별 진료소
+                            ssafy
                           </router-link>
                         </li>
                         <li>
-                          <router-link to="/safehospital">
+                          <router-link to="/">
                             <i class="material-icons">local_hospital</i>
-                            국민 안심 병원
+                            ssafy
                           </router-link>
                         </li>
                       </ul>
