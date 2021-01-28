@@ -116,6 +116,18 @@
           <div class="container text-center">
             <div class="md-layout">
               <div class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center">
+                <h2>WebRTC 미팅으로 바로가기</h2>
+                <h4>
+                  <md-button class="md-success" @click="goWebRTC">webRTC로 이동</md-button>
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="container text-center">
+            <div class="md-layout">
+              <div class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center">
                 <h2>Completed with examples</h2>
                 <h4>
                   The kit comes with three pre-built pages to help you get started faster. You can change the text and images and you're good to go. More importantly, looking at them will give you a
@@ -279,6 +291,9 @@ export default {
       // deleteCookie('til_pwd');
       // deleteCookie('til_email');
       this.$router.push('/');
+    },
+    goWebRTC() {
+      this.$router.push('/webrtc');
     },
   },
   computed: {
