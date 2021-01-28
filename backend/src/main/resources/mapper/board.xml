@@ -4,7 +4,7 @@
 
 <mapper namespace="com.ssafy.pjt.core.repository.BoardRepository">
 
-	<select id="all" resultType="BoardRequsetDTO">
+	<select id="all" resultType="BoardRequestDTO">
 		select b.board_id, b.uuid, m.name,
 		b.title, b.content, b.hit, b.upload_date, b.category
 		from board b left
@@ -15,7 +15,7 @@
 	</select>
 
 	<select id="detail" parameterType="int"
-		resultType="BoardRequsetDTO">
+		resultType="BoardRequestDTO">
 		select b.board_id, b.uuid, m.name, b.title, b.content,
 		b.hit, b.upload_date, b.category
 		from board b left join member m
@@ -24,14 +24,14 @@
 		where b.board_id = #{board_id};
 	</select>
 	
-	<update id="hit" parameterType="BoardRequsetDTO">
+	<update id="hit" parameterType="BoardRequestDTO">
 		update board
 		set
 		hit = hit+1
 		where board_id = #{board_id};
 	</update>
 
-	<insert id="insert" parameterType="BoardRequsetDTO">
+	<insert id="insert" parameterType="BoardRequestDTO">
 		INSERT INTO
 		board(`uuid`,`title`,`content`,`category`)
 		VALUES
@@ -44,7 +44,7 @@
 		where board_id = #{board_id}
 	</delete>
 
-	<update id="update" parameterType="BoardRequsetDTO">
+	<update id="update" parameterType="BoardRequestDTO">
 		update board
 		set
 		title = #{title},
