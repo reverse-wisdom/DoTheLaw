@@ -21,7 +21,7 @@ import com.ssafy.pjt.provider.service.LoginService;
 import com.ssafy.pjt.provider.service.SignupService;
 import com.ssafy.pjt.web.dto.LoginRequestDTO;
 import com.ssafy.pjt.web.dto.SignupRequestDTO;
-import com.ssafy.pjt.web.dto.SocialSignupRequsetDTO;
+import com.ssafy.pjt.web.dto.SocialSignupRequestDTO;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +55,7 @@ public class LoginController {
     
     @ApiOperation(value = "소셜로그인")
     @PostMapping("/social")
-    public CommonResponse SocialLogin(@Valid @RequestBody SocialSignupRequsetDTO socialsignupRequsetDTO) {
+    public CommonResponse SocialLogin(@Valid @RequestBody SocialSignupRequestDTO socialsignupRequsetDTO) {
     	//소셜 아이디 구분하기
     	socialsignupRequsetDTO.setEmail(socialsignupRequsetDTO.getType().trim()+"_"+socialsignupRequsetDTO.getEmail());
     	MemberDTO memberDTO = MemberDTO.builder()
