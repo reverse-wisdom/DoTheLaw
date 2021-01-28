@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.pjt.core.repository.BoardRepository">
+
+	<select id="all" resultType="BoardRequestDTO">
+		select b.board_id, b.uuid, m.name,
+		b.title, b.content, b.hit, b.upload_date, b.category
+		from board b left
+		join member m
+		on b.uuid = m.uuid
+		order by b.category= "공지사항" desc,
+		b.board_id;
+	</select>
+
+	<select id="detail" parameterType="int"
+		resultType="BoardRequestDTO">
+		select b.board_id, b.uuid, m.name, b.title, b.content,
+		b.hit, b.upload_date, b.category
+		from board b left join member m
+		on
+		b.uuid = m.uuid
+		where b.board_id = #{board_id};
+	</select>
+	
+	<update id="hit" parameterType="BoardRequestDTO">
+		update board
+		set
+		hit = hit+1
+		where board_id = #{board_id};
+	</update>
+
+	<insert id="insert" parameterType="BoardRequestDTO">
+		INSERT INTO
+		board(`uuid`,`title`,`content`,`category`)
+		VALUES
+		(#{uuid},#{title},#{content},#{category});
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from board
+		where board_id = #{board_id}
+	</delete>
+
+	<update id="update" parameterType="BoardRequestDTO">
+		update board
+		set
+		title = #{title},
+		content = #{content},
+		category = #{category},
+		upload_date = now()
+		where board_id = #{board_id}
+	</update>
+
+</mapper>
