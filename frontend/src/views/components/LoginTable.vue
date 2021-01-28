@@ -3,7 +3,6 @@
   <div class="wrapper">
     <login-card header-color="info" style="padding-bottom:-3px;">
       <h4 slot="title" class="title kor" style="font-size:250%;">로그인</h4>
-
       <template slot="inputs">
         <br />
         <md-field class="md-form-group">
@@ -20,6 +19,17 @@
       <md-button slot="footer" class="md-info md-wd " @click="login()">
         로그인
       </md-button>
+      <div slot="footer" class="mt-3">간편 로그인</div>
+      <div slot="footer" class="md-info md-wd mt-3">
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      </div>
+      <br />
+      <div slot="footer" class="md-info md-wd mt-3">
+        <a id="reauthenticate-popup-btn" @click="loginFormWithKakao">
+          <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="40px" />
+        </a>
+        <p id="reauthenticate-popup-result"></p>
+      </div>
     </login-card>
   </div>
 </template>
@@ -27,7 +37,6 @@
 <script>
 import { LoginCard } from '@/components';
 
-import axios from 'axios';
 export default {
   name: 'Login',
   components: { LoginCard },
@@ -35,8 +44,15 @@ export default {
     return {
       email: null,
       password: null,
+      googleEmail: '',
       message: '',
+      id: '',
+      name: '',
+      type: '',
     };
+  },
+  created() {
+    window.onSignIn = this.onSignIn;
   },
   computed: {
     nextRoute() {
@@ -65,6 +81,55 @@ export default {
 
         // var result = this.$store.dispatch('LOGIN', this.user);
       }
+    },
+
+    socialLogin() {
+      const userData = {
+        id: this.id,
+        email: this.socialEmail,
+        name: this.name,
+        type: this.type,
+        role: 'USER',
+      };
+      this.$store.dispatch('SOCIALLOGIN', userData);
+    },
+    onSignIn(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      this.id = profile.getId();
+      this.name = profile.getName();
+      this.socialEmail = profile.getEmail();
+      var id_token = googleUser.getAuthResponse().id_token;
+      this.type = 'google';
+      this.socialLogin();
+    },
+    loginFormWithKakao() {
+      //로그인 성공
+      var $vm = this;
+      Kakao.Auth.loginForm({
+        success: function(authObj) {
+          //로그인 성공 이후 데이터 받아오기
+          Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(res) {
+              console.log(res);
+              $vm.id = res.id;
+              $vm.socialEmail = res.kakao_account.email;
+              $vm.name = res.kakao_account.profile.nickname;
+              $vm.type = 'kakao';
+              $vm.socialLogin();
+            },
+            fail: function(error) {
+              alert('login success, but failed to request user information: ' + JSON.stringify(error));
+            },
+          });
+        },
+        fail: function(err) {
+          this.showResult(JSON.stringify(err));
+        },
+      });
+    },
+    showResult(result) {
+      document.getElementById('reauthenticate-popup-result').innerText = result;
     },
   },
 };
