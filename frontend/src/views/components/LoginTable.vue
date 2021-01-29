@@ -19,10 +19,10 @@
       <md-button slot="footer" class="md-info md-wd " @click="login()">
         로그인
       </md-button>
-      <div slot="footer" class="mt-3">간편 로그인</div>
-      <div slot="footer" class="md-info md-wd mt-3">
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
-      </div>
+
+      <!-- 구글로그인 -->
+      <GoogleLogin slot="footer" :params="params" :renderParams="renderParams" :onSuccess="onSuccess"></GoogleLogin>
+
       <br />
       <div slot="footer" class="md-info md-wd mt-3">
         <a id="reauthenticate-popup-btn" @click="loginFormWithKakao">
@@ -36,10 +36,11 @@
 
 <script>
 import { LoginCard } from '@/components';
+import GoogleLogin from 'vue-google-login';
 
 export default {
   name: 'Login',
-  components: { LoginCard },
+  components: { LoginCard, GoogleLogin },
   data() {
     return {
       email: null,
@@ -49,6 +50,15 @@ export default {
       id: '',
       name: '',
       type: '',
+      params: {
+        client_id: '607177792648-83sqdjosupk6ipqpn7cc69bl35pubgfu.apps.googleusercontent.com',
+      },
+      // only needed if you want to render the button with the google ui
+      renderParams: {
+        width: 250,
+        height: 50,
+        longtitle: true,
+      },
     };
   },
   created() {
@@ -93,14 +103,24 @@ export default {
       };
       this.$store.dispatch('SOCIALLOGIN', userData);
     },
-    onSignIn(googleUser) {
+    // onSignIn(googleUser) {
+    //   var profile = googleUser.getBasicProfile();
+    //   this.id = profile.getId();
+    //   this.name = profile.getName();
+    //   this.socialEmail = profile.getEmail();
+    //   var id_token = googleUser.getAuthResponse().id_token;
+    //   this.type = 'google';
+    //   console.log(profile);
+    //   this.socialLogin();
+    // },
+    onSuccess(googleUser) {
       var profile = googleUser.getBasicProfile();
-      this.id = profile.getId();
-      this.name = profile.getName();
-      this.socialEmail = profile.getEmail();
+      // console.log(profile);
+      this.id = profile.KR;
+      this.name = profile.sd;
+      this.socialEmail = profile.lt;
       var id_token = googleUser.getAuthResponse().id_token;
       this.type = 'google';
-      console.log(profile);
       this.socialLogin();
     },
     loginFormWithKakao() {
