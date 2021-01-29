@@ -53,4 +53,10 @@ public class SignupControllor {
     	}		
 		return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
 	}
+    //회원 정보 조회
+    
+    //회원 탈퇴
+    
+    //회원 정보 수정
+    
 }
