@@ -12,7 +12,7 @@
       <slot name="inputs"></slot>
     </md-card-content>
 
-    <md-card-actions id="login-css">
+    <md-card-actions>
       <slot name="footer"></slot>
     </md-card-actions>
   </md-card>
@@ -20,11 +20,11 @@
 
 <script>
 export default {
-  name: "login-card",
+  name: 'login-card',
   props: {
     headerColor: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   data() {
@@ -40,15 +40,10 @@ export default {
       this.cardHidden = false;
     },
     getClass: function(headerColor) {
-      return "md-card-header-" + headerColor + "";
+      return 'md-card-header-' + headerColor + '';
     },
   },
 };
 </script>
 
-<style lang="css">
-#login-css {
-  display: flex;
-  flex-direction: column;
-}
-</style>
+<style lang="css"></style>
