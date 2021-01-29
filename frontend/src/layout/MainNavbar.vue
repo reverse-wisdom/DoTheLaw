@@ -54,6 +54,27 @@
               </li>
 
               <li class="md-list-item">
+                <router-link to="/notice" class="md-list-item-router md-list-item-container md-button-clean">
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">announcement</i>
+                      공지사항
+                    </md-button>
+                  </div>
+                </router-link>
+              </li>
+              <li class="md-list-item">
+                <router-link to="/login" class="md-list-item-router md-list-item-container md-button-clean">
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">account_circle</i>
+                      로그인
+                    </md-button>
+                  </div>
+                </router-link>
+              </li>
+
+              <li class="md-list-item">
                 <router-link to="/board" class="md-list-item-router md-list-item-container md-button-clean">
                   <div class="md-list-item-content">
                     <md-button slot="title" class="md-button md-button-link md-white md-simple">
@@ -64,50 +85,16 @@
                 </router-link>
               </li>
 
-              <template v-if="this.$store.state.token">
-                <li class="md-list-item">
+              <li class="md-list-item">
+                <router-link to="/register" class="md-list-item-router md-list-item-container md-button-clean">
                   <div class="md-list-item-content">
                     <md-button slot="title" class="md-button md-button-link md-white md-simple">
-                      <i class="material-icons">account_circle</i>
-                      {{ $store.state.email }}({{ $store.state.name }})님 환영합니다.
+                      <i class="material-icons">person_add</i>
+                      회원가입
                     </md-button>
                   </div>
-                </li>
-
-                <li class="md-list-item">
-                  <div class="md-list-item-content">
-                    <md-button slot="title" class="md-button md-button-link md-white md-simple" @click="logoutUser()">
-                      <i class="material-icons">account_circle</i>
-                      로그아웃
-                    </md-button>
-                  </div>
-                </li>
-              </template>
-              <!-- 비로그인 -->
-              <template v-else>
-                <!-- 로그인 부분 -->
-                <li class="md-list-item">
-                  <router-link to="/login" class="md-list-item-router md-list-item-container md-button-clean">
-                    <div class="md-list-item-content">
-                      <md-button slot="title" class="md-button md-button-link md-white md-simple">
-                        <i class="material-icons">account_circle</i>
-                        로그인
-                      </md-button>
-                    </div>
-                  </router-link>
-                </li>
-
-                <li class="md-list-item">
-                  <router-link to="/register" class="md-list-item-router md-list-item-container md-button-clean">
-                    <div class="md-list-item-content">
-                      <md-button slot="title" class="md-button md-button-link md-white md-simple">
-                        <i class="material-icons">person_add</i>
-                        회원가입
-                      </md-button>
-                    </div>
-                  </router-link>
-                </li>
-              </template>
+                </router-link>
+              </li>
             </md-list>
           </div>
         </div>
@@ -161,17 +148,6 @@ export default {
     },
   },
   methods: {
-    logoutUser() {
-      this.$store.commit('clearEmail');
-      this.$store.commit('clearToken');
-      this.$store.commit('clearNickname');
-      this.$store.commit('clearPwd');
-      this.$store.commit('clearName');
-      localStorage.clear();
-      sessionStorage.clear();
-      $cookies.keys().forEach((cookie) => $cookies.remove(cookie));
-      this.$router.go(this.$router.currentRoute);
-    },
     bodyClick() {
       let bodyClick = document.getElementById('bodyClick');
 
