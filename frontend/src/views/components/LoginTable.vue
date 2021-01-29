@@ -19,23 +19,14 @@
       <md-button slot="footer" class="md-info md-wd " @click="login()">
         로그인
       </md-button>
-      <div slot="footer" class="mt-3">간편 로그인</div>
-      <!-- 구글로그인 -->
 
-      <GoogleLogin
-        slot="footer"
-        :params="params"
-        :renderParams="renderParams"
-        :onSuccess="onSuccess"
-      ></GoogleLogin>
+      <!-- 구글로그인 -->
+      <GoogleLogin slot="footer" :params="params" :renderParams="renderParams" :onSuccess="onSuccess"></GoogleLogin>
+
       <br />
-      <!-- 카카오로그인 -->
       <div slot="footer" class="md-info md-wd mt-3">
         <a id="reauthenticate-popup-btn" @click="loginFormWithKakao">
-          <img
-            src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg"
-            width="40px"
-          />
+          <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="40px" />
         </a>
         <p id="reauthenticate-popup-result"></p>
       </div>
@@ -44,24 +35,23 @@
 </template>
 
 <script>
-import { LoginCard } from "@/components";
-import GoogleLogin from "vue-google-login";
+import { LoginCard } from '@/components';
+import GoogleLogin from 'vue-google-login';
 
 export default {
-  name: "Login",
+  name: 'Login',
   components: { LoginCard, GoogleLogin },
   data() {
     return {
       email: null,
       password: null,
-      googleEmail: "",
-      message: "",
-      id: "",
-      name: "",
-      type: "",
+      googleEmail: '',
+      message: '',
+      id: '',
+      name: '',
+      type: '',
       params: {
-        client_id:
-          "607177792648-83sqdjosupk6ipqpn7cc69bl35pubgfu.apps.googleusercontent.com",
+        client_id: '607177792648-83sqdjosupk6ipqpn7cc69bl35pubgfu.apps.googleusercontent.com',
       },
       // only needed if you want to render the button with the google ui
       renderParams: {
@@ -76,20 +66,20 @@ export default {
   },
   computed: {
     nextRoute() {
-      return this.$route.params.nextRoute ? this.$route.params.nextRoute : "";
+      return this.$route.params.nextRoute ? this.$route.params.nextRoute : '';
     },
   },
   methods: {
     login() {
       if (this.email == null) {
         this.$swal({
-          icon: "error",
-          title: "아이디를 입력해 주세요!",
+          icon: 'error',
+          title: '아이디를 입력해 주세요!',
         });
       } else if (this.password == null) {
         this.$swal({
-          icon: "error",
-          title: "비밀번호를 입력해 주세요!",
+          icon: 'error',
+          title: '비밀번호를 입력해 주세요!',
         });
       } else {
         const userData = {
@@ -97,7 +87,7 @@ export default {
           password: this.password,
         };
         console.log(userData);
-        this.$store.dispatch("LOGIN", userData);
+        this.$store.dispatch('LOGIN', userData);
 
         // var result = this.$store.dispatch('LOGIN', this.user);
       }
@@ -109,11 +99,20 @@ export default {
         email: this.socialEmail,
         name: this.name,
         type: this.type,
-        role: "USER",
+        role: 'USER',
       };
-      console.log(userData);
-      this.$store.dispatch("SOCIALLOGIN", userData);
+      this.$store.dispatch('SOCIALLOGIN', userData);
     },
+    // onSignIn(googleUser) {
+    //   var profile = googleUser.getBasicProfile();
+    //   this.id = profile.getId();
+    //   this.name = profile.getName();
+    //   this.socialEmail = profile.getEmail();
+    //   var id_token = googleUser.getAuthResponse().id_token;
+    //   this.type = 'google';
+    //   console.log(profile);
+    //   this.socialLogin();
+    // },
     onSuccess(googleUser) {
       var profile = googleUser.getBasicProfile();
       // console.log(profile);
@@ -121,7 +120,7 @@ export default {
       this.name = profile.sd;
       this.socialEmail = profile.lt;
       var id_token = googleUser.getAuthResponse().id_token;
-      this.type = "google";
+      this.type = 'google';
       this.socialLogin();
     },
     loginFormWithKakao() {
@@ -131,20 +130,17 @@ export default {
         success: function(authObj) {
           //로그인 성공 이후 데이터 받아오기
           Kakao.API.request({
-            url: "/v2/user/me",
+            url: '/v2/user/me',
             success: function(res) {
               console.log(res);
               $vm.id = res.id;
               $vm.socialEmail = res.kakao_account.email;
               $vm.name = res.kakao_account.profile.nickname;
-              $vm.type = "kakao";
+              $vm.type = 'kakao';
               $vm.socialLogin();
             },
             fail: function(error) {
-              alert(
-                "login success, but failed to request user information: " +
-                  JSON.stringify(error)
-              );
+              alert('login success, but failed to request user information: ' + JSON.stringify(error));
             },
           });
         },
@@ -154,7 +150,7 @@ export default {
       });
     },
     showResult(result) {
-      document.getElementById("reauthenticate-popup-result").innerText = result;
+      document.getElementById('reauthenticate-popup-result').innerText = result;
     },
   },
 };
@@ -162,6 +158,6 @@ export default {
 
 <style lang="scss" scoped>
 .kor {
-  font-family: "Nanum Gothic", sans-serif;
+  font-family: 'Nanum Gothic', sans-serif;
 }
 </style>

@@ -8,6 +8,10 @@ import MainFooter from './layout/MainFooter.vue';
 import Register from './views/Register.vue';
 import WebrtcView from './views/WebRtcView.vue';
 
+import Board from './views/Board.vue';
+import BoardDetail from './views/components/BoardDetail.vue';
+import BoardWrite from './views/components/BoardWrite.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -44,6 +48,33 @@ export default new Router({
       components: { default: Search, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
+      },
+    },
+    {
+      path: '/board',
+      name: 'board',
+      components: { default: Board, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/boarddetail',
+      name: 'boarddetail',
+      components: { default: BoardDetail, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/boardWrite',
+      name: 'boardWrite',
+      components: { default: BoardWrite, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
       },
     },
     {
