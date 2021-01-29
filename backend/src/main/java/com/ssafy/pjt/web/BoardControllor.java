@@ -66,7 +66,7 @@ public class BoardControllor {
 	@PutMapping("/hit")
 	private ResponseEntity<String> hit(@Valid @RequestBody BoardRequestDTO board) {
 		try {
-			boardService.hit(board.getBoard_id());
+			boardService.hit(board.getBoardId());
 			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
