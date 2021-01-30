@@ -1,5 +1,7 @@
 package com.ssafy.pjt.web.dto;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -10,6 +12,6 @@ public class BoardRequestDTO {
     private String title;
     private String content;
     private int hit;  
-    private String uploadDate;
+    private Date uploadDate;
     private String category;
 }
