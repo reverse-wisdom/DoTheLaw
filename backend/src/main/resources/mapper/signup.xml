@@ -9,4 +9,13 @@
 		VALUES (#{email}, #{password}, #{phone}, #{name},#{rolecode});		
 	</insert>
 	
+	<insert id="joinLawyer" parameterType="MemberDTO">
+		BEGIN;
+		INSERT INTO member (email, password, name, phone, role)
+		   VALUES(#{email}, #{password}, #{name}, #{phone}, #{role});
+		INSERT INTO lawyer (uuid, career, introduction, address, photo, dept, chck)
+		   VALUES(LAST_INSERT_ID(), #{career}, #{introduction}, #{address}, #{photo}, #{dept}, #{chck});
+		COMMIT;
+	</insert>
+	
 </mapper>
