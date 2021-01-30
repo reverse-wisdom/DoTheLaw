@@ -8,9 +8,13 @@
               <img :src="logo" alt="logo" />
               <br />
 
-              <form @submit="detailSearch()" onSubmit="return false;" autocomplete="off">
+              <form @submit="detailSearch()" onSubmit="return false;" autocomplete="off" background-color="white">
                 <fieldset>
-                  <input type="search" class="searchInput" id="searchWord" placeholder="판례명" @keydown.enter="detailSearch()" />
+                  <v-text-field id="searchWord" v-model="query" color="cyan darken" label="판례명" placeholder="검색어 입력" loading>
+                    <template v-slot:progress>
+                      <v-progress-linear v-if="query" :value="progress" :color="color" absolute height="7"></v-progress-linear>
+                    </template>
+                  </v-text-field>
                   <button class="searchBtn" @click="detailSearch()"><i class="fa fa-search"></i></button>
                 </fieldset>
               </form>
@@ -49,6 +53,8 @@
             <md-button class="md-info" style="margin: auto" @click="checkCookie()">쿠키체크</md-button>
             쿠키값:
             <p>{{ cookie }}</p>
+            <br />
+            <md-button class="md-info" style="margin: auto" @click="moveBoard()">게시판으로이동</md-button>
           </div>
         </div>
 
@@ -171,11 +177,21 @@ export default {
     },
     detailSearch() {
       var query = document.getElementById('searchWord').value;
-      var router = this.$router;
-      router.push({ name: 'search', query: { searchWord: query } });
+      this.$router.push({ name: 'search', query: { searchWord: query } });
     },
     tokenTest() {
       this.testToken = this.$store.state.token;
+    },
+    moveBoard() {
+      this.tokenTest();
+      if (this.testToken != null && this.testToken != '') {
+        this.$router.push('board');
+      } else {
+        this.$swal({
+          icon: 'error',
+          title: '로그인상태만 이동가능!',
+        });
+      }
     },
     logoutUser() {
       this.$store.commit('clearEmail');
@@ -221,6 +237,13 @@ export default {
     },
   },
   computed: {
+    progress() {
+      var query = document.getElementById('searchWord').value;
+      return Math.min(100, query * 10);
+    },
+    color() {
+      return ['error', 'warning', 'success'][Math.floor(this.progress / 40)];
+    },
     headerStyle() {
       return {
         backgroundImage: `url(${this.image})`,
@@ -263,99 +286,99 @@ export default {
 
 // 검색창 디자인
 
-#form-buscar > .form-group > .input-group > .form-control {
-  height: 40px;
-}
-#form-buscar > .form-group > .input-group > .input-group-btn > .btn {
-  height: 40px;
-  font-size: 16px;
-  font-weight: 300;
-}
-#form-buscar > .form-group > .input-group > .input-group-btn > .btn .glyphicon {
-  margin-right: 12px;
-}
+// #form-buscar > .form-group > .input-group > .form-control {
+//   height: 40px;
+// }
+// #form-buscar > .form-group > .input-group > .input-group-btn > .btn {
+//   height: 40px;
+//   font-size: 16px;
+//   font-weight: 300;
+// }
+// #form-buscar > .form-group > .input-group > .input-group-btn > .btn .glyphicon {
+//   margin-right: 12px;
+// }
 
-#form-buscar > .form-group > .input-group > .form-control {
-  font-size: 16px;
-  font-weight: 300;
-}
+// #form-buscar > .form-group > .input-group > .form-control {
+//   font-size: 16px;
+//   font-weight: 300;
+// }
 
-#form-buscar > .form-group > .input-group > .form-control:focus {
-  border-color: #33a444;
-  outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px rgba(0, 109, 0, 0.8);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px rgba(0, 109, 0, 0.8);
-}
+// #form-buscar > .form-group > .input-group > .form-control:focus {
+//   border-color: #33a444;
+//   outline: 0;
+//   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px rgba(0, 109, 0, 0.8);
+//   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px rgba(0, 109, 0, 0.8);
+// }
 
-//
-fieldset {
-  position: relative;
-  display: inline-block;
-  padding: 0 0 0 40px;
-  background: #ceb980;
-  border: none;
-  border-radius: 5px;
-}
+// //
+// fieldset {
+//   position: relative;
+//   display: inline-block;
+//   padding: 0 0 0 40px;
+//   background: #ceb980;
+//   border: none;
+//   border-radius: 5px;
+// }
 
-.searchInput,
-.searchBtn {
-  position: relative;
-  width: 200px;
-  height: 50px;
-  padding: 0;
-  display: inline-block;
-  float: left;
-}
+// .searchInput,
+// .searchBtn {
+//   position: relative;
+//   width: 200px;
+//   height: 50px;
+//   padding: 0;
+//   display: inline-block;
+//   float: left;
+// }
 
-.searchInput {
-  color: #000000;
-  z-index: 2;
-  border: 0 none;
-}
-.searchInput:focus {
-  outline: 0 none;
-}
-.searchInput:focus + .searchBtn {
-  -webkit-transform: translate(0, 0);
-  -ms-transform: translate(0, 0);
-  transform: translate(0, 0);
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-}
-.searchInput:focus + .searchBtn .fa {
-  -webkit-transform: translate(0px, 0);
-  -ms-transform: translate(0px, 0);
-  transform: translate(0px, 0);
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  color: #fff;
-}
+// .searchInput {
+//   color: #000000;
+//   z-index: 2;
+//   border: 0 none;
+// }
+// .searchInput:focus {
+//   outline: 0 none;
+// }
+// .searchInput:focus + .searchBtn {
+//   -webkit-transform: translate(0, 0);
+//   -ms-transform: translate(0, 0);
+//   transform: translate(0, 0);
+//   -webkit-transition-duration: 0.3s;
+//   transition-duration: 0.3s;
+// }
+// .searchInput:focus + .searchBtn .fa {
+//   -webkit-transform: translate(0px, 0);
+//   -ms-transform: translate(0px, 0);
+//   transform: translate(0px, 0);
+//   -webkit-transition-duration: 0.3s;
+//   transition-duration: 0.3s;
+//   color: #fff;
+// }
 
-.searchBtn {
-  z-index: 1;
-  width: 50px;
-  border: 0 none;
-  background: #ceb980;
-  cursor: pointer;
-  border-radius: 0 5px 5px 0;
-  -webkit-transform: translate(-50px, 0);
-  -ms-transform: translate(-50px, 0);
-  transform: translate(-50px, 0);
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-}
+// .searchBtn {
+//   z-index: 1;
+//   width: 50px;
+//   border: 0 none;
+//   background: #ceb980;
+//   cursor: pointer;
+//   border-radius: 0 5px 5px 0;
+//   -webkit-transform: translate(-50px, 0);
+//   -ms-transform: translate(-50px, 0);
+//   transform: translate(-50px, 0);
+//   -webkit-transition-duration: 0.3s;
+//   transition-duration: 0.3s;
+// }
 
-.fa-search {
-  font-size: 1.4rem;
-  color: #29abe2;
-  z-index: 3;
-  top: 25%;
-  -webkit-transform: translate(-190px, 0);
-  -ms-transform: translate(-190px, 0);
-  transform: translate(-190px, 0);
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  -webkit-transition: all 0.1s ease-in-out;
-  transition: all 0.1s ease-in-out;
-}
+// .fa-search {
+//   font-size: 1.4rem;
+//   color: #29abe2;
+//   z-index: 3;
+//   top: 25%;
+//   -webkit-transform: translate(-190px, 0);
+//   -ms-transform: translate(-190px, 0);
+//   transform: translate(-190px, 0);
+//   -webkit-transition-duration: 0.3s;
+//   transition-duration: 0.3s;
+//   -webkit-transition: all 0.1s ease-in-out;
+//   transition: all 0.1s ease-in-out;
+// }
 </style>
