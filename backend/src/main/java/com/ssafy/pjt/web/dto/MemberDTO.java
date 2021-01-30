@@ -1,5 +1,7 @@
 package com.ssafy.pjt.web.dto;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -12,7 +14,7 @@ public class MemberDTO {
 	private String name;
 	private String phone;
 	private String role;
-	private String joinDate;
+	private Date joinDate;
 	private String career;
 	private String introduction;
 	private String address;
