@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-	<mapper namespace="com.ssafy.pjt.core.repository.mapper.SignUpMapper">
+	<mapper namespace="com.ssafy.pjt.core.repository.mapper.MemberMapper">
 
 	<insert id="joinMember" parameterType="SignupRequestDTO">		
 		INSERT INTO member (email, password, phone, name, role) 

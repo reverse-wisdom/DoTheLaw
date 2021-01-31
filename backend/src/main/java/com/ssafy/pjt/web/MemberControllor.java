@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.pjt.provider.service.SignupService;
+import com.ssafy.pjt.provider.service.MemberService;
 import com.ssafy.pjt.web.dto.MemberDTO;
 import com.ssafy.pjt.web.dto.SignupRequestDTO;
 
@@ -24,10 +24,10 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/member")
 //@CrossOrigin(origins = { "http://localhost:8080" })
 @RequiredArgsConstructor
-public class SignupControllor {
+public class MemberControllor {
 
 	@Autowired
-	private SignupService service;
+	private MemberService service;
 	
 	
     @ApiOperation(value = "일반회원 회원가입")

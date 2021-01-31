@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.pjt.core.entity.Member;
 import com.ssafy.pjt.core.repository.MemberRepository;
-import com.ssafy.pjt.core.repository.mapper.SignUpMapper;
+import com.ssafy.pjt.core.repository.mapper.MemberMapper;
 import com.ssafy.pjt.core.service.SignupUseCase;
 import com.ssafy.pjt.web.dto.MemberDTO;
 import com.ssafy.pjt.web.dto.SignupRequestDTO;
 
 @Service
-public class SignupService implements SignupUseCase{
+public class MemberService implements SignupUseCase{
 	@Autowired
-	private SignUpMapper mapper;	
+	private MemberMapper mapper;	
 	@Autowired
 	private MemberRepository memberRepository;
 	@Override
