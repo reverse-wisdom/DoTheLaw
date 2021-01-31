@@ -6,7 +6,7 @@
 
 	<select id="all" resultType="BoardRequestDTO">
 		select b.board_id, b.uuid, m.name,
-		b.title, b.content, b.hit, b.upload_date, b.category
+		b.title, LEFT(b.content, 100) content, b.hit, b.upload_date, b.category
 		from board b left
 		join member m
 		on b.uuid = m.uuid

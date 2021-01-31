@@ -18,7 +18,7 @@ pipeline {
             agent any
             steps {
                 sh 'docker build -t base-pjt-back:latest ./backend'
-		sh 'docker build -t base-pjt-front:latest ./frontend'
+				sh 'docker build -t base-pjt-front:latest ./frontend'
             }
         }
         stage('Docker run') {
@@ -26,11 +26,11 @@ pipeline {
             steps {
                 sh 'docker ps -f name=base-pjt-back -q | xargs --no-run-if-empty docker container stop'
                 sh 'docker container ls -a -fname=base-pjt-back -q | xargs -r docker container rm'
-		sh 'docker ps -f name=base-pjt-front -q | xargs --no-run-if-empty docker container stop'
-		sh 'docker container ls -a -fname=base-pjt-front -q | xargs -r docker container rm'
+				sh 'docker ps -f name=base-pjt-front -q | xargs --no-run-if-empty docker container stop'
+				sh 'docker container ls -a -fname=base-pjt-front -q | xargs -r docker container rm'
                 sh 'docker rmi $(docker images -f "dangling=true" -q)'
-		sh 'docker run -d --name base-pjt-front -p 80:80 --network base-pjt-net base-pjt-front:latest'
-                sh 'docker run -d --name base-pjt-back --network base-pjt-net base-pjt-back:latest'
+				sh 'docker run -d --name base-pjt-front -p 80:80 -p 443:443 -v /volumes/nginx/keys:/usr/keys  -v /volumes/data:/data --network base-pjt-net base-pjt-front:latest'
+                sh 'docker run -d --name base-pjt-back  -v /volumes/data:/data --network base-pjt-net base-pjt-back:latest'
             }
         }
     }
