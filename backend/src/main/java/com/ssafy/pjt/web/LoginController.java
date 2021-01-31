@@ -19,7 +19,7 @@ import com.ssafy.pjt.core.service.dto.MemberDTO;
 import com.ssafy.pjt.exception.LoginFailedException;
 import com.ssafy.pjt.provider.security.JwtAuthToken;
 import com.ssafy.pjt.provider.service.LoginService;
-import com.ssafy.pjt.provider.service.SignupService;
+import com.ssafy.pjt.provider.service.MemberService;
 import com.ssafy.pjt.web.dto.LoginRequestDTO;
 import com.ssafy.pjt.web.dto.SignupRequestDTO;
 import com.ssafy.pjt.web.dto.SocialSignupRequestDTO;
@@ -35,7 +35,7 @@ public class LoginController {
 
     private final LoginService loginService;
 	@Autowired
-	private SignupService signupService;
+	private MemberService signupService;
 	
 	private final MemberRepository memberRepository;
 	
