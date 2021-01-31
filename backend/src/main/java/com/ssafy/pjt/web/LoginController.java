@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.pjt.core.CommonResponse;
+import com.ssafy.pjt.core.repository.MemberRepository;
 import com.ssafy.pjt.core.security.Role;
 import com.ssafy.pjt.core.service.dto.MemberDTO;
 import com.ssafy.pjt.exception.LoginFailedException;
@@ -36,6 +37,8 @@ public class LoginController {
 	@Autowired
 	private SignupService signupService;
 	
+	private final MemberRepository memberRepository;
+	
     @ApiOperation(value = "로그인")
     @PostMapping("/login")
     public CommonResponse login(@RequestBody LoginRequestDTO loginRequestDTO) {
@@ -44,8 +47,9 @@ public class LoginController {
             JwtAuthToken jwtAuthToken = (JwtAuthToken) loginService.createAuthToken(optionalMemberDTO.get());
             return CommonResponse.builder()
                     .code("LOGIN_SUCCESS")
-                    .status(200)
+                    .status(200)                  
                     .message(jwtAuthToken.getToken())
+                    .member(loginService.user(loginRequestDTO.getEmail()))
                     .build();
 
         } else {
@@ -70,6 +74,7 @@ public class LoginController {
                     .code("LOGIN_SUCCESS")
                     .status(200)
                     .message(jwtAuthToken.getToken())
+                    .member(loginService.user(socialsignupRequsetDTO.getEmail()))
                     .build();
 
         } else {// DB에 없을때
@@ -92,6 +97,7 @@ public class LoginController {
                     .code("LOGIN_SUCCESS")
                     .status(200)
                     .message(jwtAuthToken.getToken())
+                    .member(loginService.user(socialsignupRequsetDTO.getEmail()))
                     .build();
         }
     }
