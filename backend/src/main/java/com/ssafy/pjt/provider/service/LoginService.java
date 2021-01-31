@@ -1,5 +1,6 @@
 package com.ssafy.pjt.provider.service;
 
+import com.ssafy.pjt.core.repository.MemberRepository;
 import com.ssafy.pjt.core.security.AuthToken;
 import com.ssafy.pjt.core.security.Role;
 import com.ssafy.pjt.core.service.LoginUseCase;
@@ -27,6 +28,8 @@ public class LoginService implements LoginUseCase {
     private final JwtAuthTokenProvider jwtAuthTokenProvider;
     private final static long LOGIN_RETENTION_MINUTES = 30;
 
+    private final MemberRepository memberRepository;
+    
     public Optional<MemberDTO> login(String email, String password) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(email, password);
@@ -59,4 +62,11 @@ public class LoginService implements LoginUseCase {
         Date expiredDate = Date.from(LocalDateTime.now().plusMinutes(LOGIN_RETENTION_MINUTES).atZone(ZoneId.systemDefault()).toInstant());
         return jwtAuthTokenProvider.createAuthToken(memberDTO.getEmail(), memberDTO.getRole().getCode(), expiredDate);
     }
+
+	@Override
+	public MemberDTO user(String email) {	
+		return memberRepository.findMemeberByEmail(email).get();
+	}
+    
+    
 }

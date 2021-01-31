@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 @Table(name = "MEMBER")
 public class Member {
 
-    @JsonIgnore
+//    @JsonIgnore
     @Id
     @Column(name = "UUID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQ")
