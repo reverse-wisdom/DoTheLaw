@@ -1,6 +1,7 @@
 <template>
   <md-toolbar id="toolbar" md-elevation="0" class="md-transparent md-absolute" :class="extraNavClasses" :color-on-scroll="colorOnScroll">
     <div class="md-toolbar-row md-collapse-lateral">
+      <!-- <div class="md-toolbar-section-start" style="margin-left: -200px;"> -->
       <div class="md-toolbar-section-start">
         <h3 class="md-title">
           <router-link to="/" class="md-title kor">
