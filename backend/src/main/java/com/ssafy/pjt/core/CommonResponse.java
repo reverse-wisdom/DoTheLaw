@@ -13,5 +13,5 @@ public class CommonResponse {
     private String message;
     private int status;
     private String code;
-    private MemberDTO member;
+    private Member member;
 }
