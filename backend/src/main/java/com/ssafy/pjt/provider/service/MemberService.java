@@ -73,5 +73,10 @@ public class MemberService implements MemberUseCase{
 		return false;
 	}
 
+	@Override
+	public MemberRequestDTO lawyer(String email) throws SQLException {		
+		return mapper.lawyer(email);
+	}
+
 
 }

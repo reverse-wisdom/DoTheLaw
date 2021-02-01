@@ -8,4 +8,5 @@ import com.ssafy.pjt.web.dto.SignupRequestDTO;
 public interface MemberMapper {
 	public void joinMember(SignupRequestDTO member) throws SQLException;
 	public void joinLawyer(MemberRequestDTO lawyer) throws SQLException;
+	public MemberRequestDTO lawyer(String email) throws SQLException;
 }

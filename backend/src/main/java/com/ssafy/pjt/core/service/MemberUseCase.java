@@ -15,4 +15,5 @@ public interface MemberUseCase {
 	public boolean checkEmail(String email);
 	public boolean checkName(String name);
 	public boolean checkRoleAndId(Role role, int uuid, String email);
+	public MemberRequestDTO lawyer(String email) throws SQLException;
 }
