@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.pjt.core.repository.FileRepository;
-import com.ssafy.pjt.core.service.dto.UploadFile;
+import com.ssafy.pjt.core.service.dto.UploadFileDTO;
 import com.ssafy.pjt.util.UploadFileUtils;
 
 /**
@@ -43,11 +43,11 @@ public class ImageService {
     FileRepository fileRepository;
     
     public Stream<Integer> loadAll() {
-        List<UploadFile> files = fileRepository.findAll();
+        List<UploadFileDTO> files = fileRepository.findAll();
         return files.stream().map(file -> file.getId());
     }
     
-    public UploadFile load(int fileId) {
+    public UploadFileDTO load(int fileId) {
         return fileRepository.findById(fileId).orElse(null);
     }
     
@@ -73,7 +73,7 @@ public class ImageService {
         return rootLocation.resolve(fileName);
     }
     
-    public UploadFile store(MultipartFile file) throws Exception {
+    public UploadFileDTO store(MultipartFile file) throws Exception {
         try {
             if (file.isEmpty()) {
                 throw new Exception("Failed to store empty file " + file.getOriginalFilename());
@@ -87,13 +87,14 @@ public class ImageService {
             
             Resource resource = loadAsResource(saveFileName);
             
-            UploadFile saveFile = new UploadFile();
+            UploadFileDTO saveFile = new UploadFileDTO();
             saveFile.setSaveFileName(saveFileName);
             saveFile.setOriginFileName(file.getOriginalFilename());
             saveFile.setContentType(file.getContentType());
-            saveFile.setFilePath(rootLocation.toString().replace(File.separatorChar, '/') + File.separator + saveFileName);
+            saveFile.setFilePath(rootLocation.toString().replace(File.separatorChar, '/') + '/' + saveFileName);
             saveFile.setSize(resource.contentLength());
             saveFile.setRegDate(new Date());
+            System.out.println(saveFile);
             saveFile = fileRepository.save(saveFile);
             
             return saveFile;
