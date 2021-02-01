@@ -14,36 +14,36 @@ import com.ssafy.pjt.web.dto.BoardRequestDTO;
 @Service
 public class BoardService implements BoardUseCase {
 	@Autowired
-	private BoardMapper mapper;
+	private BoardMapper boardMapper;
 
 	@Override
 	public List<BoardRequestDTO> all() throws SQLException {
-		return mapper.all();
+		return boardMapper.all();
 	}
 
 	@Override
 	public BoardRequestDTO detail(int boardId) throws Exception {
-		return mapper.detail(boardId);
+		return boardMapper.detail(boardId);
 	}
 
 	@Override
 	public boolean hit(int boardId) throws Exception {
-		return mapper.hit(boardId);
+		return boardMapper.hit(boardId);
 	}
 
 	@Override
 	public boolean insert(BoardRequestDTO board) throws Exception {
-		return mapper.insert(board);
+		return boardMapper.insert(board);
 	}
 
 	@Override
 	public boolean delete(int boardId) throws Exception {
-		return mapper.delete(boardId);
+		return boardMapper.delete(boardId);
 	}
 
 	@Override
 	public boolean update(BoardRequestDTO board) throws Exception {
-		return mapper.update(board);
+		return boardMapper.update(board);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class BoardService implements BoardUseCase {
 		if (role.getCode().equals("ROLE_ADMIN")) {
 			return true;
 		} else {
-			if (mapper.check(boardId) == uuid) {
+			if (boardMapper.check(boardId) == uuid) {
 				return true;
 			}
 		}

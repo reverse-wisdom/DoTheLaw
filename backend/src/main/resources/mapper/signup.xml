@@ -5,17 +5,18 @@
 	<mapper namespace="com.ssafy.pjt.core.repository.mapper.MemberMapper">
 
 	<insert id="joinMember" parameterType="SignupRequestDTO">		
-		INSERT INTO member (email, password, phone, name, role) 
-		VALUES (#{email}, #{password}, #{phone}, #{name},#{rolecode});		
+		INSERT INTO member (email, password, phone, name, role, image) 
+		VALUES (#{email}, #{password}, #{phone}, #{name}, #{role.code}, #{image});		
 	</insert>
 	
-	<insert id="joinLawyer" parameterType="MemberDTO">
+	<insert id="joinLawyer" parameterType="MemberRequestDTO">
 		BEGIN;
-		INSERT INTO member (email, password, name, phone, role)
-		   VALUES(#{email}, #{password}, #{name}, #{phone}, #{role});
-		INSERT INTO lawyer (uuid, career, introduction, address, photo, dept, chck)
-		   VALUES(LAST_INSERT_ID(), #{career}, #{introduction}, #{address}, #{photo}, #{dept}, #{chck});
+		INSERT INTO member (email, password, name, phone, role, image)
+		   VALUES(#{email}, #{password}, #{name}, #{phone}, #{role}, #{image});
+		INSERT INTO lawyer (uuid, career, introduction, address, dept, chck)
+		   VALUES(LAST_INSERT_ID(), #{career}, #{introduction}, #{address}, #{dept}, #{chck});
 		COMMIT;
 	</insert>
+	
 	
 </mapper>
