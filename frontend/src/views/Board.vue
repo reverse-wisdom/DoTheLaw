@@ -1,58 +1,42 @@
 <template>
-  <!-- 백에서 완성시 작성할것 -->
   <!-- 게시판 페이지 -->
   <div class="wrapper">
-    <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
+    <parallax
+      class="section page-header header-filter"
+      :style="headerStyle"
+    ></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title text-center kor">게시판</h2>
+        <h2 class="title text-center kor">자문게시판</h2>
         <hr class="div-hr" />
-        <div class="inn">
-          <div class="md-layout text-center">
-            <div class="md-layout-item md-medium-size-100 md-small-size-100">
-              <!-- <form class="form" @submit="searchBoard()" onSubmit="return false;">
-                <select name="searchType" id="searchType">
-                  <option value="title">제목</option>
-                  <option value="content">내용</option>
-                  <option value="writer">작성자</option>
-                </select>
-                <input id="searchWord" type="text" placeholder="검색어" @keydown.enter="searchBoard()" />
-                <md-button class="md-info" style="margin:auto;" @click="searchBoard()">검색</md-button>
-              </form> -->
-            </div>
-          </div>
-        </div>
-
         <div class="container">
-          <!-- 게시판 테이블 -->
-          <table class="styled-table" style="width: 100%">
-            <thead>
-              <tr>
-                <th scope="col">제목</th>
-                <th scope="col">내용</th>
-                <th scope="col">작성자</th>
-                <th scope="col">조회수</th>
-                <th scope="col">업로드시간</th>
-              </tr>
-            </thead>
-            <template>
-              <!-- 검색데이터 처리를 위해 조건으로 나눔 -->
+          <v-card>
+            <v-card-title>
+              자문게시판
+              <v-spacer></v-spacer>
+              <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="Search"
+                single-line
+                hide-details
+              ></v-text-field>
+            </v-card-title>
+            <v-data-table
+              :headers="headers"
+              :items="values"
+              :search="search"
+              @click:row="detailPage"
+              class="elevation-1"
+            ></v-data-table>
+          </v-card>
 
-              <tbody>
-                <tr v-for="value in values" :key="value.board_id" @click="detailPage(value)">
-                  <td>{{ value.title }}</td>
-                  <td>{{ value.content.substring(0, 10) }}</td>
-                  <td>{{ value.name }}</td>
-                  <td>{{ value.hit }}</td>
-                  <td>{{ value.upload_date }}</td>
-                </tr>
-              </tbody>
-            </template>
-          </table>
-
-          <!-- 회원만 글쓰기가 가능함(현재토큰유무로 파악되는상태임) -->
           <div class="btn-right">
-            <md-button class="md-dense md-raised md-info" type="button" @click="writePage">
+            <md-button
+              class="md-dense md-raised md-info"
+              type="button"
+              @click="writePage"
+            >
               글쓰기
             </md-button>
           </div>
@@ -64,36 +48,56 @@
 
 <script>
 // import BoardCreate from '@/views/components/BoardCreate.vue';
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-  bodyClass: 'profile-page',
+  bodyClass: "profile-page",
   data() {
     return {
       // pageArray: [],
       values: [],
-      token: '',
+      token: "",
+
+      search: "",
+      headers: [
+        {
+          text: "카테고리",
+          align: "start",
+          value: "category",
+        },
+        { text: "제목", value: "title" },
+        { text: "작성자", value: "name" },
+        { text: "조회수", value: "hit" },
+        { text: "업로드시간", value: "uploadDate" },
+      ],
     };
   },
   mounted() {
     this.token = this.$store.state.token;
 
     axios
-      .get('/api/board/search/all', {
-        headers: {
-          'x-auth-token': this.token,
-        },
-      })
+      .get("/api/board/search/all")
       .then(({ data }) => {
-        this.values = data;
-        // console.log(data);
+        for (let i = 0; i < data.length; i++) {
+          this.values.push({
+            boardId: data[i].boardId,
+            category: data[i].category,
+            hit: data[i].hit,
+            name: data[i].name,
+            title: data[i].title,
+            uploadDate: moment(data[i].uploadDate).format("llll"),
+          });
+        }
+
+        // moment.locale('ko');
+        console.log(moment(this.values[0].uploadDate).format("llll"));
       })
       .catch();
   },
   props: {
     header: {
       type: String,
-      default: require('@/assets/img/jj02.gif'),
+      default: require("@/assets/img/jj02.gif"),
     },
   },
   computed: {
@@ -104,27 +108,19 @@ export default {
     },
   },
   methods: {
+    // ISO 8601 -> Date
+    parseISOString(s) {
+      var b = s.split(/\D+/);
+      return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
+    },
     writePage() {
-      this.$router.push('/boardWrite');
+      this.$router.push("/boardWrite");
     },
     detailPage(value) {
-      var query = value.board_id;
+      var query = value.boardId;
       // console.log(query);
-      this.$router.push({ name: 'boarddetail', query: { board_id: query } });
+      this.$router.push({ name: "boarddetail", query: { boardId: query } });
     },
-    // // 게시판 검색
-    // searchBoard() {
-    //   var searchType = document.getElementById('searchType').value;
-    //   var searchWord = document.getElementById('searchWord').value;
-
-    //   axios
-    //     .get(SERVER_URL + '/board/search/?searchType=' + searchType + '&searchWord=' + searchWord)
-    //     .then(({ data }) => {
-    //       console.log(data);
-    //       this.pageArray = data;
-    //     })
-    //     .catch();
-    // },
   },
 };
 </script>
@@ -137,7 +133,7 @@ export default {
 
 // 한글 폰트 설정
 .kor {
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
 }
 .btn-right {
   text-align: right;
@@ -192,7 +188,7 @@ input {
   appearance: none;
 }
 select {
-  background: url('~@/assets/img/arrow.jpg') no-repeat 95% 50%;
+  background: url("~@/assets/img/arrow.jpg") no-repeat 95% 50%;
 }
 
 select::-ms-expand {

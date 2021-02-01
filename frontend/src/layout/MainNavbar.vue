@@ -1,16 +1,29 @@
 <template>
-  <md-toolbar id="toolbar" md-elevation="0" class="md-transparent md-absolute" :class="extraNavClasses" :color-on-scroll="colorOnScroll">
-    <div class="md-toolbar-row md-collapse-lateral">
-      <div class="md-toolbar-section-start">
-        <h3 class="md-title">
-          <router-link to="/" class="md-title kor">
-            <i class="material-icons">gavel</i>
-            法대로 합시다
-          </router-link>
-        </h3>
+  <md-toolbar
+    id="toolbar"
+    md-elevation="0"
+    class="md-transparent md-absolute"
+    :class="extraNavClasses"
+    :color-on-scroll="colorOnScroll"
+    
+  >
+    <div class="md-toolbar-row md-collapse-lateral"
+    >
+      <div class="md-toolbar-section-start" 
+      style="margin-left:-200px;">
+      <h3 class="md-title">
+        <router-link to="/" class="md-title kor">
+          <!-- <i class="material-icons">gavel</i>
+            法대로 합시다 -->
+        </router-link>
+      </h3>
       </div>
       <div class="md-toolbar-section-end">
-        <md-button class="md-just-icon md-simple md-toolbar-toggle" :class="{ toggled: toggledClass }" @click="toggleNavbarMobile()">
+        <md-button
+          class="md-just-icon md-simple md-toolbar-toggle"
+          :class="{ toggled: toggledClass }"
+          @click="toggleNavbarMobile()"
+        >
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -21,10 +34,17 @@
             <mobile-menu nav-mobile-section-start="false"></mobile-menu>
             <md-list>
               <li class="md-list-item">
-                <a href="javascript:void(0)" class="md-list-item-router md-list-item-container md-button-clean dropdown">
+                <a
+                  href="javascript:void(0)"
+                  class="md-list-item-router md-list-item-container md-button-clean dropdown"
+                >
                   <div class="md-list-item-content">
                     <drop-down direction="down">
-                      <md-button slot="title" class="md-button md-button-link md-white md-simple dropdown-toggle" data-toggle="dropdown">
+                      <md-button
+                        slot="title"
+                        class="md-button md-button-link md-white md-simple dropdown-toggle"
+                        data-toggle="dropdown"
+                      >
                         <i class="material-icons">dashboard</i>
                         <p>추가정보</p>
                       </md-button>
@@ -54,9 +74,15 @@
               </li>
 
               <li class="md-list-item">
-                <router-link to="/board" class="md-list-item-router md-list-item-container md-button-clean">
+                <router-link
+                  to="/board"
+                  class="md-list-item-router md-list-item-container md-button-clean"
+                >
                   <div class="md-list-item-content">
-                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                    <md-button
+                      slot="title"
+                      class="md-button md-button-link md-white md-simple"
+                    >
                       <i class="material-icons">assignment_turned_in</i>
                       게시판
                     </md-button>
@@ -67,16 +93,24 @@
               <template v-if="this.$store.state.token">
                 <li class="md-list-item">
                   <div class="md-list-item-content">
-                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                    <md-button
+                      slot="title"
+                      class="md-button md-button-link md-white md-simple"
+                    >
                       <i class="material-icons">account_circle</i>
-                      {{ $store.state.email }}({{ $store.state.name }})님 환영합니다.
+                      {{ $store.state.email }}({{ $store.state.name }})님
+                      환영합니다.
                     </md-button>
                   </div>
                 </li>
 
                 <li class="md-list-item">
                   <div class="md-list-item-content">
-                    <md-button slot="title" class="md-button md-button-link md-white md-simple" @click="logoutUser()">
+                    <md-button
+                      slot="title"
+                      class="md-button md-button-link md-white md-simple"
+                      @click="logoutUser()"
+                    >
                       <i class="material-icons">account_circle</i>
                       로그아웃
                     </md-button>
@@ -87,9 +121,15 @@
               <template v-else>
                 <!-- 로그인 부분 -->
                 <li class="md-list-item">
-                  <router-link to="/login" class="md-list-item-router md-list-item-container md-button-clean">
+                  <router-link
+                    to="/login"
+                    class="md-list-item-router md-list-item-container md-button-clean"
+                  >
                     <div class="md-list-item-content">
-                      <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <md-button
+                        slot="title"
+                        class="md-button md-button-link md-white md-simple"
+                      >
                         <i class="material-icons">account_circle</i>
                         로그인
                       </md-button>
@@ -98,9 +138,15 @@
                 </li>
 
                 <li class="md-list-item">
-                  <router-link to="/register" class="md-list-item-router md-list-item-container md-button-clean">
+                  <router-link
+                    to="/register"
+                    class="md-list-item-router md-list-item-container md-button-clean"
+                  >
                     <div class="md-list-item-content">
-                      <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <md-button
+                        slot="title"
+                        class="md-button md-button-link md-white md-simple"
+                      >
                         <i class="material-icons">person_add</i>
                         회원가입
                       </md-button>
@@ -130,7 +176,7 @@ function resizeThrottler(actualResizeHandler) {
   }
 }
 
-import MobileMenu from '@/layout/MobileMenu';
+import MobileMenu from "@/layout/MobileMenu";
 export default {
   components: {
     MobileMenu,
@@ -138,9 +184,17 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'white',
+      default: "white",
       validator(value) {
-        return ['white', 'default', 'primary', 'danger', 'success', 'warning', 'info'].includes(value);
+        return [
+          "white",
+          "default",
+          "primary",
+          "danger",
+          "success",
+          "warning",
+          "info",
+        ].includes(value);
       },
     },
     colorOnScroll: {
@@ -150,39 +204,39 @@ export default {
   },
   data() {
     return {
-      extraNavClasses: '',
+      extraNavClasses: "",
       toggledClass: false,
     };
   },
   computed: {
     showDownload() {
-      const excludedRoutes = ['login', 'landing', 'profile'];
+      const excludedRoutes = ["login", "landing", "profile"];
       return excludedRoutes.every((r) => r !== this.$route.name);
     },
   },
   methods: {
     logoutUser() {
-      this.$store.commit('clearEmail');
-      this.$store.commit('clearToken');
-      this.$store.commit('clearNickname');
-      this.$store.commit('clearPwd');
-      this.$store.commit('clearName');
+      this.$store.commit("clearEmail");
+      this.$store.commit("clearToken");
+      this.$store.commit("clearNickname");
+      this.$store.commit("clearPwd");
+      this.$store.commit("clearName");
       localStorage.clear();
       sessionStorage.clear();
       $cookies.keys().forEach((cookie) => $cookies.remove(cookie));
       this.$router.go(this.$router.currentRoute);
     },
     bodyClick() {
-      let bodyClick = document.getElementById('bodyClick');
+      let bodyClick = document.getElementById("bodyClick");
 
       if (bodyClick === null) {
-        let body = document.querySelector('body');
-        let elem = document.createElement('div');
-        elem.setAttribute('id', 'bodyClick');
+        let body = document.querySelector("body");
+        let elem = document.createElement("div");
+        elem.setAttribute("id", "bodyClick");
         body.appendChild(elem);
 
-        let bodyClick = document.getElementById('bodyClick');
-        bodyClick.addEventListener('click', this.toggleNavbarMobile);
+        let bodyClick = document.getElementById("bodyClick");
+        bodyClick.addEventListener("click", this.toggleNavbarMobile);
       } else {
         bodyClick.remove();
       }
@@ -193,16 +247,17 @@ export default {
       this.bodyClick();
     },
     handleScroll() {
-      let scrollValue = document.body.scrollTop || document.documentElement.scrollTop;
-      let navbarColor = document.getElementById('toolbar');
+      let scrollValue =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      let navbarColor = document.getElementById("toolbar");
       this.currentScrollValue = scrollValue;
       if (this.colorOnScroll > 0 && scrollValue > this.colorOnScroll) {
         this.extraNavClasses = `md-${this.type}`;
-        navbarColor.classList.remove('md-transparent');
+        navbarColor.classList.remove("md-transparent");
       } else {
         if (this.extraNavClasses) {
-          this.extraNavClasses = '';
-          navbarColor.classList.add('md-transparent');
+          this.extraNavClasses = "";
+          navbarColor.classList.add("md-transparent");
         }
       }
     },
@@ -210,17 +265,20 @@ export default {
       resizeThrottler(this.handleScroll);
     },
     scrollToElement() {
-      let element_id = document.getElementById('downloadSection');
+      let element_id = document.getElementById("downloadSection");
       if (element_id) {
-        element_id.scrollIntoView({ block: 'end', behavior: 'smooth' });
+        element_id.scrollIntoView({ block: "end", behavior: "smooth" });
       }
     },
   },
   mounted() {
-    document.addEventListener('scroll', this.scrollListener);
+    document.addEventListener("scroll", this.scrollListener);
   },
   beforeDestroy() {
-    document.removeEventListener('scroll', this.scrollListener);
+    document.removeEventListener("scroll", this.scrollListener);
   },
 };
 </script>
+<style scoped>
+  
+</style>

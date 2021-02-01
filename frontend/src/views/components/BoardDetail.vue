@@ -1,6 +1,9 @@
 <template>
   <div class="wrapper">
-    <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
+    <parallax
+      class="section page-header header-filter"
+      :style="headerStyle"
+    ></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
         <h2 class="title text-center kor">게시판 상세 내용</h2>
@@ -33,7 +36,9 @@
           <!-- 수정, 삭제는 자신이 쓴글일경우만 나타나게 처리함 -->
           <!-- 추후 비슷하게 로직처리할 것 -->
           <div v-if="$store.state.name == value.name" style="text-align:right">
-            <md-button class="md-warning" @click="updatePage(value)">글수정</md-button>
+            <md-button class="md-warning" @click="updatePage(value)"
+              >글수정</md-button
+            >
             <md-button class="md-rose" @click="deletePage()">글 삭제</md-button>
             <md-button class="md-info" @click="moveBoard()">뒤로가기</md-button>
           </div>
@@ -48,18 +53,26 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { detailBoard } from "@/api/board";
+// import axios from "axios";
+
 export default {
-  bodyClass: 'profile-page',
+  bodyClass: "profile-page",
   data() {
     return {
-      value: '',
+      value: "",
     };
+  },
+  async created() {
+    const postdata = this.$route.query.boardId;
+    const { data } = await detailBoard(postdata);
+    console.log(data);
+    this.value = data;
   },
   props: {
     header: {
       type: String,
-      default: require('@/assets/img/jj02.gif'),
+      default: require("@/assets/img/jj02.gif"),
     },
   },
   computed: {
@@ -69,47 +82,34 @@ export default {
       };
     },
   },
-  created() {
-    this.token = this.$store.state.token;
-    axios
-      .get('/api/board/search/detail?board_id=' + this.$route.query.board_id, {
-        headers: {
-          'x-auth-token': this.token,
-        },
-      })
-      .then(({ data }) => {
-        this.value = data;
-      })
-      .catch();
-  },
   methods: {
     moveBoard() {
-      this.$router.push('/board');
+      this.$router.push("/board");
     },
     deletePage() {
       var obj = null;
       axios
-        .delete(SERVER_URL + '/board/' + this.$route.query.boardNo)
+        .delete(SERVER_URL + "/board/" + this.$route.query.boardNo)
         .then(({ data }) => {
-          let msg = '삭제 처리시 문제가 발생했습니다.';
-          if (data === 'success') {
+          let msg = "삭제 처리시 문제가 발생했습니다.";
+          if (data === "success") {
             JSON.stringify(response.data);
             obj = response;
           }
         })
         .catch(() => {});
       this.$swal({
-        position: 'top-end',
-        icon: 'success',
-        title: '삭제성공!!',
+        position: "top-end",
+        icon: "success",
+        title: "삭제성공!!",
         showConfirmButton: false,
         timer: 1500,
       });
-      this.$router.push('/board');
+      this.$router.push("/board");
     },
     updatePage(value) {
       var no = value.no;
-      this.$router.push({ name: 'boardupdate', query: { boardNo: no } });
+      this.$router.push({ name: "boardupdate", query: { boardNo: no } });
     },
   },
 };
@@ -123,7 +123,7 @@ export default {
 
 // 한글 폰트 설정
 .kor {
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
 }
 // table css
 .styled-table {
