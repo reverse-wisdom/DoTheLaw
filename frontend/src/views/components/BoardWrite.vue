@@ -23,8 +23,17 @@
               <label for="content">내용</label>
               <md-textarea id="content" type="content" ref="content" v-model="content"></md-textarea>
             </md-field> -->
+<<<<<<< HEAD
+            <div id="summernote"></div>
+            <md-field>
+              <!-- 파일의 경우 change 리스너로 감지해야함 -->
+              <input type="file" name="uploadFile" ref="fileData" @change="handleFilesUpload" />
+            </md-field>
+          </form>
+=======
           </form>
           <div id="summernote" style="top: 0;"></div>
+>>>>>>> develop
 
           <div class="btn-right">
             <md-button class="md-dense md-raised md-warning" @click="test">
@@ -97,6 +106,8 @@ export default {
           ['insert', ['media', 'link', 'hr', 'picture', 'video']],
           ['view', ['fullscreen', 'codeview']],
         ],
+<<<<<<< HEAD
+=======
         uploadcare: {
           // button name (default is Uploadcare)
           buttonLabel: 'Image / file',
@@ -112,6 +123,7 @@ export default {
           tabs: 'all',
           multiple: true,
         },
+>>>>>>> develop
       });
     });
   },
