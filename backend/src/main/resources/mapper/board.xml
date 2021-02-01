@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.pjt.core.repository.BoardRepository">
+<mapper namespace="com.ssafy.pjt.core.repository.mapper.BoardMapper">
 
 	<select id="all" resultType="BoardRequestDTO">
 		select b.board_id, b.uuid, m.name,
-		b.title, b.content, b.hit, b.upload_date, b.category
+		b.title, LEFT(b.content, 100) content, b.hit, b.upload_date, b.category
 		from board b left
 		join member m
 		on b.uuid = m.uuid
@@ -21,27 +21,27 @@
 		from board b left join member m
 		on
 		b.uuid = m.uuid
-		where b.board_id = #{board_id};
+		where b.board_id = #{boardId};
 	</select>
 	
 	<update id="hit" parameterType="BoardRequestDTO">
 		update board
 		set
 		hit = hit+1
-		where board_id = #{board_id};
+		where board_id = #{boardId};
 	</update>
 
 	<insert id="insert" parameterType="BoardRequestDTO">
 		INSERT INTO
 		board(`uuid`,`title`,`content`,`category`)
 		VALUES
-		(#{uuid},#{title},#{content},#{category});
+		(#{uuid},#{title},#{content},#{category});	
 	</insert>
 
 	<delete id="delete" parameterType="int">
 		delete
 		from board
-		where board_id = #{board_id}
+		where board_id = #{boardId}
 	</delete>
 
 	<update id="update" parameterType="BoardRequestDTO">
@@ -51,7 +51,11 @@
 		content = #{content},
 		category = #{category},
 		upload_date = now()
-		where board_id = #{board_id}
+		where board_id = #{boardId}
 	</update>
-
+	
+	<select id="check" parameterType="int" resultType="int">
+		select uuid from board where board.board_id = #{boardId}
+	</select>
+	
 </mapper>

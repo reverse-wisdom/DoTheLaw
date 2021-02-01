@@ -1,67 +1,61 @@
 package com.ssafy.pjt.provider.service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import javax.validation.Valid;
-
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.pjt.core.entity.Member;
-import com.ssafy.pjt.core.repository.BoardRepository;
-import com.ssafy.pjt.core.repository.MemberRepository;
+import com.ssafy.pjt.core.repository.mapper.BoardMapper;
+import com.ssafy.pjt.core.security.Role;
 import com.ssafy.pjt.core.service.BoardUseCase;
-import com.ssafy.pjt.core.service.SignupUseCase;
-import com.ssafy.pjt.core.service.dto.MemberDTO;
-import com.ssafy.pjt.provider.security.JwtAuthTokenProvider;
 import com.ssafy.pjt.web.dto.BoardRequestDTO;
-import com.ssafy.pjt.web.dto.SignupRequestDTO;
-
-import lombok.RequiredArgsConstructor;
-
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
-public class BoardService implements BoardUseCase{
+public class BoardService implements BoardUseCase {
 	@Autowired
-	private SqlSession sqlSession;	
-	
+	private BoardMapper mapper;
+
 	@Override
-	public List<BoardRequestDTO> all() throws SQLException {		  
-		return sqlSession.getMapper(BoardRepository.class).all();
+	public List<BoardRequestDTO> all() throws SQLException {
+		return mapper.all();
 	}
 
 	@Override
-	public BoardRequestDTO detail(int board_id) throws Exception {
-		return sqlSession.getMapper(BoardRepository.class).detail(board_id);
+	public BoardRequestDTO detail(int boardId) throws Exception {
+		return mapper.detail(boardId);
 	}
-	
+
 	@Override
-	public boolean hit(int board_id) throws Exception {
-		return sqlSession.getMapper(BoardRepository.class).hit(board_id);
+	public boolean hit(int boardId) throws Exception {
+		return mapper.hit(boardId);
 	}
-	
+
 	@Override
 	public boolean insert(BoardRequestDTO board) throws Exception {
-		return sqlSession.getMapper(BoardRepository.class).insert(board);
+		return mapper.insert(board);
 	}
 
 	@Override
-	public boolean delete(int board_id) throws Exception {	
-		return sqlSession.getMapper(BoardRepository.class).delete(board_id);
+	public boolean delete(int boardId) throws Exception {
+		return mapper.delete(boardId);
 	}
 
 	@Override
 	public boolean update(BoardRequestDTO board) throws Exception {
-		return sqlSession.getMapper(BoardRepository.class).update(board);
+		return mapper.update(board);
 	}
 
-
-
+	@Override
+	public boolean check(int boardId, int uuid, Role role) throws Exception {
+		if (role.getCode().equals("ROLE_ADMIN")) {
+			return true;
+		} else {
+			if (mapper.check(boardId) == uuid) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

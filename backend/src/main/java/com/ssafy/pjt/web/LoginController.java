@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.pjt.core.CommonResponse;
+import com.ssafy.pjt.core.repository.MemberRepository;
 import com.ssafy.pjt.core.security.Role;
 import com.ssafy.pjt.core.service.dto.MemberDTO;
 import com.ssafy.pjt.exception.LoginFailedException;
 import com.ssafy.pjt.provider.security.JwtAuthToken;
 import com.ssafy.pjt.provider.service.LoginService;
-import com.ssafy.pjt.provider.service.SignupService;
+import com.ssafy.pjt.provider.service.MemberService;
 import com.ssafy.pjt.web.dto.LoginRequestDTO;
 import com.ssafy.pjt.web.dto.SignupRequestDTO;
 import com.ssafy.pjt.web.dto.SocialSignupRequestDTO;
@@ -34,7 +35,9 @@ public class LoginController {
 
     private final LoginService loginService;
 	@Autowired
-	private SignupService signupService;
+	private MemberService signupService;
+	
+	private final MemberRepository memberRepository;
 	
     @ApiOperation(value = "로그인")
     @PostMapping("/login")
@@ -44,8 +47,9 @@ public class LoginController {
             JwtAuthToken jwtAuthToken = (JwtAuthToken) loginService.createAuthToken(optionalMemberDTO.get());
             return CommonResponse.builder()
                     .code("LOGIN_SUCCESS")
-                    .status(200)
+                    .status(200)                  
                     .message(jwtAuthToken.getToken())
+                    .member(loginService.user(loginRequestDTO.getEmail()))
                     .build();
 
         } else {
@@ -70,6 +74,7 @@ public class LoginController {
                     .code("LOGIN_SUCCESS")
                     .status(200)
                     .message(jwtAuthToken.getToken())
+                    .member(loginService.user(socialsignupRequsetDTO.getEmail()))
                     .build();
 
         } else {// DB에 없을때
@@ -92,6 +97,7 @@ public class LoginController {
                     .code("LOGIN_SUCCESS")
                     .status(200)
                     .message(jwtAuthToken.getToken())
+                    .member(loginService.user(socialsignupRequsetDTO.getEmail()))
                     .build();
         }
     }
