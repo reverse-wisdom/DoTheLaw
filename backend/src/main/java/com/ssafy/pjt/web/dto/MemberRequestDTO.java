@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class MemberDTO {
+public class MemberRequestDTO {
 	/* member - uuid, email, password, name, phone, role, join_date */
 	/* lawyer - uuid, career, introduction, address, photo, dept, chck*/
 	private int uuid;
@@ -19,6 +19,6 @@ public class MemberDTO {
 	private String introduction;
 	private String address;
 	private String photo;
-	private String depth;
+	private String dept;
 	private String chck;
 }

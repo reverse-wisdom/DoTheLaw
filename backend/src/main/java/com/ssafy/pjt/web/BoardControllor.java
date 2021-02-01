@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.pjt.core.security.Role;
 import com.ssafy.pjt.provider.service.BoardService;
 import com.ssafy.pjt.web.dto.BoardRequestDTO;
 
@@ -47,18 +48,18 @@ public class BoardControllor {
 
 	@ApiOperation(value = "글 조회")
 	@GetMapping("/search/detail")
-	private ResponseEntity<BoardRequestDTO> detail(@RequestParam(required = true) final int board_id) {
+	private ResponseEntity<BoardRequestDTO> detail(@RequestParam(required = true) final int boardId) {
 		BoardRequestDTO board;
 		try {
-			boardService.hit(board_id);
-			board = boardService.detail(board_id);
+			boardService.hit(boardId);
+			board = boardService.detail(boardId);
 			return new ResponseEntity<>(board, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-		}		
+		}
 	}
-	
-	@ApiOperation(value = "조회수 증가")
+
+	@ApiOperation(value = "조회수 증가(boardId만 있으면 가능)")
 	@PutMapping("/hit")
 	private ResponseEntity<String> hit(@Valid @RequestBody BoardRequestDTO board) {
 		try {
@@ -69,7 +70,7 @@ public class BoardControllor {
 		}
 	}
 
-	@ApiOperation(value = "글 생성")
+	@ApiOperation(value = "글 생성(boardId 제외)")
 	@PostMapping("/create")
 	private ResponseEntity<String> create(@Valid @RequestBody BoardRequestDTO board) {
 		try {
@@ -82,26 +83,35 @@ public class BoardControllor {
 
 	@ApiOperation(value = "글 삭제")
 	@DeleteMapping("/delete")
-	private ResponseEntity<String> delete(@RequestParam(required = true) final int board_id) {
+	private ResponseEntity<String> delete(@RequestParam(required = true) final int boardId,
+			@RequestParam(required = true) final int uuid, @RequestParam(required = true) final Role role) {
 		try {
-			boardService.delete(board_id);
-			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+			if (boardService.check(boardId, uuid, role)) {				
+				boardService.delete(boardId);
+				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+			} else
+				return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+
 		} catch (Exception e) {
 			return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
 		}
 	}
+
 	@ApiOperation(value = "글 수정")
 	@PutMapping("/update")
-	private ResponseEntity<String> update(@Valid @RequestBody BoardRequestDTO board) {
+	private ResponseEntity<String> update(@Valid @RequestBody BoardRequestDTO board, @RequestParam(required = true) final Role role) {
 		try {
-			System.out.println(board);
-			boardService.update(board);
-			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+			if(boardService.check(board.getBoardId(), board.getUuid(), role)) {
+				boardService.update(board);
+				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+			}
 		} catch (Exception e) {
 			return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
 		}
 	}
-	
+
 //  @ApiOperation(value = "글 검색")
 //  @GetMapping("/search/keyword")
 //	private ResponseEntity<String> keyword(@RequestParam(required = true) final String key,) {    	

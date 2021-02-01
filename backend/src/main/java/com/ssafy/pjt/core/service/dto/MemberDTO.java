@@ -28,6 +28,7 @@ public class MemberDTO {
                 .password(member.getPassword())
                 .name(member.getName())
                 .email(member.getEmail())
+                .phone(member.getPhone())
                 .role(Role.of(member.getRole()))
                 .joinDate(member.getJoin_date())
                 .build();

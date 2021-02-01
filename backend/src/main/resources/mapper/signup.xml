@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-	<mapper namespace="com.ssafy.pjt.core.repository.mapper.SignUpMapper">
+	<mapper namespace="com.ssafy.pjt.core.repository.mapper.MemberMapper">
 
 	<insert id="joinMember" parameterType="SignupRequestDTO">		
 		INSERT INTO member (email, password, phone, name, role) 
-		VALUES (#{email}, #{password}, #{phone}, #{name},#{rolecode});		
+		VALUES (#{email}, #{password}, #{phone}, #{name}, #{role.code});		
 	</insert>
 	
-	<insert id="joinLawyer" parameterType="MemberDTO">
+	<insert id="joinLawyer" parameterType="MemberRequestDTO">
 		BEGIN;
 		INSERT INTO member (email, password, name, phone, role)
 		   VALUES(#{email}, #{password}, #{name}, #{phone}, #{role});
@@ -17,5 +17,6 @@
 		   VALUES(LAST_INSERT_ID(), #{career}, #{introduction}, #{address}, #{photo}, #{dept}, #{chck});
 		COMMIT;
 	</insert>
+	
 	
 </mapper>
