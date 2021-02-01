@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ApiModel
-@CrossOrigin(origins = { "http://localhost:8080" })
+//@CrossOrigin(origins = { "http://localhost:8080" })
 @RestController
 @RequestMapping("/api/v1/coffees")
 @RequiredArgsConstructor

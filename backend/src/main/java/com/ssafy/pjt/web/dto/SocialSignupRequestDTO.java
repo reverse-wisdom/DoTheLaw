@@ -17,6 +17,7 @@ public class SocialSignupRequestDTO {
     private String email;
     private String name;  
     private Role role;
+    @ApiModelProperty(required = false, hidden = true)
     private String rolecode;
     private String id;
     private String type;
