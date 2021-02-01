@@ -49,7 +49,8 @@
 
             <p>{{ testToken }}</p>
             <p>{{ $store.state.email }}</p>
-            <md-button class="md-info" style="margin: auto" @click="logoutUser()">로그아웃</md-button>
+            <p>{{ $store.state.uuid }}</p>
+
             <md-button class="md-info" style="margin: auto" @click="checkCookie()">쿠키체크</md-button>
             쿠키값:
             <p>{{ cookie }}</p>
@@ -181,6 +182,7 @@ export default {
     },
     tokenTest() {
       this.testToken = this.$store.state.token;
+      console.log(this.$store.state);
     },
     moveBoard() {
       this.tokenTest();
