@@ -6,7 +6,6 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.pjt.core.CommonResponse;
 import com.ssafy.pjt.core.repository.MemberRepository;
-import com.ssafy.pjt.core.security.Role;
 import com.ssafy.pjt.core.service.dto.MemberDTO;
 import com.ssafy.pjt.exception.LoginFailedException;
 import com.ssafy.pjt.provider.security.JwtAuthToken;
@@ -35,7 +33,7 @@ public class LoginController {
 
     private final LoginService loginService;
 	@Autowired
-	private MemberService signupService;
+	private MemberService memberService;
 	
 	private final MemberRepository memberRepository;
 	
@@ -60,16 +58,20 @@ public class LoginController {
     @ApiOperation(value = "소셜로그인")
     @PostMapping("/social")
     public CommonResponse SocialLogin(@Valid @RequestBody SocialSignupRequestDTO socialsignupRequsetDTO) {
+    	
     	//소셜 아이디 구분하기
     	socialsignupRequsetDTO.setEmail(socialsignupRequsetDTO.getType().trim()+"_"+socialsignupRequsetDTO.getEmail());
+    	//socialsignupRequsetDTO.setName(socialsignupRequsetDTO.getType().substring(0, 1)+"@"+socialsignupRequsetDTO.getName());
     	MemberDTO memberDTO = MemberDTO.builder()
                 .name(socialsignupRequsetDTO.getName())
                 .email(socialsignupRequsetDTO.getEmail())
                 .role(socialsignupRequsetDTO.getRole())
                 .build();
-        if (signupService.checkEmail(socialsignupRequsetDTO.getEmail())) { //DB에 있을 때
+    	
+        if (!memberService.checkEmail(socialsignupRequsetDTO.getEmail())) { //DB에 있을 때
+        	System.out.println("????????????");
             JwtAuthToken jwtAuthToken = (JwtAuthToken) loginService.createAuthToken(memberDTO);
-
+            System.out.println("??");
             return CommonResponse.builder()
                     .code("LOGIN_SUCCESS")
                     .status(200)
@@ -86,7 +88,7 @@ public class LoginController {
         	signupRequsetDTO.setRole(socialsignupRequsetDTO.getRole());
         	
         	try {
-				signupService.joinMember(signupRequsetDTO);
+        		memberService.joinMember(signupRequsetDTO);
 			} catch (SQLException e) {
 				throw new LoginFailedException();
 			}

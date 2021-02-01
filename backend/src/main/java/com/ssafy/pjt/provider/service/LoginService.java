@@ -1,5 +1,6 @@
 package com.ssafy.pjt.provider.service;
 
+import com.ssafy.pjt.core.entity.Member;
 import com.ssafy.pjt.core.repository.MemberRepository;
 import com.ssafy.pjt.core.security.AuthToken;
 import com.ssafy.pjt.core.security.Role;
@@ -64,8 +65,9 @@ public class LoginService implements LoginUseCase {
     }
 
 	@Override
-	public MemberDTO user(String email) {	
-		return memberRepository.findMemeberByEmail(email).get();
+	public Member user(String email) {	
+		System.out.println(memberRepository.findMemberByEmail(email).get());
+		return memberRepository.findByEmail(email).get();
 	}
     
     
