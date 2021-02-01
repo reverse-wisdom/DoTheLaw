@@ -35,7 +35,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberControllor {
 
 	@Autowired
-	private MemberService service;
+	private MemberService memberservice;
 	@Autowired
 	private LoginService loginService;
 	
@@ -43,9 +43,9 @@ public class MemberControllor {
     @PostMapping("/signup")
 	private ResponseEntity<String> join(@Valid @RequestBody SignupRequestDTO signupRequestDTO) {
     	
-    	if(service.check(signupRequestDTO.getEmail(), signupRequestDTO.getName())) {
+    	if(memberservice.check(signupRequestDTO.getEmail(), signupRequestDTO.getName())) {
     		try {			   			
-    			service.joinMember(signupRequestDTO);
+    			memberservice.joinMember(signupRequestDTO);
     			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 
     		} catch (Exception e) {
@@ -60,9 +60,9 @@ public class MemberControllor {
 	private ResponseEntity<String> joinLawyer(@Valid @RequestBody MemberRequestDTO memberDTO) {
     	memberDTO.setRole("ROLE_LAWYER");
     	System.out.println(memberDTO);
-    	if(service.check(memberDTO.getEmail(), memberDTO.getName())) {
+    	if(memberservice.check(memberDTO.getEmail(), memberDTO.getName())) {
     		try {			   			
-    			service.joinLawyer(memberDTO);
+    			memberservice.joinLawyer(memberDTO);
     			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 
     		} catch (Exception e) {
@@ -77,7 +77,7 @@ public class MemberControllor {
     @ApiOperation(value = "이메일 중복체크")
     @GetMapping("/check/email")
 	private ResponseEntity<String> checkEmail(@RequestParam(required = true) final String email) {    	
-    	if(!service.checkEmail(email)) {   
+    	if(!memberservice.checkEmail(email)) {   
     		return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     	}		
 		return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
@@ -86,18 +86,18 @@ public class MemberControllor {
     @ApiOperation(value = "이름 중복체크")
     @GetMapping("/check/name")
 	private ResponseEntity<String> checkName(@RequestParam(required = true) final String name) {    	
-    	if(!service.checkName(name)) {   
+    	if(!memberservice.checkName(name)) {   
     		return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     	}		
 		return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 	}
     
     //회원 정보 조회
-    @ApiOperation(value = "회원 정보 조회")
+    @ApiOperation(value = "일반 회원 정보 조회")
     @GetMapping("/lookup")
-	private ResponseEntity<Member> lookup(@RequestParam(required = true) final String email) {    	
+	private ResponseEntity<Member> lookupUser(@RequestParam(required = true) final String email) {    	
     	Member member;
-    	if(!service.checkEmail(email)) {
+    	if(!memberservice.checkEmail(email)) {
     		member = loginService.user(email);
     		return new ResponseEntity<>(member, HttpStatus.OK);
     	}		
@@ -105,6 +105,20 @@ public class MemberControllor {
 	}
     
     //변호사 회원 조회
+    @ApiOperation(value = "변호사 회원 정보 조회")
+    @GetMapping("/lookup/lawyer")
+	private ResponseEntity<MemberRequestDTO> lookupLawyer(@RequestParam(required = true) final String email) {    	
+    	MemberRequestDTO member = null;
+    	if(!memberservice.checkEmail(email)) {
+    		try {
+				member = memberservice.lawyer(email);
+				return new ResponseEntity<>(member, HttpStatus.OK);
+			} catch (SQLException e) {
+				return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+			}   		
+    	}		
+		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+	}
     
 
     //회원 탈퇴 미완성
@@ -112,8 +126,6 @@ public class MemberControllor {
 	@DeleteMapping("/delete")
 	private ResponseEntity<String> signout(@RequestParam(required = true) final int uuid
 										   , @RequestParam(required = true) final Role role, @RequestParam(required = true) final String email) {
-		
-		
 		if(loginService.user(email).getUuid().equals(String.valueOf(uuid)) ) {
 			
 		}
