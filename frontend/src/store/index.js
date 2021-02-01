@@ -16,6 +16,7 @@ export default new Vuex.Store({
     password: '',
     nickname: '',
     name: '',
+    uuid: '',
   },
   getters: {
     isLogin(state) {
@@ -53,6 +54,12 @@ export default new Vuex.Store({
     clearToken(state) {
       state.token = '';
     },
+    setUuid(state, uuid) {
+      state.uuid = uuid;
+    },
+    clearUuid(state) {
+      state.uuid = '';
+    },
     // async updateNickname(state, userData) {
     //   const {data} = await editUser(userData);
     //   console.log(data.object.nickname)
@@ -62,14 +69,13 @@ export default new Vuex.Store({
   actions: {
     async LOGIN({ commit }, userData) {
       const { data } = await loginUser(userData);
-      // const response = await searchUser(userData.email);
-      console.log(userData);
-
-      console.log(data.message);
+      console.log(data);
       if (data.code == 'LOGIN_SUCCESS') {
         commit('setToken', data['message']);
-        commit('setEmail', userData.email);
-        commit('setPassword', userData.password);
+        commit('setEmail', data.member.email);
+        commit('setPassword', data.member.password);
+        commit('setName', data.member.name);
+        commit('setUuid', data.member.uuid);
         // commit('setNickname', response.data.object.nickname);
         // saveAuthToCookie(data.token);
         // saveEmailToCookie(userData.email);
@@ -86,6 +92,7 @@ export default new Vuex.Store({
         commit('setEmail', userData.email);
         commit('setPassword', userData.password);
         commit('setName', userData.name);
+        commit('setUuid', userData.uuid);
         router.push('/');
       } else {
         alert('로그인 실패! 이메일 및 비밀번호를 확인해 주세요!');
