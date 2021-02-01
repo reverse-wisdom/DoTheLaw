@@ -52,11 +52,11 @@ public class BoardControllor {
 
 	@ApiOperation(value = "글 조회")
 	@GetMapping("/search/detail")
-	private ResponseEntity<BoardRequestDTO> detail(@RequestParam(required = true) final int board_id) {
+	private ResponseEntity<BoardRequestDTO> detail(@RequestParam(required = true) final int boardId) {
 		BoardRequestDTO board;
 		try {
-			boardService.hit(board_id);
-			board = boardService.detail(board_id);
+			boardService.hit(boardId);
+			board = boardService.detail(boardId);
 			return new ResponseEntity<>(board, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
