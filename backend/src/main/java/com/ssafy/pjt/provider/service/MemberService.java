@@ -17,66 +17,69 @@ import com.ssafy.pjt.web.dto.MemberRequestDTO;
 import com.ssafy.pjt.web.dto.SignupRequestDTO;
 
 @Service
-public class MemberService implements MemberUseCase{
+public class MemberService implements MemberUseCase {
 	@Autowired
-	private MemberMapper mapper;	
+	private MemberMapper mapper;
 	@Autowired
 	private MemberRepository memberRepository;
 
-    
 	@Override
-	public void joinMember(SignupRequestDTO member) throws SQLException {		  
+	public void joinMember(SignupRequestDTO member) throws SQLException {
 		member.setPassword(new BCryptPasswordEncoder().encode(member.getPassword()));
-		//member.setRolecode(member.getRole().getCode());
+		// member.setRolecode(member.getRole().getCode());
 		mapper.joinMember(member);
 	}
-	
+
 	@Override
-	public void joinLawyer(MemberRequestDTO lawyer) throws SQLException{
+	public void joinLawyer(MemberRequestDTO lawyer) throws SQLException {
 		mapper.joinLawyer(lawyer);
 	}
-	
+
 	@Override
 	public boolean check(String email, String name) {
-		Optional<Member> userOpt = memberRepository.findFirstByEmailOrName(email, name);		
-		if(!userOpt.isPresent()) {
+		Optional<Member> userOpt = memberRepository.findFirstByEmailOrName(email, name);
+		if (!userOpt.isPresent()) {
 			return true;
 		}
-		return false;
-	}
-	
-	@Override
-	public boolean checkEmail(String email) {
-		Optional<Member> userOpt = memberRepository.findByEmail(email);		
-		if(!userOpt.isPresent()) {
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
-	public boolean checkName(String name) {
-		Optional<Member> userOpt = memberRepository.findByName(name);		
-		if(!userOpt.isPresent()) {
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
-	public boolean  checkRoleAndId(Role role, int uuid, String email) {
-//		if(role.getCode().equals("ROLE_ADMIN")) {
-//			return true;
-//		}else {
-//			if()
-//		}
 		return false;
 	}
 
 	@Override
-	public MemberRequestDTO lawyer(String email) throws SQLException {		
+	public boolean checkEmail(String email) {
+		Optional<Member> userOpt = memberRepository.findByEmail(email);
+		if (!userOpt.isPresent()) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean checkName(String name) {
+		Optional<Member> userOpt = memberRepository.findByName(name);
+		if (!userOpt.isPresent()) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public MemberRequestDTO lawyer(String email) throws SQLException {
 		return mapper.lawyer(email);
 	}
 
+	@Override
+	public boolean signout(String role, String email) throws SQLException {
+		int uuid = mapper.uuid(email);
+		if (role.equals("ROLE_USER")) {
+			if (mapper.signout(uuid)) {
+				return true;
+			}
+		} else {
+			if (mapper.signoutLawyer(uuid) && mapper.signout(uuid)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

@@ -9,4 +9,7 @@ public interface MemberMapper {
 	public void joinMember(SignupRequestDTO member) throws SQLException;
 	public void joinLawyer(MemberRequestDTO lawyer) throws SQLException;
 	public MemberRequestDTO lawyer(String email) throws SQLException;
+	public boolean signout(int uuid) throws SQLException;
+	public boolean signoutLawyer(int uuid) throws SQLException;
+	public int uuid(String email) throws SQLException;
 }
