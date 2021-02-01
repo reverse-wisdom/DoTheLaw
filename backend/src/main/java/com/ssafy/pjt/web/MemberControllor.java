@@ -38,100 +38,107 @@ public class MemberControllor {
 	private MemberService memberservice;
 	@Autowired
 	private LoginService loginService;
-	
-    @ApiOperation(value = "일반회원 회원가입")
-    @PostMapping("/signup")
-	private ResponseEntity<String> join(@Valid @RequestBody SignupRequestDTO signupRequestDTO) {
-    	
-    	if(memberservice.check(signupRequestDTO.getEmail(), signupRequestDTO.getName())) {
-    		try {			   			
-    			memberservice.joinMember(signupRequestDTO);
-    			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 
-    		} catch (Exception e) {
-    			e.printStackTrace();
-    		}
-    	}		
+	@ApiOperation(value = "일반회원 회원가입")
+	@PostMapping("/signup")
+	private ResponseEntity<String> join(@Valid @RequestBody SignupRequestDTO signupRequestDTO) {
+
+		if (memberservice.check(signupRequestDTO.getEmail(), signupRequestDTO.getName())) {
+			try {
+				memberservice.joinMember(signupRequestDTO);
+				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
 	}
-    
-    @ApiOperation(value = "변호사 회원가입")
-    @PostMapping("/signup/lawyer")
-	private ResponseEntity<String> joinLawyer(@Valid @RequestBody MemberRequestDTO memberDTO) {
-    	memberDTO.setRole("ROLE_LAWYER");
-    	System.out.println(memberDTO);
-    	if(memberservice.check(memberDTO.getEmail(), memberDTO.getName())) {
-    		try {			   			
-    			memberservice.joinLawyer(memberDTO);
-    			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 
-    		} catch (Exception e) {
-    			e.printStackTrace();
-    		}
-    	}
-    	else
-    		return new ResponseEntity<>("중복된 이메일 또는 닉네임이 존재합니다", HttpStatus.BAD_REQUEST);
+	@ApiOperation(value = "변호사 회원가입")
+	@PostMapping("/signup/lawyer")
+	private ResponseEntity<String> joinLawyer(@Valid @RequestBody MemberRequestDTO memberDTO) {
+		memberDTO.setRole("ROLE_LAWYER");
+		System.out.println(memberDTO);
+		if (memberservice.check(memberDTO.getEmail(), memberDTO.getName())) {
+			try {
+				memberservice.joinLawyer(memberDTO);
+				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else
+			return new ResponseEntity<>("중복된 이메일 또는 닉네임이 존재합니다", HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 	}
-    
-    @ApiOperation(value = "이메일 중복체크")
-    @GetMapping("/check/email")
-	private ResponseEntity<String> checkEmail(@RequestParam(required = true) final String email) {    	
-    	if(!memberservice.checkEmail(email)) {   
-    		return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
-    	}		
+
+	@ApiOperation(value = "이메일 중복체크")
+	@GetMapping("/check/email")
+	private ResponseEntity<String> checkEmail(@RequestParam(required = true) final String email) {
+		if (!memberservice.checkEmail(email)) {
+			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+		}
 		return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 	}
-    
-    @ApiOperation(value = "이름 중복체크")
-    @GetMapping("/check/name")
-	private ResponseEntity<String> checkName(@RequestParam(required = true) final String name) {    	
-    	if(!memberservice.checkName(name)) {   
-    		return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
-    	}		
+
+	@ApiOperation(value = "이름 중복체크")
+	@GetMapping("/check/name")
+	private ResponseEntity<String> checkName(@RequestParam(required = true) final String name) {
+		if (!memberservice.checkName(name)) {
+			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+		}
 		return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 	}
-    
-    //회원 정보 조회
-    @ApiOperation(value = "일반 회원 정보 조회")
-    @GetMapping("/lookup")
-	private ResponseEntity<Member> lookupUser(@RequestParam(required = true) final String email) {    	
-    	Member member;
-    	if(!memberservice.checkEmail(email)) {
-    		member = loginService.user(email);
-    		return new ResponseEntity<>(member, HttpStatus.OK);
-    	}		
+
+	// 회원 정보 조회
+	@ApiOperation(value = "일반 회원 정보 조회")
+	@GetMapping("/lookup")
+	private ResponseEntity<Member> lookupUser(@RequestParam(required = true) final String email) {
+		Member member;
+		if (!memberservice.checkEmail(email)) {
+			member = loginService.user(email);
+			return new ResponseEntity<>(member, HttpStatus.OK);
+		}
 		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 	}
-    
-    //변호사 회원 조회
-    @ApiOperation(value = "변호사 회원 정보 조회")
-    @GetMapping("/lookup/lawyer")
-	private ResponseEntity<MemberRequestDTO> lookupLawyer(@RequestParam(required = true) final String email) {    	
-    	MemberRequestDTO member = null;
-    	if(!memberservice.checkEmail(email)) {
-    		try {
+
+	// 변호사 회원 조회
+	@ApiOperation(value = "변호사 회원 정보 조회")
+	@GetMapping("/lookup/lawyer")
+	private ResponseEntity<MemberRequestDTO> lookupLawyer(@RequestParam(required = true) final String email) {
+		MemberRequestDTO member = null;
+		if (!memberservice.checkEmail(email)) {
+			try {
 				member = memberservice.lawyer(email);
 				return new ResponseEntity<>(member, HttpStatus.OK);
 			} catch (SQLException e) {
 				return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-			}   		
-    	}		
+			}
+		}
 		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 	}
-    
 
-    //회원 탈퇴 미완성
+	// 회원 탈퇴 미완성
 	@ApiOperation(value = "회원탈퇴(아직 안됨)")
 	@DeleteMapping("/delete")
-	private ResponseEntity<String> signout(@RequestParam(required = true) final int uuid
-										   , @RequestParam(required = true) final Role role, @RequestParam(required = true) final String email) {
-		if(loginService.user(email).getUuid().equals(String.valueOf(uuid)) ) {
-			
+	private ResponseEntity<String> signout(@RequestParam(required = true) final Role role,
+			@RequestParam(required = true) final String email) {
+		if (role.getCode().equals("ROLE_ADMIN")) {
+			try {
+				memberservice.signout(loginService.user(email).getRole(), email);
+				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+			} catch (SQLException e) {
+				return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			try {
+				memberservice.signout(role.getCode(), email);
+				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+			} catch (SQLException e) {
+				return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+			}
 		}
-		return null;
 	}
 
-    //회원 정보 수정
-    
 }
