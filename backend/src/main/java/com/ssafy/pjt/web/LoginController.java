@@ -6,7 +6,6 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.pjt.core.CommonResponse;
 import com.ssafy.pjt.core.repository.MemberRepository;
-import com.ssafy.pjt.core.security.Role;
 import com.ssafy.pjt.core.service.dto.MemberDTO;
 import com.ssafy.pjt.exception.LoginFailedException;
 import com.ssafy.pjt.provider.security.JwtAuthToken;
