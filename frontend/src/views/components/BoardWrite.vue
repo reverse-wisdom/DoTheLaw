@@ -23,17 +23,12 @@
               <label for="content">내용</label>
               <md-textarea id="content" type="content" ref="content" v-model="content"></md-textarea>
             </md-field> -->
-<<<<<<< HEAD
             <div id="summernote"></div>
             <md-field>
               <!-- 파일의 경우 change 리스너로 감지해야함 -->
               <input type="file" name="uploadFile" ref="fileData" @change="handleFilesUpload" />
             </md-field>
           </form>
-=======
-          </form>
-          <div id="summernote" style="top: 0;"></div>
->>>>>>> develop
 
           <div class="btn-right">
             <md-button class="md-dense md-raised md-warning" @click="test">
@@ -85,17 +80,12 @@ export default {
 
     $(function() {
       $('#summernote').summernote({
-        // unfortunately you can only rewrite
-        // all the toolbar contents, on the bright side
-        // you can place uploadcare button wherever you want
-
         height: 300, // set editor height
         width: '90%', // set editor height
         minHeight: null, // set minimum height of editor
         maxHeight: null, // set maximum height of editor
         dialogsInBody: true,
         toolbar: [
-          ['uploadcare', ['uploadcare']], // here, for example
           ['style', ['style']],
           ['font', ['bold', 'italic', 'underline', 'clear']],
           ['fontname', ['fontname']],
@@ -106,24 +96,6 @@ export default {
           ['insert', ['media', 'link', 'hr', 'picture', 'video']],
           ['view', ['fullscreen', 'codeview']],
         ],
-<<<<<<< HEAD
-=======
-        uploadcare: {
-          // button name (default is Uploadcare)
-          buttonLabel: 'Image / file',
-          // font-awesome icon name (you need to include font awesome on the page)
-          buttonIcon: 'picture-o',
-          // text which will be shown in button tooltip
-          tooltipText: 'Upload files or video or something',
-
-          // uploadcare widget options,
-          // see https://uploadcare.com/documentation/widget/#configuration
-          publicKey: 'c7e819f2a9454b0a2286', // set your API key
-          crop: 'free',
-          tabs: 'all',
-          multiple: true,
-        },
->>>>>>> develop
       });
     });
   },
