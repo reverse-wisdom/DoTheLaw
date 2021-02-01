@@ -6,7 +6,7 @@
 
 	<insert id="joinMember" parameterType="SignupRequestDTO">		
 		INSERT INTO member (email, password, phone, name, role) 
-		VALUES (#{email}, #{password}, #{phone}, #{name},#{rolecode});		
+		VALUES (#{email}, #{password}, #{phone}, #{name}, #{role.code});		
 	</insert>
 	
 	<insert id="joinLawyer" parameterType="MemberDTO">
@@ -17,5 +17,6 @@
 		   VALUES(LAST_INSERT_ID(), #{career}, #{introduction}, #{address}, #{photo}, #{dept}, #{chck});
 		COMMIT;
 	</insert>
+	
 	
 </mapper>
