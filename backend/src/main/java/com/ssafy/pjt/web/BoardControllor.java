@@ -63,7 +63,7 @@ public class BoardControllor {
 		}
 	}
 
-	@ApiOperation(value = "조회수 증가")
+	@ApiOperation(value = "조회수 증가(boardId만 있으면 가능)")
 	@PutMapping("/hit")
 	private ResponseEntity<String> hit(@Valid @RequestBody BoardRequestDTO board) {
 		try {
@@ -74,7 +74,7 @@ public class BoardControllor {
 		}
 	}
 
-	@ApiOperation(value = "글 생성")
+	@ApiOperation(value = "글 생성(boardId 제외)")
 	@PostMapping("/create")
 	private ResponseEntity<String> create(@Valid @RequestBody BoardRequestDTO board) {
 		try {
@@ -103,10 +103,14 @@ public class BoardControllor {
 
 	@ApiOperation(value = "글 수정")
 	@PutMapping("/update")
-	private ResponseEntity<String> update(@Valid @RequestBody BoardRequestDTO board) {
+	private ResponseEntity<String> update(@Valid @RequestBody BoardRequestDTO board, @RequestParam(required = true) final Role role) {
 		try {
-			boardService.update(board);
-			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+			if(boardService.check(board.getBoardId(), board.getUuid(), role)) {
+				boardService.update(board);
+				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+			}
 		} catch (Exception e) {
 			return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
 		}
