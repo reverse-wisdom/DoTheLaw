@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.pjt.core.repository.mapper.ControversyMapper">
+
+	<select id="all" resultType="ControversyDTO">
+		select c.controversy_id, c.uuid, m.name, c.title, LEFT(c.content, 100) content, c.hit, c.start_date, c.end_date
+			from controversy c left
+		join member m
+			on c.uuid = m.uuid
+		order by c.end_date desc, c.controversy_id;
+	</select>
+
+	<select id="detail" parameterType="int"
+		resultType="ControversyDTO">
+		select c.controversy_id, c.uuid, m.name, c.start_date, c.end_date, c.title, c.content, c.hit
+		from controversy c left join member m
+			on c.uuid = m.uuid
+		where c.controversy_id = #{controversy_id};
+	</select>
+	
+	<update id="hit" parameterType="ControversyDTO">
+		update controversy
+		set hit = hit+1
+		where controversy_id = #{controversy_id};
+	</update>
+
+	<insert id="insert" parameterType="ControversyDTO">
+		INSERT INTO controversy
+			(uuid, end_date, title, content)
+		VALUES(#{uuid}, #{end_date,jdbcType=TIMESTAMP}, #{title}, #{content});
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from controversy
+		where controversy_id = #{controversy_id}
+	</delete>
+
+	<update id="update" parameterType="ControversyDTO">
+		update controversy
+		set
+			title = #{title},
+			content = #{content},
+			end_date = #{end_date,jdbcType=TIMESTAMP},
+		where controversy_id = #{controversy_id}
+	</update>
+
+</mapper>
