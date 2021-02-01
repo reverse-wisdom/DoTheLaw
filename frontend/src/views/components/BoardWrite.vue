@@ -13,27 +13,27 @@
               <label>제목</label>
               <md-input id="title" type="text" ref="title" v-model="title"></md-input>
             </md-field>
+
             <md-field>
-              <label>종류</label>
-              <md-input id="title" type="text" ref="title" v-model="category"></md-input>
+              <label for="category">글 종류</label>
+              <md-select v-model="category" name="category" id="category">
+                <md-option value="공지사항">공지사항</md-option>
+                <md-option value="일반">일반</md-option>
+                <md-option value="QnA">QnA</md-option>
+              </md-select>
             </md-field>
-
-            <!-- <md-field>
-
-              <label for="content">내용</label>
-              <md-textarea id="content" type="content" ref="content" v-model="content"></md-textarea>
-            </md-field> -->
-            <div id="summernote"></div>
+            <!-- <v-text-field label="종류" ref="category" v-model="category"></v-text-field> -->
+            <md-field>
+              <div id="summernote"></div>
+            </md-field>
             <md-field>
               <!-- 파일의 경우 change 리스너로 감지해야함 -->
-              <input type="file" name="uploadFile" ref="fileData" @change="handleFilesUpload" />
+              <input type="file" name="uploadFile" ref="fileData" />
+              <!-- <input type="file" name="uploadFile" ref="fileData" @change="handleFilesUpload" /> -->
             </md-field>
           </form>
 
           <div class="btn-right">
-            <md-button class="md-dense md-raised md-warning" @click="test">
-              html콘솔테스트
-            </md-button>
             <md-button class="md-dense md-raised md-warning" type="submit" @click="writeContent()">
               등록
             </md-button>
@@ -81,7 +81,7 @@ export default {
     $(function() {
       $('#summernote').summernote({
         height: 300, // set editor height
-        width: '90%', // set editor height
+        width: '100%', // set editor weight
         minHeight: null, // set minimum height of editor
         maxHeight: null, // set maximum height of editor
         dialogsInBody: true,
@@ -100,50 +100,35 @@ export default {
     });
   },
   methods: {
-    test() {
-      // let bodyClick = document.getElementById('summernote');
-
-      let test = $('#summernote').summernote('code');
-
-      console.log(this.$store.state.uuid);
-    },
-
     // 게시판 글 작성
     writeContent() {
-      if (undefined !== this.title && this.title.length < 3) {
-        this.$swal({
-          icon: 'error',
-          title: '제목을 3자 이상 적어주세요!!',
-        });
-      } else {
-        axios
-          .post(
-            '/api/board/create',
-            {
-              title: this.title,
-              category: this.category,
-              content: $('#summernote').summernote('code'),
-              uuid: this.$store.state.uuid,
+      axios
+        .post(
+          '/api/board/create',
+          {
+            title: this.title,
+            category: this.category,
+            content: $('#summernote').summernote('code'),
+            uuid: this.$store.state.uuid,
+          },
+          {
+            headers: {
+              'x-auth-token': this.$store.state.token,
             },
-            {
-              headers: {
-                'x-auth-token': this.$store.state.token,
-              },
-            }
-          )
-          .then(({ data }) => {
-            console.log(data);
-          });
-
-        this.$swal({
-          position: 'top-end',
-          icon: 'success',
-          title: '글 작성 완료!!',
-          showConfirmButton: false,
-          timer: 1500,
+          }
+        )
+        .then(({ data }) => {
+          console.log(data);
         });
-        this.moveList();
-      }
+
+      this.$swal({
+        position: 'top-end',
+        icon: 'success',
+        title: '글 작성 완료!!',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      this.moveList();
     },
     moveList() {
       this.$router.push('/board');
@@ -169,11 +154,4 @@ export default {
   min-height: 300px;
   padding: 10px;
 }
-// .modal-backdrop {
-//   opacity: 0;
-//   top: none !important;
-// }
-// .note-dialog .modal-dialog {
-//   z-index: 1050;
-// }
 </style>
