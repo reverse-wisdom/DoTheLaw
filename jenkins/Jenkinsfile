@@ -29,7 +29,7 @@ pipeline {
 		sh 'docker ps -f name=base-pjt-front -q | xargs --no-run-if-empty docker container stop'
 		sh 'docker container ls -a -fname=base-pjt-front -q | xargs -r docker container rm'
                 sh 'docker rmi $(docker images -f "dangling=true" -q)'
-		sh 'docker run -d --name base-pjt-back -v /volumes/data:/usr/data --network base-pjt-net base-pjt-back:latest'
+		sh 'docker run -d --name base-pjt-back -p 8080:8080 -v /volumes/data:/usr/data --network base-pjt-net base-pjt-back:latest'
 		sh 'docker run -d --name base-pjt-front -p 80:80 -p 443:443 -v /volumes/nginx/keys:/usr/keys --network base-pjt-net base-pjt-front:latest'
             }
         }
