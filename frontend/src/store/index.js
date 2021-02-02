@@ -42,7 +42,7 @@ export default new Vuex.Store({
       state.nickname = '';
     },
     clearName(state) {
-      state.Name = '';
+      state.name = '';
     },
     clearEmail(state) {
       state.email = '';
@@ -63,14 +63,13 @@ export default new Vuex.Store({
     async LOGIN({ commit }, userData) {
       const { data } = await loginUser(userData);
       // const response = await searchUser(userData.email);
-      console.log(userData);
-
+      console.log(data);
       console.log(data.message);
       if (data.code == 'LOGIN_SUCCESS') {
         commit('setToken', data['message']);
         commit('setEmail', userData.email);
         commit('setPassword', userData.password);
-        // commit('setNickname', response.data.object.nickname);
+        // commit('setName', data.object.name);
         // saveAuthToCookie(data.token);
         // saveEmailToCookie(userData.email);
         // savePwdToCookie(userData.password);
@@ -80,9 +79,10 @@ export default new Vuex.Store({
       }
     },
     async SOCIALLOGIN({ commit }, userData) {
-      const { data } = await socialLoginUser(userData);
-      if (data.code == 'LOGIN_SUCCESS') {
-        commit('setToken', data['message']);
+      const res = await socialLoginUser(userData);
+       console.log(res)
+      if (res.data.code == 'LOGIN_SUCCESS') {
+        commit('setToken', res.data['message']);
         commit('setEmail', userData.email);
         commit('setPassword', userData.password);
         commit('setName', userData.name);
