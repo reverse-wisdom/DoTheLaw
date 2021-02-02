@@ -36,7 +36,7 @@ public class ImageController {
 //        return "index";
 //    }
     
-    @GetMapping("/image/{fileId}")
+    @GetMapping({"/data/{fileId}", "/image/{fileId}"})
     @ResponseBody
     public ResponseEntity<?> serveFile(@PathVariable int fileId) {
         try {
@@ -61,12 +61,12 @@ public class ImageController {
         }
     }
     
-    @PostMapping("/image")
+    @PostMapping({"/data", "/image"})
     @ResponseBody
     public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
             UploadFileDTO uploadedFile = imageService.store(file);
-            return ResponseEntity.ok().body("/image/" + uploadedFile.getId());
+            return ResponseEntity.ok().body("/data/" + uploadedFile.getId());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();

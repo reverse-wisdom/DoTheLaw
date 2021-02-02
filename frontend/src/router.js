@@ -1,16 +1,22 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Index from './views/Index.vue';
+
 import Login from './views/Login.vue';
 import Search from './views/Search.vue';
 import MainNavbar from './layout/MainNavbar.vue';
 import MainFooter from './layout/MainFooter.vue';
-import Register from './views/Register.vue';
+
+import RegisterUser from './views/RegisterUser.vue';
+import RegisterLawyer from './views/RegisterLawyer.vue';
+import RegisterIndex from './views/RegisterIndex.vue';
+
 import WebrtcView from './views/WebRtcView.vue';
 
 import Board from './views/Board.vue';
 import BoardDetail from './views/components/BoardDetail.vue';
 import BoardWrite from './views/components/BoardWrite.vue';
+import Profile from './views/Profile.vue';
 
 Vue.use(Router);
 
@@ -27,9 +33,25 @@ export default new Router({
       },
     },
     {
-      path: '/register',
-      name: 'register',
-      components: { default: Register, header: MainNavbar, footer: MainFooter },
+      path: '/registerindex',
+      name: 'RegisterIndex',
+      components: { default: RegisterIndex, header: MainNavbar, footer: MainFooter },
+      props: {
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/registeruser',
+      name: 'registeruser',
+      components: { default: RegisterUser, header: MainNavbar, footer: MainFooter },
+      props: {
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/registerlawyer',
+      name: 'registerlawyer',
+      components: { default: RegisterLawyer, header: MainNavbar, footer: MainFooter },
       props: {
         footer: { backgroundColor: 'black' },
       },
@@ -48,6 +70,15 @@ export default new Router({
       components: { default: Search, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
+      },
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      components: { default: Profile, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
       },
     },
     {

@@ -43,7 +43,7 @@ export default new Vuex.Store({
       state.nickname = '';
     },
     clearName(state) {
-      state.Name = '';
+      state.name = '';
     },
     clearEmail(state) {
       state.email = '';
@@ -60,11 +60,6 @@ export default new Vuex.Store({
     clearUuid(state) {
       state.uuid = '';
     },
-    // async updateNickname(state, userData) {
-    //   const {data} = await editUser(userData);
-    //   console.log(data.object.nickname)
-    //   state.nickname = userData.nickname
-    // }
   },
   actions: {
     async LOGIN({ commit }, userData) {
@@ -76,19 +71,16 @@ export default new Vuex.Store({
         commit('setPassword', data.member.password);
         commit('setName', data.member.name);
         commit('setUuid', data.member.uuid);
-        // commit('setNickname', response.data.object.nickname);
-        // saveAuthToCookie(data.token);
-        // saveEmailToCookie(userData.email);
-        // savePwdToCookie(userData.password);
         router.push('/');
       } else {
         alert('로그인 실패! 이메일 및 비밀번호를 확인해 주세요!');
       }
     },
     async SOCIALLOGIN({ commit }, userData) {
-      const { data } = await socialLoginUser(userData);
-      if (data.code == 'LOGIN_SUCCESS') {
-        commit('setToken', data['message']);
+      const res = await socialLoginUser(userData);
+       console.log(res)
+      if (res.data.code == 'LOGIN_SUCCESS') {
+        commit('setToken', res.data['message']);
         commit('setEmail', userData.email);
         commit('setPassword', userData.password);
         commit('setName', userData.name);

@@ -15,7 +15,7 @@ public class UploadPathConfiguration {
 		if(os.contains("win"))
 			return "c:" +  File.separator + "PJT-data";
 		else // AWS용
-			return "/data";
+			return "/volumes/data";
 	}
 	
 	@Autowired
