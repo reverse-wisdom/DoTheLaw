@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.hibernate.annotations.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -46,5 +48,11 @@ public class SearchService {
 	public org.json.JSONObject searchByCode(String code)
 			throws MalformedURLException, UnsupportedEncodingException, IOException {
 		return XMLParserUtils.convertXMLtoJSONObject(lawServiceUrl + URLEncoder.encode(code, "UTF-8"));
+	}
+
+	public Map top() throws IOException {
+		Map<String, List> result = new HashMap();
+		result.put("items", mapper.selectHitTop());
+		return result;
 	}
 }
