@@ -48,7 +48,7 @@ public class MemberService implements MemberUseCase {
 	@Override
 	public boolean checkEmail(String email) {
 		Optional<Member> userOpt = memberRepository.findByEmail(email);
-		if (!userOpt.isPresent()) {
+		if (userOpt.isPresent()) {
 			return true;
 		}
 		return false;
@@ -57,7 +57,7 @@ public class MemberService implements MemberUseCase {
 	@Override
 	public boolean checkName(String name) {
 		Optional<Member> userOpt = memberRepository.findByName(name);
-		if (!userOpt.isPresent()) {
+		if (userOpt.isPresent()) {
 			return true;
 		}
 		return false;

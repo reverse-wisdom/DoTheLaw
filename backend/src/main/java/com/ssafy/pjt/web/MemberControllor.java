@@ -78,18 +78,28 @@ public class MemberControllor {
 	@GetMapping("/check/email")
 	private ResponseEntity<String> checkEmail(@RequestParam(required = true) final String email) {
 		if (!memberservice.checkEmail(email)) {
-			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+			try {
+				return new ResponseEntity<>("NOT DUPLICATE", HttpStatus.OK);
+			}
+			catch (Exception e) {
+				return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+			}
 		}
-		return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>("DUPLICATE", HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "이름 중복체크")
 	@GetMapping("/check/name")
 	private ResponseEntity<String> checkName(@RequestParam(required = true) final String name) {
 		if (!memberservice.checkName(name)) {
-			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+			try {
+				return new ResponseEntity<>("NOT DUPLICATE", HttpStatus.OK);
+			}
+			catch (Exception e) {
+				return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+			}
 		}
-		return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>("DUPLICATE", HttpStatus.OK);
 	}
 
 	// 회원 정보 조회
