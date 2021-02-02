@@ -10,6 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
@@ -27,8 +28,8 @@ public class RSSController {
 	private RSSservice service; 
 	
 	@ApiOperation(value = "뉴스파싱")
-	@RequestMapping("/news")
-	private ResponseEntity newsParsing() throws SAXException, IOException, ParserConfigurationException {
+	@GetMapping("/news")
+	private ResponseEntity<?> newsParsing() throws SAXException, IOException, ParserConfigurationException {
 		List aList = service.parsingNews();
 		Map rsult = new HashMap();
 		rsult.put("items", aList);

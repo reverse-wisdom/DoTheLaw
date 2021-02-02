@@ -1,6 +1,5 @@
 package com.ssafy.pjt.web.dto;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -22,5 +21,5 @@ public class SignupRequestDTO {
     private String phone;
     private String name;  
     private Role role;
-    private String rolecode;
+    private String image;
 }

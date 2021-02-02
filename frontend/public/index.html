@@ -11,11 +11,37 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons" />
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo&display=swap&subset=korean" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet" />
+
+    <!-- include libraries(jQuery, bootstrap) -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- include summernote css/js-->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.js"></script>
+
+    <!-- moment(시간파싱js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js"></script>
+
+    <!-- <script src=".plugins/uploadcare.js"></script> -->
+
+    <!-- 구글 지도 -->
+    <!-- 콜백함수 -->
+    <script>
+      window.mapState = {
+        initMap: false,
+      };
+
+      function initMap() {
+        window.mapState.initMap = true;
+      }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc&callback=initMap"></script>
 
     <!-- 카카오 로그인 -->
-    <meta charset="utf-8" />
-    <title>Kakao JavaScript SDK</title>
+
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
       // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -33,6 +59,7 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc&callback=initMap"></script>
 
   </head>
+
   <body>
     <noscript>
       <strong>We're sorry but vue-material-kit doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
