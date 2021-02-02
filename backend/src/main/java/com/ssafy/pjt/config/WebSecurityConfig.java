@@ -69,10 +69,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                              
                 
                 .antMatchers("/api/ocr/**").permitAll() //test
-//                .antMatchers("/api/image/**").permitAll() //test
+                .antMatchers("/api/image/**").permitAll() //test
                 .antMatchers("/api/data/**").permitAll() //test
                 .antMatchers("/api/lawSearch/**").permitAll() //test
                 .antMatchers("/api/lawService/**").permitAll() //test
+                
+                .antMatchers("/api/comment/**").permitAll() //test
+                
                 .anyRequest().authenticated()
 
                 .and()

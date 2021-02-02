@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssafy.pjt.core.repository.mapper.MemberMapper">
+
+	<insert id="joinMember" parameterType="SignupRequestDTO">
+		INSERT INTO member (email,
+		password, phone, name, role, image)
+		VALUES (#{email}, #{password},
+		#{phone}, #{name}, #{role.code}, #{image});
+	</insert>
+
+	<insert id="joinLawyer" parameterType="MemberRequestDTO">
+		BEGIN;
+		INSERT INTO member
+		(email, password, name, phone, role, image)
+		VALUES(#{email},
+		#{password}, #{name}, #{phone}, #{role}, #{image});
+		INSERT INTO lawyer
+		(uuid, career, introduction, address, dept, chck)
+		VALUES(LAST_INSERT_ID(), #{career}, #{introduction}, #{address},
+		#{dept}, #{chck});
+		COMMIT;
+	</insert>
+
+	<select id="lawyer" parameterType="String"
+		resultType="MemberRequestDTO">
+		select m.uuid , m.email, m.password, m.name, m.phone,
+		m.role, m.join_date, m.image
+		, l.career, l.introduction, l.address,
+		l.dept, l.chck
+		from member m join lawyer l
+		on m.uuid = l.uuid
+		where
+		m.email = #{email};
+	</select>
+
+	<delete id="signout" parameterType="int">
+		delete
+		from member
+		where
+		member.uuid
+		= #{uuid}
+	</delete>
+
+	<delete id="signoutLawyer" parameterType="int">
+		delete
+		from lawyer
+		where lawyer.uuid
+		= #{uuid}
+	</delete>
+
+	<select id="uuid" parameterType="String" resultType="int">
+		select uuid
+		from member
+		where member.email = #{email}
+	</select>
+	<update id="updateUser" parameterType="MemberRequestDTO" >
+		update member
+		set
+		name = #{name},
+		phone = #{phone},
+		image = #{image}
+		where uuid = #{uuid};
+	</update>
+	<update id="updateLawyer" parameterType="MemberRequestDTO" >
+		update lawyer
+		set
+		career = #{career},
+		introduction = #{introduction},
+		address = #{address},
+        dept = #{dept}
+		where uuid = #{uuid};
+	</update>
+</mapper>
