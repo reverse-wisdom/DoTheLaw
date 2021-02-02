@@ -1,42 +1,45 @@
 <template>
   <div class="wrapper">
     <parallax class="page-header header-filter" :style="headerStyle">
-      <div class="md-layout">
-        <div class="md-layout-item">
-          <div class="image-wrapper">
-            <div class="brand">
-              <img :src="logo" alt="logo" />
-              <br />
+      <v-card class="mx-auto" color="#ECEFF1">
+        <div class="md-layout">
+          <div class="md-layout-item">
+            <div class="image-wrapper">
+              <div class="brand">
+                <!-- <img :src="logo" alt="logo" /> -->
+                <v-img class="white--text align-end" :src="logo"></v-img>
+                <br />
 
-              <form @submit="detailSearch()" onSubmit="return false;" autocomplete="off" background-color="white">
-                <fieldset>
-                  <v-text-field id="searchWord" v-model="query" color="cyan darken" label="판례명" placeholder="검색어 입력" loading>
-                    <template v-slot:progress>
-                      <v-progress-linear v-if="query" :value="progress" :color="color" absolute height="7"></v-progress-linear>
-                    </template>
-                  </v-text-field>
-                  <button class="searchBtn" @click="detailSearch()"><i class="fa fa-search"></i></button>
-                </fieldset>
-              </form>
+                <form @submit="detailSearch()" onSubmit="return false;" autocomplete="off" background-color="white">
+                  <fieldset>
+                    <v-text-field id="searchWord" v-model="query" color="cyan darken" label="판례명" placeholder="검색어 입력" loading>
+                      <template v-slot:progress>
+                        <v-progress-linear v-if="query" :value="progress" :color="color" absolute height="7"></v-progress-linear>
+                      </template>
+                    </v-text-field>
+                    <button class="searchBtn" @click="detailSearch()"><i class="fa fa-search"></i></button>
+                  </fieldset>
+                </form>
 
-              <!-- 리스트 -->
+                <!-- 리스트 -->
 
-              <v-list>
-                <v-list-item-group v-model="model">
-                  <v-list-item v-for="(item, i) in items" :key="i">
-                    <v-list-item-icon>
-                      <v-icon v-text="item.icon"></v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                      <v-list-item-title v-text="item.text"></v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list-item-group>
-              </v-list>
+                <v-list>
+                  <v-list-item-group v-model="model">
+                    <v-list-item v-for="(item, i) in items" :key="i">
+                      <v-list-item-icon>
+                        <v-icon v-text="item.icon"></v-icon>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title v-text="item.text"></v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list-item-group>
+                </v-list>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </v-card>
     </parallax>
     <div class="main main-raised">
       <div class="section section-basic">
@@ -55,7 +58,6 @@
             쿠키값:
             <p>{{ cookie }}</p>
             <br />
-            <md-button class="md-info" style="margin: auto" @click="moveBoard()">게시판으로이동</md-button>
           </div>
         </div>
 
@@ -144,7 +146,7 @@ export default {
   props: {
     image: {
       type: String,
-      default: require('@/assets/img/bigstock.jpg'),
+      default: require('@/assets/img/law-wallpapers-hd-1080p-1920x1080-desktop-02.jpg'),
     },
     logo: {
       type: String,
@@ -266,17 +268,7 @@ export default {
       this.testToken = this.$store.state.token;
       console.log(this.$store.state);
     },
-    moveBoard() {
-      this.tokenTest();
-      if (this.testToken != null && this.testToken != '') {
-        this.$router.push('board');
-      } else {
-        this.$swal({
-          icon: 'error',
-          title: '로그인상태만 이동가능!',
-        });
-      }
-    },
+
     logoutUser() {
       this.$store.commit('clearEmail');
       this.$store.commit('clearToken');
