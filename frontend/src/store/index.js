@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-// import { getAuthFromCookie, getEmailFromCookie, getPwdFromCookie, saveAuthToCookie, saveEmailToCookie, savePwdToCookie,deleteCookie } from '@/utils/cookies';
 import { loginUser, socialLoginUser } from '@/api/auth';
-// import { editUser, searchUser } from '../api/auth';
 import createPersistedState from 'vuex-persistedstate';
 import router from '../router'; // store vuex에서 라우터 사용시 다시 import 해줘야함!!
 
@@ -17,6 +15,7 @@ export default new Vuex.Store({
     nickname: '',
     name: '',
     uuid: '',
+    role: '',
   },
   getters: {
     isLogin(state) {
@@ -27,26 +26,33 @@ export default new Vuex.Store({
     setEmail(state, email) {
       state.email = email;
     },
+    clearEmail(state) {
+      state.email = '';
+    },
     setPassword(state, password) {
       state.password = password;
+    },
+    clearPassword(state) {
+      state.password = '';
     },
     setNickname(state, nickname) {
       state.nickname = nickname;
     },
-    setName(state, name) {
-      state.name = name;
-    },
-    clearPwd(state) {
-      state.password = '';
-    },
     clearNickname(state) {
       state.nickname = '';
+    },
+
+    setName(state, name) {
+      state.name = name;
     },
     clearName(state) {
       state.name = '';
     },
-    clearEmail(state) {
-      state.email = '';
+    setRole(state, role) {
+      state.role = role;
+    },
+    clearRole(state) {
+      state.role = '';
     },
     setToken(state, token) {
       state.token = token;
@@ -71,6 +77,7 @@ export default new Vuex.Store({
         commit('setPassword', data.member.password);
         commit('setName', data.member.name);
         commit('setUuid', data.member.uuid);
+        commit('setRole', data.member.role.substring(5).trim());
         router.push('/');
       } else {
         alert('로그인 실패! 이메일 및 비밀번호를 확인해 주세요!');
@@ -78,7 +85,7 @@ export default new Vuex.Store({
     },
     async SOCIALLOGIN({ commit }, userData) {
       const res = await socialLoginUser(userData);
-       console.log(res)
+      console.log(res);
       if (res.data.code == 'LOGIN_SUCCESS') {
         commit('setToken', res.data['message']);
         commit('setEmail', userData.email);

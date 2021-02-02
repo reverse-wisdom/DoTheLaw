@@ -3,11 +3,15 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title text-center kor">게시판 상세 내용</h2>
+        <h2 class="title text-center kor">자문 상세 내용</h2>
 
         <hr class="div-hr" />
         <div class="container">
           <table class="styled-table" style="width: 100%">
+            <tr>
+              <th scope="col">카테고리</th>
+              <td>{{ value.category }}</td>
+            </tr>
             <tr>
               <th scope="col">제목</th>
               <td>{{ value.title }}</td>
@@ -33,16 +37,13 @@
           <!-- 수정, 삭제는 자신이 쓴글일경우만 나타나게 처리함 -->
           <div v-if="$store.state.name == value.name" style="text-align:right">
             <md-button class="md-warning" @click="updatePage(value)">글수정</md-button>
-            <md-button class="md-rose" @click="deletePage()">글 삭제</md-button>
-            <md-button class="md-info" @click="moveBoard()">뒤로가기</md-button>
+            <md-button class="md-rose" @click="deleteAdvise">글 삭제</md-button>
+            <md-button class="md-info" @click="moveAdviseList()">목록</md-button>
           </div>
           <!-- else -->
           <div v-if="$store.state.name != value.name" style="text-align:right">
-            <md-button class="md-info" @click="moveBoard()">뒤로가기</md-button>
+            <md-button class="md-info" @click="moveAdviseList()">목록</md-button>
           </div>
-          <comment-write :boardId="value.boardId" />
-          <br />
-          <comment-row v-for="(comment, index) in comments" :key="index" :comment="comment" />
         </div>
       </div>
     </div>
@@ -50,21 +51,13 @@
 </template>
 
 <script>
-import { detailBoard, deleteBoard } from '@/api/board';
-import CommentWrite from './CommentWrite';
-import CommentRow from './CommentRow.vue';
-import axios from 'axios';
+import { detailAdvise, deleteAdvise } from '@/api/advise';
 
 export default {
   bodyClass: 'profile-page',
-  components: {
-    CommentWrite,
-    CommentRow,
-  },
   data() {
     return {
       value: '',
-      comments: [],
     };
   },
   props: {
@@ -82,25 +75,19 @@ export default {
   },
   async created() {
     const postData = this.$route.query.boardId;
-    const { data } = await detailBoard(postData);
+    const { data } = await detailAdvise(postData);
+    console.log(data);
     this.value = data;
-
-    axios
-      .get('/api/comment/search?boardId=' + this.$route.query.boardId, {})
-      .then(({ data }) => {
-        this.comments = data;
-      })
-      .catch();
   },
   methods: {
-    moveBoard() {
-      this.$router.push('/board');
+    moveAdviseList() {
+      this.$router.push('/adviseList');
     },
-    async deletePage() {
+    async deleteAdvise() {
       const boardId = this.value.boardId;
       const role = this.$store.state.role;
       const userId = this.$store.state.uuid;
-      const { data } = await deleteBoard(boardId, role, userId);
+      const { data } = await deleteAdvise(boardId, role, userId);
       this.$swal({
         position: 'top-end',
         icon: 'success',
@@ -108,11 +95,11 @@ export default {
         showConfirmButton: false,
         timer: 1500,
       });
-      this.$router.push('/board');
+      this.$router.push('/adviseList');
     },
     updatePage(value) {
       var boardId = value.boardId;
-      this.$router.push({ name: 'boardUpdate', query: { boardId: boardId } });
+      this.$router.push({ name: 'adviseUpdate', query: { boardId: boardId } });
     },
   },
 };
