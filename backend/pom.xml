@@ -126,6 +126,13 @@
 	      <artifactId>imgscalr-lib</artifactId>
 	      <version>4.2</version>
 	    </dependency>
+	    <!-- To convert XML File in to JSON -->
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20201115</version>
+		</dependency>
 	</dependencies>
 
 	<build>
