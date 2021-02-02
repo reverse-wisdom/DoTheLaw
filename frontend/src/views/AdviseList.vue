@@ -47,8 +47,7 @@
 </template>
 
 <script>
-// import BoardCreate from '@/views/components/BoardCreate.vue';
-import axios from "axios";
+import { fetchAdviseList } from "@/api/advise";
 
 export default {
   bodyClass: "profile-page",
@@ -72,28 +71,24 @@ export default {
       ],
     };
   },
-  mounted() {
-    this.token = this.$store.state.token;
-
-    axios
-      .get("/api/board/search/all")
-      .then(({ data }) => {
-        for (let i = 0; i < data.length; i++) {
-          this.values.push({
-            boardId: data[i].boardId,
-            category: data[i].category,
-            hit: data[i].hit,
-            name: data[i].name,
-            title: data[i].title,
-            uploadDate: moment(data[i].uploadDate).format("llll"),
-          });
-        }
-
-        // moment.locale('ko');
-        console.log(moment(this.values[0].uploadDate).format("llll"));
-      })
-      .catch();
+  async mounted() {
+    try {
+      const { data } = await fetchAdviseList();
+      for (let i = 0; i < data.length; i++) {
+        this.values.push({
+          boardId: data[i].boardId,
+          category: data[i].category,
+          hit: data[i].hit,
+          name: data[i].name,
+          title: data[i].title,
+          uploadDate: moment(data[i].uploadDate).format("llll"),
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   },
+
   props: {
     header: {
       type: String,
@@ -114,12 +109,12 @@ export default {
       return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
     },
     writePage() {
-      this.$router.push("/boardWrite");
+      this.$router.push("/advisewrite");
     },
     detailPage(value) {
       var query = value.boardId;
       // console.log(query);
-      this.$router.push({ name: "boarddetail", query: { boardId: query } });
+      this.$router.push({ name: "AdviseDetail", query: { boardId: query } });
     },
   },
 };

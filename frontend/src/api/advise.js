@@ -1,19 +1,21 @@
 import { posts } from './index';
 
-
-function createBoard(postData) {
+function fetchAdviseList() {
+  return posts.get('/api/board/search/all');
+}
+function createAdvise(postData) {
   return posts.post('/api/board/create', postData);
 }
-function detailBoard(boardId) {
+function detailAdvise(boardId) {
   // console.log(boardId)
   return posts.get(`/api/board/search/detail?boardId=${boardId}`);
 }
-function editBoard(modifyData, memberRole) {
+function editAdvise(modifyData, memberRole) {
   // console.log(modifyData, memberRole)
   return posts.put(`/api/board/update?role=${memberRole}`, modifyData);
 }
-function deleteBoard(boardId,roleData,userId) {
+function deleteAdvise(boardId,roleData,userId) {
   console.log(boardId,roleData,userId)
   return posts.delete(`/api/board/delete/?boardId=${boardId}&role=${roleData}&uuid=${userId}`)
 }
-export { createBoard, detailBoard, editBoard, deleteBoard};
+export { fetchAdviseList, createAdvise, detailAdvise, editAdvise, deleteAdvise};

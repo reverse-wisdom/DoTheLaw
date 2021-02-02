@@ -10,14 +10,14 @@
           <h1 class="title text-center kor">공사중!!!!</h1>
           <h2 class="title text-center kor">자문게시판 글쓰기</h2>
           <hr class="div-hr" />
-          <form @submit.prevent="writeContent">
+          <form @submit.prevent="modifyAdvise">
             <md-field>
               <label>제목</label>
               <md-input
                 id="title"
                 type="text"
                 ref="title"
-                v-model="title"
+                v-model="value.title"
               ></md-input>
             </md-field>
             <md-field>
@@ -28,7 +28,8 @@
                     :menu-props="{ bottom: true, offsetY: true }"
                     label="카테고리"
                     v-model="selected"
-                  ></v-select>
+                    >{{ value.category }}</v-select
+                  >
                 </v-col>
               </v-row>
             </md-field>
@@ -52,14 +53,13 @@
 
             <div class="btn-right">
               <md-button class="md-dense md-raised md-warning" type="submit">
-                등록
+                수정완료
               </md-button>
               <md-button
                 class="md-dense md-raised md-info"
-                type="button"
-                @click="moveList"
+                @click="moveAdviseList"
               >
-                뒤로가기
+                목록
               </md-button>
             </div>
           </form>
@@ -70,13 +70,13 @@
 </template>
 
 <script>
-import { createBoard } from "@/api/board";
+import { detailAdvise, editAdvise } from "@/api/advise";
 
 export default {
   bodyClass: "profile-page",
   data: function() {
     return {
-      title: "",
+      value: "",
       content: "",
       selected: "",
       items: [
@@ -102,11 +102,14 @@ export default {
       };
     },
   },
-  mounted() {
-    // $('#summernote').summernote({
-    //   height: 700,
-    // });
-
+  async created() {
+    // const userData = this.$store.state.role;
+    const postData = this.$route.query.boardId;
+    const { data } = await detailAdvise(postData);
+    console.log(data);
+    this.value = data;
+    this.selected = data.category;
+    // console.log(this.value.content);
     $(function() {
       $("#summernote").summernote({
         height: 300, // set editor height
@@ -126,62 +129,70 @@ export default {
           ["view", ["fullscreen", "codeview"]],
         ],
       });
+      $("#summernote").summernote("pasteHTML", data.content);
     });
   },
+  mounted() {
+    // $('#summernote').summernote({
+    //   height: 700,
+    // });
+  },
   methods: {
-    // 게시판 글 작성
-    async writeContent() {
-      const data = {
-        uuid: this.$store.state.uuid,
-        title: this.title,
-        writer: this.$store.state.name,
+    async modifyAdvise() {
+      const editData = {
+        boardId: this.value.boardId,
+        category: this.value.category,
         content: $("#summernote").summernote("code"),
-        category: this.selected,
+        title: this.value.title,
+        name: this.value.name,
+        uuid: this.value.uuid,
       };
-      // console.log(data)
-      const response = await createBoard(data);
-      console.log("완료1111111111", response);
 
-      // axios
-      //   .post(SERVER_URL + "api/board/create", {
-
-      //   })
-      //   .then(function(response) {
-      // JSON.stringify(response.data);
-      // obj = JSON.stringify(response.data);
-      //   });
+      const role = this.$store.state.role;
+      const { data } = await editAdvise(editData, role);
+      console.log(data);
 
       this.$swal({
-        position: "top-end",
         icon: "success",
-        title: "글 작성 완료!!",
-        showConfirmButton: false,
-        timer: 1500,
+        title: "글 수정 완료",
       });
-      this.moveList();
+      var query = this.value.boardId;
+      this.$router.push({ name: "AdviseDetail", query: { boardId: query } });
     },
-    moveList() {
-      this.$router.push({ name: "board" });
+    moveAdviseList() {
+      this.$router.push({ name: "AdviseList" });
     },
   },
 };
 </script>
+
 <style lang="scss" scoped>
+// hr 설정
+.div-hr {
+  width: 80%;
+}
+
+// 한글 폰트 설정
 .kor {
   font-family: "Nanum Gothic", sans-serif;
 }
-.btn-right {
-  text-align: right;
+// table css
+.styled-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
-.titleSize {
-  margin: 10px;
-  width: 50%;
-  min-height: 30px;
+.styled-table th {
+  background-color: #98cec3;
+  color: #ffffff;
+  text-align: center;
+  width: 10rem;
 }
-.boxSize {
-  margin: 10px;
-  width: 50%;
-  min-height: 300px;
-  padding: 10px;
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
 }
 </style>

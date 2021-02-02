@@ -8,10 +8,10 @@ import MainFooter from './layout/MainFooter.vue';
 import Register from './views/Register.vue';
 import WebrtcView from './views/WebRtcView.vue';
 
-import Board from './views/Board.vue';
-import BoardDetail from './views/components/BoardDetail.vue';
-import BoardWrite from './views/components/BoardWrite.vue';
-import BoardUpdate from './views/components/BoardUpdate.vue';
+import AdviseList from './views/AdviseList.vue';
+import AdviseDetail from './views/components/AdviseDetail.vue';
+import AdviseWrite from './views/components/AdviseWrite.vue';
+import AdviseUpdate from './views/components/AdviseUpdate.vue';
 
 Vue.use(Router);
 
@@ -52,36 +52,36 @@ export default new Router({
       },
     },
     {
-      path: '/board',
-      name: 'board',
-      components: { default: Board, header: MainNavbar, footer: MainFooter },
+      path: '/adviselist',
+      name: 'AdviseList',
+      components: { default: AdviseList, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
     },
     {
-      path: '/boarddetail',
-      name: 'boarddetail',
-      components: { default: BoardDetail, header: MainNavbar, footer: MainFooter },
+      path: '/advisedetail',
+      name: 'AdviseDetail',
+      components: { default: AdviseDetail, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
     },
     {
-      path: '/boardWrite',
-      name: 'boardWrite',
-      components: { default: BoardWrite, header: MainNavbar, footer: MainFooter },
+      path: '/advisewrite',
+      name: 'AdviseWrite',
+      components: { default: AdviseWrite, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
     },
     {
-      path: '/boardUpdate',
-      name: 'boardupdate',
-      components: { default: BoardUpdate, header: MainNavbar, footer: MainFooter },
+      path: '/adviseUpdate',
+      name: 'AdviseUpdate',
+      components: { default: AdviseUpdate, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
@@ -101,3 +101,4 @@ export default new Router({
     }
   },
 });
+

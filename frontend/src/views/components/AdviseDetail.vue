@@ -43,12 +43,16 @@
             <md-button class="md-warning" @click="updatePage(value)"
               >글수정</md-button
             >
-            <md-button class="md-rose" @click="deleteBoard">글 삭제</md-button>
-            <md-button class="md-info" @click="moveBoard()">목록</md-button>
+            <md-button class="md-rose" @click="deleteAdvise">글 삭제</md-button>
+            <md-button class="md-info" @click="moveAdviseList()"
+              >목록</md-button
+            >
           </div>
           <!-- else -->
           <div v-if="$store.state.name != value.name" style="text-align:right">
-            <md-button class="md-info" @click="moveBoard()">목록</md-button>
+            <md-button class="md-info" @click="moveAdviseList()"
+              >목록</md-button
+            >
           </div>
         </div>
       </div>
@@ -57,7 +61,7 @@
 </template>
 
 <script>
-import { detailBoard, deleteBoard } from "@/api/board";
+import { detailAdvise, deleteAdvise } from "@/api/advise";
 // import axios from "axios";
 
 export default {
@@ -69,7 +73,7 @@ export default {
   },
   async created() {
     const postData = this.$route.query.boardId;
-    const { data } = await detailBoard(postData);
+    const { data } = await detailAdvise(postData);
     console.log(data);
     this.value = data;
     this.value.uploadDate = moment(data.uploadDate).format("llll");
@@ -88,15 +92,15 @@ export default {
     },
   },
   methods: {
-    moveBoard() {
-      this.$router.push("/board");
+    moveAdviseList() {
+      this.$router.push("/adviselist");
     },
-    async deleteBoard() {
+    async deleteAdvise() {
       const boardId = this.value.boardId;
       const role = this.$store.state.role;
       const userId = this.$store.state.uuid;
       // const role = this.
-      const { data } = await deleteBoard(boardId, role, userId);
+      const { data } = await deleteAdvise(boardId, role, userId);
       this.$swal({
         position: "top-end",
         icon: "success",
@@ -104,11 +108,11 @@ export default {
         showConfirmButton: false,
         timer: 1500,
       });
-      this.$router.push("/board");
+      this.$router.push("/adviselist");
     },
     updatePage(value) {
       var boardId = value.boardId;
-      this.$router.push({ name: "boardupdate", query: { boardId: boardId } });
+      this.$router.push({ name: "AdviseUpdate", query: { boardId: boardId } });
     },
   },
 };

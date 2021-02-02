@@ -5,18 +5,15 @@
     class="md-transparent md-absolute"
     :class="extraNavClasses"
     :color-on-scroll="colorOnScroll"
-    
   >
-    <div class="md-toolbar-row md-collapse-lateral"
-    >
-      <div class="md-toolbar-section-start" 
-      style="margin-left:-200px;">
-      <h3 class="md-title">
-        <router-link to="/" class="md-title kor">
-          <!-- <i class="material-icons">gavel</i>
+    <div class="md-toolbar-row md-collapse-lateral">
+      <div class="md-toolbar-section-start" style="margin-left:-200px;">
+        <h3 class="md-title">
+          <router-link to="/" class="md-title kor">
+            <!-- <i class="material-icons">gavel</i>
             法대로 합시다 -->
-        </router-link>
-      </h3>
+          </router-link>
+        </h3>
       </div>
       <div class="md-toolbar-section-end">
         <md-button
@@ -75,7 +72,7 @@
 
               <li class="md-list-item">
                 <router-link
-                  to="/board"
+                  to="/adviselist"
                   class="md-list-item-router md-list-item-container md-button-clean"
                 >
                   <div class="md-list-item-content">
@@ -279,6 +276,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-  
-</style>
+<style scoped></style>

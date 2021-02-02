@@ -10,14 +10,14 @@
           <h1 class="title text-center kor">공사중!!!!</h1>
           <h2 class="title text-center kor">자문게시판 글쓰기</h2>
           <hr class="div-hr" />
-          <form @submit.prevent="modifyBoard">
+          <form @submit.prevent="writeContent">
             <md-field>
               <label>제목</label>
               <md-input
                 id="title"
                 type="text"
                 ref="title"
-                v-model="value.title"
+                v-model="title"
               ></md-input>
             </md-field>
             <md-field>
@@ -28,8 +28,7 @@
                     :menu-props="{ bottom: true, offsetY: true }"
                     label="카테고리"
                     v-model="selected"
-                    >{{ value.category }}</v-select
-                  >
+                  ></v-select>
                 </v-col>
               </v-row>
             </md-field>
@@ -52,14 +51,14 @@
             </md-field> -->
 
             <div class="btn-right">
-              <md-button
-                class="md-dense md-raised md-warning"
-                type="submit"
-                @click="modifyBoard"
-              >
-                수정완료
+              <md-button class="md-dense md-raised md-warning" type="submit">
+                등록
               </md-button>
-              <md-button class="md-dense md-raised md-info" @click="moveBoard">
+              <md-button
+                class="md-dense md-raised md-info"
+                type="button"
+                @click="moveAdviseList"
+              >
                 목록
               </md-button>
             </div>
@@ -71,13 +70,13 @@
 </template>
 
 <script>
-import { detailBoard, editBoard } from "@/api/board";
+import { createAdvise } from "@/api/advise";
 
 export default {
   bodyClass: "profile-page",
   data: function() {
     return {
-      value: "",
+      title: "",
       content: "",
       selected: "",
       items: [
@@ -103,14 +102,11 @@ export default {
       };
     },
   },
-  async created() {
-    // const userData = this.$store.state.role;
-    const postData = this.$route.query.boardId;
-    const { data } = await detailBoard(postData);
-    console.log(data);
-    this.value = data;
-    this.selected = data.category;
-    // console.log(this.value.content);
+  mounted() {
+    // $('#summernote').summernote({
+    //   height: 700,
+    // });
+
     $(function() {
       $("#summernote").summernote({
         height: 300, // set editor height
@@ -130,80 +126,62 @@ export default {
           ["view", ["fullscreen", "codeview"]],
         ],
       });
-      $("#summernote").summernote("pasteHTML", data.content);
     });
   },
-  mounted() {
-    // $('#summernote').summernote({
-    //   height: 700,
-    // });
-  },
   methods: {
-    async modifyBoard() {
-      const editData = {
-        boardId: this.value.boardId,
-        category: this.value.category,
-        content: this.value.content,
-        title: this.value.title,
-        name: this.value.name,
-        uuid: this.value.uuid,
+    // 게시판 글 작성
+    async writeContent() {
+      const data = {
+        uuid: this.$store.state.uuid,
+        title: this.title,
+        writer: this.$store.state.name,
+        content: $("#summernote").summernote("code"),
+        category: this.selected,
       };
+      // console.log(data)
+      const response = await createAdvise(data);
+      console.log("완료1111111111", response);
 
-      const role = this.$store.state.role;
-      const { data } = await editBoard(editData, role);
-      console.log(data);
       // axios
-      //   .put(SERVER_URL + "/notice/" + no, {
-      //     title: title,
-      //     content: content,
-      //     no: no,
+      //   .post(SERVER_URL + "api/board/create", {
+
       //   })
-      //   .then((response) => {
-      //     JSON.stringify(response.data);
-      //   })
-      //   .catch();
+      //   .then(function(response) {
+      // JSON.stringify(response.data);
+      // obj = JSON.stringify(response.data);
+      //   });
 
       this.$swal({
+        position: "top-end",
         icon: "success",
-        title: "글 수정 완료",
+        title: "글 작성 완료!!",
+        showConfirmButton: false,
+        timer: 1500,
       });
-      var query = this.value.boardId;
-      this.$router.push({ name: "boarddetail", query: { boardId: query } });
+      this.moveAdviseList();
     },
-    moveBoard() {
-      this.$router.push({ name: "board" });
+    moveAdviseList() {
+      this.$router.push({ name: "AdviseList" });
     },
   },
 };
 </script>
-
 <style lang="scss" scoped>
-// hr 설정
-.div-hr {
-  width: 80%;
-}
-
-// 한글 폰트 설정
 .kor {
   font-family: "Nanum Gothic", sans-serif;
 }
-// table css
-.styled-table {
-  border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 0.9em;
-  font-family: sans-serif;
-  min-width: 400px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+.btn-right {
+  text-align: right;
 }
-.styled-table th {
-  background-color: #98cec3;
-  color: #ffffff;
-  text-align: center;
-  width: 10rem;
+.titleSize {
+  margin: 10px;
+  width: 50%;
+  min-height: 30px;
 }
-.styled-table th,
-.styled-table td {
-  padding: 12px 15px;
+.boxSize {
+  margin: 10px;
+  width: 50%;
+  min-height: 300px;
+  padding: 10px;
 }
 </style>
