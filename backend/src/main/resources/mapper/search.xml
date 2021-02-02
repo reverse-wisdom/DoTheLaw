@@ -8,6 +8,12 @@
 			VALUES (#{word}, 0)
 			ON DUPLICATE KEY UPDATE hit = hit + 1;
 	</update>
+	<select id="selectHitTop" resultType="searchRequestDTO">
+	SELECT search_id, word, hit
+		FROM `search`
+	ORDER BY hit DESC
+	LIMIT 10;
+	</select>
 <!-- 
 	<select id="all" resultType="BoardRequestDTO">
 		select b.board_id, b.uuid, m.name,
