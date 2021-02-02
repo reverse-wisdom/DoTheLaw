@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -120,7 +121,7 @@ public class MemberControllor {
 	}
 
 	// 회원 탈퇴 미완성
-	@ApiOperation(value = "회원탈퇴(아직 안됨)")
+	@ApiOperation(value = "회원탈퇴")
 	@DeleteMapping("/delete")
 	private ResponseEntity<String> signout(@RequestParam(required = true) final Role role,
 			@RequestParam(required = true) final String email) {
@@ -140,5 +141,24 @@ public class MemberControllor {
 			}
 		}
 	}
-
+	@ApiOperation(value = "일반 회원 정보 수정")
+	@PutMapping("/update")
+	private ResponseEntity<String> updateUser(@Valid @RequestBody MemberRequestDTO memberRequestDTO) {
+		try {
+			memberservice.updateUser(memberRequestDTO);
+			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);			
+		} catch (SQLException e) {
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+		}
+	}
+	@ApiOperation(value = "변호사 회원 정보 수정")
+	@PutMapping("/update/lawyer")
+	private ResponseEntity<String> updateLawyer(@Valid @RequestBody MemberRequestDTO memberRequestDTO) {
+		try {
+			memberservice.updateLawyer(memberRequestDTO);
+			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);			
+		} catch (SQLException e) {
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+		}
+	}
 }

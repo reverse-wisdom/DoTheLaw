@@ -22,5 +22,4 @@ public class SignupRequestDTO {
     private String name;  
     private Role role;
     private String image;
-
 }

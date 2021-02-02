@@ -32,6 +32,7 @@ public class MemberService implements MemberUseCase {
 
 	@Override
 	public void joinLawyer(MemberRequestDTO lawyer) throws SQLException {
+		lawyer.setPassword(new BCryptPasswordEncoder().encode(lawyer.getPassword()));
 		mapper.joinLawyer(lawyer);
 	}
 
@@ -80,6 +81,19 @@ public class MemberService implements MemberUseCase {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public void updateUser(MemberRequestDTO member) throws SQLException {
+		member.setUuid(mapper.uuid(member.getEmail()));
+		mapper.updateUser(member);
+	}
+
+	@Override
+	public void updateLawyer(MemberRequestDTO lawyer) throws SQLException {
+		lawyer.setUuid(mapper.uuid(lawyer.getEmail()));
+		mapper.updateUser(lawyer);
+		mapper.updateLawyer(lawyer);
 	}
 
 }

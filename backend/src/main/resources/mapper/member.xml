@@ -57,4 +57,21 @@
 		from member
 		where member.email = #{email}
 	</select>
+	<update id="updateUser" parameterType="MemberRequestDTO" >
+		update member
+		set
+		name = #{name},
+		phone = #{phone},
+		image = #{image}
+		where uuid = #{uuid};
+	</update>
+	<update id="updateLawyer" parameterType="MemberRequestDTO" >
+		update lawyer
+		set
+		career = #{career},
+		introduction = #{introduction},
+		address = #{address},
+        dept = #{dept}
+		where uuid = #{uuid};
+	</update>
 </mapper>

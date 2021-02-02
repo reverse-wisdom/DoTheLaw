@@ -12,4 +12,6 @@ public interface MemberMapper {
 	public boolean signout(int uuid) throws SQLException;
 	public boolean signoutLawyer(int uuid) throws SQLException;
 	public int uuid(String email) throws SQLException;
+	public void updateUser(MemberRequestDTO member)throws SQLException;
+	public void updateLawyer(MemberRequestDTO lawyer) throws SQLException;
 }
