@@ -36,7 +36,7 @@ public class ImageController {
 //        return "index";
 //    }
     
-    @GetMapping("/data/{fileId}")
+    @GetMapping({"/data/{fileId}", "/image/{fileId}"})
     @ResponseBody
     public ResponseEntity<?> serveFile(@PathVariable int fileId) {
         try {
@@ -61,7 +61,7 @@ public class ImageController {
         }
     }
     
-    @PostMapping("/data")
+    @PostMapping({"/data", "/image"})
     @ResponseBody
     public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
