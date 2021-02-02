@@ -23,9 +23,7 @@
 
 <script>
 import { Circle8 } from 'vue-loading-spinner'; // npm 스피너 컴포넌트
-// import { newsParsing } from '@/api/service';
 import axios from 'axios';
-// const SERVER_URL = process.env.VUE_APP_API_URL;
 
 export default {
   components: { Circle8 },

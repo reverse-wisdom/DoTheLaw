@@ -18,7 +18,7 @@ import org.xml.sax.SAXException;
 
 @Service
 public class RSSservice {
-	public List parsingNews() throws SAXException, IOException, ParserConfigurationException {
+	public List<?> parsingNews() throws SAXException, IOException, ParserConfigurationException {
 		List<Map<String, String>> result = new ArrayList<>();
 		String url = "http://www.evernews.co.kr/rss/S1N8.xml";
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
