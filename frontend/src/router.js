@@ -11,6 +11,7 @@ import WebrtcView from './views/WebRtcView.vue';
 import Board from './views/Board.vue';
 import BoardDetail from './views/components/BoardDetail.vue';
 import BoardWrite from './views/components/BoardWrite.vue';
+import Profile from './views/Profile.vue';
 
 Vue.use(Router);
 
@@ -48,6 +49,15 @@ export default new Router({
       components: { default: Search, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
+      },
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      components: { default: Profile, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
       },
     },
     {
