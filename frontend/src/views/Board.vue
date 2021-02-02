@@ -1,5 +1,4 @@
 <template>
-  <!-- 백에서 완성시 작성할것 -->
   <!-- 게시판 페이지 -->
   <div class="wrapper">
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
@@ -7,22 +6,6 @@
       <div class="section profile-content">
         <h2 class="title text-center kor">게시판</h2>
         <hr class="div-hr" />
-        <div class="inn">
-          <div class="md-layout text-center">
-            <div class="md-layout-item md-medium-size-100 md-small-size-100">
-              <!-- <form class="form" @submit="searchBoard()" onSubmit="return false;">
-                <select name="searchType" id="searchType">
-                  <option value="title">제목</option>
-                  <option value="content">내용</option>
-                  <option value="writer">작성자</option>
-                </select>
-                <input id="searchWord" type="text" placeholder="검색어" @keydown.enter="searchBoard()" />
-                <md-button class="md-info" style="margin:auto;" @click="searchBoard()">검색</md-button>
-              </form> -->
-            </div>
-          </div>
-        </div>
-
         <div class="container">
           <v-card>
             <v-card-title>
@@ -30,19 +13,7 @@
               <v-spacer></v-spacer>
               <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
             </v-card-title>
-            <v-data-table
-              :headers="headers"
-              :items="values"
-              :search="search"
-              @click:row="detailPage"
-              :footer-props="{
-                showFirstLastPage: true,
-                firstIcon: 'mdi-arrow-collapse-left',
-                lastIcon: 'mdi-arrow-collapse-right',
-                prevIcon: 'mdi-minus',
-                nextIcon: 'mdi-plus',
-              }"
-            ></v-data-table>
+            <v-data-table :headers="headers" :items="values" :search="search" @click:row="detailPage" class="elevation-1"></v-data-table>
           </v-card>
 
           <div class="btn-right">
@@ -86,14 +57,21 @@ export default {
     this.token = this.$store.state.token;
 
     axios
-      .get('/api/board/search/all', {
-        // headers: {
-        //   'x-auth-token': this.token,
-        // },
-      })
+      .get('/api/board/search/all')
       .then(({ data }) => {
-        this.values = data;
-        // console.log(data);
+        for (let i = 0; i < data.length; i++) {
+          this.values.push({
+            boardId: data[i].boardId,
+            category: data[i].category,
+            hit: data[i].hit,
+            name: data[i].name,
+            title: data[i].title,
+            uploadDate: moment(data[i].uploadDate).format('llll'),
+          });
+        }
+
+        // moment.locale('ko');
+        console.log(moment(this.values[0].uploadDate).format('llll'));
       })
       .catch();
   },
@@ -111,6 +89,11 @@ export default {
     },
   },
   methods: {
+    // ISO 8601 -> Date
+    parseISOString(s) {
+      var b = s.split(/\D+/);
+      return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
+    },
     writePage() {
       this.$router.push('/boardWrite');
     },
@@ -119,19 +102,6 @@ export default {
       console.log(query);
       this.$router.push({ name: 'boarddetail', query: { boardId: query } });
     },
-    // // 게시판 검색
-    // searchBoard() {
-    //   var searchType = document.getElementById('searchType').value;
-    //   var searchWord = document.getElementById('searchWord').value;
-
-    //   axios
-    //     .get(SERVER_URL + '/board/search/?searchType=' + searchType + '&searchWord=' + searchWord)
-    //     .then(({ data }) => {
-    //       console.log(data);
-    //       this.pageArray = data;
-    //     })
-    //     .catch();
-    // },
   },
 };
 </script>
