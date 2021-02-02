@@ -60,11 +60,6 @@ export default new Vuex.Store({
     clearUuid(state) {
       state.uuid = '';
     },
-    // async updateNickname(state, userData) {
-    //   const {data} = await editUser(userData);
-    //   console.log(data.object.nickname)
-    //   state.nickname = userData.nickname
-    // }
   },
   actions: {
     async LOGIN({ commit }, userData) {
@@ -76,10 +71,6 @@ export default new Vuex.Store({
         commit('setPassword', data.member.password);
         commit('setName', data.member.name);
         commit('setUuid', data.member.uuid);
-        // commit('setNickname', response.data.object.nickname);
-        // saveAuthToCookie(data.token);
-        // saveEmailToCookie(userData.email);
-        // savePwdToCookie(userData.password);
         router.push('/');
       } else {
         alert('로그인 실패! 이메일 및 비밀번호를 확인해 주세요!');
