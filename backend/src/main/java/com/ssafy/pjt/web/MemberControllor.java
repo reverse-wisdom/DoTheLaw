@@ -82,7 +82,7 @@ public class MemberControllor {
 				return new ResponseEntity<>("NOT DUPLICATE", HttpStatus.OK);
 			}
 			catch (Exception e) {
-				return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
 			}
 		}
 		return new ResponseEntity<>("DUPLICATE", HttpStatus.OK);
@@ -96,7 +96,7 @@ public class MemberControllor {
 				return new ResponseEntity<>("NOT DUPLICATE", HttpStatus.OK);
 			}
 			catch (Exception e) {
-				return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
 			}
 		}
 		return new ResponseEntity<>("DUPLICATE", HttpStatus.OK);
