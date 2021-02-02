@@ -25,7 +25,7 @@ function searchUser(userEmail) {
 }
 //이메일 중복 체크
 function emailCheck(userEmail) {
-  return instance.get('/api/member/check', {
+  return instance.get('/api/member/check/email', {
     params: {
       email: userEmail,
     },
