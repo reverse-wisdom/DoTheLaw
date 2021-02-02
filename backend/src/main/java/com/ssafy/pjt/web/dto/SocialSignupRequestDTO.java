@@ -20,5 +20,6 @@ public class SocialSignupRequestDTO {
     private String phone;
     private Role role;
     private String id;
+    private String image;
     private String type;
 }
