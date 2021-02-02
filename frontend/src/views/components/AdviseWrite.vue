@@ -4,20 +4,19 @@
     <div class="main main-raised" style="z-index:1">
       <div class="section profile-content">
         <div style="padding:80px">
-          <h2 class="title text-center kor">게시판 글쓰기</h2>
+          <h2 class="title text-center kor">자문게시판 글쓰기</h2>
           <hr class="div-hr" />
-          <form v-on:submit.prevent="writeContent">
+          <form @submit.prevent="writeContent">
             <md-field>
               <label>제목</label>
               <md-input id="title" type="text" ref="title" v-model="title"></md-input>
             </md-field>
             <md-field>
-              <label for="category">글 종류</label>
-              <md-select v-model="category" name="category" id="category">
-                <md-option value="공지사항">공지사항</md-option>
-                <md-option value="일반">일반</md-option>
-                <md-option value="QnA">QnA</md-option>
-              </md-select>
+              <v-row align="center">
+                <v-col cols="12">
+                  <v-select :items="items" :menu-props="{ bottom: true, offsetY: true }" label="카테고리" v-model="selected"></v-select>
+                </v-col>
+              </v-row>
             </md-field>
             <md-field>
               <div id="summernote"></div>
@@ -27,16 +26,16 @@
               <input type="file" name="uploadFile" ref="fileData" />
               <!-- <input type="file" name="uploadFile" ref="fileData" @change="handleFilesUpload" /> -->
             </md-field>
-          </form>
 
-          <div class="btn-right">
-            <md-button class="md-dense md-raised md-warning" type="submit" @click="writeContent()">
-              등록
-            </md-button>
-            <md-button class="md-dense md-raised md-info" type="button" @click="moveList">
-              뒤로가기
-            </md-button>
-          </div>
+            <div class="btn-right">
+              <md-button class="md-dense md-raised md-warning" type="submit" @click="writeContent">
+                등록
+              </md-button>
+              <md-button class="md-dense md-raised md-info" type="button" @click="moveAdviseList">
+                목록
+              </md-button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -44,7 +43,7 @@
 </template>
 
 <script>
-import { createBoard } from '@/api/board';
+import { createAdvise } from '@/api/advise';
 
 export default {
   bodyClass: 'profile-page',
@@ -52,7 +51,8 @@ export default {
     return {
       title: '',
       content: '',
-      category: '',
+      selected: '',
+      items: ['교통/운전', '가정', '근로/노동', '부동산', '금융', '정보통신/기술'],
     };
   },
   props: {
@@ -97,10 +97,10 @@ export default {
         title: this.title,
         writer: this.$store.state.name,
         content: $('#summernote').summernote('code'),
-        category: this.category,
+        category: this.selected,
       };
-      const response = await createBoard(data);
-      console.log('게시글 작성 성공', response);
+      const response = await createAdvise(data);
+      console.log('자문 작성 성공', response);
 
       this.$swal({
         position: 'top-end',
@@ -109,10 +109,10 @@ export default {
         showConfirmButton: false,
         timer: 1500,
       });
-      this.moveList();
+      this.moveAdviseList();
     },
-    moveList() {
-      this.$router.push('/board');
+    moveAdviseList() {
+      this.$router.push({ name: 'adviseList' });
     },
   },
 };

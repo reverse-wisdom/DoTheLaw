@@ -4,12 +4,12 @@
     <div class="main main-raised" style="z-index:1">
       <div class="section profile-content">
         <div style="padding:80px">
-          <h2 class="title text-center kor">게시판 글쓰기</h2>
+          <h2 class="title text-center kor">게시판 글수정</h2>
           <hr class="div-hr" />
-          <form v-on:submit.prevent="writeContent">
+          <form v-on:submit.prevent="modifyContent">
             <md-field>
               <label>제목</label>
-              <md-input id="title" type="text" ref="title" v-model="title"></md-input>
+              <md-input id="title" type="text" ref="title" v-model="value.title"></md-input>
             </md-field>
             <md-field>
               <label for="category">글 종류</label>
@@ -30,10 +30,10 @@
           </form>
 
           <div class="btn-right">
-            <md-button class="md-dense md-raised md-warning" type="submit" @click="writeContent()">
+            <md-button class="md-dense md-raised md-warning" type="submit" @click="modifyBoard()">
               등록
             </md-button>
-            <md-button class="md-dense md-raised md-info" type="button" @click="moveList">
+            <md-button class="md-dense md-raised md-info" type="button" @click="moveBoard">
               뒤로가기
             </md-button>
           </div>
@@ -44,13 +44,13 @@
 </template>
 
 <script>
-import { createBoard } from '@/api/board';
+import { detailBoard, editBoard } from '@/api/board';
 
 export default {
   bodyClass: 'profile-page',
-  data() {
+  data: function() {
     return {
-      title: '',
+      value: '',
       content: '',
       category: '',
     };
@@ -68,7 +68,10 @@ export default {
       };
     },
   },
-  mounted() {
+  async created() {
+    const postData = this.$route.query.boardId;
+    const { data } = await detailBoard(postData);
+    this.value = data;
     $(function() {
       $('#summernote').summernote({
         height: 300, // set editor height
@@ -88,51 +91,64 @@ export default {
           ['view', ['fullscreen', 'codeview']],
         ],
       });
+      $('#summernote').summernote('pasteHTML', data.content);
     });
   },
   methods: {
-    async writeContent() {
-      const data = {
-        uuid: this.$store.state.uuid,
-        title: this.title,
-        writer: this.$store.state.name,
+    async modifyBoard() {
+      const editData = {
+        boardId: this.value.boardId,
+        category: this.value.category,
         content: $('#summernote').summernote('code'),
-        category: this.category,
+        title: this.value.title,
+        name: this.value.name,
+        uuid: this.value.uuid,
       };
-      const response = await createBoard(data);
-      console.log('게시글 작성 성공', response);
+
+      const role = this.$store.state.role;
+      const { data } = await editBoard(editData, role);
+      console.log(data);
 
       this.$swal({
-        position: 'top-end',
         icon: 'success',
-        title: '글 작성 완료!!',
-        showConfirmButton: false,
-        timer: 1500,
+        title: '글 수정 완료',
       });
-      this.moveList();
+      var query = this.value.boardId;
+      this.$router.push({ name: 'boardDetail', query: { boardId: query } });
     },
-    moveList() {
-      this.$router.push('/board');
+    moveBoard() {
+      this.$router.push({ name: 'board' });
     },
   },
 };
 </script>
+
 <style lang="scss" scoped>
+// hr 설정
+.div-hr {
+  width: 80%;
+}
+// 한글 폰트 설정
 .kor {
   font-family: 'Nanum Gothic', sans-serif;
 }
-.btn-right {
-  text-align: right;
+// table css
+.styled-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
-.titleSize {
-  margin: 10px;
-  width: 50%;
-  min-height: 30px;
+.styled-table th {
+  background-color: #98cec3;
+  color: #ffffff;
+  text-align: center;
+  width: 10rem;
 }
-.boxSize {
-  margin: 10px;
-  width: 50%;
-  min-height: 300px;
-  padding: 10px;
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
 }
 </style>

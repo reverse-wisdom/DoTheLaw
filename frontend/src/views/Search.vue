@@ -154,7 +154,7 @@ export default {
   props: {
     header: {
       type: String,
-      default: require('@/assets/img/nature-2.jpg'),
+      default: require('@/assets/img/jj02.gif'),
     },
   },
   computed: {
@@ -174,7 +174,7 @@ export default {
       var searchWord = document.getElementById('searchWord').value;
       this.contents = [];
       axios
-        .get('https://www.law.go.kr/DRF/lawSearch.do?OC=' + LAWS_API_KEY + '&target=prec&type=XML&mobileYn=Y&display=100&query=' + searchWord)
+        .get('https://www.law.go.kr/DRF/lawSearch.do?OC=dbm01049&target=prec&type=XML&mobileYn=Y&display=100&query=' + searchWord)
         .then(({ data }) => {
           var xml = data;
           var json = convert.xml2json(xml, { compact: true });
@@ -195,7 +195,7 @@ export default {
       this.render = false;
       this.judgment = {};
       axios
-        .get('https://www.law.go.kr/DRF/lawService.do?OC=' + LAWS_API_KEY + '&target=prec&type=xml&ID=' + data)
+        .get('https://www.law.go.kr/DRF/lawService.do?OC=dbm01049&target=prec&type=xml&ID=' + data)
         .then(({ data }) => {
           var xml = data;
           var json = convert.xml2json(xml, { compact: true });

@@ -1,15 +1,15 @@
 <template>
-  <!-- 게시판 페이지 -->
+  <!-- 자문 게시판 페이지 -->
   <div class="wrapper">
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title text-center kor">게시판</h2>
+        <h2 class="title text-center kor">자문게시판</h2>
         <hr class="div-hr" />
         <div class="container">
           <v-card>
             <v-card-title>
-              자유게시판
+              자문게시판
               <v-spacer></v-spacer>
               <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
             </v-card-title>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { fetchBoardList } from '@/api/board';
+import { fetchAdviseList } from '@/api/advise';
 
 export default {
   bodyClass: 'profile-page',
@@ -52,8 +52,7 @@ export default {
   },
   async mounted() {
     try {
-      this.token = this.$store.state.token;
-      const { data } = await fetchBoardList();
+      const { data } = await fetchAdviseList();
       for (let i = 0; i < data.length; i++) {
         this.values.push({
           boardId: data[i].boardId,
@@ -68,6 +67,7 @@ export default {
       console.log(err);
     }
   },
+
   props: {
     header: {
       type: String,
@@ -83,11 +83,11 @@ export default {
   },
   methods: {
     writePage() {
-      this.$router.push('/boardWrite');
+      this.$router.push('/advisewrite');
     },
     detailPage(value) {
       var query = value.boardId;
-      this.$router.push({ name: 'boardDetail', query: { boardId: query } });
+      this.$router.push({ name: 'adviseDetail', query: { boardId: query } });
     },
   },
 };

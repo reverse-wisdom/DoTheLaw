@@ -1,9 +1,6 @@
 <template>
   <div class="wrapper">
-    <parallax
-      class="section page-header header-filter"
-      :style="headerStyle"
-    ></parallax>
+    <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
         <div class="container">
@@ -41,29 +38,35 @@
               <div class="col-11" id="text-solid-one">
                 최근답변
                 <hr />
-                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
                 <div></div>
               </div>
               <!-- <div class="col-5" id="text-solid">6</div> -->
             </div>
             <md-field style="margin: 5rem 5rem 0 5rem ;">
-              <md-input
-                id="address"
-                type="text"
-                ref="address"
-                v-model="address"
-                placeholder="주소 입력"
-              ></md-input>
+              <md-input id="address" type="text" ref="address" v-model="address" placeholder="주소 입력"></md-input>
             </md-field>
-            <md-button class="md-info" style="margin: auto" @click="searchMap"
-              >주소로검색</md-button
-            >
-            <div
-              id="map"
-              ref="map"
-              style="width: 100%; height: 400px; margin: 2rem;"
-            ></div>
+            <md-button class="md-info" style="margin: auto" @click="searchMap">주소로검색</md-button>
+            <div id="map" ref="map" style="width: 100%; height: 400px; margin: 2rem;"></div>
           </div>
         </div>
       </div>
@@ -72,15 +75,15 @@
 </template>
 
 <script>
-const GOOGLE_MAP_KEY = "AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc";
-import axios from "axios";
+const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
+import axios from 'axios';
 
 export default {
   components: {},
-  bodyClass: "profile-page",
+  bodyClass: 'profile-page',
   data() {
     return {
-      imageUrl: require("@/assets/img/ryan.jpg"),
+      imageUrl: require('@/assets/img/ryan.jpg'),
       address: null,
       map: null,
       mapState: window.mapState,
@@ -93,7 +96,7 @@ export default {
   props: {
     header: {
       type: String,
-      default: require("@/assets/img/jj02.gif"),
+      default: require('@/assets/img/jj02.gif'),
     },
   },
   computed: {
@@ -104,18 +107,13 @@ export default {
     },
   },
   created() {
-    var query = "경북 구미시 3공단 3로 302";
+    var query = '경북 구미시 3공단 3로 302';
     axios
-      .get(
-        "https://maps.googleapis.com/maps/api/geocode/json?key=" +
-          GOOGLE_MAP_KEY +
-          "&address=" +
-          query
-      )
+      .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_MAP_KEY + '&address=' + query)
       .then(({ data }) => {
         let lat = data.results[0].geometry.location.lat;
         let lng = data.results[0].geometry.location.lng;
-        this.map = new window.google.maps.Map(document.getElementById("map"), {
+        this.map = new window.google.maps.Map(document.getElementById('map'), {
           center: {
             lat,
             lng,
@@ -133,29 +131,40 @@ export default {
       })
       .catch();
   },
+  watch: {
+    // watch를 통해 mounted가 실패하더라도 다시호출함 지도가 랜더링 안되는 현상 방지함
+    'mapState.initMap'(value) {
+      if (value) {
+        if (this.mapState.initMap) {
+          this.map = new window.google.maps.Map(document.getElementById('map'), {
+            center: this.multi,
+            zoom: 12,
+          });
+          new window.google.maps.Marker({
+            position: this.multi,
+            map: this.map,
+            icon: require('@/assets/building.png'),
+          });
+        }
+        console.log('load by watch');
+      }
+    },
+  },
   methods: {
     searchMap() {
       var query = this.address;
       axios
-        .get(
-          "https://maps.googleapis.com/maps/api/geocode/json?key=" +
-            GOOGLE_MAP_KEY +
-            "&address=" +
-            query
-        )
+        .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_MAP_KEY + '&address=' + query)
         .then(({ data }) => {
           let lat = data.results[0].geometry.location.lat;
           let lng = data.results[0].geometry.location.lng;
-          this.map = new window.google.maps.Map(
-            document.getElementById("map"),
-            {
-              center: {
-                lat,
-                lng,
-              },
-              zoom: 18,
-            }
-          );
+          this.map = new window.google.maps.Map(document.getElementById('map'), {
+            center: {
+              lat,
+              lng,
+            },
+            zoom: 18,
+          });
           new window.google.maps.Marker({
             label: query,
             position: {
@@ -175,8 +184,7 @@ export default {
 #profile {
   border-radius: 70%;
 }
-#content-sort {
-}
+
 #image-change-button {
   border: 1px solid gray;
   margin-top: 3px;

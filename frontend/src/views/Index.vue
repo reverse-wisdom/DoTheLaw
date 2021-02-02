@@ -52,7 +52,7 @@
 
             <p>{{ testToken }}</p>
             <p>{{ $store.state.email }}</p>
-            <p>{{ $store.state.uuid }}</p>
+            <p>{{ $store.state.role }}</p>
 
             <md-button class="md-info" style="margin: auto" @click="checkCookie()">쿠키체크</md-button>
             쿠키값:
@@ -60,15 +60,6 @@
             <br />
           </div>
         </div>
-
-        <!-- 구글 지도 테스트 -->
-        <md-field>
-          <label>주소입력</label>
-          <md-input id="address" type="text" ref="address" v-model="address"></md-input>
-        </md-field>
-        <md-button class="md-info" style="margin: auto" @click="searchMap">주소로검색</md-button>
-        <div id="map" ref="map" style="width: 100%; height: 300px; margin: auto;"></div>
-        <!-- end -->
 
         <div class="section">
           <div class="icon icon-success">
@@ -138,7 +129,7 @@
 
 <script>
 import RSSParser from './components/RSSParser';
-const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
+// const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
 import axios from 'axios';
 export default {
   name: 'index',
@@ -178,83 +169,10 @@ export default {
 
       model: 1,
       cookie: '',
-
-      // 구글 지도관련
-      address: null,
-      map: null,
-      mapState: window.mapState,
-      multi: {
-        lat: 37.5665734,
-        lng: 126.978179,
-      },
     };
   },
 
-  // mounted를 통해 지도 로딩 체크
-  mounted() {
-    console.log(this.mapState.initMap);
-    console.log('123123');
-    if (this.mapState.initMap) {
-      console.log('지도 로딩완료');
-      this.map = new window.google.maps.Map(document.getElementById('map'), {
-        center: this.multi,
-        zoom: 12,
-      });
-      new window.google.maps.Marker({
-        position: this.multi,
-        map: this.map,
-        icon: require('@/assets/building.png'),
-      });
-    }
-  },
-
-  watch: {
-    // watch를 통해 mounted가 실패하더라도 다시호출함 지도가 랜더링 안되는 현상 방지함
-    'mapState.initMap'(value) {
-      if (value) {
-        if (this.mapState.initMap) {
-          this.map = new window.google.maps.Map(document.getElementById('map'), {
-            center: this.multi,
-            zoom: 12,
-          });
-          new window.google.maps.Marker({
-            position: this.multi,
-            map: this.map,
-            icon: require('@/assets/building.png'),
-          });
-        }
-        console.log('load by watch');
-      }
-    },
-  },
   methods: {
-    // 구글 지도 지오코드
-    searchMap() {
-      var query = this.address;
-      axios
-        .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_MAP_KEY + '&address=' + query)
-        .then(({ data }) => {
-          let lat = data.results[0].geometry.location.lat;
-          let lng = data.results[0].geometry.location.lng;
-          this.map = new window.google.maps.Map(document.getElementById('map'), {
-            center: {
-              lat,
-              lng,
-            },
-            zoom: 18,
-          });
-          new window.google.maps.Marker({
-            label: query,
-            position: {
-              lat,
-              lng,
-            },
-            map: this.map,
-          });
-        })
-        .catch();
-    },
-
     // RSS 뉴스 새로고침 버튼
     // :key "componentKey" 변수를 활용해 컴포넌트 강제새로고침 생성
     forceRerender() {
