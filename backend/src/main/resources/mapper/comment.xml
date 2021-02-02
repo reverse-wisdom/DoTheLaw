@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.pjt.core.repository.mapper.CommentMapper">
+	
+	<select id="search" parameterType="int" resultType="CommentRequestDTO">
+		select * from comment where comment.board_id=#{bpardId}
+	</select>
+	
+	<insert id="insert" parameterType="CommentRequestDTO">
+		INSERT INTO comment (board_id, uuid, content)
+		VALUES (#{boardId}, #{uuid}, #{content})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete
+		from comment
+		where
+		comment.comment_id
+		= #{commentId}
+	</delete>
+	
+	<update id="update" parameterType="CommentRequestDTO">
+		update comment
+		set
+		content = #{content}
+		where comment.comment_id = #{commentId};
+	</update>
+	
+	<select id="searchMember" parameterType="int" resultType="MemberRequestDTO">
+		select * from member where member.uuid=#{uuid}
+	</select>
+	
+	<select id="check" parameterType="int" resultType="CommentRequestDTO">
+		select * from comment where comment.comment_id=#{commentId}
+	</select>
+	
+</mapper>

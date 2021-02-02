@@ -6,7 +6,7 @@
       <div class="section profile-content">
         <hr />
         <div class="container">
-          <register-insert></register-insert>
+          <register-insert-lawyer></register-insert-lawyer>
         </div>
       </div>
     </div>
@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import RegisterInsert from './components/RegisterInsert.vue';
+import RegisterInsertLawyer from './components/RegisterInsertLawyer.vue';
 
 export default {
-  components: { RegisterInsert },
+  components: { RegisterInsertLawyer },
   bodyClass: 'profile-page',
   data() {
     return {};
