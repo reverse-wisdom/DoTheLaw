@@ -61,7 +61,7 @@ public class LoginController {
     	
     	//소셜 아이디 구분하기
     	socialsignupRequsetDTO.setEmail(socialsignupRequsetDTO.getType().trim()+"_"+socialsignupRequsetDTO.getEmail());
-    	//socialsignupRequsetDTO.setName(socialsignupRequsetDTO.getType().substring(0, 1)+"@"+socialsignupRequsetDTO.getName());
+    	socialsignupRequsetDTO.setName(socialsignupRequsetDTO.getType().substring(0, 1)+"@"+socialsignupRequsetDTO.getName());
     	MemberDTO memberDTO = MemberDTO.builder()
                 .name(socialsignupRequsetDTO.getName())
                 .email(socialsignupRequsetDTO.getEmail())
@@ -69,9 +69,7 @@ public class LoginController {
                 .build();
     	
         if (!memberService.checkEmail(socialsignupRequsetDTO.getEmail())) { //DB에 있을 때
-        	System.out.println("????????????");
             JwtAuthToken jwtAuthToken = (JwtAuthToken) loginService.createAuthToken(memberDTO);
-            System.out.println("??");
             return CommonResponse.builder()
                     .code("LOGIN_SUCCESS")
                     .status(200)
@@ -85,6 +83,7 @@ public class LoginController {
         	signupRequsetDTO.setEmail(socialsignupRequsetDTO.getEmail());
         	signupRequsetDTO.setPassword(socialsignupRequsetDTO.getId());
         	signupRequsetDTO.setName(socialsignupRequsetDTO.getName());
+        	signupRequsetDTO.setImage(socialsignupRequsetDTO.getImage());
         	signupRequsetDTO.setRole(socialsignupRequsetDTO.getRole());
         	
         	try {
