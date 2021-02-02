@@ -17,6 +17,7 @@ export default new Vuex.Store({
     nickname: '',
     name: '',
     uuid: '',
+    role: '',
   },
   getters: {
     isLogin(state) {
@@ -38,6 +39,9 @@ export default new Vuex.Store({
     },
     setName(state, name) {
       state.name = name;
+    },
+    setRole(state, role) {
+      state.role = role;
     },
     clearPwd(state) {
       state.password = '';
@@ -76,6 +80,10 @@ export default new Vuex.Store({
         commit('setPassword', userData.password);
         commit('setName', response.data.member.name);
         commit('setUuid', response.data.member.uuid);
+        const tmp = response.data.member.role;
+        const tmp_role = tmp.substring(5);
+        const role = tmp_role.trim();
+        commit('setRole', role);
         // saveAuthToCookie(data.token);
         // saveEmailToCookie(userData.email);
         // savePwdToCookie(userData.password);
@@ -87,11 +95,16 @@ export default new Vuex.Store({
     async SOCIALLOGIN({ commit }, userData) {
       const { data } = await socialLoginUser(userData);
       if (data.code == 'LOGIN_SUCCESS') {
+        console.log(data.member)
         commit('setToken', data['message']);
         commit('setEmail', userData.email);
         commit('setPassword', userData.password);
         commit('setName', userData.name);
         commit('setUuid', data.member.uuid);
+        const tmp = data.member.role;
+        const tmp_role = tmp.substring(5);
+        const role = tmp_role.trim();
+        commit('setRole', role);
         router.push('/');
       } else {
         alert('로그인 실패! 이메일 및 비밀번호를 확인해 주세요!');

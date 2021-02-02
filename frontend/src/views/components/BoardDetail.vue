@@ -12,6 +12,10 @@
         <div class="container">
           <table class="styled-table" style="width: 100%">
             <tr>
+              <th scope="col">카테고리</th>
+              <td>{{ value.category }}</td>
+            </tr>
+            <tr>
               <th scope="col">제목</th>
               <td>{{ value.title }}</td>
             </tr>
@@ -39,12 +43,12 @@
             <md-button class="md-warning" @click="updatePage(value)"
               >글수정</md-button
             >
-            <md-button class="md-rose" @click="deletePage()">글 삭제</md-button>
-            <md-button class="md-info" @click="moveBoard()">뒤로가기</md-button>
+            <md-button class="md-rose" @click="deleteBoard">글 삭제</md-button>
+            <md-button class="md-info" @click="moveBoard()">목록</md-button>
           </div>
           <!-- else -->
           <div v-if="$store.state.name != value.name" style="text-align:right">
-            <md-button class="md-info" @click="moveBoard()">뒤로가기</md-button>
+            <md-button class="md-info" @click="moveBoard()">목록</md-button>
           </div>
         </div>
       </div>
@@ -53,7 +57,7 @@
 </template>
 
 <script>
-import { detailBoard } from "@/api/board";
+import { detailBoard, deleteBoard } from "@/api/board";
 // import axios from "axios";
 
 export default {
@@ -64,8 +68,8 @@ export default {
     };
   },
   async created() {
-    const postdata = this.$route.query.boardId;
-    const { data } = await detailBoard(postdata);
+    const postData = this.$route.query.boardId;
+    const { data } = await detailBoard(postData);
     console.log(data);
     this.value = data;
   },
@@ -86,18 +90,12 @@ export default {
     moveBoard() {
       this.$router.push("/board");
     },
-    deletePage() {
-      var obj = null;
-      axios
-        .delete(SERVER_URL + "/board/" + this.$route.query.boardNo)
-        .then(({ data }) => {
-          let msg = "삭제 처리시 문제가 발생했습니다.";
-          if (data === "success") {
-            JSON.stringify(response.data);
-            obj = response;
-          }
-        })
-        .catch(() => {});
+    async deleteBoard() {
+      const boardId = this.value.boardId;
+      const role = this.$store.state.role;
+      const userId = this.$store.state.uuid;
+      // const role = this.
+      const { data } = await deleteBoard(boardId, role, userId);
       this.$swal({
         position: "top-end",
         icon: "success",
@@ -108,8 +106,8 @@ export default {
       this.$router.push("/board");
     },
     updatePage(value) {
-      var no = value.no;
-      this.$router.push({ name: "boardupdate", query: { boardNo: no } });
+      var boardId = value.boardId;
+      this.$router.push({ name: "boardupdate", query: { boardId: boardId } });
     },
   },
 };

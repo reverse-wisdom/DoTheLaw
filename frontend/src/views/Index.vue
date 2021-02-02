@@ -1,62 +1,67 @@
 <template>
   <div class="wrapper">
     <parallax class="page-header header-filter" :style="headerStyle">
-      <div class="md-layout">
-        <div class="md-layout-item">
-          <div class="image-wrapper">
-            <div class="brand">
-              <!-- <img :src="logo" alt="logo" /> -->
-              <br />
+      <v-card class="mx-auto" color="#ECEFF1">
+        <div class="md-layout">
+          <div class="md-layout-item">
+            <div class="image-wrapper">
+              <div class="brand">
+                <!-- <img :src="logo" alt="logo" /> -->
+                <!-- <v-img class="white--text align-end" :src="logo"></v-img> -->
+                <br />
 
-              <form
-                @submit="detailSearch()"
-                onSubmit="return false;"
-                autocomplete="off"
-                background-color="white"
-              >
-                <!-- <fieldset> -->
-                  <v-text-field
-                    id="searchWord"
-                    v-model="query"
-                    color="grey lighten-5"
-                    label="판례명"
-                    placeholder="검색어 입력"
-                    loading
-                  >
-                    <template v-slot:progress>
-                      <v-progress-linear
-                        v-if="query"
-                        :value="progress"
-                        :color="color"
-                        absolute
-                        height="7"
-                      ></v-progress-linear>
-                    </template>
-                  </v-text-field>
-                  <button class="searchBtn" @click="detailSearch()">
-                    <i class="fa fa-search"></i>
-                  </button>
-                <!-- </fieldset> -->
-              </form>
+                <form
+                  @submit="detailSearch()"
+                  onSubmit="return false;"
+                  autocomplete="off"
+                  background-color="white"
+                >
+                  <fieldset>
+                    <v-text-field
+                      id="searchWord"
+                      v-model="query"
+                      color="cyan darken"
+                      label="판례명"
+                      placeholder="검색어 입력"
+                      loading
+                    >
+                      <template v-slot:progress>
+                        <v-progress-linear
+                          v-if="query"
+                          :value="progress"
+                          :color="color"
+                          absolute
+                          height="7"
+                        ></v-progress-linear>
+                      </template>
+                    </v-text-field>
+                    <button class="searchBtn" @click="detailSearch()">
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </fieldset>
+                </form>
 
-              <!-- 리스트 -->
+                <!-- 리스트 -->
 
-              <v-list>
-                <v-list-item-group v-model="model">
-                  <v-list-item v-for="(item, i) in items" :key="i">
-                    <v-list-item-icon>
-                      <v-icon v-text="item.icon"></v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                      <v-list-item-title v-text="item.text"></v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list-item-group>
-              </v-list>
+                <v-list>
+                  <v-list-item-group v-model="model">
+                    <v-list-item v-for="(item, i) in items" :key="i">
+                      <v-list-item-icon>
+                        <v-icon v-text="item.icon"></v-icon>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title
+                          v-text="item.text"
+                        ></v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list-item-group>
+                </v-list>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </v-card>
     </parallax>
     <div class="main main-raised">
       <div class="section section-basic">
@@ -71,12 +76,8 @@
 
             <p>{{ testToken }}</p>
             <p>{{ $store.state.email }}</p>
-            <md-button
-              class="md-info"
-              style="margin: auto"
-              @click="logoutUser()"
-              >로그아웃</md-button
-            >
+            <p>{{ $store.state.uuid }}</p>
+
             <md-button
               class="md-info"
               style="margin: auto"
@@ -86,11 +87,28 @@
             쿠키값:
             <p>{{ cookie }}</p>
             <br />
-            <md-button class="md-info" style="margin: auto" @click="moveBoard()"
-              >게시판으로이동</md-button
-            >
           </div>
         </div>
+
+        <!-- 구글 지도 테스트 -->
+        <md-field>
+          <label>주소입력</label>
+          <md-input
+            id="address"
+            type="text"
+            ref="address"
+            v-model="address"
+          ></md-input>
+        </md-field>
+        <md-button class="md-info" style="margin: auto" @click="searchMap"
+          >주소로검색</md-button
+        >
+        <div
+          id="map"
+          ref="map"
+          style="width: 100%; height: 300px; margin: auto;"
+        ></div>
+        <!-- end -->
 
         <div class="section">
           <div class="icon icon-success">
@@ -182,9 +200,8 @@
 
 <script>
 import RSSParser from "./components/RSSParser";
-const LAWS_API_KEY = process.env.VUE_APP_LAWS_API_KEY;
-import { deleteCookie } from "@/utils/cookies";
-
+const GOOGLE_MAP_KEY = "AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc";
+import axios from "axios";
 export default {
   name: "index",
   bodyClass: "index-page",
@@ -193,10 +210,10 @@ export default {
       type: String,
       default: require("@/assets/img/mainbg.png"),
     },
-    logo: {
-      type: String,
-      default: require("@/assets/img/logo.png"),
-    },
+    // logo: {
+    //   type: String,
+    //   default: require("@/assets/img/logo.png"),
+    // },
   },
   components: {
     RSSParser,
@@ -223,9 +240,94 @@ export default {
 
       model: 1,
       cookie: "",
+
+      // 구글 지도관련
+      address: null,
+      map: null,
+      mapState: window.mapState,
+      multi: {
+        lat: 37.5665734,
+        lng: 126.978179,
+      },
     };
   },
+
+  // mounted를 통해 지도 로딩 체크
+  mounted() {
+    console.log(this.mapState.initMap);
+    console.log("123123");
+    if (this.mapState.initMap) {
+      console.log("지도 로딩완료");
+      this.map = new window.google.maps.Map(document.getElementById("map"), {
+        center: this.multi,
+        zoom: 12,
+      });
+      new window.google.maps.Marker({
+        position: this.multi,
+        map: this.map,
+        icon: require("@/assets/building.png"),
+      });
+    }
+  },
+
+  watch: {
+    // watch를 통해 mounted가 실패하더라도 다시호출함 지도가 랜더링 안되는 현상 방지함
+    "mapState.initMap"(value) {
+      if (value) {
+        if (this.mapState.initMap) {
+          this.map = new window.google.maps.Map(
+            document.getElementById("map"),
+            {
+              center: this.multi,
+              zoom: 12,
+            }
+          );
+          new window.google.maps.Marker({
+            position: this.multi,
+            map: this.map,
+            icon: require("@/assets/building.png"),
+          });
+        }
+        console.log("load by watch");
+      }
+    },
+  },
   methods: {
+    // 구글 지도 지오코드
+    searchMap() {
+      var query = this.address;
+      axios
+        .get(
+          "https://maps.googleapis.com/maps/api/geocode/json?key=" +
+            GOOGLE_MAP_KEY +
+            "&address=" +
+            query
+        )
+        .then(({ data }) => {
+          let lat = data.results[0].geometry.location.lat;
+          let lng = data.results[0].geometry.location.lng;
+          this.map = new window.google.maps.Map(
+            document.getElementById("map"),
+            {
+              center: {
+                lat,
+                lng,
+              },
+              zoom: 18,
+            }
+          );
+          new window.google.maps.Marker({
+            label: query,
+            position: {
+              lat,
+              lng,
+            },
+            map: this.map,
+          });
+        })
+        .catch();
+    },
+
     // RSS 뉴스 새로고침 버튼
     // :key "componentKey" 변수를 활용해 컴포넌트 강제새로고침 생성
     forceRerender() {
@@ -237,18 +339,9 @@ export default {
     },
     tokenTest() {
       this.testToken = this.$store.state.token;
+      console.log(this.$store.state);
     },
-    moveBoard() {
-      this.tokenTest();
-      if (this.testToken != null && this.testToken != "") {
-        this.$router.push("board");
-      } else {
-        this.$swal({
-          icon: "error",
-          title: "로그인상태만 이동가능!",
-        });
-      }
-    },
+
     logoutUser() {
       this.$store.commit("clearEmail");
       this.$store.commit("clearToken");
@@ -259,17 +352,7 @@ export default {
       sessionStorage.clear();
 
       // 쿠키날리기
-      // deleteCookie(all);
-      // this.deleteAllCookies();
       $cookies.keys().forEach((cookie) => $cookies.remove(cookie));
-      // this.$router.push('/');
-      // this.$router.go(0);
-      // var auth2 = window.gapi.auth2.getAuthInstance();
-      // if (auth2 != null) {
-      //   auth2.sighOut(0);
-      //   auth2.disconnect();
-      // }
-
       this.$router.go(this.$router.currentRoute);
     },
     deleteAllCookies() {
@@ -284,7 +367,6 @@ export default {
     },
     checkCookie() {
       this.cookie = "";
-      // console.log($cookies.keys());
       console.log($cookies.isKey(""));
       this.cookie = $cookies.keys();
     },
@@ -311,15 +393,10 @@ export default {
       };
     },
   },
-
-  mounted() {
-    // console.log(this.$cookies.get('NID'));
-    // console.log(this.$cookies.keys().join('\n'));
-  },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .md-card-actions.text-center {
   display: flex;
   justify-content: center !important;
@@ -338,106 +415,5 @@ export default {
   transform: translateX(10%);
   color: white;
   text-align: left;
-}
-
-// 검색창 디자인
-
-// #form-buscar > .form-group > .input-group > .form-control {
-//   height: 40px;
-// }
-// #form-buscar > .form-group > .input-group > .input-group-btn > .btn {
-//   height: 40px;
-//   font-size: 16px;
-//   font-weight: 300;
-// }
-// #form-buscar > .form-group > .input-group > .input-group-btn > .btn .glyphicon {
-//   margin-right: 12px;
-// }
-
-// #form-buscar > .form-group > .input-group > .form-control {
-//   font-size: 16px;
-//   font-weight: 300;
-// }
-
-// #form-buscar > .form-group > .input-group > .form-control:focus {
-//   border-color: #33a444;
-//   outline: 0;
-//   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px rgba(0, 109, 0, 0.8);
-//   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px rgba(0, 109, 0, 0.8);
-// }
-
-// //
-// fieldset {
-//   position: relative;
-//   display: inline-block;
-//   padding: 0 0 0 40px;
-//   background: #ceb980;
-//   border: none;
-//   border-radius: 5px;
-// }
-
-// .searchInput,
-// .searchBtn {
-//   position: relative;
-//   width: 200px;
-//   height: 50px;
-//   padding: 0;
-//   display: inline-block;
-//   float: left;
-// }
-
-// .searchInput {
-//   color: #000000;
-//   z-index: 2;
-//   border: 0 none;
-// }
-// .searchInput:focus {
-//   outline: 0 none;
-// }
-// .searchInput:focus + .searchBtn {
-//   -webkit-transform: translate(0, 0);
-//   -ms-transform: translate(0, 0);
-//   transform: translate(0, 0);
-//   -webkit-transition-duration: 0.3s;
-//   transition-duration: 0.3s;
-// }
-// .searchInput:focus + .searchBtn .fa {
-//   -webkit-transform: translate(0px, 0);
-//   -ms-transform: translate(0px, 0);
-//   transform: translate(0px, 0);
-//   -webkit-transition-duration: 0.3s;
-//   transition-duration: 0.3s;
-//   color: #fff;
-// }
-
-// .searchBtn {
-//   z-index: 1;
-//   width: 50px;
-//   border: 0 none;
-//   background: #ceb980;
-//   cursor: pointer;
-//   border-radius: 0 5px 5px 0;
-//   -webkit-transform: translate(-50px, 0);
-//   -ms-transform: translate(-50px, 0);
-//   transform: translate(-50px, 0);
-//   -webkit-transition-duration: 0.3s;
-//   transition-duration: 0.3s;
-// }
-
-// .fa-search {
-//   font-size: 1.4rem;
-//   color: #29abe2;
-//   z-index: 3;
-//   top: 25%;
-//   -webkit-transform: translate(-190px, 0);
-//   -ms-transform: translate(-190px, 0);
-//   transform: translate(-190px, 0);
-//   -webkit-transition-duration: 0.3s;
-//   transition-duration: 0.3s;
-//   -webkit-transition: all 0.1s ease-in-out;
-//   transition: all 0.1s ease-in-out;
-// }
-.theme--light.v-input.search-field input::placeholder {
-  color: #ffff;
 }
 </style>

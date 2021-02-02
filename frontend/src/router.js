@@ -11,6 +11,7 @@ import WebrtcView from './views/WebRtcView.vue';
 import Board from './views/Board.vue';
 import BoardDetail from './views/components/BoardDetail.vue';
 import BoardWrite from './views/components/BoardWrite.vue';
+import BoardUpdate from './views/components/BoardUpdate.vue';
 
 Vue.use(Router);
 
@@ -72,6 +73,15 @@ export default new Router({
       path: '/boardWrite',
       name: 'boardWrite',
       components: { default: BoardWrite, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/boardUpdate',
+      name: 'boardupdate',
+      components: { default: BoardUpdate, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
