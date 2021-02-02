@@ -25,7 +25,7 @@
             </tr>
             <tr style="border-top: 1px solid;">
               <th scope="col">작성시간</th>
-              <td>{{ value.upload_date }}</td>
+              <td>{{ value.uploadDate }}</td>
             </tr>
             <tr style="border-top: 1px solid;">
               <th scope="col">조회수</th>
@@ -33,7 +33,7 @@
             </tr>
             <tr style="border-top: 1px solid;">
               <th scope="col">내용</th>
-              <td>{{ value.content }}</td>
+              <td v-html="value.content"></td>
             </tr>
           </table>
 
@@ -72,6 +72,7 @@ export default {
     const { data } = await detailBoard(postData);
     console.log(data);
     this.value = data;
+    this.value.uploadDate = moment(data.uploadDate).format("llll");
   },
   props: {
     header: {

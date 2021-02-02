@@ -1,56 +1,69 @@
 <template>
-  <!-- 공지사항 수정 페이지 -->
   <div class="wrapper">
     <parallax
       class="section page-header header-filter"
       :style="headerStyle"
     ></parallax>
-    <div class="main main-raised">
+    <div class="main main-raised" style="z-index:1">
       <div class="section profile-content">
-        <h2 class="title text-center kor">자문게시판 수정</h2>
+        <div style="padding:80px">
+          <h1 class="title text-center kor">공사중!!!!</h1>
+          <h2 class="title text-center kor">자문게시판 글쓰기</h2>
+          <hr class="div-hr" />
+          <form @submit.prevent="modifyBoard">
+            <md-field>
+              <label>제목</label>
+              <md-input
+                id="title"
+                type="text"
+                ref="title"
+                v-model="value.title"
+              ></md-input>
+            </md-field>
+            <md-field>
+              <v-row align="center">
+                <v-col cols="12">
+                  <v-select
+                    :items="items"
+                    :menu-props="{ bottom: true, offsetY: true }"
+                    label="카테고리"
+                    v-model="selected"
+                    >{{ value.category }}</v-select
+                  >
+                </v-col>
+              </v-row>
+            </md-field>
+            <md-field>
+              <div id="summernote"></div>
+            </md-field>
+            <md-field>
+              <!-- 파일의 경우 change 리스너로 감지해야함 -->
+              <input type="file" name="uploadFile" ref="fileData" />
+              <!-- <input type="file" name="uploadFile" ref="fileData" @change="handleFilesUpload" /> -->
+            </md-field>
+            <!-- <md-field>
+              <label for="content">내용</label>
+              <md-textarea
+                id="content"
+                type="content"
+                ref="content"
+                v-model="content"
+              ></md-textarea>
+            </md-field> -->
 
-        <hr class="div-hr" />
-        <div class="container">
-          <table class="styled-table" style="width: 100%">
-            <tr>
-              <th scope="col">카테고리</th>
-              <td>{{ value.category }}</td>
-            </tr>
-            <tr>
-              <th scope="col">제목</th>
-              <td>
-                <input
-                  type="text"
-                  id="title"
-                  v-model="value.title"
-                  style="width:100%; height: 30px;"
-                />
-              </td>
-            </tr>
-            <tr style="border-top: 1px solid;">
-              <th scope="col">
-                글내용
-              </th>
-              <td>
-                <textarea
-                  type="text"
-                  id="content"
-                  v-model="value.content"
-                  style="width:100%; height:30px; "
-                ></textarea>
-              </td>
-            </tr>
-          </table>
-
-          <div v-if="$store.state.name == value.name" style="text-align:right">
-            <md-button class="md-warning" @click="modifyBoard(value)"
-              >수정완료</md-button
-            >
-          </div>
-          <!-- else -->
-          <div v-if="$store.state.name != value.name" style="text-align:right">
-            <md-button class="md-info" @click="moveList()">목록</md-button>
-          </div>
+            <div class="btn-right">
+              <md-button
+                class="md-dense md-raised md-warning"
+                type="submit"
+                @click="modifyBoard"
+              >
+                수정완료
+              </md-button>
+              <md-button class="md-dense md-raised md-info" @click="moveBoard">
+                목록
+              </md-button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -58,15 +71,23 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
-// import axios from "axios";
-// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 import { detailBoard, editBoard } from "@/api/board";
+
 export default {
   bodyClass: "profile-page",
-  data() {
+  data: function() {
     return {
       value: "",
+      content: "",
+      selected: "",
+      items: [
+        "교통/운전",
+        "가정",
+        "근로/노동",
+        "부동산",
+        "금융",
+        "정보통신/기술",
+      ],
     };
   },
   props: {
@@ -81,26 +102,42 @@ export default {
         backgroundImage: `url(${this.header})`,
       };
     },
-
-    // ...mapGetters(["getAccessToken", "getUserId", "getUserName"]),
   },
-
   async created() {
     // const userData = this.$store.state.role;
     const postData = this.$route.query.boardId;
     const { data } = await detailBoard(postData);
     console.log(data);
     this.value = data;
+    this.selected = data.category;
+    // console.log(this.value.content);
+    $(function() {
+      $("#summernote").summernote({
+        height: 300, // set editor height
+        width: "100%", // set editor weight
+        minHeight: null, // set minimum height of editor
+        maxHeight: null, // set maximum height of editor
+        dialogsInBody: true,
+        toolbar: [
+          ["style", ["style"]],
+          ["font", ["bold", "italic", "underline", "clear"]],
+          ["fontname", ["fontname"]],
+          ["color", ["color"]],
+          ["para", ["ul", "ol", "paragraph"]],
+          ["height", ["height"]],
+          ["table", ["table"]],
+          ["insert", ["media", "link", "hr", "picture", "video"]],
+          ["view", ["fullscreen", "codeview"]],
+        ],
+      });
+      $("#summernote").summernote("pasteHTML", data.content);
+    });
   },
-  // created() {
-  //   // 공지사항 상세 정보 호출
-  //   axios
-  //     .get(SERVER_URL + "/notice/" + this.$route.query.noticeNo)
-  //     .then(({ data }) => {
-  //       this.value = data;
-  //     })
-  //     .catch();
-  // },
+  mounted() {
+    // $('#summernote').summernote({
+    //   height: 700,
+    // });
+  },
   methods: {
     async modifyBoard() {
       const editData = {
@@ -133,9 +170,9 @@ export default {
       var query = this.value.boardId;
       this.$router.push({ name: "boarddetail", query: { boardId: query } });
     },
-  },
-  moveList() {
-    this.$router.push({ name: "board" });
+    moveBoard() {
+      this.$router.push({ name: "board" });
+    },
   },
 };
 </script>
