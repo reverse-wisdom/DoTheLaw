@@ -99,7 +99,7 @@
                 </li>
 
                 <li class="md-list-item">
-                  <router-link to="/register" class="md-list-item-router md-list-item-container md-button-clean">
+                  <router-link to="/registerindex" class="md-list-item-router md-list-item-container md-button-clean">
                     <div class="md-list-item-content">
                       <md-button slot="title" class="md-button md-button-link md-white md-simple">
                         <i class="material-icons">person_add</i>

@@ -1,7 +1,7 @@
 <template>
   <!-- 회원가입 페이지 테이블 컴포넌트 -->
   <div class="wrapper">
-    <login-card header-color="green" style="padding-bottom:-3px;">
+    <login-card header-color="red" style="padding-bottom:-3px;">
       <h4 slot="title" class="title kor" style="font-size:250%;">회원가입</h4>
 
       <template slot="inputs">
@@ -10,16 +10,17 @@
           <md-icon>face</md-icon>
           <label>사용자이름...</label>
           <md-input v-model="name"></md-input>
+          <md-button class="md-accent md-wd md-sm" @click="nameCheckFun()">이름 중복확인</md-button>
         </md-field>
 
         <md-field class="md-form-group">
           <md-icon>account_circle</md-icon>
           <label>이메일</label>
           <md-input v-model="email"></md-input>
-          <md-button class="md-success md-wd md-sm" @click="emailCheckFun()">이메일 중복확인</md-button>
+          <md-button class="md-accent md-wd md-sm" @click="emailCheckFun()">이메일 중복확인</md-button>
         </md-field>
         <md-field class="md-form-group">
-          <md-icon>face</md-icon>
+          <md-icon>call</md-icon>
           <label>전화번호...</label>
           <md-input v-model="phone"></md-input>
         </md-field>
@@ -33,74 +34,117 @@
           <label>비밀번호확인</label>
           <md-input v-model="pwdcheck" type="password"></md-input>
         </md-field>
-        <div>
-          <md-radio v-model="isLawer" :value="false">사용자</md-radio>
-          <md-radio v-model="isLawer" :value="true">변호사</md-radio>
-        </div>
+        <v-file-input type="file" name="uploadFile" accept="image/png, image/jpeg, image/bmp" placeholder="회원사진" ref="files" prepend-icon="mdi-camera" @change="handleFilesUpload"></v-file-input>
       </template>
-      <md-button slot="footer" class="md-success md-wd" @click="register()">
-        가입하기
-      </md-button>
+      <md-button slot="footer" class="md-accent md-wd" @click="register()">가입하기</md-button>
     </login-card>
   </div>
 </template>
 
 <script>
 import { LoginCard } from '@/components';
-import { registerUser, emailCheck } from '@/api/auth';
+import { registerUser } from '@/api/auth';
+import axios from 'axios';
 
 export default {
   components: { LoginCard },
   data() {
     return {
       email: null,
-      userid: null,
       phone: null,
       name: null,
       password: null,
       pwdcheck: null,
       emailCheck: 'fail',
-      isChecked: false,
-      isLawer: false,
+      nameCheck: 'fail',
+      isCheckedEmail: false,
+      isCheckedName: false,
+      files: null,
+      data: null,
     };
   },
   mounted() {},
   methods: {
+    // 파일의 경우 chage리스너로 감지해야함
+    handleFilesUpload(file) {
+      this.files = file;
+    },
+
+    // 사용자이름이 유효한지 검사하는 함수
+    nameCheckFun() {
+      let result = '';
+      if (this.name == null) {
+        this.$swal({
+          icon: 'error',
+          title: '이름을 입력해주세요!',
+        });
+      } else {
+        axios
+          .get('/api/member/check/name?name=' + this.name)
+          .then(({ data }) => {
+            result = data;
+          })
+          .catch();
+        if (result == 'DUPLICATE') {
+          this.$swal({
+            icon: 'error',
+            title: '이미 이름이 존재합니다!!',
+          });
+          this.isCheckedName = false;
+          this.nameCheck = 'fail';
+        } else {
+          // 추후 정규식 처리 필요함
+          this.$swal({
+            icon: 'success',
+            title: '사용가능한 이름 입니다!!',
+          });
+          this.isCheckedName = true;
+          this.nameCheck = 'success';
+        }
+      }
+    },
     // 이메일이 유효한지 검사하는 함수
-    async emailCheckFun() {
+    emailCheckFun() {
+      let result = '';
       if (this.email == null) {
         this.$swal({
           icon: 'error',
-          title: '아이디를 입력해주세요!',
+          title: '이메일을 입력해주세요!',
         });
       } else {
-        const { data } = await emailCheck(this.email);
-        if (data == 'SUCCESS') {
+        axios
+          .get('/api/member/check/email?email=' + this.email)
+          .then(({ data }) => {
+            result = data;
+          })
+          .catch();
+        if (result == 'DUPLICATE') {
           this.$swal({
             icon: 'error',
             title: '이미 이메일이 존재합니다!!',
           });
-          this.isChecked = false;
+          this.isCheckedEmail = false;
+          this.emailCheck = 'fail';
         } else {
           // 추후 정규식 처리 필요함
           this.$swal({
             icon: 'success',
             title: '사용가능한 이메일 입니다!!',
           });
-          this.isChecked = true;
-          this.emailCheck = 'fail';
+          this.isCheckedEmail = true;
+          this.emailCheck = 'success';
         }
       }
     },
 
     // 각항목에대해 null값 체크
     async register() {
-      if (this.name == null) {
+      if (!this.isCheckedName && this.nameCheck != 'success') {
         this.$swal({
           icon: 'error',
-          title: '이름을 입력해주세요!',
+          title: '이름 중복검사를 해주세요!',
         });
-      } else if (!this.isChecked && this.emailCheck != 'success') {
+      } else if (!this.isCheckedEmail && this.emailCheck != 'success') {
         this.$swal({
           icon: 'error',
           title: '이메일 중복검사를 해주세요!',
@@ -131,9 +175,20 @@ export default {
           password: this.password,
           name: this.name,
           phone: this.phone,
-          role: this.isLawer ? 'ADMIN' : 'USER', // 임시
+          role: 'LAWYER',
         };
+
+        var FormData = require('form-data');
+        var form = new FormData();
+
+        if (this.files != null) {
+          form.append('file', this.files);
+        }
+
+        axios.post('/api/data', form, { 'Content-Type': 'multipart/form-data' }).then(function(response) {});
+
         const { data } = await registerUser(userData);
+
         if (data == 'SUCCESS') {
           this.$swal({
             position: 'top-end',
