@@ -88,8 +88,6 @@ export default {
         };
         console.log(userData);
         this.$store.dispatch('LOGIN', userData);
-
-        // var result = this.$store.dispatch('LOGIN', this.user);
       }
     },
 
