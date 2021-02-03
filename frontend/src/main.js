@@ -5,9 +5,8 @@ import Vuetify from 'vuetify';
 import store from '@/store/index';
 import 'vuetify/dist/vuetify.min.css';
 import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 import VueCookies from 'vue-cookies';
-import vueMoment from 'vue-moment';
-import moment from 'moment';
 
 import MaterialKit from './plugins/material-kit';
 
@@ -15,9 +14,6 @@ const options = {
   confirmButtonColor: '#41b882',
   cancelButtonColor: '#ff7674',
 };
-
-moment.locale('ko');
-Vue.use(vueMoment, { moment });
 
 Vue.use(VueSweetalert2, options); // alert API
 
