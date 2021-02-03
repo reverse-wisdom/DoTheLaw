@@ -66,7 +66,6 @@ public class LoginService implements LoginUseCase {
 
 	@Override
 	public Member user(String email) {	
-		System.out.println(memberRepository.findMemberByEmail(email).get());
 		return memberRepository.findByEmail(email).get();
 	}
     

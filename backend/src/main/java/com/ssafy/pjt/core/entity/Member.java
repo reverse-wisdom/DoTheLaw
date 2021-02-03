@@ -51,6 +51,6 @@ public class Member {
     @Size(min = 4, max = 50)
     private String joinDate;
     
-    @Column(name = "image", length = 45)
+    @Column(name = "image", length = 300)
     private String image;
 }
