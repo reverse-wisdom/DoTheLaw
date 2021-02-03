@@ -54,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/member/signup/**").permitAll() // 회원가입
                 .antMatchers("/api/member/social/**").permitAll()
                 .antMatchers("/api/member/check/**").permitAll()
+                .antMatchers("/api/member/image/**").permitAll()
                 
                 .antMatchers("/api/rss/**").permitAll() // RSS 파싱 관련
                 
@@ -75,6 +76,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/search/**").permitAll() //test
                 
                 .antMatchers("/api/comment/**").permitAll() //test
+                
+                .antMatchers("/api/member/update/image/**").permitAll() //test
                 
                 .anyRequest().authenticated()
 
