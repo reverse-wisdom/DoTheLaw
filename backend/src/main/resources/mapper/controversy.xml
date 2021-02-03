@@ -17,25 +17,25 @@
 		select c.controversy_id, c.uuid, m.name, c.start_date, c.end_date, c.title, c.content, c.hit
 		from controversy c left join member m
 			on c.uuid = m.uuid
-		where c.controversy_id = #{controversy_id};
+		where c.controversy_id = #{controversyId};
 	</select>
 	
 	<update id="hit" parameterType="ControversyDTO">
 		update controversy
 		set hit = hit+1
-		where controversy_id = #{controversy_id};
+		where controversy_id = #{controversyId};
 	</update>
 
 	<insert id="insert" parameterType="ControversyDTO">
 		INSERT INTO controversy
 			(uuid, end_date, title, content)
-		VALUES(#{uuid}, #{end_date,jdbcType=TIMESTAMP}, #{title}, #{content});
+		VALUES(#{uuid}, #{endDate,jdbcType=TIMESTAMP}, #{title}, #{content});
 	</insert>
 
 	<delete id="delete" parameterType="int">
 		delete
 		from controversy
-		where controversy_id = #{controversy_id}
+		where controversy_id = #{controversyId}
 	</delete>
 
 	<update id="update" parameterType="ControversyDTO">
@@ -43,8 +43,8 @@
 		set
 			title = #{title},
 			content = #{content},
-			end_date = #{end_date,jdbcType=TIMESTAMP},
-		where controversy_id = #{controversy_id}
+			end_date = #{endDate,jdbcType=TIMESTAMP},
+		where controversy_id = #{controversyId}
 	</update>
 
 </mapper>
