@@ -8,14 +8,14 @@
         <br />
         <md-field class="md-form-group">
           <md-icon>face</md-icon>
-          <label>사용자이름...</label>
+          <label>닉네임...</label>
           <md-input v-model="name"></md-input>
-          <md-button class="md-accent md-wd md-sm" @click="nameCheckFun()">이름 중복확인</md-button>
+          <md-button class="md-accent md-wd md-sm" @click="nameCheckFun()">닉네임 중복확인</md-button>
         </md-field>
 
         <md-field class="md-form-group">
           <md-icon>account_circle</md-icon>
-          <label>이메일</label>
+          <label>이메일...</label>
           <md-input v-model="email"></md-input>
           <md-button class="md-accent md-wd md-sm" @click="emailCheckFun()">이메일 중복확인</md-button>
         </md-field>
@@ -26,12 +26,12 @@
         </md-field>
         <md-field class="md-form-group">
           <md-icon>lock_outline</md-icon>
-          <label>비밀번호</label>
+          <label>비밀번호...</label>
           <md-input v-model="password" type="password"></md-input>
         </md-field>
         <md-field class="md-form-group">
           <md-icon>lock_outline</md-icon>
-          <label>비밀번호확인</label>
+          <label>비밀번호확인...</label>
           <md-input v-model="pwdcheck" type="password"></md-input>
         </md-field>
         <v-file-input type="file" name="uploadFile" accept="image/png, image/jpeg, image/bmp" placeholder="회원사진" ref="files" prepend-icon="mdi-camera" @change="handleFilesUpload"></v-file-input>
@@ -83,24 +83,24 @@ export default {
           .get('/api/member/check/name?name=' + this.name)
           .then(({ data }) => {
             result = data;
+            if (result == 'DUPLICATE') {
+              this.$swal({
+                icon: 'error',
+                title: '이미 이름이 존재합니다!!',
+              });
+              this.isCheckedName = false;
+              this.nameCheck = 'fail';
+            } else {
+              // 추후 정규식 처리 필요함
+              this.$swal({
+                icon: 'success',
+                title: '사용가능한 이름 입니다!!',
+              });
+              this.isCheckedName = true;
+              this.nameCheck = 'success';
+            }
           })
           .catch();
-        if (result == 'DUPLICATE') {
-          this.$swal({
-            icon: 'error',
-            title: '이미 이름이 존재합니다!!',
-          });
-          this.isCheckedName = false;
-          this.nameCheck = 'fail';
-        } else {
-          // 추후 정규식 처리 필요함
-          this.$swal({
-            icon: 'success',
-            title: '사용가능한 이름 입니다!!',
-          });
-          this.isCheckedName = true;
-          this.nameCheck = 'success';
-        }
       }
     },
     // 이메일이 유효한지 검사하는 함수
@@ -116,24 +116,24 @@ export default {
           .get('/api/member/check/email?email=' + this.email)
           .then(({ data }) => {
             result = data;
+            if (result == 'DUPLICATE') {
+              this.$swal({
+                icon: 'error',
+                title: '이미 이메일이 존재합니다!!',
+              });
+              this.isCheckedEmail = false;
+              this.emailCheck = 'fail';
+            } else {
+              // 추후 정규식 처리 필요함
+              this.$swal({
+                icon: 'success',
+                title: '사용가능한 이메일 입니다!!',
+              });
+              this.isCheckedEmail = true;
+              this.emailCheck = 'success';
+            }
           })
           .catch();
-        if (result == 'DUPLICATE') {
-          this.$swal({
-            icon: 'error',
-            title: '이미 이메일이 존재합니다!!',
-          });
-          this.isCheckedEmail = false;
-          this.emailCheck = 'fail';
-        } else {
-          // 추후 정규식 처리 필요함
-          this.$swal({
-            icon: 'success',
-            title: '사용가능한 이메일 입니다!!',
-          });
-          this.isCheckedEmail = true;
-          this.emailCheck = 'success';
-        }
       }
     },
 

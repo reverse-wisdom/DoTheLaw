@@ -28,7 +28,7 @@
             </md-field>
 
             <div class="btn-right">
-              <md-button class="md-dense md-raised md-warning" type="submit" @click="writeContent">
+              <md-button class="md-dense md-raised md-warning" type="submit">
                 등록
               </md-button>
               <md-button class="md-dense md-raised md-info" type="button" @click="moveAdviseList">
