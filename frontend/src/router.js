@@ -43,6 +43,7 @@ export default new Router({
       name: 'RegisterIndex',
       components: { default: RegisterIndex, header: MainNavbar, footer: MainFooter },
       props: {
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
     },
@@ -51,6 +52,7 @@ export default new Router({
       name: 'registeruser',
       components: { default: RegisterUser, header: MainNavbar, footer: MainFooter },
       props: {
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
     },
@@ -59,6 +61,7 @@ export default new Router({
       name: 'registerlawyer',
       components: { default: RegisterLawyer, header: MainNavbar, footer: MainFooter },
       props: {
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
     },
@@ -67,7 +70,8 @@ export default new Router({
       name: 'login',
       components: { default: Login, header: MainNavbar, footer: MainFooter },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
       },
     },
     {
@@ -76,6 +80,7 @@ export default new Router({
       components: { default: Search, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
       },
     },
     {
