@@ -33,6 +33,7 @@ public class ControversyService implements ControversyUseCase{
 	
 	@Override
 	public boolean insert(ControversyDTO controversy) throws Exception {
+		System.out.println("??");
 		return mapper.insert(controversy);
 	}
 
