@@ -67,8 +67,7 @@ public class LoginController {
                 .email(socialsignupRequsetDTO.getEmail())
                 .role(socialsignupRequsetDTO.getRole())
                 .build();
-    	
-        if (!memberService.checkEmail(socialsignupRequsetDTO.getEmail())) { //DB에 있을 때
+        if (memberService.checkEmail(socialsignupRequsetDTO.getEmail())) { //DB에 있을 때
             JwtAuthToken jwtAuthToken = (JwtAuthToken) loginService.createAuthToken(memberDTO);
             return CommonResponse.builder()
                     .code("LOGIN_SUCCESS")
