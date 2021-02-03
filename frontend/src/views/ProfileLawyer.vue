@@ -1,0 +1,218 @@
+<template>
+  <div class="wrapper">
+    <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
+    <div class="main main-raised">
+      <div class="section profile-content">
+        <div class="container">
+          <div class="row">
+            <div class="col-3 row ml-5">
+              <img id="profile" class="col-12 r-10" :src="image" alt="noimage" />
+              <div class="r-2" id="button-sort">
+                <button id="image-change-button">
+                  이미지 변경
+                </button>
+              </div>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-8 row" id="content-sort">
+              <h1 class="col-12 r-4">변호사 {{ $store.state.name }}</h1>
+              <div class="col-11" id="text-solid-1">한줄소개</div>
+            </div>
+            <div class="row ml-10">
+              <div class="col-5" id="text-solid-margin">
+                관심분야
+                <hr />
+              </div>
+              <div class="col-5" id="text-solid">
+                전화번호
+                <hr />
+              </div>
+              <div class="col-5" id="text-solid-margin">
+                경력
+                <hr />
+              </div>
+              <div class="col-5" id="text-solid">
+                자기소개
+                <hr />
+              </div>
+              <div class="col-11" id="text-solid-one">
+                최근답변
+                <hr />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <div></div>
+              </div>
+              <!-- <div class="col-5" id="text-solid">6</div> -->
+            </div>
+            <md-field style="margin: 5rem 5rem 0 5rem ;">
+              <md-input id="address" type="text" ref="address" v-model="address" placeholder="주소 입력"></md-input>
+            </md-field>
+            <md-button class="md-info" style="margin: auto" @click="searchMap">주소로검색</md-button>
+            <div id="map" ref="map" style="width: 100%; height: 400px; margin: 2rem;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
+import axios from 'axios';
+
+export default {
+  components: {},
+  bodyClass: 'profile-page',
+  data() {
+    return {
+      image: this.$store.state.image,
+      address: null,
+      map: null,
+      mapState: window.mapState,
+      multi: {
+        lat: 37.5665734,
+        lng: 126.978179,
+      },
+    };
+  },
+  props: {
+    header: {
+      type: String,
+      default: require('@/assets/img/jj02.gif'),
+    },
+  },
+  computed: {
+    headerStyle() {
+      return {
+        backgroundImage: `url(${this.header})`,
+      };
+    },
+  },
+  created() {
+    var query = '경북 구미시 3공단 3로 302';
+    axios
+      .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_MAP_KEY + '&address=' + query)
+      .then(({ data }) => {
+        let lat = data.results[0].geometry.location.lat;
+        let lng = data.results[0].geometry.location.lng;
+        this.map = new window.google.maps.Map(document.getElementById('map'), {
+          center: {
+            lat,
+            lng,
+          },
+          zoom: 18,
+        });
+        new window.google.maps.Marker({
+          label: query,
+          position: {
+            lat,
+            lng,
+          },
+          map: this.map,
+        });
+      })
+      .catch();
+  },
+  watch: {
+    // watch를 통해 mounted가 실패하더라도 다시호출함 지도가 랜더링 안되는 현상 방지함
+    'mapState.initMap'(value) {
+      if (value) {
+        if (this.mapState.initMap) {
+          this.map = new window.google.maps.Map(document.getElementById('map'), {
+            center: this.multi,
+            zoom: 12,
+          });
+          new window.google.maps.Marker({
+            position: this.multi,
+            map: this.map,
+            icon: require('@/assets/building.png'),
+          });
+        }
+        console.log('load by watch');
+      }
+    },
+  },
+  methods: {
+    searchMap() {
+      var query = this.address;
+      axios
+        .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_MAP_KEY + '&address=' + query)
+        .then(({ data }) => {
+          let lat = data.results[0].geometry.location.lat;
+          let lng = data.results[0].geometry.location.lng;
+          this.map = new window.google.maps.Map(document.getElementById('map'), {
+            center: {
+              lat,
+              lng,
+            },
+            zoom: 18,
+          });
+          new window.google.maps.Marker({
+            label: query,
+            position: {
+              lat,
+              lng,
+            },
+            map: this.map,
+          });
+        })
+        .catch();
+    },
+  },
+};
+</script>
+
+<style>
+#profile {
+  border-radius: 70%;
+}
+
+#image-change-button {
+  border: 1px solid gray;
+  margin-top: 3px;
+}
+#button-sort {
+  justify-items: center;
+}
+#text-solid {
+  border: 1px solid black;
+  width: 200px;
+  height: 120px;
+  margin-top: 2rem;
+}
+#text-solid-1 {
+  border: 1px solid black;
+  width: 200px;
+  height: 120px;
+}
+#text-solid-margin {
+  border: 1px solid black;
+  width: 200px;
+  height: 120px;
+  margin-top: 2rem;
+  margin-right: 4.7rem;
+}
+#text-solid-one {
+  border: 1px solid black;
+  height: auto;
+  margin-top: 2rem;
+}
+</style>
