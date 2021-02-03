@@ -1,11 +1,23 @@
-import { instance } from './index';
+import { posts } from './index';
+
+// 검색어 순위
+function top() {
+  return posts.get('/api/search/top');
+}
+
+// 판례검색
+function lawSearch(query) {
+  return posts.get(`/api/search/lawSearch?query=${query}`);
+}
+
+// 판례번호로 상세조회
+function lawService(ID) {
+  return posts.get(`/api/search/lawService?ID=${ID}`);
+}
 
 // 뉴스 RSS 가져오기
 function newsParsing() {
-  var test = instance.get('/api/rss/news');
-  console.log(test);
-  return test;
-  // return instance.get('api/rss/news');
+  return posts.get('/api/rss/news');
 }
 
-export { newsParsing };
+export { top, lawService, lawSearch, newsParsing };

@@ -78,12 +78,14 @@
 
               <template v-if="this.$store.state.token">
                 <li class="md-list-item">
-                  <div class="md-list-item-content">
-                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
-                      <i class="material-icons">account_circle</i>
-                      {{ $store.state.email }}({{ $store.state.name }})님 환영합니다.
-                    </md-button>
-                  </div>
+                  <router-link to="/profile" class="md-list-item-router md-list-item-container md-button-clean">
+                    <div class="md-list-item-content">
+                      <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                        <i class="material-icons">account_circle</i>
+                        {{ $store.state.email }}({{ $store.state.name }})님 환영합니다.
+                      </md-button>
+                    </div>
+                  </router-link>
                 </li>
 
                 <li class="md-list-item">

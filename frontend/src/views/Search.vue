@@ -126,7 +126,8 @@
 <script>
 import axios from 'axios';
 import convert from 'xml-js';
-const LAWS_API_KEY = process.env.VUE_APP_LAWS_API_KEY;
+import { lawService, lawSearch } from '@/api/service';
+
 export default {
   name: 'search',
   bodyClass: 'profile-page',
@@ -165,13 +166,23 @@ export default {
     },
   },
   created() {
-    console.log(this.$route.query.searchWord);
     this.search = this.$route.query.searchWord;
     this.searchLaw();
   },
   methods: {
-    searchLaw() {
+    async searchLaw() {
       var searchWord = document.getElementById('searchWord').value;
+      const { data } = await lawSearch(searchWord);
+      // console.log(data.PrecSearch.prec[0].id);
+      // for(var i=0;i<data.length;i++){
+      //   this.contents.push({
+      //     no: data.
+      //   })
+      // }
+
+      console.log(data);
+      // console.log(data.PrecSearch.prec[0].id);
+
       this.contents = [];
       axios
         .get('https://www.law.go.kr/DRF/lawSearch.do?OC=dbm01049&target=prec&type=XML&mobileYn=Y&display=100&query=' + searchWord)
