@@ -9,32 +9,6 @@
                 <!-- <img :src="logo" alt="logo" /> -->
                 <v-img class="white--text align-end" :src="logo"></v-img>
                 <br />
-
-                <form @submit="detailSearch()" onSubmit="return false;" autocomplete="off" background-color="white">
-                  <fieldset>
-                    <v-text-field id="searchWord" v-model="query" color="cyan darken" label="판례명" placeholder="검색어 입력" loading>
-                      <template v-slot:progress>
-                        <v-progress-linear v-if="query" :value="progress" :color="color" absolute height="7"></v-progress-linear>
-                      </template>
-                    </v-text-field>
-                    <button class="searchBtn" @click="detailSearch()"><i class="fa fa-search"></i></button>
-                  </fieldset>
-                </form>
-
-                <!-- 리스트 -->
-
-                <v-list>
-                  <v-list-item-group v-model="model">
-                    <v-list-item v-for="(item, i) in items" :key="i">
-                      <v-list-item-icon>
-                        <v-icon v-text="item.icon"></v-icon>
-                      </v-list-item-icon>
-                      <v-list-item-content>
-                        <v-list-item-title v-text="item.text"></v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-list-item-group>
-                </v-list>
               </div>
             </div>
           </div>
@@ -44,6 +18,19 @@
     <div class="main main-raised">
       <div class="section section-basic">
         <!-- 테스트 영역 start-->
+        <form @submit="detailSearch()" onSubmit="return false;" autocomplete="off" background-color="white">
+          <fieldset>
+            <v-text-field id="searchWord" v-model="query" color="cyan darken" label="판례명" placeholder="검색어 입력" loading>
+              <template v-slot:progress>
+                <v-progress-linear v-if="query" :value="progress" :color="color" absolute height="7"></v-progress-linear>
+              </template>
+            </v-text-field>
+            <button class="searchBtn" @click="detailSearch()"><i class="fa fa-search"></i></button>
+          </fieldset>
+        </form>
+
+        <!-- 검색어 순위 컴포넌트 -->
+        <search-rank></search-rank>
 
         <!-- 토큰값 체크 -->
         <div class="section">
@@ -129,8 +116,7 @@
 
 <script>
 import RSSParser from './components/RSSParser';
-// const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
-import axios from 'axios';
+import SearchRank from './components/SearchRank';
 export default {
   name: 'index',
   bodyClass: 'index-page',
@@ -146,6 +132,7 @@ export default {
   },
   components: {
     RSSParser,
+    SearchRank,
   },
   data() {
     return {
@@ -154,18 +141,6 @@ export default {
       componentKey: 0,
 
       laws: [],
-
-      items: [
-        {
-          text: '1. 명예훼손',
-        },
-        {
-          text: '2. 도로교통법',
-        },
-        {
-          text: '3. 모욕죄',
-        },
-      ],
 
       model: 1,
       cookie: '',
