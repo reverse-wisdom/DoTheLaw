@@ -16,7 +16,13 @@ import WebrtcView from './views/WebRtcView.vue';
 import Board from './views/Board.vue';
 import BoardDetail from './views/components/BoardDetail.vue';
 import BoardWrite from './views/components/BoardWrite.vue';
+import BoardUpdate from './views/components/BoardUpdate.vue';
 import Profile from './views/Profile.vue';
+
+import AdviseList from './views/AdviseList.vue';
+import AdviseDetail from './views/components/AdviseDetail.vue';
+import AdviseWrite from './views/components/AdviseWrite.vue';
+import AdviseUpdate from './views/components/AdviseUpdate.vue';
 
 Vue.use(Router);
 
@@ -91,8 +97,8 @@ export default new Router({
       },
     },
     {
-      path: '/boarddetail',
-      name: 'boarddetail',
+      path: '/boardDetail',
+      name: 'boardDetail',
       components: { default: BoardDetail, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
@@ -103,6 +109,51 @@ export default new Router({
       path: '/boardWrite',
       name: 'boardWrite',
       components: { default: BoardWrite, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/boardUpdate',
+      name: 'boardUpdate',
+      components: { default: BoardUpdate, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/adviseList',
+      name: 'adviseList',
+      components: { default: AdviseList, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/adviseDetail',
+      name: 'adviseDetail',
+      components: { default: AdviseDetail, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/advisewrite',
+      name: 'advisewrite',
+      components: { default: AdviseWrite, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/adviseUpdate',
+      name: 'adviseUpdate',
+      components: { default: AdviseUpdate, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
