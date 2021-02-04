@@ -38,14 +38,12 @@
 
 	<update id="update" parameterType="MatchingRequestDTO">
 		update matching
-		set
-		<if test="content != null">	content = #{content}</if>
-		<if test="state != null and content != null">, </if>
-		<if test="state != null">state = #{state}</if>
-		<if test="reservationDate != null and (state != null or content != null)"> ,</if>
-		<if test="reservationDate != null">reservation_date = #{reservationDate}</if>
-		<if test="remarks != null and (reservationDate != null or state != null or content != null)"> ,</if>
-		<if test="remarks != null">remarks = #{remarks}</if>
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="content != null">	content = #{content},</if>
+			<if test="state != null">state = #{state},</if>
+			<if test="reservationDate != null">reservation_date = #{reservationDate},</if>
+			<if test="remarks != null">remarks = #{remarks},</if>
+		</trim>
 		where matching_id = #{matchingId}
 	</update>
 	
