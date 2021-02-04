@@ -14,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 import org.xml.sax.SAXException;
 
 import com.ssafy.pjt.core.repository.mapper.SearchMapper;
 import com.ssafy.pjt.util.XMLParserUtils;
+import com.ssafy.pjt.web.dto.SearchDictDTO;
 
 @Service
 public class SearchService {
@@ -54,5 +56,9 @@ public class SearchService {
 		Map<String, List> result = new HashMap();
 		result.put("items", mapper.selectHitTop());
 		return result;
+	}
+
+	public List<SearchDictDTO> getDictAll() {
+		return mapper.selectDictAll();
 	}
 }
