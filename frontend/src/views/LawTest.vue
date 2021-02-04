@@ -9,6 +9,11 @@
           <img src="@/assets/img/lawtitle.png" style="max-width:80%; height:auto;" class="title-lawtest" alt="" />
           <img src="@/assets/img/main2.png" style="max-width:80%; height:auto;" alt="" />
         </div>
+        <div class="btn-center">
+          <md-button class="md-info" type="button" @click="moveTest">
+            테스트하러가기
+          </md-button>
+        </div>
       </div>
     </div>
   </div>
@@ -24,36 +29,7 @@ export default {
       values: [],
       token: '',
       search: '',
-      headers: [
-        {
-          text: '카테고리',
-          align: 'start',
-          value: 'category',
-        },
-        { text: '제목', value: 'title' },
-        { text: '작성자', value: 'name' },
-        { text: '조회수', value: 'hit' },
-        { text: '업로드시간', value: 'uploadDate' },
-      ],
     };
-  },
-  async mounted() {
-    try {
-      this.token = this.$store.state.token;
-      const { data } = await fetchBoardList();
-      for (let i = 0; i < data.length; i++) {
-        this.values.push({
-          boardId: data[i].boardId,
-          category: data[i].category,
-          hit: data[i].hit,
-          name: data[i].name,
-          title: data[i].title,
-          uploadDate: this.$moment(data[i].uploadDate).format('llll'),
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
   },
   props: {
     header: {
@@ -69,8 +45,8 @@ export default {
     },
   },
   methods: {
-    writePage() {
-      this.$router.push('/boardWrite');
+    moveTest() {
+      this.$router.push('/golawtest');
     },
     detailPage(value) {
       var query = value.boardId;
@@ -90,8 +66,8 @@ export default {
 .kor {
   font-family: 'Nanum Gothic', sans-serif;
 }
-.btn-right {
-  text-align: right;
+.btn-center {
+  text-align: center;
 }
 // table css
 .styled-table {
@@ -150,8 +126,11 @@ select::-ms-expand {
   display: none;
 }
 img {
-  justify-content: center;
-  align-items: center;
+  width: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .title-lawtest {
   animation: swing;
