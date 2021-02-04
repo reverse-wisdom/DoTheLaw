@@ -12,6 +12,7 @@ import RegisterLawyer from './views/RegisterLawyer.vue';
 import RegisterIndex from './views/RegisterIndex.vue';
 
 import WebrtcView from './views/WebRtcView.vue';
+import DictTest from './views/DictTest.vue';
 
 import Board from './views/Board.vue';
 import BoardDetail from './views/components/BoardDetail.vue';
@@ -179,6 +180,15 @@ export default new Router({
       path: '/webrtc',
       name: 'webrtc',
       components: { default: WebrtcView, header: undefined, footer: undefined },
+    },
+    {
+      path: '/dicttest',
+      name: 'dicttest',
+      components: { default: DictTest, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
     },
   ],
   scrollBehavior: (to) => {
