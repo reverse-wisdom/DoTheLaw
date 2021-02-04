@@ -85,6 +85,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 
                 .antMatchers("/api/controversy/**").permitAll() //test
 
+                .antMatchers("/api/matching/**").permitAll() //test
+               
                 
                 .anyRequest().authenticated()
 
