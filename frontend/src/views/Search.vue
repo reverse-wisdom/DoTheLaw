@@ -151,6 +151,10 @@ export default {
     }
   },
   methods: {
+    matchExact(r, str) {
+      var match = str.match(r);
+      return match && str === match[0];
+    },
     async searchLaw() {
       const { data } = await lawSearch(this.search);
       for (var i = 0; i < data.PrecSearch.prec.length; i++) {
@@ -175,15 +179,50 @@ export default {
 
       this.dict.forEach((element) => {
         var regEx = new RegExp(element.word, 'g');
+
         this.judgment.PrecService.판결요지 = this.judgment.PrecService.판결요지.replace(regEx, element.mean);
+        // this.judgment.PrecService.판결요지 = "딸기수박바나나 딸기 수박수 수박 과일 딸기바나나........................".replace("딸기", "<a title=딸기는 과일이다/>");
+        // this.judgment.PrecService.판결요지 = "딸기수박바나나 딸기 수박수 수박 과일 딸기바나나........................".replace("과일", "<a title=과일은 야채가 아니다/>");
+
         this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(regEx, element.mean);
         this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, element.mean);
+        // this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(new RegExp('\\b' + regEx + '\\b'), element.mean);
+
+        // if (this.matchExact(this.judgment.PrecService.판례내용, element.mean)) {
+        //   this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, element.mean);
+        // }
       });
     },
   },
 };
 </script>
+<style lang="scss">
+[data-title]:hover:after {
+  opacity: 1;
 
+  transition: all 0.1s ease 0.5s;
+  visibility: visible;
+}
+[data-title]:after {
+  content: attr(data-title);
+  background-color: grey;
+  color: white;
+  font-size: 110%;
+  position: absolute;
+  padding: 1px 5px 2px 5px;
+  bottom: -1.6em;
+  left: 100%;
+  white-space: nowrap;
+  box-shadow: 1px 1px 3px #222222;
+  opacity: 0;
+  border: 1px solid #111111;
+  z-index: 99999;
+  visibility: hidden;
+}
+[data-title] {
+  position: relative;
+}
+</style>
 <style lang="scss" scoped>
 // hr 설정
 .div-hr {
