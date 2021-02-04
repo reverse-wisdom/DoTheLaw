@@ -23,13 +23,6 @@
 		where b.matching_id = #{matchingId}
 	</select>
 	
-	<update id="hit" parameterType="MatchingRequestDTO">
-		update board
-		set
-		hit = hit+1
-		where board_id = #{boardId};
-	</update>
-
 	<insert id="insert" parameterType="MatchingRequestDTO">
 		INSERT INTO
 		matching(`uuid`,`lawyer_uuid`,`content`,`state`,`reservation_date`)
@@ -45,21 +38,21 @@
 
 	<update id="update" parameterType="MatchingRequestDTO">
 		update matching
-		set
-		<if test="content != null">	content = #{content}</if>
-		<if test="state != null and content != null">, </if>
-		<if test="state != null">state = #{state}</if>
-		<if test="reservationDate != null and (state != null or content != null)"> ,</if>
-		<if test="reservationDate != null">reservation_date = #{reservationDate}</if>
-		<if test="remarks != null and (reservationDate != null or state != null or content != null)"> ,</if>
-		<if test="remarks != null">remarks = #{remarks}</if>
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="content != null">	content = #{content},</if>
+			<if test="state != null">state = #{state},</if>
+			<if test="reservationDate != null">reservation_date = #{reservationDate},</if>
+			<if test="remarks != null">remarks = #{remarks},</if>
+		</trim>
 		where matching_id = #{matchingId}
 	</update>
 	
 	<select id="checkUser" parameterType="int" resultType="int">
 		select uuid from matching where matching.matching_id = #{matchingId}
 	</select>
+	
 	<select id="checkLawyer" parameterType="int" resultType="int">
 		select lawyer_uuid from matching where matching.matching_id = #{matchingId}
 	</select>
+	
 </mapper>
