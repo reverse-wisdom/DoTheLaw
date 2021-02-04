@@ -31,9 +31,9 @@
                       </md-button>
                       <ul class="dropdown-menu dropdown-with-icons">
                         <li>
-                          <router-link to="/">
+                          <router-link to="/lawtest">
                             <i class="material-icons">store</i>
-                            ssafy
+                            법상식테스트
                           </router-link>
                         </li>
                         <li>
@@ -78,7 +78,8 @@
 
               <template v-if="this.$store.state.token">
                 <li class="md-list-item">
-                  <router-link to="/profile" class="md-list-item-router md-list-item-container md-button-clean">
+                  <!-- USER프로필 완성되면 to경로 바꾸깅 -->
+                  <router-link :to="(role = 'USER' ? { name: 'profileLawyer' } : { name: 'profileLawyer' })" class="md-list-item-router md-list-item-container md-button-clean">
                     <div class="md-list-item-content">
                       <md-button slot="title" class="md-button md-button-link md-white md-simple">
                         <i class="material-icons">account_circle</i>
@@ -166,6 +167,7 @@ export default {
     return {
       extraNavClasses: '',
       toggledClass: false,
+      role: this.$store.state.role,
     };
   },
   computed: {
