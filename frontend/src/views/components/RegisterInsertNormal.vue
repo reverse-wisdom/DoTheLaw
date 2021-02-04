@@ -149,6 +149,11 @@ export default {
           icon: 'error',
           title: '이메일 중복검사를 해주세요!',
         });
+      } else if (!/^.*(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/.test(this.password)) {
+        this.$swal({
+          icon: 'error',
+          title: '8자리이상,특수문자를 포함해주세요!',
+        });
       } else if (this.password == null) {
         this.$swal({
           icon: 'error',
