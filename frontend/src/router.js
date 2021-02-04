@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Index from './views/Index.vue';
+import Main from './views/Main.vue';
 
 import Login from './views/Login.vue';
 import Search from './views/Search.vue';
@@ -28,6 +29,7 @@ import AdviseWrite from './views/components/AdviseWrite.vue';
 import AdviseUpdate from './views/components/AdviseUpdate.vue';
 
 import LawTest from './views/LawTest.vue';
+import GoLawTest from './views/components/GoLawTest.vue';
 
 Vue.use(Router);
 
@@ -38,6 +40,15 @@ export default new Router({
       path: '/',
       name: 'index',
       components: { default: Index, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/main',
+      name: 'main',
+      components: { default: Main, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: 'black' },
@@ -196,6 +207,15 @@ export default new Router({
       path: '/lawtest',
       name: 'lawtest',
       components: { default: LawTest, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/golawtest',
+      name: 'golawtest',
+      components: { default: GoLawTest, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
