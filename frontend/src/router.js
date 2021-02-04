@@ -27,6 +27,8 @@ import AdviseDetail from './views/components/AdviseDetail.vue';
 import AdviseWrite from './views/components/AdviseWrite.vue';
 import AdviseUpdate from './views/components/AdviseUpdate.vue';
 
+import LawTest from './views/LawTest.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -185,6 +187,15 @@ export default new Router({
       path: '/dicttest',
       name: 'dicttest',
       components: { default: DictTest, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/lawtest',
+      name: 'lawtest',
+      components: { default: LawTest, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
