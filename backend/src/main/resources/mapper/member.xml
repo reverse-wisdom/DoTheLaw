@@ -36,6 +36,14 @@
 		where
 		m.email = #{email};
 	</select>
+	<select id="lawyerAll" resultType="MemberRequestDTO">
+		select m.uuid , m.email, m.password, m.name, m.phone,
+		m.role, m.join_date, m.image
+		, l.career, l.introduction, l.address,
+		l.dept, l.chck
+		from member m join lawyer l
+		on m.uuid = l.uuid
+	</select>
 
 	<delete id="signout" parameterType="int">
 		delete

@@ -67,7 +67,13 @@ public class MemberService implements MemberUseCase {
 	public MemberRequestDTO lawyer(String email) throws SQLException {
 		return mapper.lawyer(email);
 	}
+	
+	@Override
+	public List<MemberRequestDTO> lawyerAll() throws SQLException {
+		return mapper.lawyerAll();
+	}
 
+	
 	@Override
 	public boolean signout(String role, String email) throws SQLException {
 		int uuid = mapper.uuid(email);
