@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.pjt.core.repository.mapper.MatchingMapper">
+
+	<select id="search" parameterType="int" resultType="MatchingRequestDTO">
+		select b.matching_id, b.uuid, b.lawyer_uuid, m.name as name,
+		b.create_date, b.content, b.state, b.reservation_date
+		from matching b left
+		join member m
+		on b.uuid = m.uuid
+		where b.lawyer_uuid = #{lawyerUuid}
+	</select>
+
+	<select id="detail" parameterType="int"
+		resultType="MatchingRequestDTO">
+		select b.matching_id, b.uuid, b.lawyer_uuid, m.name as name,
+		b.create_date, b.content, b.state, b.reservation_date
+		from matching b left
+		join member m
+		on b.uuid = m.uuid
+		where b.matching_id = #{matchingId}
+	</select>
+	
+	<update id="hit" parameterType="MatchingRequestDTO">
+		update board
+		set
+		hit = hit+1
+		where board_id = #{boardId};
+	</update>
+
+	<insert id="insert" parameterType="MatchingRequestDTO">
+		INSERT INTO
+		matching(`uuid`,`lawyer_uuid`,`content`,`state`,`reservation_date`)
+		VALUES
+		(#{uuid},#{lawyerUuid},#{content},#{state},#{reservationDate});	
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from matching
+		where matching_id = #{matchingId}
+	</delete>
+
+	<update id="update" parameterType="MatchingRequestDTO">
+		update matching
+		set
+		<if test="content != null">	content = #{content}</if>
+		<if test="state != null and content != null">, </if>
+		<if test="state != null">state = #{state}</if>
+		<if test="reservationDate != null and (state != null or content != null)"> ,</if>
+		<if test="reservationDate != null">reservation_date = #{reservationDate}</if>
+		<if test="remarks != null and (reservationDate != null or state != null or content != null)"> ,</if>
+		<if test="remarks != null">remarks = #{remarks}</if>
+		where matching_id = #{matchingId}
+	</update>
+	
+	<select id="checkUser" parameterType="int" resultType="int">
+		select uuid from matching where matching.matching_id = #{matchingId}
+	</select>
+	<select id="checkLawyer" parameterType="int" resultType="int">
+		select lawyer_uuid from matching where matching.matching_id = #{matchingId}
+	</select>
+</mapper>
