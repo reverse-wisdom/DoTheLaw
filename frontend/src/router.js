@@ -12,17 +12,22 @@ import RegisterLawyer from './views/RegisterLawyer.vue';
 import RegisterIndex from './views/RegisterIndex.vue';
 
 import WebrtcView from './views/WebRtcView.vue';
+import DictTest from './views/DictTest.vue';
 
 import Board from './views/Board.vue';
 import BoardDetail from './views/components/BoardDetail.vue';
 import BoardWrite from './views/components/BoardWrite.vue';
 import BoardUpdate from './views/components/BoardUpdate.vue';
-import Profile from './views/Profile.vue';
+
+import ProfileLawyer from './views/ProfileLawyer.vue';
+import ProfileUser from './views/ProfileUser.vue';
 
 import AdviseList from './views/AdviseList.vue';
 import AdviseDetail from './views/components/AdviseDetail.vue';
 import AdviseWrite from './views/components/AdviseWrite.vue';
 import AdviseUpdate from './views/components/AdviseUpdate.vue';
+
+import LawTest from './views/LawTest.vue';
 
 Vue.use(Router);
 
@@ -43,6 +48,7 @@ export default new Router({
       name: 'RegisterIndex',
       components: { default: RegisterIndex, header: MainNavbar, footer: MainFooter },
       props: {
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
     },
@@ -51,6 +57,7 @@ export default new Router({
       name: 'registeruser',
       components: { default: RegisterUser, header: MainNavbar, footer: MainFooter },
       props: {
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
     },
@@ -59,6 +66,7 @@ export default new Router({
       name: 'registerlawyer',
       components: { default: RegisterLawyer, header: MainNavbar, footer: MainFooter },
       props: {
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
     },
@@ -67,7 +75,8 @@ export default new Router({
       name: 'login',
       components: { default: Login, header: MainNavbar, footer: MainFooter },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
       },
     },
     {
@@ -76,12 +85,22 @@ export default new Router({
       components: { default: Search, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
       },
     },
     {
-      path: '/profile',
-      name: 'profile',
-      components: { default: Profile, header: MainNavbar, footer: MainFooter },
+      path: '/profileLawyer',
+      name: 'profileLawyer',
+      components: { default: ProfileLawyer, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/profileUser',
+      name: 'profileUser',
+      components: { default: ProfileUser, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
@@ -163,6 +182,24 @@ export default new Router({
       path: '/webrtc',
       name: 'webrtc',
       components: { default: WebrtcView, header: undefined, footer: undefined },
+    },
+    {
+      path: '/dicttest',
+      name: 'dicttest',
+      components: { default: DictTest, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/lawtest',
+      name: 'lawtest',
+      components: { default: LawTest, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
     },
   ],
   scrollBehavior: (to) => {

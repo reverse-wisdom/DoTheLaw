@@ -45,8 +45,9 @@ export default {
     return {
       email: null,
       password: null,
-      googleEmail: '',
+      socialEmail: '',
       message: '',
+      image: '',
       id: '',
       name: '',
       type: '',
@@ -97,30 +98,23 @@ export default {
         email: this.socialEmail,
         name: this.name,
         type: this.type,
+        image: this.image,
         role: 'USER',
       };
       this.$store.dispatch('SOCIALLOGIN', userData);
     },
-    // onSignIn(googleUser) {
-    //   var profile = googleUser.getBasicProfile();
-    //   this.id = profile.getId();
-    //   this.name = profile.getName();
-    //   this.socialEmail = profile.getEmail();
-    //   var id_token = googleUser.getAuthResponse().id_token;
-    //   this.type = 'google';
-    //   console.log(profile);
-    //   this.socialLogin();
-    // },
+    // 구글 로그인
     onSuccess(googleUser) {
       var profile = googleUser.getBasicProfile();
-      // console.log(profile);
       this.id = profile.KR;
       this.name = profile.sd;
       this.socialEmail = profile.lt;
+      this.image = profile.wI;
       var id_token = googleUser.getAuthResponse().id_token;
       this.type = 'google';
       this.socialLogin();
     },
+    // 카카오로스인
     loginFormWithKakao() {
       //로그인 성공
       var $vm = this;
@@ -134,6 +128,7 @@ export default {
               $vm.id = res.id;
               $vm.socialEmail = res.kakao_account.email;
               $vm.name = res.kakao_account.profile.nickname;
+              $vm.image = res.kakao_account.profile.profile_image_url;
               $vm.type = 'kakao';
               $vm.socialLogin();
             },
