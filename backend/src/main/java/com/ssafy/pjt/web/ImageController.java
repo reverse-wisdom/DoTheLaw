@@ -1,14 +1,14 @@
 package com.ssafy.pjt.web;
 
+import java.net.URI;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -41,6 +41,24 @@ public class ImageController {
 	MemberService memberService;
 
 	/**
+	 * 파일 업로드
+	 * 
+	 * @param file
+	 * @return 고유URL주소
+	 */
+	@PostMapping({ "/data", "/image" })
+	@ResponseBody
+	public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
+		try {
+			UploadFileDTO uploadedFile = imageService.store(file);
+			return ResponseEntity.ok().body("/data/" + uploadedFile.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
+	/**
 	 * 파일 다운로드
 	 * 
 	 * @param 파일고유번호
@@ -67,24 +85,6 @@ public class ImageController {
 			Resource resource = imageService.loadAsResource(uploadedFile.getSaveFileName());
 			return ResponseEntity.ok().headers(headers).body(resource);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-		}
-	}
-
-	/**
-	 * 파일 업로드
-	 * 
-	 * @param file
-	 * @return 고유URL주소
-	 */
-	@PostMapping({ "/data", "/image" })
-	@ResponseBody
-	public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
-		try {
-			UploadFileDTO uploadedFile = imageService.store(file);
-			return ResponseEntity.ok().body("/data/" + uploadedFile.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
@@ -124,7 +124,7 @@ public class ImageController {
 		int imageSize = size.orElse(64);
 		try {
 			MemberRequestDTO member = memberService.getMember(uuid);
-			if (member.getImage() == null || member.getImage().length() == 0) {
+			if (member == null || member.getImage() == null || member.getImage().length() == 0) {
 				HttpHeaders headers = new HttpHeaders();
 				headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"default\"");
 				headers.setContentType(MediaType.IMAGE_PNG);
@@ -132,7 +132,13 @@ public class ImageController {
 				Resource resource = new UrlResource(file.toUri());
 				return ResponseEntity.ok().headers(headers).body(resource);
 			}
-
+			String img = member.getImage();
+			if (img.startsWith("http") || img.chars().allMatch(Character::isDigit) == false) { // 숫자의 형태가 아니라면
+				URI redirectUri = new URI(img);
+				HttpHeaders httpHeaders = new HttpHeaders();
+				httpHeaders.setLocation(redirectUri);
+				return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
+			}
 			UploadFileDTO uploadedFile = imageService.load(Integer.parseInt(member.getImage()));
 			HttpHeaders headers = new HttpHeaders();
 
