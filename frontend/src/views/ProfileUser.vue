@@ -15,7 +15,7 @@
             </div>
             <div class="col-1"></div>
             <div class="col-8 row" id="content-sort">
-              <h1 class="col-12 r-4">변호사 {{ $store.state.name }}</h1>
+              <h1 class="col-12 r-4">사용자 {{ $store.state.name }}</h1>
               <div class="col-11" id="text-solid-1">한줄소개</div>
             </div>
             <div class="row ml-10">
