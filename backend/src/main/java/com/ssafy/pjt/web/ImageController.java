@@ -51,7 +51,7 @@ public class ImageController {
 	public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
 		try {
 			UploadFileDTO uploadedFile = imageService.store(file);
-			return ResponseEntity.ok().body("/data/" + uploadedFile.getId());
+			return ResponseEntity.ok().body("/api/data/" + uploadedFile.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
@@ -103,7 +103,7 @@ public class ImageController {
 			MemberRequestDTO member = memberService.getMember(uuid);
 			member.setImage(String.valueOf(uploadedFile.getId()));
 			memberService.updateUser(member);
-			return ResponseEntity.ok().body("/image/" + uploadedFile.getId());
+			return ResponseEntity.ok().body("/api/image/" + uploadedFile.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
