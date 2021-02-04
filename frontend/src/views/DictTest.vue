@@ -79,6 +79,9 @@ export default {
       var newText = this.raw.replace(/<(\/a|a)([^>]*)>/gi, '');
 
       this.raw = newText;
+      var str = `<a title="상소는 판결, 명령, 결정 등의 법원의 재판에 관하여 특정 기간 안에 불복의 의사를 표시하여 상급법원의 판단을 구하는 법률행위를 의미한다.">상소</a>`;
+      var re = /a/;
+      console.log(re.test(str) ? true : false);
     },
     regexp() {
       this.dict.forEach((element) => {
