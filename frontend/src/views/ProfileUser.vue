@@ -36,7 +36,7 @@
                 <hr />
               </div>
               <div class="col-11" id="text-solid-one">
-                최근답변
+                최근 답변
                 <hr />
                 <br />
                 <br />
