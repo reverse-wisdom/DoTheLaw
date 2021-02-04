@@ -4,7 +4,7 @@
     <div class="main main-raised" style="z-index:1">
       <div class="section profile-content">
         <div style="padding:80px">
-          <h2 class="title text-center kor">자문게시판 글쓰기</h2>
+          <h2 class="title text-center kor">자문요청 글쓰기</h2>
           <hr class="div-hr" />
           <form @submit.prevent="writeContent">
             <md-field>
@@ -28,7 +28,7 @@
             </md-field>
 
             <div class="btn-right">
-              <md-button class="md-dense md-raised md-warning" type="submit" @click="writeContent">
+              <md-button class="md-dense md-raised md-warning" type="submit">
                 등록
               </md-button>
               <md-button class="md-dense md-raised md-info" type="button" @click="moveAdviseList">

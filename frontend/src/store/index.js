@@ -14,6 +14,8 @@ export default new Vuex.Store({
     password: '',
     nickname: '',
     name: '',
+    image: '',
+    phone: '',
     uuid: '',
     role: '',
   },
@@ -41,7 +43,20 @@ export default new Vuex.Store({
     clearNickname(state) {
       state.nickname = '';
     },
+    setPhone(state, phone) {
+      state.phone = phone;
+    },
 
+    clearPhone(state) {
+      state.phone = '';
+    },
+    setImage(state, image) {
+      state.image = image;
+    },
+
+    clearImage(state) {
+      state.image = '';
+    },
     setName(state, name) {
       state.name = name;
     },
@@ -77,6 +92,8 @@ export default new Vuex.Store({
         commit('setPassword', data.member.password);
         commit('setName', data.member.name);
         commit('setUuid', data.member.uuid);
+        commit('setPhone', data.member.phone);
+        commit('setImage', data.member.image);
         commit('setRole', data.member.role.substring(5).trim());
         router.push('/');
       } else {
@@ -84,14 +101,17 @@ export default new Vuex.Store({
       }
     },
     async SOCIALLOGIN({ commit }, userData) {
-      const res = await socialLoginUser(userData);
-      console.log(res);
-      if (res.data.code == 'LOGIN_SUCCESS') {
-        commit('setToken', res.data['message']);
+      const { data } = await socialLoginUser(userData);
+      console.log(data);
+      if (data.code == 'LOGIN_SUCCESS') {
+        commit('setToken', data['message']);
         commit('setEmail', userData.email);
         commit('setPassword', userData.password);
-        commit('setName', userData.name);
-        commit('setUuid', userData.uuid);
+        commit('setUuid', data.member.uuid);
+        commit('setName', data.member.name);
+        commit('setPhone', data.member.phone);
+        commit('setImage', data.member.image);
+        commit('setRole', data.member.role.substring(5).trim());
         router.push('/');
       } else {
         alert('로그인 실패! 이메일 및 비밀번호를 확인해 주세요!');

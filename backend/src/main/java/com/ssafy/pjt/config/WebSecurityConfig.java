@@ -55,6 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/member/social/**").permitAll()
                 .antMatchers("/api/member/check/**").permitAll()
                 .antMatchers("/api/member/image/**").permitAll()
+
                 
                 .antMatchers("/api/rss/**").permitAll() // RSS 파싱 관련
                 
