@@ -46,6 +46,77 @@
 <script>
 import { createBoard } from '@/api/board';
 
+function uploadSummernoteFile(file, editor) {
+  let data = new FormData();
+  data.append('file', file);
+  $.ajax({
+    data: data,
+    type: 'POST',
+    url: '/api/data',
+    cache: false,
+    contentType: false,
+    processData: false,
+    xhr: function() {
+      //Handle progress upload
+      let myXhr = $.ajaxSettings.xhr();
+      if (myXhr.upload) myXhr.upload.addEventListener('progress', progressHandlingFunction, false);
+      return myXhr;
+    },
+    success: function(reponse) {
+      console.dir(reponse);
+      // if (reponse.status === true) {
+      let listMimeImg = ['image/png', 'image/jpeg', 'image/webp', 'image/gif', 'image/svg'];
+      let listMimeAudio = ['audio/mpeg', 'audio/ogg'];
+      let listMimeVideo = ['video/mpeg', 'video/mp4', 'video/webm'];
+      let elem;
+      console.log(file);
+      if (listMimeImg.indexOf(file.type) > -1) {
+        //Picture
+        console.log('이미지', reponse);
+        $(editor).summernote('insertImage', reponse);
+      } else if (listMimeAudio.indexOf(file.type) > -1) {
+        //Audio
+        console.log('오디오', reponse);
+        elem = document.createElement('audio');
+        elem.setAttribute('src', reponse);
+        elem.setAttribute('controls', 'controls');
+        elem.setAttribute('preload', 'metadata');
+        $(editor).summernote('insertNode', elem);
+      } else if (listMimeVideo.indexOf(file.type) > -1) {
+        //Video
+        console.log('비디오', reponse);
+        elem = document.createElement('video');
+        elem.setAttribute('src', reponse);
+        elem.setAttribute('controls', 'controls');
+        elem.setAttribute('preload', 'metadata');
+        $(editor).summernote('insertNode', elem);
+      } else {
+        //Other file type
+        console.log('일반파일', reponse);
+        elem = document.createElement('a');
+        let linkText = document.createTextNode(file.name);
+        elem.appendChild(linkText);
+        elem.title = file.name;
+        elem.href = reponse;
+        $(editor).summernote('insertNode', elem);
+      }
+      // }
+    },
+  });
+}
+
+function progressHandlingFunction(e) {
+  if (e.lengthComputable) {
+    //Log current progress
+    console.log((e.loaded / e.total) * 100 + '%');
+
+    //Reset progress on complete
+    if (e.loaded === e.total) {
+      console.log('Upload finished.');
+    }
+  }
+}
+
 export default {
   bodyClass: 'profile-page',
   data() {
@@ -84,9 +155,33 @@ export default {
           ['para', ['ul', 'ol', 'paragraph']],
           ['height', ['height']],
           ['table', ['table']],
-          ['insert', ['media', 'link', 'hr', 'picture', 'video']],
+          ['insert', ['media', 'link', 'hr', 'picture', 'video', 'file']],
           ['view', ['fullscreen', 'codeview']],
         ],
+        callbacks: {
+          //여기 부분이 이미지를 첨부하는 부분
+          onFileUpload: function(files, editor, welEditable) {
+            for (var i = files.length - 1; i >= 0; i--) {
+              // console.log(files[i]);
+              uploadSummernoteFile(files[i], this);
+            }
+          },
+          onImageUpload: function(files, editor, welEditable) {
+            for (var i = files.length - 1; i >= 0; i--) {
+              // console.log(files[i]);
+              uploadSummernoteFile(files[i], this);
+            }
+          },
+          onPaste: function(e) {
+            // var clipboardData = e.originalEvent.clipboardData;
+            // if (clipboardData && clipboardData.items && clipboardData.items.length) {
+            //   var item = clipboardData.items[0];
+            //   if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+            //     e.preventDefault();
+            //   }
+            // }
+          },
+        },
       });
     });
   },
