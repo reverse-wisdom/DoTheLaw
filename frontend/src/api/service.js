@@ -15,9 +15,14 @@ function lawService(ID) {
   return posts.get(`/api/search/lawService?ID=${ID}`);
 }
 
+// 법률 단어 사전 가져오기
+function lawDict() {
+  return posts.get(`/api/search/dict`);
+}
+
 // 뉴스 RSS 가져오기
 function newsParsing() {
   return posts.get('/api/rss/news');
 }
 
-export { top, lawService, lawSearch, newsParsing };
+export { top, lawService, lawSearch, lawDict, newsParsing };
