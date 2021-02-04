@@ -89,10 +89,6 @@
                       <td>사건종류코드</td>
                       <td>{{ judgment.PrecService.사건종류코드 }}</td>
                     </tr>
-                    <tr>
-                      <td>마우스오버</td>
-                      <a title="This is some text I want to display.">This link has mouseover text.</a>
-                    </tr>
                   </tbody>
                 </v-simple-table>
 
@@ -111,7 +107,7 @@
 </template>
 
 <script>
-import { lawService, lawSearch } from '@/api/service';
+import { lawService, lawSearch, lawDict } from '@/api/service';
 
 export default {
   name: 'search',
@@ -125,16 +121,7 @@ export default {
       render: false,
       judgment_detail: '',
       radio: false,
-      dicts: [
-        { no: 1, title: '상고', content: '상고(上告)는 상소의 한 가지로서, 제2심 판결에 불복할 때에 하는 신청이다.' },
-        { no: 2, title: '항소', content: '항소(抗訴, Berufung)은 상소의 한 가지로서, 제1심 판결에 불복할 때에 하는 신청이다.' },
-        {
-          no: 3,
-          title: '민사소송법',
-          content:
-            '민사소송법이라고 함은 형식적으로는 민사소송법이라는 법률을 말하고, 실질적으로는 민사소송제도를 규율하는 법규 일체를 말한다. 따라서 실질적인 의미의 민사소송법에는 민사소송법외에도 민사집행법(2002년 분리), 가사소송법 등등이 포함된다. 파산이나 회생, 개인회생도 민사소송법학의 연구대상이다. 즉, 널리 민사절차 일반이 민사소송법학의 연구 대상이다.',
-        },
-      ],
+      dict: [],
     };
   },
   props: {
@@ -154,6 +141,15 @@ export default {
     this.search = this.$route.query.searchWord;
     this.searchLaw();
   },
+  async mounted() {
+    const { data } = await lawDict();
+    for (let i = 0; i < data.length; i++) {
+      this.dict.push({
+        word: data[i].word,
+        mean: String.raw`${data[i].mean}`.replace(/\\n/g, '\n'),
+      });
+    }
+  },
   methods: {
     async searchLaw() {
       const { data } = await lawSearch(this.search);
@@ -171,8 +167,18 @@ export default {
       const { data } = await lawService(ID);
       this.render = true;
       this.judgment = data;
+
+      this.judgment.PrecService.판결요지 = this.judgment.PrecService.판결요지.replace(/<(\/a|a)([^>]*)>/gi, '');
+      this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(/<(\/a|a)([^>]*)>/gi, '');
+      this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(/<(\/a|a)([^>]*)>/gi, '');
       this.radio = this.judgment.PrecService.판결요지;
-      console.log(this.judgment.PrecService.판례내용);
+
+      this.dict.forEach((element) => {
+        var regEx = new RegExp(element.word, 'g');
+        this.judgment.PrecService.판결요지 = this.judgment.PrecService.판결요지.replace(regEx, element.mean);
+        this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(regEx, element.mean);
+        this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, element.mean);
+      });
     },
   },
 };
