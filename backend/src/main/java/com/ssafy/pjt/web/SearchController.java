@@ -51,4 +51,9 @@ public class SearchController {
 			return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping("/dict")
+	public ResponseEntity<?> getDict(){
+		return new ResponseEntity(searchService.getDictAll(), HttpStatus.OK);
+	}
 }
