@@ -102,4 +102,8 @@ public class MemberService implements MemberUseCase {
 		mapper.updateLawyer(lawyer);
 	}
 
+	public MemberRequestDTO getMember(int uuid) throws SQLException {
+		return mapper.selectMemberByUUID(uuid);
+	}
+
 }

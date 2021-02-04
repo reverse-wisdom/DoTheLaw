@@ -6,7 +6,7 @@
         <div class="container">
           <div class="row">
             <div class="col-3 row ml-5">
-              <img id="profile" class="r-10" :src="imageUrl" alt="noimage" />
+              <img id="profile" class="col-12 r-10" :src="image" alt="noimage" />
               <div class="r-2" id="button-sort">
                 <button id="image-change-button">
                   이미지 변경
@@ -83,7 +83,7 @@ export default {
   bodyClass: 'profile-page',
   data() {
     return {
-      imageUrl: require('@/assets/img/ryan.jpg'),
+      image: this.$store.state.image,
       address: null,
       map: null,
       mapState: window.mapState,

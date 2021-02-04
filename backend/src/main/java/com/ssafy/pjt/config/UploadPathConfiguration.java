@@ -8,19 +8,20 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class UploadPathConfiguration {
-	
+
 	@Bean(name = "uploadPath")
 	public String uploadPath() {
 		String os = System.getProperty("os.name").toLowerCase();
-		if(os.contains("win"))
-			return "c:" +  File.separator + "PJT-data";
+		if (os.contains("win"))
+			return "c:" + File.separator + "PJT-data";
 		else // AWS용
 			return "/volumes/data";
 	}
-	
+
 	@Autowired
 	@Bean(name = "lawyerImagePath")
 	public String lawyerImagePath(String uploadPath) {
-		return uploadPath +  File.separator + "lawyer";
+		return uploadPath + File.separator + "lawyer";
 	}
+
 }
