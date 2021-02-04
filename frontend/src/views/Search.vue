@@ -70,53 +70,40 @@
               <br />
 
               <template v-if="render">
-                <h3 v-html="judgment.PrecService.사건명._cdata"></h3>
+                <h3 v-html="judgment.PrecService.사건명"></h3>
                 <v-simple-table>
                   <tbody>
                     <tr>
                       <td>선고일자</td>
-                      <td>{{ judgment.PrecService.선고일자._text }}</td>
+                      <td>{{ judgment.PrecService.선고일자 }}</td>
                     </tr>
                     <tr>
                       <td>법원명</td>
-                      <td>{{ judgment.PrecService.법원명._text }}</td>
+                      <td>{{ judgment.PrecService.법원명 }}</td>
                     </tr>
                     <tr>
                       <td>사건종류명</td>
-                      <td>{{ judgment.PrecService.사건종류명._text }}</td>
+                      <td>{{ judgment.PrecService.사건종류명 }}</td>
                     </tr>
                     <tr>
                       <td>사건종류코드</td>
-                      <td>{{ judgment.PrecService.사건종류코드._text }}</td>
+                      <td>{{ judgment.PrecService.사건종류코드 }}</td>
+                    </tr>
+                    <tr>
+                      <td>마우스오버</td>
+                      <a title="This is some text I want to display.">This link has mouseover text.</a>
                     </tr>
                   </tbody>
                 </v-simple-table>
 
-                <md-radio v-model="radio" :value="judgment.PrecService.판결요지._cdata">판결요지</md-radio>
-                <md-radio v-model="radio" :value="judgment.PrecService.참조조문._cdata">참조조문</md-radio>
-                <md-radio v-model="radio" :value="judgment.PrecService.판례내용._cdata">판례내용</md-radio>
+                <md-radio v-model="radio" :value="judgment.PrecService.판결요지">판결요지</md-radio>
+                <md-radio v-model="radio" :value="judgment.PrecService.참조조문">참조조문</md-radio>
+                <md-radio v-model="radio" :value="judgment.PrecService.판례내용">판례내용</md-radio>
 
                 <p v-html="radio"></p>
               </template>
             </v-card>
           </v-col>
-          <!-- <v-col cols="6" md="4">
-            <v-card class="pa-2" outlined tile>
-              <v-card class="mx-auto" tile>
-                <v-subheader>용어설명</v-subheader>
-                <v-list style="max-height: 400px" class="overflow-y-auto">
-                  <template v-for="dict in dicts">
-                    <v-list-item :key="dict.no" two-line>
-                      <v-list-item-content>
-                        <v-list-item-title v-text="dict.title"></v-list-item-title>
-                        <v-list-item-subtitle v-text="dict.content"></v-list-item-subtitle>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </template>
-                </v-list>
-              </v-card>
-            </v-card>
-          </v-col> -->
         </v-row>
       </div>
     </div>
@@ -124,8 +111,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-import convert from 'xml-js';
 import { lawService, lawSearch } from '@/api/service';
 
 export default {
@@ -171,50 +156,23 @@ export default {
   },
   methods: {
     async searchLaw() {
-      var searchWord = document.getElementById('searchWord').value;
-      const { data } = await lawSearch(searchWord);
-      // console.log(data.PrecSearch.prec[0].id);
-      // for(var i=0;i<data.length;i++){
-      //   this.contents.push({
-      //     no: data.
-      //   })
-      // }
-
-      console.log(data);
-      // console.log(data.PrecSearch.prec[0].id);
-
-      this.contents = [];
-      axios
-        .get('https://www.law.go.kr/DRF/lawSearch.do?OC=dbm01049&target=prec&type=XML&mobileYn=Y&display=100&query=' + searchWord)
-        .then(({ data }) => {
-          var xml = data;
-          var json = convert.xml2json(xml, { compact: true });
-          let $vm = this;
-          JSON.parse(json).PrecSearch.prec.forEach(function(entry) {
-            $vm.contents.push({
-              no: entry.판례일련번호._text,
-              name: entry.사건명._cdata,
-              category: entry.법원명._text,
-            });
-          });
-          this.detailJudgment(this.contents[0].no);
-        })
-        .catch();
+      const { data } = await lawSearch(this.search);
+      for (var i = 0; i < data.PrecSearch.prec.length; i++) {
+        this.contents.push({
+          no: data.PrecSearch.prec[i].판례일련번호,
+          name: data.PrecSearch.prec[i].사건명,
+          category: data.PrecSearch.prec[i].법원명,
+        });
+      }
     },
-    detailJudgment(data) {
-      console.log(data);
+    async detailJudgment(ID) {
       this.render = false;
       this.judgment = {};
-      axios
-        .get('https://www.law.go.kr/DRF/lawService.do?OC=dbm01049&target=prec&type=xml&ID=' + data)
-        .then(({ data }) => {
-          var xml = data;
-          var json = convert.xml2json(xml, { compact: true });
-          this.judgment = JSON.parse(json);
-          this.render = true;
-          this.radio = this.judgment.PrecService.판결요지._cdata;
-        })
-        .catch();
+      const { data } = await lawService(ID);
+      this.render = true;
+      this.judgment = data;
+      this.radio = this.judgment.PrecService.판결요지;
+      console.log(this.judgment.PrecService.판례내용);
     },
   },
 };

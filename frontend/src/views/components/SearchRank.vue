@@ -32,17 +32,14 @@ export default {
   async mounted() {
     this.loadCheck = false;
     const { data } = await top();
-    console.log(data.items.length);
-    // 랭킹 4등까지만
-    for (let i = 0; i < 4; i++) {
+    // 랭킹 5등까지만
+    for (let i = 0; i < 5; i++) {
       this.items.push({
         rank: i,
         word: data.items[i].word,
       });
     }
     this.loadCheck = true;
-    let index = 0;
-    console.log(this.items[index].word);
   },
   methods: {
     moveSearch(query) {

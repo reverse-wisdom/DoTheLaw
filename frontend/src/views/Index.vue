@@ -70,6 +70,12 @@
                   <md-button class="md-success" @click="goWebRTC">webRTC로 이동</md-button>
                 </h4>
               </div>
+              <div class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center">
+                <h2>판례필터 테스트</h2>
+                <h4>
+                  <md-button class="md-success" @click="goDictTest">판례테스트 이동</md-button>
+                </h4>
+              </div>
             </div>
           </div>
         </div>
@@ -187,11 +193,13 @@ export default {
     },
     checkCookie() {
       this.cookie = '';
-      console.log($cookies.isKey(''));
       this.cookie = $cookies.keys();
     },
     goWebRTC() {
       this.$router.push('/webrtc');
+    },
+    goDictTest() {
+      this.$router.push('/dicttest');
     },
   },
   computed: {
