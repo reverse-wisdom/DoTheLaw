@@ -10,7 +10,6 @@ import com.ssafy.pjt.web.dto.MatchingRequestDTO;
 public interface MatchingUseCase {
 	public List<MatchingRequestDTO> search(int lawyerUuid) throws Exception;
 	public MatchingRequestDTO detail(int matchingId) throws Exception;
-	//public boolean hit(int boardId) throws Exception;
 	public boolean insert(MatchingRequestDTO matching) throws Exception;
 	public boolean delete(int matchingId) throws Exception;
 	public boolean update(MatchingRequestDTO matching) throws Exception;
