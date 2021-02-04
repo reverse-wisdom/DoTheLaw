@@ -23,13 +23,6 @@
 		where b.matching_id = #{matchingId}
 	</select>
 	
-	<update id="hit" parameterType="MatchingRequestDTO">
-		update board
-		set
-		hit = hit+1
-		where board_id = #{boardId};
-	</update>
-
 	<insert id="insert" parameterType="MatchingRequestDTO">
 		INSERT INTO
 		matching(`uuid`,`lawyer_uuid`,`content`,`state`,`reservation_date`)
@@ -59,7 +52,9 @@
 	<select id="checkUser" parameterType="int" resultType="int">
 		select uuid from matching where matching.matching_id = #{matchingId}
 	</select>
+	
 	<select id="checkLawyer" parameterType="int" resultType="int">
 		select lawyer_uuid from matching where matching.matching_id = #{matchingId}
 	</select>
+	
 </mapper>
