@@ -18,4 +18,5 @@ public interface MemberUseCase {
 	public boolean signout(String role, String eamil) throws SQLException;
 	public void updateUser(MemberRequestDTO member)throws SQLException;
 	public void updateLawyer(MemberRequestDTO lawyer) throws SQLException;
+	public List<MemberRequestDTO> lawyerAll() throws SQLException;
 }
