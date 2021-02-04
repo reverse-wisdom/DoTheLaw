@@ -1,27 +1,38 @@
 <template>
-  <!-- 게시판 페이지 -->
   <div class="wrapper">
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title text-center kor">법상식테스트</h2>
-        <div class="container">
+        <!-- <h2 class="title text-center kor">법상식테스트</h2> -->
+        <div class="container text-center">
           <img src="@/assets/img/lawtitle.png" style="max-width:80%; height:auto;" class="title-lawtest" alt="" />
-          <img src="@/assets/img/main2.png" style="max-width:80%; height:auto;" alt="" />
         </div>
-        <div class="btn-center">
-          <md-button class="md-info" type="button" @click="moveTest">
-            테스트하러가기
-          </md-button>
-        </div>
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <img src="@/assets/img/main2.png" style="width: 500px;height:auto;" alt="" />
+      <div class="btn-center">
+        <md-button class="md-info" type="button" @click="moveTest">
+          테스트하러가기
+        </md-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { fetchBoardList } from '@/api/board';
-
 export default {
   bodyClass: 'profile-page',
   data() {
