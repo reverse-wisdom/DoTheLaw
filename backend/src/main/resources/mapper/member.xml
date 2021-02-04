@@ -36,6 +36,11 @@
 		where
 		m.email = #{email};
 	</select>
+	
+	<select id="selectMemberByUUID" parameterType="int" resultType="MemberRequestDTO">
+		SELECT *
+		FROM member WHERE uuid = #{uuid};
+	</select>
 
 	<delete id="signout" parameterType="int">
 		delete
