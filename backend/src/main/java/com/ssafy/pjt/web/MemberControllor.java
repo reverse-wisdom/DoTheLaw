@@ -80,8 +80,7 @@ public class MemberControllor {
 		if (!memberservice.checkEmail(email)) {
 			try {
 				return new ResponseEntity<>("NOT DUPLICATE", HttpStatus.OK);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
 			}
 		}
@@ -94,8 +93,7 @@ public class MemberControllor {
 		if (!memberservice.checkName(name)) {
 			try {
 				return new ResponseEntity<>("NOT DUPLICATE", HttpStatus.OK);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
 			}
 		}
@@ -130,6 +128,19 @@ public class MemberControllor {
 		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 	}
 
+	// 변호사 회원 조회
+	@ApiOperation(value = "변호사 회원 정보 전체 조회")
+	@GetMapping("/lookup/lawyer/all")
+	private ResponseEntity<List<MemberRequestDTO>> lookupLawyerAll() {
+		List<MemberRequestDTO> member = null;
+		try {
+			member = memberservice.lawyerAll();
+			return new ResponseEntity<>(member, HttpStatus.OK);
+		} catch (SQLException e) {
+			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+		}
+	}
+
 	// 회원 탈퇴 미완성
 	@ApiOperation(value = "회원탈퇴")
 	@DeleteMapping("/delete")
@@ -151,22 +162,24 @@ public class MemberControllor {
 			}
 		}
 	}
+
 	@ApiOperation(value = "일반 회원 정보 수정")
 	@PutMapping("/update")
 	private ResponseEntity<String> updateUser(@Valid @RequestBody MemberRequestDTO memberRequestDTO) {
 		try {
 			memberservice.updateUser(memberRequestDTO);
-			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);			
+			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 		} catch (SQLException e) {
 			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
 	}
+
 	@ApiOperation(value = "변호사 회원 정보 수정")
 	@PutMapping("/update/lawyer")
 	private ResponseEntity<String> updateLawyer(@Valid @RequestBody MemberRequestDTO memberRequestDTO) {
 		try {
 			memberservice.updateLawyer(memberRequestDTO);
-			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);			
+			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 		} catch (SQLException e) {
 			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
