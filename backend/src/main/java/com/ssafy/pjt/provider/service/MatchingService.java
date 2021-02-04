@@ -18,7 +18,6 @@ public class MatchingService implements MatchingUseCase {
 
 	@Override
 	public List<MatchingRequestDTO> search(int lawyerUuid) throws SQLException {
-		System.out.println("??");
 		return matchingMapper.search(lawyerUuid);
 	}
 
@@ -27,14 +26,9 @@ public class MatchingService implements MatchingUseCase {
 		return matchingMapper.detail(matchingId);
 	}
 
-//	@Override
-//	public boolean hit(int boardId) throws Exception {
-//		return matchingMapper.hit(boardId);
-//	}
 
 	@Override
 	public boolean insert(MatchingRequestDTO matching) throws Exception {
-		System.out.println("???????????");
 		return matchingMapper.insert(matching);
 	}
 
@@ -45,8 +39,6 @@ public class MatchingService implements MatchingUseCase {
 
 	@Override
 	public boolean update(MatchingRequestDTO matching) throws Exception {
-		System.out.println("??");
-		System.out.println(matching);
 		return matchingMapper.update(matching);
 	}
 

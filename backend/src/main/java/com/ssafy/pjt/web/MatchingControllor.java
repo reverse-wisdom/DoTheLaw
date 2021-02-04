@@ -38,7 +38,6 @@ public class MatchingControllor {
 	private ResponseEntity<List<MatchingRequestDTO>> search(@RequestParam(required = true) final int lawyerUuid) {
 		List<MatchingRequestDTO> list;
 		try {
-			System.out.println("??");
 			list = matchingService.search(lawyerUuid);
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		} catch (SQLException e) {
@@ -52,7 +51,6 @@ public class MatchingControllor {
 	private ResponseEntity<MatchingRequestDTO> detail(@RequestParam(required = true) final int matchingId) {
 		MatchingRequestDTO matching;
 		try {
-			//boardService.hit(boardId);
 			matching = matchingService.detail(matchingId);
 			return new ResponseEntity<>(matching, HttpStatus.OK);
 		} catch (Exception e) {
@@ -65,13 +63,10 @@ public class MatchingControllor {
 	@PostMapping("/create")
 	private ResponseEntity<String> create(@Valid @RequestBody MatchingRequestDTO matching) {
 		try {
-			System.out.println(matching);
 			matchingService.insert(matching);
-			System.out.println(matching);
-			//matchingService.insert(matching);
 			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -84,27 +79,25 @@ public class MatchingControllor {
 				matchingService.delete(matchingId);
 				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 			} else
-				return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+				return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 
 		} catch (Exception e) {
-			return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@ApiOperation(value = "자문 상태 수정")
 	@PutMapping("/update")
 	private ResponseEntity<String> update(@Valid @RequestBody MatchingRequestDTO matching, @RequestParam(required = true) final Role role) {
-		System.out.println("?");
 		try {
 			if(matchingService.check(matching.getMatchingId(), matching.getUuid(), role)) {
-				System.out.println("??");
 				matchingService.update(matching);
 				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 			}else {
-				return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+				return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 			}
 		} catch (Exception e) {
-			return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
 	}
 
