@@ -19,4 +19,5 @@ public interface MemberUseCase {
 	public void updateUser(MemberRequestDTO member)throws SQLException;
 	public void updateLawyer(MemberRequestDTO lawyer) throws SQLException;
 	public List<MemberRequestDTO> lawyerAll() throws SQLException;
+	public boolean passwordUpdate(int uuid, String password) throws SQLException;
 }
