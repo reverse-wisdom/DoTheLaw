@@ -34,7 +34,7 @@
 		from member m join lawyer l
 		on m.uuid = l.uuid
 		where
-		m.email = #{email};
+		m.email = #{email}
 	</select>
 	
 	<select id="lawyerAll" resultType="MemberRequestDTO">
@@ -86,6 +86,13 @@
 		introduction = #{introduction},
 		address = #{address},
         dept = #{dept}
+		where uuid = #{uuid};
+	</update>
+	
+	<update id="passwordUpdate">
+		update member
+		set
+		password = #{password}
 		where uuid = #{uuid};
 	</update>
 </mapper>
