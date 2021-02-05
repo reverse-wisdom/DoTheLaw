@@ -2,6 +2,7 @@ package com.ssafy.pjt.web;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -45,8 +46,19 @@ public class MatchingControllor {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}
 	}
+	
+	@ApiOperation(value = "내가 포함되어 있는 자문 전체 조회")
+	@GetMapping("/contain")
+	private ResponseEntity<String> contain(@RequestParam(required = true) final int uuid) {
+		try {
+			Map rsult = matchingService.findByUUID(uuid);
+			return new ResponseEntity(rsult, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+		}
+	}
 
-	@ApiOperation(value = "자문 조회")
+	@ApiOperation(value = "자문 상세 조회")
 	@GetMapping("/search/detail")
 	private ResponseEntity<MatchingRequestDTO> detail(@RequestParam(required = true) final int matchingId) {
 		MatchingRequestDTO matching;
@@ -100,7 +112,6 @@ public class MatchingControllor {
 			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
 	}
-
 
 
 }
