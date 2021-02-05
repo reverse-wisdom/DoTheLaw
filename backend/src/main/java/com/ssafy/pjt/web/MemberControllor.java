@@ -184,4 +184,16 @@ public class MemberControllor {
 			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
 	}
+	@ApiOperation(value = "비밀전호 수정")
+	@PutMapping("/update/password")
+	private ResponseEntity<String> updatePassword(@Valid @RequestParam int uuid, @Valid @RequestParam String password ) {
+		try {
+			if(memberservice.passwordUpdate(uuid,password)) {
+				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+			}
+			return new ResponseEntity<>("FAIL", HttpStatus.OK);
+		} catch (SQLException e) {
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+		}
+	}
 }

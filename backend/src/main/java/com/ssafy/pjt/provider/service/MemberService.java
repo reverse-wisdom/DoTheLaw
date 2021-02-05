@@ -13,6 +13,8 @@ import com.ssafy.pjt.core.repository.MemberRepository;
 import com.ssafy.pjt.core.repository.mapper.MemberMapper;
 import com.ssafy.pjt.core.security.Role;
 import com.ssafy.pjt.core.service.MemberUseCase;
+import com.ssafy.pjt.core.service.dto.MemberDTO;
+import com.ssafy.pjt.util.EmailUtils;
 import com.ssafy.pjt.web.dto.MemberRequestDTO;
 import com.ssafy.pjt.web.dto.SignupRequestDTO;
 
@@ -104,6 +106,18 @@ public class MemberService implements MemberUseCase {
 
 	public MemberRequestDTO getMember(int uuid) throws SQLException {
 		return mapper.selectMemberByUUID(uuid);
+	}
+
+	@Override
+	public boolean passwordUpdate(int uuid, String password) throws SQLException {
+		MemberRequestDTO member = null;
+		member = mapper.selectMemberByUUID(uuid);
+		if(member != null) {		
+			mapper.passwordUpdate(uuid, new BCryptPasswordEncoder().encode(password));
+			return true;
+		}
+		
+		return false;
 	}
 
 }
