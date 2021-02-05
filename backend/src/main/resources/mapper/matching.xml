@@ -12,6 +12,15 @@
 		on b.uuid = m.uuid
 		where b.lawyer_uuid = #{lawyerUuid}
 	</select>
+	
+	<select id="selectByUUID" parameterType="int" resultType="MatchingRequestDTO">
+		select b.matching_id, b.uuid, b.lawyer_uuid, m.name as name,
+		b.create_date, b.content, b.state, b.reservation_date
+		from matching b left
+		join member m
+		on b.uuid = m.uuid
+		where b.uuid = #{uuid} or b.lawyer_uuid = #{uuid}
+	</select>
 
 	<select id="detail" parameterType="int"
 		resultType="MatchingRequestDTO">
