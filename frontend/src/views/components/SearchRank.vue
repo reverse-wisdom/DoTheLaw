@@ -2,10 +2,10 @@
   <div>
     <div v-if="loadCheck">
       <div class="list-type">
-        <ol style="list-style: none; ">
-          <li v-for="item in items" :key="item.rank">
-            <a @click="moveSearch(item.word)" v-text="item.word"></a>
-          </li>
+        <ol id="olid" style="list-style: none;">
+          <div class="mt-10" v-for="item in items" :key="item.rank">
+            <a class="box-solid" @click="moveSearch(item.word)" v-text="item.word"></a>
+          </div>
         </ol>
       </div>
     </div>
@@ -50,58 +50,41 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// 리스트 디자인
-.list-type {
-  width: 100%;
-  margin: 0 auto;
+.kor {
+  font-family: 'Nanum Gothic', sans-serif;
 }
-.list-type ol {
-  list-style-type: none;
-  list-style-type: decimal;
-  margin: 0;
-  margin-left: 1em;
-  padding: 0;
-  counter-reset: li-counter;
-}
-.list-type ol li {
-  position: relative;
-  margin-bottom: 1.5em;
-  padding: 0.5em;
-  background-color: #f0d756;
-  padding-left: 58px;
-}
-
 .list-type a {
   text-decoration: none;
-  color: black !important;
+  color: white !important;
   font-size: 17px;
   font-family: 'Nanum Gothic', sans-serif;
 }
-
-.list-type li:hover {
-  box-shadow: inset -3em 0 #6cd6cc;
-  -webkit-transition: box-shadow 0.5s; /* For Safari 3.1 to 6.0 */
-  transition: box-shadow 0.5s;
+/* #img2 {
+  filter: brightness(60%);
+} */
+a + h2 {
+  color: aliceblue;
 }
-
-.list-type ol li:before {
-  position: absolute;
-  top: -0.3em;
-  left: -0.2em;
-  width: 1.8em;
-  height: 1.2em;
-  font-size: 2em;
-  line-height: 1.2;
-  font-weight: bold;
-  text-align: center;
+.box-solid {
+  box-sizing: border-box;
+  border: 1px solid white;
+  border-radius: 1.5rem;
+  padding: 1rem;
+  width: 500px;
+}
+#title-solid {
+  box-sizing: content-box;
+  border: 5px solid white;
+  font-size: 50px;
+  border-radius: 1.5rem;
+  padding: 1rem;
   color: white;
-  background-color: #6cd6cc;
-  transform: rotate(-20deg);
-  -ms-transform: rotate(-20deg);
-  -webkit-transform: rotate(-20deg);
-  z-index: 99;
-  overflow: hidden;
-  content: counter(li-counter);
-  counter-increment: li-counter;
+  font-weight: bold;
+}
+#olid {
+  box-sizing: content-box;
+}
+li {
+  list-style: none;
 }
 </style>
