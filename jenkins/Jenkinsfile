@@ -29,7 +29,8 @@ pipeline {
                 sh 'docker container ls -a -fname=base-pjt-back -q | xargs -r docker container rm'
 		sh 'docker ps -f name=base-pjt-front -q | xargs --no-run-if-empty docker container stop'
 		sh 'docker container ls -a -fname=base-pjt-front -q | xargs -r docker container rm'
-                sh 'docker rmi $(docker images -f "dangling=true" -q)'
+                sh 'docker ps -a -f "status=exited" -q | xargs -r docker container rm'
+		sh 'docker rmi $(docker images -f "dangling=true" -q)'
 	    }
 	}
         stage('Docker run') {
