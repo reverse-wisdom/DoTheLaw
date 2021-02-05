@@ -1,7 +1,10 @@
 package com.ssafy.pjt.provider.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +25,28 @@ public class MatchingService implements MatchingUseCase {
 	}
 
 	@Override
+	public Map findByUUID(int uuid) throws SQLException {
+		Map result = new HashMap();
+		List<MatchingRequestDTO> list = matchingMapper.selectByUUID(uuid);
+		List lawyer = new ArrayList(), client = new ArrayList(), others = new ArrayList();
+		for (MatchingRequestDTO matchingDTO : list) {
+			if (matchingDTO.getUuid() == uuid) {
+				client.add(matchingDTO);
+			} else if (matchingDTO.getLawyerUuid() == uuid) {
+				lawyer.add(matchingDTO);
+			} else
+				others.add(matchingDTO);
+		}
+		result.put("lawyer", lawyer);
+		result.put("client", client);
+		result.put("others", others);
+		return result;
+	}
+
+	@Override
 	public MatchingRequestDTO detail(int matchingId) throws Exception {
 		return matchingMapper.detail(matchingId);
 	}
-
 
 	@Override
 	public boolean insert(MatchingRequestDTO matching) throws Exception {
@@ -43,14 +64,14 @@ public class MatchingService implements MatchingUseCase {
 	}
 
 	@Override
-	public boolean check(int matchingId, int uuid, Role role) throws Exception {		
+	public boolean check(int matchingId, int uuid, Role role) throws Exception {
 		if (role.getCode().equals("ROLE_ADMIN")) {
 			return true;
-		} else if(role.getCode().equals("ROLE_USER")) {
+		} else if (role.getCode().equals("ROLE_USER")) {
 			if (matchingMapper.checkUser(matchingId) == uuid) {
 				return true;
 			}
-		} else if(role.getCode().equals("ROLE_LAWYER")) {
+		} else if (role.getCode().equals("ROLE_LAWYER")) {
 			if (matchingMapper.checkLawyer(matchingId) == uuid) {
 				return true;
 			}
