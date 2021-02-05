@@ -105,7 +105,7 @@ public class MemberControllor {
 	@GetMapping("/lookup")
 	private ResponseEntity<Member> lookupUser(@RequestParam(required = true) final String email) {
 		Member member;
-		if (!memberservice.checkEmail(email)) {
+		if (memberservice.checkEmail(email)) {
 			member = loginService.user(email);
 			return new ResponseEntity<>(member, HttpStatus.OK);
 		}
@@ -117,12 +117,12 @@ public class MemberControllor {
 	@GetMapping("/lookup/lawyer")
 	private ResponseEntity<MemberRequestDTO> lookupLawyer(@RequestParam(required = true) final String email) {
 		MemberRequestDTO member = null;
-		if (!memberservice.checkEmail(email)) {
-			try {
+		if (memberservice.checkEmail(email)) {
+			try {				
 				member = memberservice.lawyer(email);
 				return new ResponseEntity<>(member, HttpStatus.OK);
 			} catch (SQLException e) {
-				return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+				return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 			}
 		}
 		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
