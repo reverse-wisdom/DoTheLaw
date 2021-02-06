@@ -3,30 +3,17 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <!-- <h2 class="title text-center kor">법상식테스트</h2> -->
-        <div class="container text-center">
-          <img src="@/assets/img/lawtitle.png" style="max-width:80%; height:auto;" class="title-lawtest" alt="" />
+        <div class="">
+          <img src="@/assets/img/lawtitle.png" style="max-width:30%; height:auto;" class="title-lawtest" alt="" />
         </div>
-      </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <img src="@/assets/img/main2.png" style="width: 500px;height:auto;" alt="" />
-      <div class="btn-center">
-        <md-button class="md-info" type="button" @click="moveTest">
-          테스트하러가기
-        </md-button>
+        <div class="">
+          <img src="@/assets/img/main2.png" style="max-width:30%; height:auto;" alt="" />
+        </div>
+        <div class="btn-center">
+          <md-button class="md-info" type="button" @click="moveTest">
+            테스트하러가기
+          </md-button>
+        </div>
       </div>
     </div>
   </div>
@@ -80,72 +67,20 @@ export default {
 .btn-center {
   text-align: center;
 }
-// table css
-.styled-table {
-  border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 0.9em;
-  font-family: sans-serif;
-  min-width: 400px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-}
-.styled-table thead tr {
-  background-color: #98cec3;
-  color: #ffffff;
-  text-align: left;
-  width: 10rem;
-}
-.styled-table th,
-.styled-table td {
-  padding: 12px 15px;
-}
-.styled-table tbody tr {
-  border-bottom: 1px solid #dddddd;
-}
-//even 잡으면 호버 작동 안됨 어두운 부분.
-.styled-table tbody tr:nth-of-type {
-  background-color: #f3f3f3;
-}
 
-.styled-table tbody tr:last-of-type {
-  border-bottom: 2px solid #009879;
-}
-tr:hover {
-  color: rgb(10, 0, 0);
-  background-color: rgb(163, 203, 221);
-}
-.inn {
-  padding: 40px;
-}
-// select option css select,
-select,
-input {
-  width: 200px;
-  padding: 0.8em 0.5em;
-  border: 1px solid #999;
-  font-family: inherit;
-  border-radius: 0px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-select {
-  background: url('~@/assets/img/arrow.jpg') no-repeat 95% 50%;
-}
-
-select::-ms-expand {
-  display: none;
-}
-img {
-  width: 80%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+// img {
+//   width: 80%;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// }
 .title-lawtest {
-  animation: swing;
-  animation-duration: 2s;
+  left: 50%;
+  animation: flipInX;
+  animation-duration: 1s;
   animation-iteration-count: infinite;
+}
+.section {
+  text-align: center;
 }
 </style>
