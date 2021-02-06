@@ -38,7 +38,7 @@ public class EmailService implements EmailUseCase {
 		String pass = EmailUtils.getRamdomPassword(10);
 		if(member.isPresent()) {		
 			memberMapper.passwordUpdate(Integer.parseInt(member.get().getUuid()), new BCryptPasswordEncoder().encode(pass));
-			EmailUtils.gmailSend(email,pass);
+			EmailUtils.gmailSend(member.get(),pass);
 			return true;
 		}
 		
