@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Index from './views/Index.vue';
-import Main from './views/Main.vue';
 
 import Login from './views/Login.vue';
 import Search from './views/Search.vue';
@@ -39,16 +38,7 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      components: { default: Main, header: MainNavbar, footer: MainFooter },
-      props: {
-        header: { colorOnScroll: 400 },
-        footer: { backgroundColor: 'black' },
-      },
-    },
-    {
-      path: '/main',
-      name: 'main',
-      components: { default: Main, header: MainNavbar, footer: MainFooter },
+      components: { default: Index, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: 'black' },
