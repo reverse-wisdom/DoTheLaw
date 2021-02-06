@@ -161,7 +161,7 @@ export default {
       this.type = 'google';
       this.socialLogin();
     },
-    // 카카오로스인
+    // 카카오로그인
     loginFormWithKakao() {
       //로그인 성공
       var $vm = this;

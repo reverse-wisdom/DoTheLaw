@@ -1,4 +1,4 @@
-import { instance } from './index';
+import { instance, posts } from './index';
 
 // 회원가입 API
 function registerUser(userData) {
@@ -55,5 +55,9 @@ function signoutUser(userData) {
     },
   });
 }
+// 변호사 리스트
+function LawyerList() {
+  return posts.get('api/member/lookup/lawyer/all');
+}
 
-export { registerUser, loginUser, searchUser, editUser, signoutUser, emailCheck, socialLoginUser, findPassword };
+export { registerUser, loginUser, searchUser, editUser, signoutUser, emailCheck, socialLoginUser, LawyerList };
