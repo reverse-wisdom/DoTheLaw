@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Index from './views/Index.vue';
 
 import Login from './views/Login.vue';
+
 import Search from './views/Search.vue';
 import MainNavbar from './layout/MainNavbar.vue';
 import MainFooter from './layout/MainFooter.vue';
