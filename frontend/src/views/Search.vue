@@ -5,46 +5,35 @@
       <div class="section section-basic">
         <v-row no-gutters justify="center">
           <v-col cols="6" md="4">
-            <v-toolbar dense>
-              <v-text-field hide-details single-line id="searchWord" placeholder="판례명" v-model="search"></v-text-field>
-
-              <v-btn icon @click="searchLaw()">
-                <i class="material-icons">search</i>
-              </v-btn>
-            </v-toolbar>
+            <form @submit="searchLaw()" onSubmit="return false;">
+              <v-toolbar dense>
+                <v-text-field hide-details single-line id="searchWord" placeholder="판례명" v-model="search"></v-text-field>
+                <v-btn icon @click="searchLaw()">
+                  <i class="material-icons">search</i>
+                </v-btn>
+              </v-toolbar>
+            </form>
             <br />
+
             <v-card class="mx-auto" tile>
-              <v-subheader>연관검색어</v-subheader>
-              <v-list-item>
+              <v-subheader>검색기록</v-subheader>
+              <hr />
+              <v-list-item v-for="(word, i) in history" :key="i">
                 <v-list-item-content>
-                  <v-list-item-title>1. 공사설비</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title>2. 부실공사</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title>3. 소음</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title>4. 방음</v-list-item-title>
+                  <v-list-item-title class="hvr-underline-from-center" @click="historySearch(word)" style="height: 30px;">{{ i + 1 }}.&nbsp; {{ word }}</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-card>
 
             <br />
-            <v-card class="mx-auto" max-width="500" tile>
+            <v-card class="mx-auto" max-width="auto" tile>
               <v-subheader>판례목록</v-subheader>
+              <hr />
               <v-list style="max-height: 400px" class="overflow-y-auto">
                 <template v-for="content in contents">
                   <v-list-item :key="content.no">
                     <v-list-item-content>
-                      <v-list-item-title v-html="content.name"></v-list-item-title>
+                      <v-list-item-title v-html="content.name" @click="detailJudgment(content.no)" style="height: 30px;" class="hvr-underline-from-center"></v-list-item-title>
                     </v-list-item-content>
                     <v-btn icon @click="detailJudgment(content.no)">
                       <v-icon>source</v-icon>
@@ -70,7 +59,7 @@
               <br />
 
               <template v-if="render">
-                <h3 v-html="judgment.PrecService.사건명"></h3>
+                <h3 v-html="judgment.PrecService.사건명" class="text-center"></h3>
                 <v-simple-table>
                   <tbody>
                     <tr>
@@ -92,10 +81,23 @@
                   </tbody>
                 </v-simple-table>
 
-                <md-radio v-model="radio" :value="judgment.PrecService.판결요지">판결요지</md-radio>
+                <!-- <md-radio v-model="radio" :value="judgment.PrecService.판결요지">판결요지</md-radio>
                 <md-radio v-model="radio" :value="judgment.PrecService.참조조문">참조조문</md-radio>
-                <md-radio v-model="radio" :value="judgment.PrecService.판례내용">판례내용</md-radio>
+                <md-radio v-model="radio" :value="judgment.PrecService.판례내용">판례내용</md-radio> -->
+                <div class="radiobtn">
+                  <input v-model="radio" :value="judgment.PrecService.판결요지" type="radio" id="판결요지" checked />
+                  <label for="판결요지">판결요지</label>
+                </div>
 
+                <div class="radiobtn">
+                  <input v-model="radio" :value="judgment.PrecService.참조조문" type="radio" id="참조조문" />
+                  <label for="참조조문">참조조문</label>
+                </div>
+
+                <div class="radiobtn">
+                  <input v-model="radio" :value="judgment.PrecService.판례내용" type="radio" id="판례내용" />
+                  <label for="판례내용">판례내용</label>
+                </div>
                 <p v-html="radio"></p>
               </template>
             </v-card>
@@ -122,6 +124,7 @@ export default {
       judgment_detail: '',
       radio: false,
       dict: [],
+      history: [],
     };
   },
   props: {
@@ -155,7 +158,13 @@ export default {
       var match = str.match(r);
       return match && str === match[0];
     },
+
+    historySearch(word) {
+      this.search = word;
+      this.searchLaw();
+    },
     async searchLaw() {
+      this.contents = [];
       const { data } = await lawSearch(this.search);
       for (var i = 0; i < data.PrecSearch.prec.length; i++) {
         this.contents.push({
@@ -163,6 +172,9 @@ export default {
           name: data.PrecSearch.prec[i].사건명,
           category: data.PrecSearch.prec[i].법원명,
         });
+      }
+      if (!this.history.includes(this.search)) {
+        this.history.push(this.search);
       }
     },
     async detailJudgment(ID) {
@@ -176,16 +188,17 @@ export default {
       this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(/<(\/a|a)([^>]*)>/gi, '');
       this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(/<(\/a|a)([^>]*)>/gi, '');
       this.radio = this.judgment.PrecService.판결요지;
-
+      console.log(this.dict);
       this.dict.forEach((element) => {
         var regEx = new RegExp(element.word, 'g');
 
-        this.judgment.PrecService.판결요지 = this.judgment.PrecService.판결요지.replace(regEx, element.mean);
+        this.judgment.PrecService.판결요지 = this.judgment.PrecService.판결요지.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
+
+        this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
+        this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
+
         // this.judgment.PrecService.판결요지 = "딸기수박바나나 딸기 수박수 수박 과일 딸기바나나........................".replace("딸기", "<a title=딸기는 과일이다/>");
         // this.judgment.PrecService.판결요지 = "딸기수박바나나 딸기 수박수 수박 과일 딸기바나나........................".replace("과일", "<a title=과일은 야채가 아니다/>");
-
-        this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(regEx, element.mean);
-        this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, element.mean);
         // this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(new RegExp('\\b' + regEx + '\\b'), element.mean);
 
         // if (this.matchExact(this.judgment.PrecService.판례내용, element.mean)) {
@@ -199,7 +212,6 @@ export default {
 <style lang="scss">
 [data-title]:hover:after {
   opacity: 1;
-
   transition: all 0.1s ease 0.5s;
   visibility: visible;
 }
@@ -218,6 +230,7 @@ export default {
   border: 1px solid #111111;
   z-index: 99999;
   visibility: hidden;
+  white-space: pre;
 }
 [data-title] {
   position: relative;
@@ -234,5 +247,104 @@ export default {
 }
 .mr {
   padding: 5px;
+}
+
+// v-data-table hover 스타일 해제
+tbody {
+  tr:hover {
+    background-color: transparent !important;
+  }
+}
+
+// 라디오 버튼 스타일
+$accentcolor: #fcae2c;
+$lightcolor: #fff;
+$darkcolor: #444;
+
+.radiobtn {
+  position: relative;
+  display: block;
+  label {
+    display: block;
+    background: lighten($accentcolor, 30%);
+    color: $darkcolor;
+    border-radius: 5px;
+    padding: 10px 20px;
+    border: 2px solid lighten($accentcolor, 20%);
+    margin-bottom: 5px;
+    cursor: pointer;
+    &:after,
+    &:before {
+      content: '';
+      position: absolute;
+      right: 11px;
+      top: 11px;
+      width: 20px;
+      height: 20px;
+      border-radius: 3px;
+      background: lighten($accentcolor, 15%);
+    }
+    &:before {
+      background: transparent;
+      transition: 0.1s width cubic-bezier(0.075, 0.82, 0.165, 1) 0s, 0.3s height cubic-bezier(0.075, 0.82, 0.165, 2) 0.1s;
+      z-index: 2;
+      overflow: hidden;
+      background-repeat: no-repeat;
+      background-size: 13px;
+      background-position: center;
+      width: 0;
+      height: 0;
+      background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNS4zIDEzLjIiPiAgPHBhdGggZmlsbD0iI2ZmZiIgZD0iTTE0LjcuOGwtLjQtLjRhMS43IDEuNyAwIDAgMC0yLjMuMUw1LjIgOC4yIDMgNi40YTEuNyAxLjcgMCAwIDAtMi4zLjFMLjQgN2ExLjcgMS43IDAgMCAwIC4xIDIuM2wzLjggMy41YTEuNyAxLjcgMCAwIDAgMi40LS4xTDE1IDMuMWExLjcgMS43IDAgMCAwLS4yLTIuM3oiIGRhdGEtbmFtZT0iUGZhZCA0Ii8+PC9zdmc+);
+    }
+  }
+  input[type='radio'] {
+    display: none;
+    position: absolute;
+    width: 100%;
+    appearance: none;
+    &:checked + label {
+      background: lighten($accentcolor, 15%);
+      animation-name: blink;
+      animation-duration: 1s;
+      border-color: $accentcolor;
+      &:after {
+        background: $accentcolor;
+      }
+      &:before {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+@keyframes blink {
+  0% {
+    background-color: lighten($accentcolor, 15%);
+  }
+  10% {
+    background-color: lighten($accentcolor, 15%);
+  }
+  11% {
+    background-color: lighten($accentcolor, 20%);
+  }
+  29% {
+    background-color: lighten($accentcolor, 20%);
+  }
+  30% {
+    background-color: lighten($accentcolor, 15%);
+  }
+  50% {
+    background-color: lighten($accentcolor, 20%);
+  }
+  45% {
+    background-color: lighten($accentcolor, 15%);
+  }
+  50% {
+    background-color: lighten($accentcolor, 20%);
+  }
+  100% {
+    background-color: lighten($accentcolor, 15%);
+  }
 }
 </style>
