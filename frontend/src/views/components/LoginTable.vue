@@ -1,7 +1,7 @@
 <template>
   <!-- 로그인 페이지 테이블 컴포넌트 -->
   <div class="wrapper">
-    <login-card header-color="info" style="padding-bottom:-3px;">
+    <login-card header-color="info" style="padding-bottom:-3px;" v-if="isLoad">
       <h4 slot="title" class="title kor" style="font-size:250%;">로그인</h4>
       <template slot="inputs">
         <br />
@@ -23,7 +23,7 @@
         </v-btn>
 
         <!-- 구글로그인 -->
-        <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess"></GoogleLogin>
+        <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess" ref="Glogin"></GoogleLogin>
 
         <a id="reauthenticate-popup-btn" @click="loginFormWithKakao">
           <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="40px" />
@@ -60,15 +60,24 @@ export default {
         height: 50,
         longtitle: true,
       },
+      isLoad: false,
     };
   },
-
   computed: {
     nextRoute() {
       return this.$route.params.nextRoute ? this.$route.params.nextRoute : '';
     },
   },
+  mounted() {
+    if (typeof this.$refs.Glogin) {
+      this.isLoad = true;
+    }
+  },
   methods: {
+    loadCheck() {
+      this.isLoad = true;
+      console.log(this.isLoad);
+    },
     login() {
       if (this.email == null) {
         this.$swal({
