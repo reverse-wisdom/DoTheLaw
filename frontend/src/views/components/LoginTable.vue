@@ -16,15 +16,15 @@
           <md-input v-model="password" type="password"></md-input>
         </md-field>
       </template>
-      <md-button slot="footer" class="md-info md-wd " @click="login()">
-        로그인
-      </md-button>
 
-      <!-- 구글로그인 -->
-      <GoogleLogin slot="footer" :params="params" :renderParams="renderParams" :onSuccess="onSuccess"></GoogleLogin>
+      <div slot="footer">
+        <v-btn width="200" height="50" color="success" @click="login()">
+          로그인
+        </v-btn>
 
-      <br />
-      <div slot="footer" class="md-info md-wd mt-3">
+        <!-- 구글로그인 -->
+        <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess"></GoogleLogin>
+
         <a id="reauthenticate-popup-btn" @click="loginFormWithKakao">
           <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="40px" />
         </a>
@@ -62,9 +62,7 @@ export default {
       },
     };
   },
-  created() {
-    window.onSignIn = this.onSignIn;
-  },
+
   computed: {
     nextRoute() {
       return this.$route.params.nextRoute ? this.$route.params.nextRoute : '';
@@ -152,5 +150,9 @@ export default {
 <style lang="scss" scoped>
 .kor {
   font-family: 'Nanum Gothic', sans-serif;
+}
+.md-card img {
+  width: 200px;
+  height: 50px;
 }
 </style>
