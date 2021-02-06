@@ -50,7 +50,7 @@
             <input @click="moveSearch" class="button" value="판례필터TEST" readonly onfocus="this.blur();" />
           </li>
           <li class="col-2">
-            <input class="button" value="공사중" readonly onfocus="this.blur();" />
+            <input @click="moveMatch" class="button" value="변호사매칭" readonly onfocus="this.blur();" />
           </li>
           <li class="col-2">
             <input type="text" class="button" value="공사중" readonly onfocus="this.blur();" />
@@ -151,6 +151,9 @@ export default {
     },
     moveHome() {
       this.$router.push({ name: 'index' });
+    },
+    moveMatch() {
+      this.$router.push({ name: 'lawyermatch' });
     },
   },
 };
