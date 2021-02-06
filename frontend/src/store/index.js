@@ -4,7 +4,16 @@ import { loginUser, socialLoginUser } from '@/api/auth';
 import createPersistedState from 'vuex-persistedstate';
 import router from '../router'; // store vuex에서 라우터 사용시 다시 import 해줘야함!!
 
+import VueSweetalert2 from 'vue-sweetalert2';
+
 Vue.use(Vuex);
+
+const options = {
+  confirmButtonColor: '#41b882',
+  cancelButtonColor: '#ff7674',
+};
+
+Vue.use(VueSweetalert2, options); // alert API
 
 export default new Vuex.Store({
   plugins: [createPersistedState()],
@@ -84,20 +93,26 @@ export default new Vuex.Store({
   },
   actions: {
     async LOGIN({ commit }, userData) {
-      const { data } = await loginUser(userData);
-      console.log(data);
-      if (data.code == 'LOGIN_SUCCESS') {
-        commit('setToken', data['message']);
-        commit('setEmail', data.member.email);
-        commit('setPassword', data.member.password);
-        commit('setName', data.member.name);
-        commit('setUuid', data.member.uuid);
-        commit('setPhone', data.member.phone);
-        commit('setImage', data.member.image);
-        commit('setRole', data.member.role.substring(5).trim());
-        router.push('/');
-      } else {
-        alert('로그인 실패! 이메일 및 비밀번호를 확인해 주세요!');
+      try {
+        const data = await loginUser(userData);
+
+        console.log(data.status);
+        if (data.code == 'LOGIN_SUCCESS') {
+          commit('setToken', data['message']);
+          commit('setEmail', data.member.email);
+          commit('setPassword', data.member.password);
+          commit('setName', data.member.name);
+          commit('setUuid', data.member.uuid);
+          commit('setPhone', data.member.phone);
+          commit('setImage', data.member.image);
+          commit('setRole', data.member.role.substring(5).trim());
+          router.push('/');
+        }
+      } catch (err) {
+        Vue.swal({
+          icon: 'error',
+          title: '로그인 실패! 이메일 및 비밀번호를 확인해 주세요!',
+        });
       }
     },
     async SOCIALLOGIN({ commit }, userData) {

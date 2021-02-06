@@ -31,6 +31,16 @@ function emailCheck(userEmail) {
     },
   });
 }
+
+// 비밀번호 찾기(임시비밀번호 생성)
+function findPassword(userEmail) {
+  return instance.get('/api/email/check', {
+    params: {
+      email: userEmail,
+    },
+  });
+}
+
 //회원정보 수정
 function editUser(userData) {
   // console.log(userData)
@@ -46,4 +56,4 @@ function signoutUser(userData) {
   });
 }
 
-export { registerUser, loginUser, searchUser, editUser, signoutUser, emailCheck, socialLoginUser };
+export { registerUser, loginUser, searchUser, editUser, signoutUser, emailCheck, socialLoginUser, findPassword };
