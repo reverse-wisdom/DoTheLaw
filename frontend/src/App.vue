@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div id="material-kit">
     <v-app id="app">
@@ -11,3 +12,4 @@
     </v-app>
   </div>
 </template>
+/* eslint-enable */
