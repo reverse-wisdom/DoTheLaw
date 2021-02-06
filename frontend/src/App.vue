@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable */ // eslint-disable-next-line
 <template>
   <div id="material-kit">
     <v-app id="app">
