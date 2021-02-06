@@ -10,6 +10,7 @@
           </div>
         </ol>
       </div>
+      <md-button class="md-info" disabled id="rss_time">{{ refresh_time }}</md-button>
     </div>
     <div v-else class="md-layout-item md-size-4 mx-auto">
       <br />
@@ -95,9 +96,10 @@ export default {
   font-size: 17px;
   font-family: 'Nanum Gothic', sans-serif;
 }
-/* #img2 {
-  filter: brightness(60%);
-} */
+#rss_time {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
 a + h2 {
   color: aliceblue;
 }
