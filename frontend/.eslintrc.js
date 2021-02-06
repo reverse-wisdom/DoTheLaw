@@ -10,6 +10,8 @@ module.exports = {
     'vue/no-use-v-if-with-v-for': 'off',
     'no-console': 'off',
     indent: 'off',
+    avoidEscape: true,
+    allowTemplateLiterals: true,
   },
   parserOptions: {
     parser: 'babel-eslint',

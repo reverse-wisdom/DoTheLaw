@@ -18,12 +18,28 @@
       </template>
 
       <div slot="footer">
-        <v-btn width="200" height="50" color="success" @click="login()">
+        <!-- <div>
+          <h6 class="text-center">
+            <span>아이디 찾기</span>
+            |
+            <span @click="moveFindPassWord">비밀번호 찾기</span>
+          </h6>
+        </div> -->
+        <h6 class="text-center">
+          <span @click="findPassWord">비밀번호 찾기</span>
+        </h6>
+
+        <br />
+        <v-btn width="250" height="50" color="success" @click="login()">
           로그인
         </v-btn>
+        <hr />
+        <br />
+        <h4 class="text-center">소셜 아이디로 로그인</h4>
+        <hr />
 
-        <!-- 구글로그인 -->
         <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess" ref="Glogin"></GoogleLogin>
+        <hr />
 
         <a id="reauthenticate-popup-btn" @click="loginFormWithKakao">
           <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="40px" />
@@ -36,6 +52,7 @@
 
 <script>
 import { LoginCard } from '@/components';
+import { findPassword } from '@/api/auth';
 import GoogleLogin from 'vue-google-login';
 
 export default {
@@ -74,6 +91,30 @@ export default {
     }
   },
   methods: {
+    async findPassWord() {
+      this.$swal({
+        icon: 'question',
+        title: '이메일을 입력해 주세요',
+        input: 'text',
+        showCancelButton: true,
+        showLoaderOnConfirm: true,
+        preConfirm: async (email) => {
+          return await findPassword(email).then((response) => {
+            if (response.data == 'FAIL') {
+              this.$swal({
+                icon: 'error',
+                title: '존재하지 않는 이메일 입니다.!!',
+              });
+            } else {
+              this.$swal({
+                icon: 'success',
+                title: '해당 이메일로 임시 비밀번호를 발급하였습니다.!',
+              });
+            }
+          });
+        },
+      });
+    },
     loadCheck() {
       this.isLoad = true;
       console.log(this.isLoad);
@@ -94,7 +135,6 @@ export default {
           email: this.email,
           password: this.password,
         };
-        console.log(userData);
         this.$store.dispatch('LOGIN', userData);
       }
     },
@@ -161,7 +201,7 @@ export default {
   font-family: 'Nanum Gothic', sans-serif;
 }
 .md-card img {
-  width: 200px;
+  width: 250px;
   height: 50px;
 }
 </style>
