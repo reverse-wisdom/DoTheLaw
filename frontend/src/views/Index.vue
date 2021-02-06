@@ -2,13 +2,21 @@
   <div class="home">
     <full-page :options="options">
       <div class="section pb-0" :style="image_1" data-width="1200" data-height="730">
-        <form @submit="detailSearch()" onSubmit="return false;" autocomplete="off" background-color="white">
-          <fieldset id="searchbar">
-            <v-text-field id="searchWord" color="white" v-model="query" style="backgroundcolor: white" label="판례명" placeholder="검색어 입력">
-              <template v-slot:progress>
-                <v-progress-linear v-if="query" :value="progress" :color="color" absolute height="7"></v-progress-linear>
+        <form @submit="detailSearch()" autocomplete="off" background-color="white">
+          <fieldset id="searchbar" class="text-center">
+            <v-text-field id="searchWordMain" clearable color="white" height="50px" v-model="query" style="backgroundcolor: white; width: 1500px; float: left;">
+              <template v-slot:label>
+                <strong>검색어</strong>
+                를입력해주세요!
+                <v-icon color="white" style="vertical-align: middle">
+                  mdi-file-find
+                </v-icon>
               </template>
             </v-text-field>
+
+            <v-btn depressed x-large color="primary" @click="detailSearch">
+              검색
+            </v-btn>
           </fieldset>
         </form>
       </div>
@@ -121,20 +129,13 @@ export default {
         backgroundImage: `url(${this.image3})`,
       };
     },
-    color() {
-      return ['error', 'warning', 'success'][Math.floor(this.progress / 40)];
-    },
-    progress() {
-      var query = document.getElementById('searchWord').value;
-      return Math.min(100, query * 10);
-    },
   },
   methods: {
     forceRerender() {
       this.componentKey += 1;
     },
     detailSearch() {
-      var query = document.getElementById('searchWord').value;
+      var query = document.getElementById('searchWordMain').value;
       this.$router.push({ name: 'search', query: { searchWord: query } });
     },
     moveBoard() {
@@ -159,20 +160,24 @@ export default {
 };
 </script>
 
-<style>
-#searchWord {
+<style lang="scss">
+#searchWordMain {
   color: white;
 }
 #searchbar > div > div > div.v-input__slot > div > label {
   color: white;
 }
-#fp-nav ul li a span,
-.fp-slidesNav ul li a span {
-  background: rgba(236, 206, 140, 0.356) !important;
-  /* height: 20px !important;
-  width: 20px !important;
-  margin: -2px 0 0 -2px !important; */
+input#searchWordMain {
+  font-size: 200%;
+  text-align: center;
 }
+// #fp-nav ul li a span,
+// .fp-slidesNav ul li a span {
+//   background: rgba(236, 206, 140, 0.356) !important;
+//   /* height: 20px !important;
+//   width: 20px !important;
+//   margin: -2px 0 0 -2px !important; */
+// }
 </style>
 <style scoped>
 .kor {
