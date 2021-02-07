@@ -18,4 +18,5 @@ public class MatchingRequestDTO {
 	 @ApiModelProperty(required = false, hidden = true)
 	private String name;
 	private String remarks;
+	private String title;
 }

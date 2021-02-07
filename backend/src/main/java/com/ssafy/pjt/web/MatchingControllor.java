@@ -85,9 +85,9 @@ public class MatchingControllor {
 	@ApiOperation(value = "자문 삭제")
 	@DeleteMapping("/delete")
 	private ResponseEntity<String> delete(@RequestParam(required = true) final int matchingId,
-			@RequestParam(required = true) final int uuid, @RequestParam(required = true) final Role role) {
+			@RequestParam(required = true) final int uuid) {
 		try {
-			if (matchingService.check(matchingId, uuid, role)) {				
+			if (matchingService.check(matchingId, uuid)) {				
 				matchingService.delete(matchingId);
 				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 			} else
@@ -100,9 +100,9 @@ public class MatchingControllor {
 
 	@ApiOperation(value = "자문 상태 수정")
 	@PutMapping("/update")
-	private ResponseEntity<String> update(@Valid @RequestBody MatchingRequestDTO matching, @RequestParam(required = true) final Role role) {
+	private ResponseEntity<String> update(@Valid @RequestBody MatchingRequestDTO matching) {
 		try {
-			if(matchingService.check(matching.getMatchingId(), matching.getUuid(), role)) {
+			if(matchingService.check(matching.getMatchingId(), matching.getUuid())) {
 				matchingService.update(matching);
 				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 			}else {

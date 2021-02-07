@@ -13,6 +13,7 @@ import com.ssafy.pjt.core.repository.mapper.MatchingMapper;
 import com.ssafy.pjt.core.security.Role;
 import com.ssafy.pjt.core.service.MatchingUseCase;
 import com.ssafy.pjt.web.dto.MatchingRequestDTO;
+import com.ssafy.pjt.web.dto.MemberRequestDTO;
 
 @Service
 public class MatchingService implements MatchingUseCase {
@@ -64,14 +65,15 @@ public class MatchingService implements MatchingUseCase {
 	}
 
 	@Override
-	public boolean check(int matchingId, int uuid, Role role) throws Exception {
-		if (role.getCode().equals("ROLE_ADMIN")) {
+	public boolean check(int matchingId, int uuid) throws Exception {
+		MemberRequestDTO data = matchingMapper.searchMember(uuid);
+		if (data.getRole().equals("ROLE_ADMIN")) {
 			return true;
-		} else if (role.getCode().equals("ROLE_USER")) {
+		} else if (data.getRole().equals("ROLE_USER")) {
 			if (matchingMapper.checkUser(matchingId) == uuid) {
 				return true;
 			}
-		} else if (role.getCode().equals("ROLE_LAWYER")) {
+		} else if (data.getRole().equals("ROLE_LAWYER")) {
 			if (matchingMapper.checkLawyer(matchingId) == uuid) {
 				return true;
 			}
