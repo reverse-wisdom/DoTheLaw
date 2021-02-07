@@ -1,8 +1,13 @@
 import { instance, posts } from './index';
 
-// 회원가입 API
+// 멤버 회원가입 API
 function registerUser(userData) {
   return instance.post('/api/member/signup', userData);
+}
+
+// 변호사 회원가입 API
+function registerLawyer(userData) {
+  return instance.post('/api/member/signup/lawyer', userData);
 }
 
 // 로그인 API
@@ -50,4 +55,4 @@ function LawyerList() {
   return posts.get('api/member/lookup/lawyer/all');
 }
 
-export { registerUser, loginUser, searchUser, editUser, signoutUser, emailCheck, socialLoginUser, LawyerList };
+export { registerUser, loginUser, registerLawyer, searchUser, editUser, signoutUser, emailCheck, socialLoginUser, LawyerList };

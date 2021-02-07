@@ -34,6 +34,31 @@
           <label>비밀번호확인...</label>
           <md-input v-model="pwdcheck" type="password"></md-input>
         </md-field>
+        <md-field class="md-form-group">
+          <md-icon>maps_home_work</md-icon>
+          <label>소속</label>
+          <md-input v-model="dept"></md-input>
+        </md-field>
+        <md-field class="md-form-group">
+          <md-icon>home</md-icon>
+          <label>주소</label>
+          <md-input v-model="address"></md-input>
+        </md-field>
+        <md-field class="md-form-group">
+          <md-icon>perm_identity</md-icon>
+          <label>경력</label>
+          <md-input v-model="career"></md-input>
+        </md-field>
+        <md-field class="md-form-group">
+          <md-icon>perm_identity</md-icon>
+          <label>자기소개</label>
+          <md-input v-model="introduction"></md-input>
+        </md-field>
+        <md-field class="md-form-group">
+          <md-icon>badge</md-icon>
+          <label>자격증여부(Y/N)</label>
+          <md-input v-model="chck"></md-input>
+        </md-field>
         <v-file-input type="file" name="uploadFile" accept="image/png, image/jpeg, image/bmp" placeholder="회원사진" ref="files" prepend-icon="mdi-camera" @change="handleFilesUpload"></v-file-input>
       </template>
       <md-button slot="footer" class="md-accent md-wd" @click="register()">가입하기</md-button>
@@ -43,7 +68,7 @@
 
 <script>
 import { LoginCard } from '@/components';
-import { registerUser } from '@/api/auth';
+import { registerLawyer } from '@/api/auth';
 import axios from 'axios';
 
 export default {
@@ -55,6 +80,11 @@ export default {
       name: null,
       password: null,
       pwdcheck: null,
+      dept: '',
+      career: '',
+      address: '',
+      chck: '',
+      introduction: '',
       emailCheck: 'fail',
       nameCheck: 'fail',
       isCheckedEmail: false,
@@ -176,9 +206,14 @@ export default {
         });
       } else {
         const userData = {
+          address: this.address,
+          career: this.career,
+          chck: this.chck,
+          dept: this.dept,
           email: this.email,
-          password: this.password,
+          introduction: this.introduction,
           name: this.name,
+          password: this.password,
           phone: this.phone,
           role: 'LAWYER',
         };
@@ -192,7 +227,7 @@ export default {
 
         axios.post('/api/data', form, { 'Content-Type': 'multipart/form-data' }).then(function(response) {});
 
-        const { data } = await registerUser(userData);
+        const { data } = await registerLawyer(userData);
 
         if (data == 'SUCCESS') {
           this.$swal({

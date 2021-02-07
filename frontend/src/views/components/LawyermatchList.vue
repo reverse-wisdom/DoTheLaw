@@ -1,7 +1,7 @@
 <template>
   <div class="col-4">
     <v-card max-width="344">
-      <v-img :src="image" height="200px" v-if="image"></v-img>
+      <v-img :src="photo" height="200px" v-if="lawyer.photo"></v-img>
       <v-img src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" height="200px" v-else></v-img>
       <v-card-title>
         <strong>{{ lawyer.name }}</strong>
@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       show: false,
-      image: this.lawyer.image,
+      image: this.lawyer.photo,
     };
   },
   props: {

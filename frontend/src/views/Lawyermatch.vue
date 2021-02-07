@@ -36,6 +36,7 @@ export default {
   async created() {
     const res = await LawyerList();
     this.lawyerlists = res;
+    console.log(res);
   },
   computed: {
     headerStyle() {
