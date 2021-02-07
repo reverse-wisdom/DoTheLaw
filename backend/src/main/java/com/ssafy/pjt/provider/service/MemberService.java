@@ -77,13 +77,13 @@ public class MemberService implements MemberUseCase {
 
 	
 	@Override
-	public boolean signout(String role, String email) throws SQLException {
-		int uuid = mapper.uuid(email);
-		if (role.equals("ROLE_USER")) {
+	public boolean signout(int uuid) throws SQLException {
+		MemberRequestDTO member = mapper.selectMemberByUUID(uuid);				
+		if (member.getRole().equals("ROLE_USER") || member.getRole().equals("ROLE_ADMIN")) {
 			if (mapper.signout(uuid)) {
 				return true;
 			}
-		} else {
+		} else {			
 			if (mapper.signoutLawyer(uuid) && mapper.signout(uuid)) {
 				return true;
 			}
@@ -93,15 +93,16 @@ public class MemberService implements MemberUseCase {
 
 	@Override
 	public void updateUser(MemberRequestDTO member) throws SQLException {
-		member.setUuid(mapper.uuid(member.getEmail()));
 		mapper.updateUser(member);
 	}
 
 	@Override
 	public void updateLawyer(MemberRequestDTO lawyer) throws SQLException {
-		lawyer.setUuid(mapper.uuid(lawyer.getEmail()));
-		mapper.updateUser(lawyer);
+		if(lawyer.getName() != null || lawyer.getPhone() != null || lawyer.getImage() != null )
+			mapper.updateUser(lawyer);
+
 		mapper.updateLawyer(lawyer);
+		
 	}
 
 	public MemberRequestDTO getMember(int uuid) throws SQLException {

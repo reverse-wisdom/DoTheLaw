@@ -118,7 +118,7 @@ public class MemberControllor {
 	private ResponseEntity<MemberRequestDTO> lookupLawyer(@RequestParam(required = true) final String email) {
 		MemberRequestDTO member = null;
 		if (memberservice.checkEmail(email)) {
-			try {				
+			try {
 				member = memberservice.lawyer(email);
 				return new ResponseEntity<>(member, HttpStatus.OK);
 			} catch (SQLException e) {
@@ -144,23 +144,14 @@ public class MemberControllor {
 	// 회원 탈퇴 미완성
 	@ApiOperation(value = "회원탈퇴")
 	@DeleteMapping("/delete")
-	private ResponseEntity<String> signout(@RequestParam(required = true) final Role role,
-			@RequestParam(required = true) final String email) {
-		if (role.getCode().equals("ROLE_ADMIN")) {
-			try {
-				memberservice.signout(loginService.user(email).getRole(), email);
-				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
-			} catch (SQLException e) {
-				return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
-			}
-		} else {
-			try {
-				memberservice.signout(role.getCode(), email);
-				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
-			} catch (SQLException e) {
-				return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
-			}
+	private ResponseEntity<String> signout(@RequestParam(required = true) final int uuid) {
+		try {
+			memberservice.signout(uuid);
+			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+		} catch (SQLException e) {
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
+
 	}
 
 	@ApiOperation(value = "일반 회원 정보 수정")
@@ -177,6 +168,7 @@ public class MemberControllor {
 	@ApiOperation(value = "변호사 회원 정보 수정")
 	@PutMapping("/update/lawyer")
 	private ResponseEntity<String> updateLawyer(@Valid @RequestBody MemberRequestDTO memberRequestDTO) {
+		System.out.println(memberRequestDTO);
 		try {
 			memberservice.updateLawyer(memberRequestDTO);
 			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
@@ -184,11 +176,12 @@ public class MemberControllor {
 			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
 	}
+
 	@ApiOperation(value = "비밀전호 수정")
 	@PutMapping("/update/password")
-	private ResponseEntity<String> updatePassword(@Valid @RequestParam int uuid, @Valid @RequestParam String password ) {
+	private ResponseEntity<String> updatePassword(@Valid @RequestParam int uuid, @Valid @RequestParam String password) {
 		try {
-			if(memberservice.passwordUpdate(uuid,password)) {
+			if (memberservice.passwordUpdate(uuid, password)) {
 				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 			}
 			return new ResponseEntity<>("FAIL", HttpStatus.OK);
