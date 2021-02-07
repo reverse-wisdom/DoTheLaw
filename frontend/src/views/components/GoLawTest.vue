@@ -5,37 +5,76 @@
     <div class="main main-raised">
       <div class="section profile-content">
         <div class="question-title">법상식테스트</div>
-        <ul>
-          <li class="question-item" v-for="item in items" :key="item.no">
-            <p>{{ item.no + 1 }}.</p>
-            <p>{{ item.quiz }}</p>
-            <button class="seletor" @click.prevent="clickQueizeNext(index)">
-              {{ item.example }}
-            </button>
-          </li>
-        </ul>
+
+        <div id="wrapper">
+          <div class="bxslider question-item" v-for="(item, idx) in items" :key="idx">
+            <div>
+              <QuizGroup :item="item" :idx="idx" @checkedPenalty="checkedPenalty" />
+            </div>
+          </div>
+        </div>
       </div>
+      <h1>{{ total }}</h1>
     </div>
   </div>
 </template>
 
+<script src="js/jquery-2.2.4.min.js"></script>
+<script src="js/jquery.bxslider.js"></script>
 <script>
+$(function() {
+  $('.bxslider').bxSlider({
+    captions: true,
+    slideWidth: 600,
+    auto: true,
+    autoControls: false,
+    stopAutoOnclick: true,
+  });
+});
+</script>
+<script>
+import QuizGroup from '@/views/components/QuizGroup';
+
 export default {
   bodyClass: 'profile-page',
+  components: {
+    QuizGroup,
+  },
   data() {
     return {
+      total: 0,
       items: [
         {
-          no: '0',
           quiz: '허락없이 남의 핸드폰을 보는 행위',
-          example: ``,
+          example: {
+            exp1: '합법',
+            exp2: '위법',
+          },
+          answer: '합법',
+          penalty: 500,
         },
         {
-          no: '1',
           quiz: '허락없이 남의 핸드폰을 보는 행위',
-          example: `<a title="공연성이란 불특정 다수가 인식 가능한 상태를 말합니다.\n한사람에게 이야기했는데 여러 사람에게 전파될 가능성이 있다면 공연성이 성립합니다.">공연성</a>`,
+          example: {
+            exp1: '합법',
+            exp2: '위법',
+          },
+          answer: '합법',
+          penalty: 300,
+        },
+        {
+          quiz: '허락없이 남의 핸드폰을 보는 행위',
+          example: {
+            exp1: '합법',
+            exp2: '위법',
+            exp3: '보기3',
+            exp4: '보기4',
+          },
+          answer: '합법',
+          penalty: 200,
         },
       ],
+      answer: [],
     };
   },
   props: {
@@ -51,7 +90,11 @@ export default {
       };
     },
   },
-  methods: {},
+  methods: {
+    checkedPenalty(money) {
+      this.total += money;
+    },
+  },
 };
 </script>
 
@@ -76,13 +119,12 @@ img {
 
 .question-title {
   width: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   border-radius: 15px;
   padding: 20px;
   margin: 10px;
   box-shadow: 5px 5px 25px #888888;
+}
+li {
+  list-style-type: none;
 }
 </style>
