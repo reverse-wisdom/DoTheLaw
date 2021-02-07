@@ -22,23 +22,33 @@
       </div>
 
       <div id="section1" class="section pb-0" :style="image_2" data-width="1200" data-height="730">
-        <!-- <div class="kor mt-15">
-          <span id="title-solid">실시간 법원/검찰 뉴스</span>
-          <law-rss-news :key="componentKey" style="text-center"></law-rss-news>
-          <button id="f5" class="" @click="forceRerender">새로고침</button>
-        </div> -->
-        <v-row>
-          <v-col>
+        <div class="md-layout ">
+          <div class="md-layout-item md-medium-size-50 md-small-size-100 ">
+            <v-card elevation="7" color="rgba(255, 255, 255, 0.1)" class="custom-card">
+              <span class="title-solid">실시간 법원/검찰 뉴스</span>
+              <law-rss-news :key="componentKey"></law-rss-news>
+              <button id="f5" @click="forceRerender">새로고침</button>
+            </v-card>
+          </div>
+
+          <div class="md-layout-item md-medium-size-50 md-small-size-100">
+            <v-card elevation="7" color="rgba(255, 255, 255, 0.1)" class="custom-card">
+              <span class="title-solid">검색어 순위</span>
+              <search-rank></search-rank>
+            </v-card>
+          </div>
+        </div>
+        <!-- <v-row no-gutters>
+          <v-col cols="12" sm="6" md="8">
             <span class="title-solid">실시간 법원/검찰 뉴스</span>
             <law-rss-news :key="componentKey" style="text-center"></law-rss-news>
             <button id="f5" class="" @click="forceRerender">새로고침</button>
           </v-col>
-          <v-col>
-            <!-- 검색어 순위 컴포넌트 -->
+          <v-col cols="6" md="4">
             <span class="title-solid">검색어 순위</span>
             <search-rank></search-rank>
           </v-col>
-        </v-row>
+        </v-row> -->
       </div>
 
       <div id="section1" class="section pb-0" :style="image_3" data-width="1200" data-height="730">
@@ -206,6 +216,14 @@ input#searchWordMain {
   height: 100%;
 }
 
+.custom-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+  height: 100%;
+  padding-top: 30px;
+  padding-left: 30px;
+}
+
 #f5 {
   border: 1px solid white;
   padding: 1rem;
@@ -224,7 +242,7 @@ input#searchWordMain {
 .title-solid {
   box-sizing: content-box;
   border: 5px solid white;
-  font-size: 50px;
+  font-size: 40px;
   border-radius: 1.5rem;
   padding: 1rem;
   color: white;
