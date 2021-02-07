@@ -32,6 +32,7 @@ import LawTest from './views/LawTest.vue';
 import GoLawTest from './views/components/GoLawTest.vue';
 
 import Lawyermatch from './views/Lawyermatch.vue';
+import LawyermatchDetail from './views/components/LawyermatchDetail.vue';
 
 Vue.use(Router);
 
@@ -218,6 +219,15 @@ export default new Router({
       path: '/lawyermatch',
       name: 'lawyermatch',
       components: { default: Lawyermatch, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/lawyermatchdetail',
+      name: 'lawyermatchdetail',
+      components: { default: LawyermatchDetail, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
