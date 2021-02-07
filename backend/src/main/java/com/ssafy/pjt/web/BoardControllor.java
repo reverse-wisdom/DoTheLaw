@@ -70,45 +70,45 @@ public class BoardControllor {
 		}
 	}
 
-	@ApiOperation(value = "글 생성(boardId 제외)")
+	@ApiOperation(value = "글 생성")
 	@PostMapping("/create")
 	private ResponseEntity<String> create(@Valid @RequestBody BoardRequestDTO board) {
 		try {
 			boardService.insert(board);
 			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@ApiOperation(value = "글 삭제")
 	@DeleteMapping("/delete")
 	private ResponseEntity<String> delete(@RequestParam(required = true) final int boardId,
-			@RequestParam(required = true) final int uuid, @RequestParam(required = true) final Role role) {
+			@RequestParam(required = true) final int uuid) {
 		try {
-			if (boardService.check(boardId, uuid, role)) {				
+			if (boardService.check(boardId, uuid)) {				
 				boardService.delete(boardId);
 				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 			} else
-				return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+				return new ResponseEntity<>("FAIL", HttpStatus.OK);
 
 		} catch (Exception e) {
-			return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@ApiOperation(value = "글 수정")
 	@PutMapping("/update")
-	private ResponseEntity<String> update(@Valid @RequestBody BoardRequestDTO board, @RequestParam(required = true) final Role role) {
+	private ResponseEntity<String> update(@Valid @RequestBody BoardRequestDTO board) {
 		try {
-			if(boardService.check(board.getBoardId(), board.getUuid(), role)) {
+			if(boardService.check(board.getBoardId(), board.getUuid())) {
 				boardService.update(board);
 				return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 			}else {
-				return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+				return new ResponseEntity<>("FAIL", HttpStatus.OK);
 			}
 		} catch (Exception e) {
-			return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
 	}
 
