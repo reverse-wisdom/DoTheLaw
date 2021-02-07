@@ -168,6 +168,7 @@ public class MemberControllor {
 	@ApiOperation(value = "변호사 회원 정보 수정")
 	@PutMapping("/update/lawyer")
 	private ResponseEntity<String> updateLawyer(@Valid @RequestBody MemberRequestDTO memberRequestDTO) {
+		System.out.println(memberRequestDTO);
 		try {
 			memberservice.updateLawyer(memberRequestDTO);
 			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
