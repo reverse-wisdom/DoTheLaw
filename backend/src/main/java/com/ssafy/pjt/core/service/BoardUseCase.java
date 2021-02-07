@@ -13,5 +13,5 @@ public interface BoardUseCase {
 	public boolean insert(BoardRequestDTO board) throws Exception;
 	public boolean delete(int boardId) throws Exception;
 	public boolean update(BoardRequestDTO board) throws Exception;
-	public boolean check(int boardId,int uuid, Role role) throws Exception;
+	public boolean check(int boardId,int uuid) throws Exception;
 }
