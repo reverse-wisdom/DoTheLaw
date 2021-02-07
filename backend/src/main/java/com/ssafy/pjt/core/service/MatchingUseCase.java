@@ -15,5 +15,5 @@ public interface MatchingUseCase {
 	public boolean insert(MatchingRequestDTO matching) throws Exception;
 	public boolean delete(int matchingId) throws Exception;
 	public boolean update(MatchingRequestDTO matching) throws Exception;
-	public boolean check(int matchingId,int uuid, Role role) throws Exception;
+	public boolean check(int matchingId,int uuid) throws Exception;
 }
