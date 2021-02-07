@@ -9,22 +9,19 @@
     </div>
     <div>
       <div>
-        <div class="row">
-          <div class="col-8">
-            <vue-webrtc
-              ref="webrtc"
-              width="80%"
-              :roomId="roomId"
-              :socketURL="socketURL"
-              v-on:joined-room="logEvent"
-              v-on:left-room="logEvent"
-              v-on:opened-room="logEvent"
-              v-on:share-started="logEvent"
-              v-on:share-stopped="logEvent"
-              @error="onError"
-            />
-          </div>
-          <div class="col">chatting</div>
+        <div>
+          <vue-webrtc
+            ref="webrtc"
+            width="100%"
+            :roomId="roomId"
+            :socketURL="socketURL"
+            v-on:joined-room="logEvent"
+            v-on:left-room="logEvent"
+            v-on:opened-room="logEvent"
+            v-on:share-started="logEvent"
+            v-on:share-stopped="logEvent"
+            @error="onError"
+          />
         </div>
         <div>
           <div>
@@ -102,42 +99,5 @@ export default {
 }
 .section {
   padding: 0;
-}
-
-.video-list {
-  margin: 0 auto;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-evenly;
-  // flex-wrap: wrap;
-  // flex-direction: row;
-}
-
-video {
-  border: 2px solid red;
-}
-.video-list > video {
-  width: 50px;
-}
-// .video-list video {
-//   width: 50px;
-//   margin: 10 auto;
-//   // display: inline-flex;
-//   flex-direction: column;
-//   flex: none;
-//   // flex-basis: auto;
-//   flex-grow: 1;
-//   // flex-basis: 33.33%;
-//   margin-top: 20px;
-//   padding: 0 5px;
-//   box-sizing: border-box;
-//   border: 2x, red;
-// }
-
-.video-list ~ video::-webkit-media-controls-play-button {
-  display: none;
-}
-video::-webkit-media-controls-time-remaining-display {
-  display: none !important;
 }
 </style>
