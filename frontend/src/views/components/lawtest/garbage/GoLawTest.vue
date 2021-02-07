@@ -6,12 +6,10 @@
       <div class="section profile-content">
         <div class="question-title">법상식테스트</div>
 
-        <div id="wrapper">
-          <div class="bxslider question-item" v-for="(item, idx) in items" :key="idx">
-            <div>
-              <QuizGroup :item="item" :idx="idx" @checkedPenalty="checkedPenalty" />
-            </div>
-          </div>
+        <div v-for="(item, idx) in items" :key="idx">
+          <span>문제.{{ idx + 1 }}</span>
+          <span>{{ item.quiz }}</span>
+          <QuizExample :item="item" :idx="idx" @checkPenalty="checkPenalty" />
         </div>
       </div>
       <h1>{{ total }}</h1>
@@ -19,26 +17,14 @@
   </div>
 </template>
 
-<script src="js/jquery-2.2.4.min.js"></script>
-<script src="js/jquery.bxslider.js"></script>
 <script>
-$(function() {
-  $('.bxslider').bxSlider({
-    captions: true,
-    slideWidth: 600,
-    auto: true,
-    autoControls: false,
-    stopAutoOnclick: true,
-  });
-});
-</script>
-<script>
-import QuizGroup from '@/views/components/QuizGroup';
+import QuizExample from '@/views/components/QuizExample';
+// import RangeCounter from '../lawtest/RangeCounter.vue';
 
 export default {
   bodyClass: 'profile-page',
   components: {
-    QuizGroup,
+    QuizExample,
   },
   data() {
     return {
@@ -47,34 +33,40 @@ export default {
         {
           quiz: '허락없이 남의 핸드폰을 보는 행위',
           example: {
-            exp1: '합법',
-            exp2: '위법',
-          },
-          answer: '합법',
-          penalty: 500,
-        },
-        {
-          quiz: '허락없이 남의 핸드폰을 보는 행위',
-          example: {
-            exp1: '합법',
-            exp2: '위법',
-          },
-          answer: '합법',
-          penalty: 300,
-        },
-        {
-          quiz: '허락없이 남의 핸드폰을 보는 행위',
-          example: {
-            exp1: '합법',
-            exp2: '위법',
+            exp1: '정답',
+            exp2: '오답',
             exp3: '보기3',
             exp4: '보기4',
           },
-          answer: '합법',
+          answer: '정답',
+          penalty: 200,
+        },
+        {
+          quiz: '허락없이 남의 핸드폰을 보는 행위',
+          example: {
+            exp1: '정답',
+            exp2: '오답',
+            exp3: '보기3',
+            exp4: '보기4',
+          },
+          answer: '정답',
+          penalty: 200,
+        },
+        {
+          quiz: '허락없이 남의 핸드폰을 보는 행위',
+          example: {
+            exp1: '정답',
+            exp2: '오답',
+            exp3: '보기3',
+            exp4: '보기4',
+          },
+          answer: '정답',
           penalty: 200,
         },
       ],
       answer: [],
+      model: 0,
+      colors: ['primary', 'secondary', 'yellow darken-2', 'red', 'orange'],
     };
   },
   props: {
@@ -91,8 +83,8 @@ export default {
     },
   },
   methods: {
-    checkedPenalty(money) {
-      this.total += money;
+    checkPenalty(updatePenalty) {
+      this.total += updatePenalty;
     },
   },
 };
