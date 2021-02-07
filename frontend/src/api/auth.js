@@ -28,6 +28,16 @@ function searchUser(userEmail) {
     },
   });
 }
+
+// 닉네임 중복 체크
+function nameCheck(userName) {
+  return instance.get('/api/member/check/name', {
+    params: {
+      name: userName,
+    },
+  });
+}
+
 //이메일 중복 체크
 function emailCheck(userEmail) {
   return instance.get('/api/member/check/email', {
@@ -68,4 +78,4 @@ function LawyerList() {
 function LawyerDetail(lawyerData) {
   return posts.get(`api/member/lookup/lawyer?email=${lawyerData}`);
 }
-export { registerUser, registerLawyer, loginUser, searchUser, editUser, signoutUser, emailCheck, socialLoginUser, LawyerList, findPassword, LawyerDetail };
+export { registerUser, registerLawyer, loginUser, searchUser, editUser, signoutUser, nameCheck, emailCheck, socialLoginUser, LawyerList, findPassword, LawyerDetail };
