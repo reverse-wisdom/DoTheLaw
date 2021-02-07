@@ -64,4 +64,8 @@ function signoutUser(userData) {
 function LawyerList() {
   return posts.get('api/member/lookup/lawyer/all');
 }
-export { registerUser, registerLawyer, loginUser, searchUser, editUser, signoutUser, emailCheck, socialLoginUser, LawyerList, findPassword };
+
+function LawyerDetail(lawyerData) {
+  return posts.get(`api/member/lookup/lawyer?email=${lawyerData}`);
+}
+export { registerUser, registerLawyer, loginUser, searchUser, editUser, signoutUser, emailCheck, socialLoginUser, LawyerList, findPassword, LawyerDetail };
