@@ -10,13 +10,15 @@ import axios from 'axios';
 
 export default {
   name: 'CommentWrite',
-  props: ['boardId'],
   data() {
     return {
       commentId: '',
       content: '',
       name: '',
     };
+  },
+  props: {
+    boardId: Number,
   },
   methods: {
     onSubmit() {
@@ -27,11 +29,17 @@ export default {
           content: this.content,
           uuid: this.$store.state.uuid,
         })
-        .then(({ data }) => {
-          this.$router.go(this.$router.currentRoute);
-          // this.$router.go(-1);
+        .then((data) => {
+          this.$emit('uploadComment');
+          this.content = '';
         })
         .catch();
+      //     .then(({ data }) => {
+      //       this.$router.go(this.$router.currentRoute);
+      //       // this.$router.go(-1);
+      //     })
+      //     .catch();
+      // },
     },
   },
 };

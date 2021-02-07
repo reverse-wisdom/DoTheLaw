@@ -27,8 +27,9 @@ import AdviseDetail from './views/components/AdviseDetail.vue';
 import AdviseWrite from './views/components/AdviseWrite.vue';
 import AdviseUpdate from './views/components/AdviseUpdate.vue';
 
-import LawTest from './views/LawTest.vue';
-import GoLawTest from './views/components/GoLawTest.vue';
+// import LawTest from './views/LawTest.vue';
+// import GoLawTest from './views/components/GoLawTest.vue';
+import QuizCore from './views/components/lawtest/QuizCore.vue';
 
 Vue.use(Router);
 
@@ -193,19 +194,28 @@ export default new Router({
         footer: { backgroundColor: 'black' },
       },
     },
+    // {
+    //   path: '/lawtest',
+    //   name: 'lawtest',
+    //   components: { default: LawTest, header: MainNavbar, footer: MainFooter },
+    //   props: {
+    //     header: { colorOnScroll: 100 },
+    //     footer: { backgroundColor: 'black' },
+    //   },
+    // },
+    // {
+    //   path: '/golawtest',
+    //   name: 'golawtest',
+    //   components: { default: GoLawTest, header: MainNavbar, footer: MainFooter },
+    //   props: {
+    //     header: { colorOnScroll: 100 },
+    //     footer: { backgroundColor: 'black' },
+    //   },
+    // },
     {
       path: '/lawtest',
       name: 'lawtest',
-      components: { default: LawTest, header: MainNavbar, footer: MainFooter },
-      props: {
-        header: { colorOnScroll: 100 },
-        footer: { backgroundColor: 'black' },
-      },
-    },
-    {
-      path: '/golawtest',
-      name: 'golawtest',
-      components: { default: GoLawTest, header: MainNavbar, footer: MainFooter },
+      components: { default: QuizCore, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
