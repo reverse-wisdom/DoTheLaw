@@ -73,19 +73,21 @@
 	</select>
 	<update id="updateUser" parameterType="MemberRequestDTO" >
 		update member
-		set
-		name = #{name},
-		phone = #{phone},
-		image = #{image}
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="name != null"> name = #{name},</if>
+			<if test="phone != null">phone = #{phone},</if>
+			<if test="image != null">image = #{image},</if>
+		</trim>
 		where uuid = #{uuid};
 	</update>
 	<update id="updateLawyer" parameterType="MemberRequestDTO" >
 		update lawyer
-		set
-		career = #{career},
-		introduction = #{introduction},
-		address = #{address},
-        dept = #{dept}
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="career != null">career = #{career},</if>
+			<if test="introduction != null">introduction = #{introduction},</if>
+			<if test="address != null">address = #{address},</if>
+      		<if test="dept != null"> dept = #{dept},</if>
+        </trim>
 		where uuid = #{uuid};
 	</update>
 	

@@ -93,15 +93,16 @@ public class MemberService implements MemberUseCase {
 
 	@Override
 	public void updateUser(MemberRequestDTO member) throws SQLException {
-		member.setUuid(mapper.uuid(member.getEmail()));
 		mapper.updateUser(member);
 	}
 
 	@Override
 	public void updateLawyer(MemberRequestDTO lawyer) throws SQLException {
-		lawyer.setUuid(mapper.uuid(lawyer.getEmail()));
-		mapper.updateUser(lawyer);
+		if(lawyer.getName() != null || lawyer.getPhone() != null || lawyer.getImage() != null )
+			mapper.updateUser(lawyer);
+
 		mapper.updateLawyer(lawyer);
+		
 	}
 
 	public MemberRequestDTO getMember(int uuid) throws SQLException {
