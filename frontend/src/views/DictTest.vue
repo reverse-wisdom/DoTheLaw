@@ -8,12 +8,7 @@
         <div class="container text-center">
           <div class="md-layout">
             <div class="md-layout-item my-2">
-              <v-btn x-large color="blue-grey" dark @click="test">
-                태그제거
-                <v-icon right dark>
-                  mdi-account-check
-                </v-icon>
-              </v-btn>
+              <a @click="dictAlert(alertTest)">alertTest</a>
               <v-btn x-large color="blue-grey" dark @click="regexp">
                 정규식치환테스트
                 <v-icon right dark>
@@ -31,6 +26,7 @@
 
 <script>
 import { lawDict } from '@/api/service';
+
 export default {
   bodyClass: 'profile-page',
   data() {
@@ -47,6 +43,8 @@ export default {
         },
       ],
       dict: [],
+      alertTest: '쀼쀼쀼',
+      swal: null,
     };
   },
   props: {
@@ -73,21 +71,27 @@ export default {
         mean: String.raw`${data[i].mean}`.replace(/\\n/g, '\n'),
       });
     }
+    var newText = this.raw.replace(/<(\/a|a)([^>]*)>/gi, '');
+
+    this.swal = this.$swal;
+    this.raw = newText;
+    this.regexp();
   },
   methods: {
-    test() {
-      var newText = this.raw.replace(/<(\/a|a)([^>]*)>/gi, '');
-
-      this.raw = newText;
-      var str = `<a title="상소는 판결, 명령, 결정 등의 법원의 재판에 관하여 특정 기간 안에 불복의 의사를 표시하여 상급법원의 판단을 구하는 법률행위를 의미한다.">상소</a>`;
-      var re = /a/;
-      console.log(re.test(str) ? true : false);
-    },
     regexp() {
       this.dict.forEach((element) => {
         var regEx = new RegExp(element.word, 'g');
-        var replaced_str = this.raw.replace(regEx, element.mean);
+        // var replaced_str = this.raw.replace(regEx, `<a @click="dictAlert(alertTest)">alertTest</a>`);
+        // var replaced_str = this.raw.replace(regEx, `<a @click="dictAlert(${element.mean})">${element.word}</a>`);
+        var replaced_str = this.raw.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
         this.raw = replaced_str;
+      });
+    },
+    dictAlert(mean) {
+      // console.log(mean);
+      this.swal({
+        // icon: 'error',
+        title: mean,
       });
     },
   },
