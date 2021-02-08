@@ -187,7 +187,11 @@ export default new Router({
     {
       path: '/webrtc',
       name: 'webrtc',
-      components: { default: WebrtcView, header: undefined, footer: undefined },
+      components: { default: WebrtcView, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
     },
     {
       path: '/dicttest',
