@@ -109,6 +109,7 @@ export default {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
+  background: white;
   // flex-wrap: wrap;
   // flex-direction: row;
 }
