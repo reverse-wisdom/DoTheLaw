@@ -7,6 +7,11 @@
         <h2 class="title text-center kor">자문게시판</h2>
         <hr class="div-hr" />
         <div class="container">
+          <div class="btn-right">
+            <md-button class="md-dense md-raised md-info" type="button" @click="containMeAdvise">
+              내가 쓴 자문요청글
+            </md-button>
+          </div>
           <v-card>
             <v-card-title>
               자문게시판
@@ -15,7 +20,6 @@
             </v-card-title>
             <v-data-table :headers="headers" :items="values" :search="search" @click:row="detailPage" class="elevation-1"></v-data-table>
           </v-card>
-
           <div class="btn-right">
             <md-button class="md-dense md-raised md-info" type="button" @click="writePage">
               글쓰기
@@ -88,6 +92,10 @@ export default {
     detailPage(value) {
       var query = value.boardId;
       this.$router.push({ name: 'adviseDetail', query: { boardId: query } });
+    },
+    containMeAdvise() {
+      var uuid = this.$store.state.uuid;
+      this.$router.push({ name: 'AdviseMe', query: { uuid: uuid } });
     },
   },
 };

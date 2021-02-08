@@ -37,6 +37,7 @@
               </div>
               <div class="col-11" id="text-solid-one">
                 최근답변
+                <AdviseLawyer />
                 <hr />
                 <br />
                 <br />
@@ -76,10 +77,13 @@
 
 <script>
 const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
+import AdviseLawyer from '@/views/components/advise/AdviseLawyer.vue';
 import axios from 'axios';
 
 export default {
-  components: {},
+  components: {
+    AdviseLawyer,
+  },
   bodyClass: 'profile-page',
   data() {
     return {
