@@ -20,13 +20,14 @@ function socialLoginUser(userData) {
   return instance.post('api/member/social', userData);
 }
 
-//회원정보 조회
+// 사용자 회원정보 조회
 function searchUser(userEmail) {
-  return instance.get('/api/member/search', {
-    params: {
-      email: userEmail,
-    },
-  });
+  return posts.get(`/api/member/lookup?email=${userEmail}`);
+}
+
+// 변호사 회원정보 조회
+function searchLawyer(userEmail) {
+  return posts.get(`/api/member/lookup/lawyer?email=${userEmail}`);
 }
 
 // 닉네임 중복 체크
@@ -56,11 +57,17 @@ function findPassword(userEmail) {
   });
 }
 
-//회원정보 수정
+// 사용자 회원정보 수정
 function editUser(userData) {
   // console.log(userData)
-  return instance.put('/api/member/update', userData);
+  return posts.put('/api/member/update', userData);
 }
+// 변호사 회원정보 수정
+function editLawyer(userData) {
+  // console.log(userData)
+  return posts.put('/api/member/update/lawyer', userData);
+}
+
 //회원탈퇴
 function signoutUser(userData) {
   console.log(userData);
@@ -78,4 +85,4 @@ function LawyerList() {
 function LawyerDetail(lawyerData) {
   return posts.get(`api/member/lookup/lawyer?email=${lawyerData}`);
 }
-export { registerUser, registerLawyer, loginUser, searchUser, editUser, signoutUser, nameCheck, emailCheck, socialLoginUser, LawyerList, findPassword, LawyerDetail };
+export { registerUser, registerLawyer, loginUser, searchUser, searchLawyer, editUser, editLawyer, signoutUser, nameCheck, emailCheck, socialLoginUser, LawyerList, findPassword, LawyerDetail };
