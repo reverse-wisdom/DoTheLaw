@@ -10,6 +10,7 @@ import com.ssafy.pjt.core.repository.mapper.BoardMapper;
 import com.ssafy.pjt.core.security.Role;
 import com.ssafy.pjt.core.service.BoardUseCase;
 import com.ssafy.pjt.web.dto.BoardRequestDTO;
+import com.ssafy.pjt.web.dto.MemberRequestDTO;
 
 @Service
 public class BoardService implements BoardUseCase {
@@ -47,8 +48,9 @@ public class BoardService implements BoardUseCase {
 	}
 
 	@Override
-	public boolean check(int boardId, int uuid, Role role) throws Exception {
-		if (role.getCode().equals("ROLE_ADMIN")) {
+	public boolean check(int boardId, int uuid) throws Exception {
+		MemberRequestDTO data = boardMapper.searchMember(uuid);
+		if (data.getRole().equals("ROLE_ADMIN")) {
 			return true;
 		} else {
 			if (boardMapper.check(boardId) == uuid) {

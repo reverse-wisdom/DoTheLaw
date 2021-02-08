@@ -46,16 +46,22 @@
 
 	<update id="update" parameterType="BoardRequestDTO">
 		update board
-		set
-		title = #{title},
-		content = #{content},
-		category = #{category},
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="title != null"> title = #{title},</if>
+			<if test="content != null">	content = #{content},</if>
+			<if test="category != null">category = #{category},</if>		
+		</trim>
+		,
 		upload_date = now()
 		where board_id = #{boardId}
 	</update>
 	
 	<select id="check" parameterType="int" resultType="int">
 		select uuid from board where board.board_id = #{boardId}
+	</select>
+	
+	<select id="searchMember" parameterType="int" resultType="MemberRequestDTO">
+		select * from member where member.uuid=#{uuid}
 	</select>
 	
 </mapper>
