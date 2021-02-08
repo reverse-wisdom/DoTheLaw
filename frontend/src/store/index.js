@@ -96,23 +96,23 @@ export default new Vuex.Store({
       var data;
       try {
         data = await loginUser(userData);
+        if (data.data.code == 'LOGIN_SUCCESS') {
+          console.log('test');
+          commit('setToken', data.data['message']);
+          commit('setEmail', data.data.member.email);
+          commit('setPassword', data.data.member.password);
+          commit('setName', data.data.member.name);
+          commit('setUuid', data.data.member.uuid);
+          commit('setPhone', data.data.member.phone);
+          commit('setImage', data.data.member.image);
+          commit('setRole', data.data.member.role.substring(5).trim());
+          router.push('/');
+        }
       } catch (err) {
         Vue.swal({
           icon: 'error',
           title: '로그인 실패! 이메일 및 비밀번호를 확인해 주세요!',
         });
-      }
-      if (data.data.code == 'LOGIN_SUCCESS') {
-        console.log('test');
-        commit('setToken', data.data['message']);
-        commit('setEmail', data.data.member.email);
-        commit('setPassword', data.data.member.password);
-        commit('setName', data.data.member.name);
-        commit('setUuid', data.data.member.uuid);
-        commit('setPhone', data.data.member.phone);
-        commit('setImage', data.data.member.image);
-        commit('setRole', data.data.member.role.substring(5).trim());
-        router.push('/');
       }
     },
     async SOCIALLOGIN({ commit }, userData) {
