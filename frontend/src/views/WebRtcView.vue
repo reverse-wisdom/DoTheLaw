@@ -47,6 +47,16 @@
         </div>
       </div>
     </div>
+    <div>
+      <div class="col-md-12">
+        <h2>Captured Image</h2>
+        <figure class="figure">
+          <img :src="img" class="img-responsive" />
+        </figure>
+      </div>
+    </div>
+    <!-- 채팅룸의 룸ID 값은 자문매칭의 ID와 같아야 하므로 임의로 4로 배정  -->
+    <chat-room :roomId="4" v-if="roomId"></chat-room>
   </div>
 </template>
 
@@ -54,14 +64,19 @@
 import Vue from 'vue';
 import WebRTC from 'vue-webrtc';
 import * as io from 'socket.io-client';
+
+import ChatRoom from './components/ChatRoom.vue';
+
 window.io = io;
 
 Vue.use(WebRTC);
 Vue.component('vueWebrtc', WebRTC['vue-webrtc']);
 
+  
 export default {
   name: 'web-rtc',
   bodyClass: 'profile-page',
+  components: { ChatRoom },
   data() {
     return {
       img: null,
@@ -113,5 +128,43 @@ export default {
 }
 .section {
   padding: 0;
+}
+
+.video-list {
+  margin: 0 auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  background: white;
+  // flex-wrap: wrap;
+  // flex-direction: row;
+}
+
+video {
+  border: 2px solid red;
+}
+.video-list > video {
+  width: 50px;
+}
+// .video-list video {
+//   width: 50px;
+//   margin: 10 auto;
+//   // display: inline-flex;
+//   flex-direction: column;
+//   flex: none;
+//   // flex-basis: auto;
+//   flex-grow: 1;
+//   // flex-basis: 33.33%;
+//   margin-top: 20px;
+//   padding: 0 5px;
+//   box-sizing: border-box;
+//   border: 2x, red;
+// }
+
+.video-list ~ video::-webkit-media-controls-play-button {
+  display: none;
+}
+video::-webkit-media-controls-time-remaining-display {
+  display: none !important;
 }
 </style>

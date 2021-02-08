@@ -3,6 +3,7 @@ package com.ssafy.pjt.web;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import javax.imageio.ImageIO;
@@ -12,9 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.pjt.core.repository.mapper.MemberMapper;
 import com.ssafy.pjt.util.UploadFileUtils;
 
 import net.sourceforge.tess4j.ITesseract;
@@ -28,6 +31,8 @@ import net.sourceforge.tess4j.TesseractException;
 @RestController
 public class OcrController {
 
+	@Autowired
+	private MemberMapper memberMapper;
 	
 	private final String path;
 	
@@ -38,7 +43,7 @@ public class OcrController {
 
 	@PostMapping("/api/ocr")
 	public ResponseEntity<?> DoOCR(/* @RequestParam("DestinationLanguage") String destinationLanguage, */
-			/* @RequestParam("Image") */ MultipartFile image) throws IOException {
+			/* @RequestParam("Image") */ MultipartFile image, @RequestParam(required = true) final int uuid) throws IOException {
 
 		ITesseract instance = new Tesseract();
 		String result = "";
@@ -68,6 +73,13 @@ public class OcrController {
 			if (!result.contains(s))
 				return new ResponseEntity<>("잘못된 증명서 입니다.", HttpStatus.BAD_REQUEST);
 		}
+		
+		try {
+			memberMapper.checkUpdate(uuid, "Y");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return new ResponseEntity<>("정식 변호사 합격 증명서 입니다.", HttpStatus.OK);
 
 	}
