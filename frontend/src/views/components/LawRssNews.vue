@@ -2,6 +2,10 @@
   <div class="md-layout">
     <!-- 뉴스 업데이트한(가져온) 시간 -->
     <div v-if="loadCheck">
+      <br />
+
+      <md-button class="md-info" disabled id="rss_time">{{ refresh_time }}</md-button>
+      <br />
       <div class="list-type">
         <ol id="olid" style="list-style: none;">
           <!-- 파싱한 데이터중 7개의 뉴스제목과 링크를 들고옴 -->
@@ -10,7 +14,6 @@
           </div>
         </ol>
       </div>
-      <md-button class="md-info" disabled id="rss_time">{{ refresh_time }}</md-button>
     </div>
     <div v-else class="md-layout-item md-size-4 mx-auto">
       <br />
@@ -38,7 +41,8 @@
 
 <script>
 import { Circle8 } from 'vue-loading-spinner'; // npm 스피너 컴포넌트
-import axios from 'axios';
+import { newsParsing } from '@/api/service';
+
 export default {
   components: { Circle8 },
   data() {
@@ -61,27 +65,23 @@ export default {
         '초',
     };
   },
-  created() {
+  async mounted() {
     // RSS 뉴스 불러오기
 
     // 파싱
-    // const { data } = newsParsing(); // 왜안될까
-    // console.log(data);
+    const { data } = await newsParsing();
+    console.log(data);
 
-    this.loadCheck = false;
-    axios.get('/api/rss/news').then(({ data }) => {
-      if (data['items']) {
-        data = data['items'];
-        for (let i = 0; i < data.length; i++) {
-          this.news.push({
-            title: data[i].title,
-            link: data[i].link,
-          });
-          this.loadCheck = true;
-          console.log('rss 로딩 완료');
-        }
+    if (data['items']) {
+      this.loadCheck = false;
+      for (let i = 0; i < data.items.length; i++) {
+        this.news.push({
+          title: data.items[i].title,
+          link: data.items[i].link,
+        });
+        this.loadCheck = true;
       }
-    });
+    }
   },
 };
 </script>
