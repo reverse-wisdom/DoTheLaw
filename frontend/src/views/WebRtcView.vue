@@ -106,4 +106,42 @@ export default {
 .section {
   padding: 0;
 }
+
+.video-list {
+  margin: 0 auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  background: white;
+  // flex-wrap: wrap;
+  // flex-direction: row;
+}
+
+video {
+  border: 2px solid red;
+}
+.video-list > video {
+  width: 50px;
+}
+// .video-list video {
+//   width: 50px;
+//   margin: 10 auto;
+//   // display: inline-flex;
+//   flex-direction: column;
+//   flex: none;
+//   // flex-basis: auto;
+//   flex-grow: 1;
+//   // flex-basis: 33.33%;
+//   margin-top: 20px;
+//   padding: 0 5px;
+//   box-sizing: border-box;
+//   border: 2x, red;
+// }
+
+.video-list ~ video::-webkit-media-controls-play-button {
+  display: none;
+}
+video::-webkit-media-controls-time-remaining-display {
+  display: none !important;
+}
 </style>
