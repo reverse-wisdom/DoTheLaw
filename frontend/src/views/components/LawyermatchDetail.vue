@@ -15,7 +15,11 @@
             </div>
             <div class="col-1"></div>
             <div class="col-8 row" id="content-sort">
-              <h1 class="col-12 r-4">변호사 {{ lawyer.name }}</h1>
+              <div>
+                <h1 class="col-12 r-4">변호사 {{ lawyer.name }}</h1>
+                <md-button @click="createAdvise">자문요청</md-button>
+              </div>
+              x
               <div class="col-11" id="text-solid-1">
                 한줄소개
                 <hr />
@@ -148,6 +152,13 @@ export default {
       return {
         backgroundImage: `url(${this.header})`,
       };
+    },
+  },
+  methods: {
+    createAdvise() {
+      console.log(this.lawyer);
+      const lawyerUuid = this.lawyer.uuid;
+      this.$router.push({ name: 'AdviseWrite', query: { lawyerUuid: lawyerUuid } });
     },
   },
   watch: {

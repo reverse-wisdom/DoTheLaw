@@ -1,19 +1,21 @@
 import { posts } from './index';
 
-function fetchAdviseList() {
-  return posts.get('/api/board/search/all');
+function fetchAdviseLawyer(userData) {
+  return posts.get('/api/matching/search/', userData);
 }
-function createAdvise(postData) {
-  return posts.post('/api/board/create', postData);
+function fetchAdviseMe(userData) {
+  return posts.get(`/api/matching/contain?uuid=${userData}`);
 }
-function detailAdvise(boardId) {
-  return posts.get(`/api/board/search/detail?boardId=${boardId}`);
+function createAdvise(adviseData) {
+  return posts.post('/api/matching/create/', adviseData);
 }
-function editAdvise(modifyData, memberRole) {
-  return posts.put(`/api/board/update?role=${memberRole}`, modifyData);
+function detailAdvise(adviseData) {
+  return posts.get(`/api/matching/search/detail?matchingId=${adviseData}`);
 }
-function deleteAdvise(boardId, roleData, userId) {
-  console.log(boardId, roleData, userId);
-  return posts.delete(`/api/board/delete/?boardId=${boardId}&role=${roleData}&uuid=${userId}`);
+function editAdvise(modifyData) {
+  return posts.put('api/matching/update/', modifyData);
 }
-export { fetchAdviseList, createAdvise, detailAdvise, editAdvise, deleteAdvise };
+function deleteAdvise(userData, adviseData, userId) {
+  return posts.delete(`api/matching/delete?matchingId=${adviseData}&uuid=${userData}`);
+}
+export { fetchAdviseLawyer, createAdvise, detailAdvise, editAdvise, deleteAdvise, fetchAdviseMe };

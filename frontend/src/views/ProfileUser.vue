@@ -15,7 +15,7 @@
             </div>
             <div class="col-1"></div>
             <div class="col-8 row" id="content-sort">
-              <h1 class="col-12 r-4">사용자 {{ $store.state.name }}</h1>
+              <h1 class="col-12 r-4">{{ $store.state.role }}, {{ $store.state.name }}</h1>
               <div class="col-11" id="text-solid-1">한줄소개</div>
             </div>
             <div class="row ml-10">
@@ -36,28 +36,8 @@
                 <hr />
               </div>
               <div class="col-11" id="text-solid-one">
-                최근 답변
-                <hr />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
+                최근 자문요청
+                <AdviseMe />
                 <div></div>
               </div>
               <!-- <div class="col-5" id="text-solid">6</div> -->
@@ -70,8 +50,11 @@
 </template>
 
 <script>
+import AdviseMe from '@/views/components/advise/AdviseMe.vue';
 export default {
-  components: {},
+  components: {
+    AdviseMe,
+  },
   bodyClass: 'profile-page',
   data() {
     return {

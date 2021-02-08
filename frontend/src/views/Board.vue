@@ -54,6 +54,7 @@ export default {
     try {
       this.token = this.$store.state.token;
       const { data } = await fetchBoardList();
+      console.log(data);
       for (let i = 0; i < data.length; i++) {
         this.values.push({
           boardId: data[i].boardId,

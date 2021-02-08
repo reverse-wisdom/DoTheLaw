@@ -9,10 +9,6 @@
         <div class="container">
           <table class="styled-table" style="width: 100%">
             <tr>
-              <th scope="col">카테고리</th>
-              <td>{{ value.category }}</td>
-            </tr>
-            <tr>
               <th scope="col">제목</th>
               <td>{{ value.title }}</td>
             </tr>
@@ -21,13 +17,21 @@
               <td>{{ value.name }}</td>
             </tr>
             <tr style="border-top: 1px solid;">
-              <th scope="col">작성시간</th>
-              <td>{{ this.$moment(value.uploadDate).format('llll') }}</td>
+              <th scope="col">진행상황</th>
+              <td>{{ value.state }}</td>
             </tr>
             <tr style="border-top: 1px solid;">
+              <th scope="col">예약시간</th>
+              <td>{{ this.$moment(value.reservationDate).format('llll') }}</td>
+            </tr>
+            <tr style="border-top: 1px solid;">
+              <th scope="col">작성시간</th>
+              <td>{{ this.$moment(value.createDate).format('llll') }}</td>
+            </tr>
+            <!-- <tr style="border-top: 1px solid;">
               <th scope="col">조회수</th>
               <td>{{ value.hit }}</td>
-            </tr>
+            </tr> -->
             <tr style="border-top: 1px solid;">
               <th scope="col">내용</th>
               <td v-html="value.content"></td>
@@ -36,14 +40,20 @@
 
           <!-- 수정, 삭제는 자신이 쓴글일경우만 나타나게 처리함 -->
           <div v-if="$store.state.name == value.name" style="text-align:right">
-            <md-button class="md-warning" @click="updatePage(value)">글수정</md-button>
-            <md-button class="md-rose" @click="deleteAdvise">글 삭제</md-button>
-            <md-button class="md-info" @click="moveAdviseList()">목록</md-button>
+            <md-button class="md-warning" @click="updateAdvise(value)">자문수정</md-button>
+            <md-button class="md-rose" @click="adviseDelete">자문삭제</md-button>
+            <!-- <md-button class="md-info" @click="moveBoard()">뒤로가기</md-button> -->
           </div>
           <!-- else -->
           <div v-if="$store.state.name != value.name" style="text-align:right">
-            <md-button class="md-info" @click="moveAdviseList()">목록</md-button>
+            <md-button class="md-info" @click="moveBoard()">뒤로가기</md-button>
           </div>
+          <!-- 댓글 -->
+          <!-- <comment-write :boardId="value.boardId" @uploadComment="uploadComment" />
+          <br />
+          <ul v-for="(comment, index) in comments" :key="index">
+            <comment-row :comment="comment" :boardId="value.boardId" @deleteComment="deleteComment" />
+          </ul> -->
         </div>
       </div>
     </div>
@@ -52,12 +62,15 @@
 
 <script>
 import { detailAdvise, deleteAdvise } from '@/api/advise';
+import axios from 'axios';
 
 export default {
   bodyClass: 'profile-page',
+  components: {},
   data() {
     return {
       value: '',
+      comments: [],
     };
   },
   props: {
@@ -74,32 +87,43 @@ export default {
     },
   },
   async created() {
-    const postData = this.$route.query.boardId;
-    const { data } = await detailAdvise(postData);
-    console.log(data);
+    const adviseId = this.$route.query.matchingId;
+    const { data } = await detailAdvise(adviseId);
     this.value = data;
   },
   methods: {
-    moveAdviseList() {
-      this.$router.push('/adviseList');
+    moveBoard() {
+      this.$router.push('/board');
     },
-    async deleteAdvise() {
-      const boardId = this.value.boardId;
-      const role = this.$store.state.role;
-      const userId = this.$store.state.uuid;
-      const { data } = await deleteAdvise(boardId, role, userId);
+    async adviseDelete() {
+      const uuid = this.$store.state.uuid;
+      const matchingId = this.value.matchingId;
+      const { data } = await deleteAdvise(uuid, matchingId);
       this.$swal({
-        position: 'top-end',
         icon: 'success',
         title: '삭제성공!!',
         showConfirmButton: false,
         timer: 1500,
       });
-      this.$router.push('/adviseList');
+      this.$router.push('/board');
     },
-    updatePage(value) {
-      var boardId = value.boardId;
-      this.$router.push({ name: 'adviseUpdate', query: { boardId: boardId } });
+    updateAdvise(value) {
+      var matchingId = value.matchingId;
+      this.$router.push({ name: 'AdviseUpdate', query: { matchingId: matchingId } });
+    },
+    uploadComment(newComment) {
+      axios
+        .get('/api/comment/search?boardId=' + this.$route.query.boardId, {})
+        .then(({ data }) => {
+          this.comments = data;
+        })
+        .catch();
+    },
+    deleteComment(oldComment) {
+      const commentIndex = this.comments.findIndex((comment) => {
+        return comment.comment_id === oldComment.comment_id;
+      });
+      this.comments.splice(commentIndex, 1);
     },
   },
 };
