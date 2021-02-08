@@ -13,7 +13,7 @@
 			FROM message m INNER JOIN member b
 			USING(uuid)
 		WHERE m.matching_id = #{matchingId}
-		ORDER BY m.reg_date
+		ORDER BY m.reg_date desc
 	</select>
 	
 </mapper>
