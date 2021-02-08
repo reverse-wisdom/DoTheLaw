@@ -16,4 +16,7 @@ function deleteAdvise(boardId, roleData, userId) {
   console.log(boardId, roleData, userId);
   return posts.delete(`/api/board/delete/?boardId=${boardId}&role=${roleData}&uuid=${userId}`);
 }
-export { fetchAdviseList, createAdvise, detailAdvise, editAdvise, deleteAdvise };
+function searchLawyerAdvise(lawyerid) {
+  return posts.get(`api/matching/search?lawyerUuid=${lawyerid}`);
+}
+export { fetchAdviseList, createAdvise, detailAdvise, editAdvise, deleteAdvise, searchLawyerAdvise };
