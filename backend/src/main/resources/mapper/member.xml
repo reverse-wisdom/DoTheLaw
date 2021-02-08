@@ -19,9 +19,18 @@
 		VALUES(#{email},
 		#{password}, #{name}, #{phone}, #{role}, #{image});
 		INSERT INTO lawyer
-		(uuid, career, introduction, address, dept, chck)
-		VALUES(LAST_INSERT_ID(), #{career}, #{introduction}, #{address},
-		#{dept}, #{chck});
+		(uuid, 
+		<if test="career != null">career, </if>
+		<if test="introduction != null">introduction, </if>
+		<if test="dept != null">dept, </if>
+		<if test="bailiwick != null">bailiwick, </if>
+		address)
+		VALUES(LAST_INSERT_ID(),
+		<if test="career != null"> #{career},</if>
+		<if test="introduction != null"> #{introduction},</if>
+		<if test="dept != null">#{dept},</if>
+		<if test="bailiwick != null">#{bailiwick},</if>
+		 #{address});
 		COMMIT;
 	</insert>
 
@@ -76,7 +85,7 @@
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="name != null"> name = #{name},</if>
 			<if test="phone != null">phone = #{phone},</if>
-			<if test="image != null">image = #{image},</if>
+			<if test="image != null">image = #{image},</if>		
 		</trim>
 		where uuid = #{uuid};
 	</update>
@@ -87,6 +96,7 @@
 			<if test="introduction != null">introduction = #{introduction},</if>
 			<if test="address != null">address = #{address},</if>
       		<if test="dept != null"> dept = #{dept},</if>
+      		<if test="bailiwick != null">bailiwick = #{bailiwick},</if>
         </trim>
 		where uuid = #{uuid};
 	</update>
@@ -97,4 +107,12 @@
 		password = #{password}
 		where uuid = #{uuid};
 	</update>
+	
+	<update id="checkUpdate">
+		update lawyer
+		set
+		chck = #{chck}
+		where uuid = #{uuid};
+	</update>
+	
 </mapper>
