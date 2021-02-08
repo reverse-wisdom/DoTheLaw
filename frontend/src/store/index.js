@@ -100,7 +100,7 @@ export default new Vuex.Store({
           console.log('test');
           commit('setToken', data.data['message']);
           commit('setEmail', data.data.member.email);
-          commit('setPassword', data.data.member.password);
+          commit('setPassword', userData.password);
           commit('setName', data.data.member.name);
           commit('setUuid', data.data.member.uuid);
           commit('setPhone', data.data.member.phone);
