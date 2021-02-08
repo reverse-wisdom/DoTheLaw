@@ -39,7 +39,7 @@
 		select m.uuid , m.email, m.password, m.name, m.phone,
 		m.role, m.join_date, m.image
 		, l.career, l.introduction, l.address,
-		l.dept, l.chck
+		l.dept, l.chck, l.bailiwick
 		from member m join lawyer l
 		on m.uuid = l.uuid
 		where
@@ -50,7 +50,7 @@
 		select m.uuid , m.email, m.password, m.name, m.phone,
 		m.role, m.join_date, m.image
 		, l.career, l.introduction, l.address,
-		l.dept, l.chck
+		l.dept, l.chck, l.bailiwick
 		from member m join lawyer l
 		on m.uuid = l.uuid
 	</select>
