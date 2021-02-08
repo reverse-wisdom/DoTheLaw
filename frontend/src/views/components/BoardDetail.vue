@@ -40,9 +40,12 @@
           <div v-if="$store.state.name != value.name" style="text-align:right">
             <md-button class="md-info" @click="moveBoard()">뒤로가기</md-button>
           </div>
-          <comment-write :boardId="value.boardId" />
+          <!-- 댓글 -->
+          <comment-write :boardId="value.boardId" @uploadComment="uploadComment" />
           <br />
-          <comment-row v-for="(comment, index) in comments" :key="index" :comment="comment" />
+          <ul v-for="(comment, index) in comments" :key="index">
+            <comment-row :comment="comment" :boardId="value.boardId" @deleteComment="deleteComment" />
+          </ul>
         </div>
       </div>
     </div>
@@ -84,7 +87,6 @@ export default {
     const postData = this.$route.query.boardId;
     const { data } = await detailBoard(postData);
     this.value = data;
-
     axios
       .get('/api/comment/search?boardId=' + this.$route.query.boardId, {})
       .then(({ data }) => {
@@ -113,6 +115,20 @@ export default {
     updatePage(value) {
       var boardId = value.boardId;
       this.$router.push({ name: 'boardUpdate', query: { boardId: boardId } });
+    },
+    uploadComment(newComment) {
+      axios
+        .get('/api/comment/search?boardId=' + this.$route.query.boardId, {})
+        .then(({ data }) => {
+          this.comments = data;
+        })
+        .catch();
+    },
+    deleteComment(oldComment) {
+      const commentIndex = this.comments.findIndex((comment) => {
+        return comment.comment_id === oldComment.comment_id;
+      });
+      this.comments.splice(commentIndex, 1);
     },
   },
 };
