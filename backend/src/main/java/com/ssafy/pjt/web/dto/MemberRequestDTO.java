@@ -21,4 +21,5 @@ public class MemberRequestDTO {
 	private String address;
 	private String dept;
 	private String chck;
+	private String bailiwick;
 }
