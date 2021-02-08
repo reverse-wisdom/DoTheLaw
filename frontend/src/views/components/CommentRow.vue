@@ -23,7 +23,9 @@
 import axios from 'axios';
 export default {
   name: 'CommentRow',
-  props: ['comment'],
+  props: {
+    comment: Object,
+  },
   data() {
     return {
       disabled: 1,
@@ -36,7 +38,8 @@ export default {
       axios
         .delete('/api/comment/delete?commentId=' + this.comment.commentId + '&uuid=' + this.comment.uuid)
         .then(({ data }) => {
-          this.$router.go(this.$router.currentRoute);
+          // this.$router.go(this.$router.currentRoute);
+          this.$emit('deleteComment', data);
         })
         .catch();
     },
