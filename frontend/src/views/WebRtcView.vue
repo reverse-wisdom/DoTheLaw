@@ -132,9 +132,9 @@ export default {
 video {
   border: 2px solid red;
 }
-.video-list > video {
-  width: 50px;
-}
+// .video-list > video {
+//   width: 50px;
+// }
 // .video-list video {
 //   width: 50px;
 //   margin: 10 auto;
@@ -149,11 +149,4 @@ video {
 //   box-sizing: border-box;
 //   border: 2x, red;
 // }
-
-.video-list ~ video::-webkit-media-controls-play-button {
-  display: none;
-}
-video::-webkit-media-controls-time-remaining-display {
-  display: none !important;
-}
 </style>
