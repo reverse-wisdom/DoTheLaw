@@ -162,7 +162,7 @@ public class ImageController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().body(e);//.build();
 		}
 	}
 }
