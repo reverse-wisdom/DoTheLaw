@@ -2,7 +2,6 @@
   <!-- 게시판 페이지 -->
   <div class="wrapper">
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
-
     <div class="main main-raised">
       <div class="section profile-content">
         <h2 class="title text-center kor">게시판</h2>
@@ -88,6 +87,7 @@ export default {
     },
     detailPage(value) {
       var query = value.boardId;
+      console.log(typeof query);
       this.$router.push({ name: 'boardDetail', query: { boardId: query } });
     },
   },
