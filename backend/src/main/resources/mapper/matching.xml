@@ -6,7 +6,7 @@
 
 	<select id="search" parameterType="int" resultType="MatchingRequestDTO">
 		select b.matching_id, b.uuid, b.lawyer_uuid, m.name as name,
-		b.create_date, b.content, b.state, b.reservation_date, b.title
+		b.create_date, b.content, b.state, b.reservation_date, b.title, b.category
 		from matching b left
 		join member m
 		on b.uuid = m.uuid
@@ -15,7 +15,7 @@
 	
 	<select id="selectByUUID" parameterType="int" resultType="MatchingRequestDTO">
 		select b.matching_id, b.uuid, b.lawyer_uuid, m.name as name,
-		b.create_date, b.content, b.state, b.reservation_date, b.title
+		b.create_date, b.content, b.state, b.reservation_date, b.title, b.category
 		from matching b left
 		join member m
 		on b.uuid = m.uuid
@@ -25,7 +25,7 @@
 	<select id="detail" parameterType="int"
 		resultType="MatchingRequestDTO">
 		select b.matching_id, b.uuid, b.lawyer_uuid, m.name as name,
-		b.create_date, b.content, b.state, b.reservation_date, b.title
+		b.create_date, b.content, b.state, b.reservation_date, b.title, b.category
 		from matching b left
 		join member m
 		on b.uuid = m.uuid
@@ -34,9 +34,9 @@
 	
 	<insert id="insert" parameterType="MatchingRequestDTO">
 		INSERT INTO
-		matching(`uuid`,`lawyer_uuid`,`title`,`content`,`state`,`reservation_date`)
+		matching(`uuid`,`lawyer_uuid`,`title`,`content`,`state`,`reservation_date`,`category`)
 		VALUES
-		(#{uuid},#{lawyerUuid},#{title},#{content},#{state},#{reservationDate});	
+		(#{uuid},#{lawyerUuid},#{title},#{content},#{state},#{reservationDate},#{category});	
 	</insert>
 
 	<delete id="delete" parameterType="int">
@@ -53,6 +53,7 @@
 			<if test="state != null">state = #{state},</if>
 			<if test="reservationDate != null">reservation_date = #{reservationDate},</if>
 			<if test="remarks != null">remarks = #{remarks},</if>
+			<if test="category != null">category = #{category},</if>
 		</trim>
 		where matching_id = #{matchingId}
 	</update>
