@@ -91,6 +91,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                
                 .antMatchers("/api/email/**").permitAll() //test
                 
+                .antMatchers("/api/ws/**").permitAll() //test
+                .antMatchers("/api/chat/**").permitAll() //test
+
                 .anyRequest().authenticated()
 
                 .and()
