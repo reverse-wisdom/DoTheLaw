@@ -41,6 +41,8 @@
         </figure>
       </div>
     </div>
+    <!-- 채팅룸의 룸ID 값은 자문매칭의 ID와 같아야 하므로 임의로 4로 배정  -->
+    <chat-room :roomId="4" v-if="roomId"></chat-room>
   </div>
 </template>
 
@@ -48,6 +50,7 @@
 import Vue from 'vue';
 import WebRTC from 'vue-webrtc';
 import * as io from 'socket.io-client';
+import ChatRoom from './components/ChatRoom.vue';
 window.io = io;
 
 Vue.use(WebRTC);
@@ -55,7 +58,7 @@ Vue.component('vueWebrtc', WebRTC['vue-webrtc']);
 
 export default {
   name: 'WebRtcView',
-  components: {},
+  components: { ChatRoom },
   data() {
     return {
       img: null,

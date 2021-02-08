@@ -3,20 +3,25 @@ import Stomp from 'webstomp-client';
 import SockJS from 'sockjs-client';
 
 class WebChatClient {
-  constructor(roomId, uuid, msg) {
+  constructor(roomId, uuid, name, msg) {
     this.roomId = roomId;
     this.uuid = uuid;
+    this.name = name;
     this.msg = msg;
     this.stompClient = null;
   }
   //방 제목 가져오기
-  getRoomTitle() {
-    return posts.get('/api/chat/room/' + this.roomId);
+  getRoomTitle(callback) {
+    return posts.get(`/api/chat/room/${this.roomId}`).then((response) => callback(response.data));
   }
 
   // 채팅방 기존 내용 가져오기
   getChatBeforeMessage() {
-    posts.get('/api/chat/room/message/' + this.roomId).then((res) => {
+    // console.log('채팅방 내용을 가져오고 있습니다.');
+    // console.log(this.roomId);
+    // console.log(this.uuid);
+    // console.log(this.msg);
+    posts.get(`/api/chat/room/message/${this.roomId}`).then((res) => {
       this.msg.length = 0; //기존 메세지들 모두 삭제
       for (let i = res.data.length - 1; i > -1; i--) {
         let m = {
@@ -37,11 +42,12 @@ class WebChatClient {
   connect() {
     let socket = new SockJS('/api/ws');
     this.stompClient = Stomp.over(socket);
+    this.stompClient.debug = () => {};
     this.stompClient.connect(
       {},
       (frame) => {
         console.log('success', frame);
-        this.stompClient.subscribe('/sub/' + this.roomid, (res) => {
+        this.stompClient.subscribe(`/sub/${this.roomId}`, (res) => {
           let jsonBody = JSON.parse(res.body);
           let m = {
             name: jsonBody.name,
@@ -59,13 +65,19 @@ class WebChatClient {
   sendMessage(msg) {
     if (msg.trim() != '' && this.stompClient != null) {
       let chatMessage = {
-        matchingId: this.roomid,
-        uuid: this.id,
+        matchingId: this.roomId,
+        uuid: this.uuid,
         content: msg,
+        regDate: new Date(),
+        name: this.name,
       };
       this.stompClient.send('/pub/message', JSON.stringify(chatMessage), {});
     }
   }
 }
 
-export { WebChatClient };
+function createWebChatClient(roomId, uuid, name, msg) {
+  return new WebChatClient(roomId, uuid, name, msg);
+}
+
+export { createWebChatClient };
