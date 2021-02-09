@@ -5,9 +5,10 @@
       <div class="section profile-content">
         <div class="container">
           <div class="row">
-            <div class="col-3 row ml-5">
-              <img id="profile" class="col-12 r-10" :src="image" alt="noimage" />
-              <div class="r-2" id="button-sort">
+            <div class="col-4 row ml-5">
+              <img v-if="value.image" id="profile" class="col-12 r-7 mx-auto" :src="value.image" alt="" />
+              <img v-else id="profile" class="col-12 r-7 mx-auto" src="@/assets/img/noimage.jpg" alt="noimage" />
+              <div class="r-2 mx-auto" id="button-sort">
                 <button id="image-change-button">
                   이미지 변경
                 </button>
@@ -23,16 +24,12 @@
                 관심분야
                 <hr />
               </div>
-              <div class="col-5" id="text-solid">
+              <div class="col-5 mx-auto" id="text-solid">
                 전화번호
                 <hr />
               </div>
-              <div class="col-5" id="text-solid-margin">
-                경력
-                <hr />
-              </div>
-              <div class="col-5" id="text-solid">
-                자기소개
+              <div class="col-5 mx-auto" id="text-solid">
+                전화번호
                 <hr />
               </div>
               <div class="col-11" id="text-solid-one">
@@ -40,7 +37,8 @@
                 <AdviseMe />
                 <div></div>
               </div>
-              <!-- <div class="col-5" id="text-solid">6</div> -->
+              <div class="col-11 mx-auto"></div>
+              <div class="btn btn-info col-1 mt-5 mx-auto" style="float: right;" @click="moveUserUpdate">정보수정</div>
             </div>
           </div>
         </div>
@@ -59,6 +57,7 @@ export default {
   data() {
     return {
       image: this.$store.state.image,
+      value: [],
     };
   },
   props: {
@@ -74,9 +73,17 @@ export default {
       };
     },
   },
-  created() {},
-
-  methods: {},
+  async created() {
+    const email = this.$store.state.email;
+    const { data } = await searchUser(email);
+    this.value = data;
+    console.log('회원정보', this.value);
+  },
+  methods: {
+    moveUserUpdate() {
+      this.$router.push({ name: 'profileUserUpdate' });
+    },
+  },
 };
 </script>
 

@@ -18,4 +18,5 @@ public interface MemberMapper {
 	public void updateLawyer(MemberRequestDTO lawyer) throws SQLException;
 	public MemberRequestDTO selectMemberByUUID(int uuid) throws SQLException;
 	public void passwordUpdate(int uuid, String password) throws SQLException;
+	public void checkUpdate(int uuid, String chck) throws SQLException;
 }

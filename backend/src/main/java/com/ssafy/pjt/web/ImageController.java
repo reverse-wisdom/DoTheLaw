@@ -106,7 +106,7 @@ public class ImageController {
 			return ResponseEntity.ok().body("/api/image/" + uploadedFile.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().body(e);
 		}
 	}
 
@@ -152,7 +152,7 @@ public class ImageController {
 				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 			}
 			Resource resource = null;
-			if (imageSize == 0)
+			if (imageSize == 0 && uploadedFile.getSaveFileName().startsWith("c:"))
 				resource = imageService.loadAsResource(uploadedFile.getSaveFileName());
 			else {
 				String filename = UploadFileUtils.getThumbnailFileName(uploadedFile.getSaveFileName(), imageSize);
@@ -162,7 +162,7 @@ public class ImageController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().body(e);
 		}
 	}
 }

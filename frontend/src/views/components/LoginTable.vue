@@ -13,18 +13,17 @@
         <md-field class="md-form-group">
           <md-icon>lock_outline</md-icon>
           <label>비밀번호</label>
-          <md-input v-model="password" type="password"></md-input>
+          <md-input v-model="password" type="password" id="input_pwd" @keypress="caps_lock"></md-input>
+
+          <p id="capslock" style="position:relative; border:2px solid #003b83; width:300px; bottom:0px; display:none">
+            &nbsp;
+            <b>CapsLock</b>
+            키가 눌려있습니다.&nbsp;
+          </p>
         </md-field>
       </template>
 
       <div slot="footer">
-        <!-- <div>
-          <h6 class="text-center">
-            <span>아이디 찾기</span>
-            |
-            <span @click="moveFindPassWord">비밀번호 찾기</span>
-          </h6>
-        </div> -->
         <h6 class="text-center">
           <span @click="findPassWord">비밀번호 찾기</span>
         </h6>
@@ -91,6 +90,27 @@ export default {
     }
   },
   methods: {
+    // 인풋갑 caps lock 버튼 체킹
+    caps_lock(e) {
+      var keyCode = 0;
+      var shiftKey = false;
+      keyCode = e.keyCode;
+      shiftKey = e.shiftKey;
+      if ((keyCode >= 65 && keyCode <= 90 && !shiftKey) || (keyCode >= 97 && keyCode <= 122 && shiftKey)) {
+        this.show_caps_lock();
+        setTimeout(() => {
+          this.hide_caps_lock();
+        }, 3500);
+      } else {
+        this.hide_caps_lock();
+      }
+    },
+    show_caps_lock() {
+      $('#capslock').show();
+    },
+    hide_caps_lock() {
+      $('#capslock').hide();
+    },
     async findPassWord() {
       this.$swal({
         icon: 'question',
