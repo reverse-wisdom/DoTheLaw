@@ -25,10 +25,12 @@ import ProfileLawyerUpdate from './views/components/ProfileLawyerUpdate.vue';
 import ProfileUser from './views/ProfileUser.vue';
 import ProfileUserUpdate from './views/components/ProfileUserUpdate.vue';
 
-import AdviseList from './views/AdviseList.vue';
-import AdviseDetail from './views/components/AdviseDetail.vue';
-import AdviseWrite from './views/components/AdviseWrite.vue';
-import AdviseUpdate from './views/components/AdviseUpdate.vue';
+// import AdviseList from './views/components/advise/AdviseList.vue';
+import AdviseDetail from './views/components/advise/AdviseDetail.vue';
+import AdviseWrite from './views/components/advise/AdviseWrite.vue';
+import AdviseUpdate from './views/components/advise/AdviseUpdate.vue';
+import AdviseMe from './views/components/advise/AdviseMe.vue';
+import AdviseLawyer from './views/components/advise/AdviseLawyer.vue';
 
 // import LawTest from './views/LawTest.vue';
 // import GoLawTest from './views/components/GoLawTest.vue';
@@ -168,18 +170,10 @@ export default new Router({
         footer: { backgroundColor: 'black' },
       },
     },
-    {
-      path: '/adviseList',
-      name: 'adviseList',
-      components: { default: AdviseList, header: MainNavbar, footer: MainFooter },
-      props: {
-        header: { colorOnScroll: 100 },
-        footer: { backgroundColor: 'black' },
-      },
-    },
+
     {
       path: '/adviseDetail',
-      name: 'adviseDetail',
+      name: 'AdviseDetail',
       components: { default: AdviseDetail, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
@@ -188,7 +182,7 @@ export default new Router({
     },
     {
       path: '/advisewrite',
-      name: 'advisewrite',
+      name: 'AdviseWrite',
       components: { default: AdviseWrite, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
@@ -197,8 +191,26 @@ export default new Router({
     },
     {
       path: '/adviseUpdate',
-      name: 'adviseUpdate',
+      name: 'AdviseUpdate',
       components: { default: AdviseUpdate, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/adviseme',
+      name: 'AdviseMe',
+      components: { default: AdviseMe, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/adviselawyer',
+      name: 'AdviseLawyer',
+      components: { default: AdviseLawyer, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
@@ -222,24 +234,6 @@ export default new Router({
         footer: { backgroundColor: 'black' },
       },
     },
-    // {
-    //   path: '/lawtest',
-    //   name: 'lawtest',
-    //   components: { default: LawTest, header: MainNavbar, footer: MainFooter },
-    //   props: {
-    //     header: { colorOnScroll: 100 },
-    //     footer: { backgroundColor: 'black' },
-    //   },
-    // },
-    // {
-    //   path: '/golawtest',
-    //   name: 'golawtest',
-    //   components: { default: GoLawTest, header: MainNavbar, footer: MainFooter },
-    //   props: {
-    //     header: { colorOnScroll: 100 },
-    //     footer: { backgroundColor: 'black' },
-    //   },
-    // },
     {
       path: '/lawtest',
       name: 'lawtest',

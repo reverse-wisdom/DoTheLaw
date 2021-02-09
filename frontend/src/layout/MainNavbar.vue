@@ -66,11 +66,12 @@
               </li>
 
               <li class="md-list-item">
-                <router-link to="/adviseList" class="md-list-item-router md-list-item-container md-button-clean">
+                <router-link to="/lawyermatch" class="md-list-item-router md-list-item-container md-button-clean">
+                  <!-- <router-link to="/adviseList" class="md-list-item-router md-list-item-container md-button-clean"> -->
                   <div class="md-list-item-content">
                     <md-button slot="title" class="md-button md-button-link md-white md-simple">
                       <i class="material-icons">assignment_turned_in</i>
-                      자문게시판
+                      변호사자문매칭
                     </md-button>
                   </div>
                 </router-link>

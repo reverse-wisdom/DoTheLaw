@@ -1,0 +1,240 @@
+<template>
+  <div class="wrapper">
+    <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
+    <div class="main main-raised" style="z-index:1">
+      <div class="section profile-content">
+        <div style="padding:80px">
+          <h2 class="title text-center kor">자문요청</h2>
+          <hr class="div-hr" />
+          <form v-on:submit.prevent="writeContent">
+            <md-field>
+              <label>제목</label>
+              <md-input id="title" type="text" ref="title" v-model="title"></md-input>
+            </md-field>
+            <md-field>
+              <label for="category">자문종류</label>
+              <md-select v-model="category" name="category" id="category">
+                <md-option value="교통/운전">교통/운전</md-option>
+                <md-option value="가정">가정</md-option>
+                <md-option value="근로/노동">근로/노동</md-option>
+                <md-option value="부동산">부동산</md-option>
+                <md-option value="금융">금융</md-option>
+                <md-option value="정보통신/기술">정보통신/기술</md-option>
+              </md-select>
+            </md-field>
+            <md-field>
+              <div id="summernote"></div>
+            </md-field>
+            <md-field>
+              <!-- 파일의 경우 change 리스너로 감지해야함 -->
+              <input type="file" name="uploadFile" ref="fileData" />
+              <!-- <input type="file" name="uploadFile" ref="fileData" @change="handleFilesUpload" /> -->
+            </md-field>
+            <!-- 예약시간: 임의로 textarea로 넣음 나중에 수정예정 -->
+            <md-field>
+              <label>예약시간</label>
+              <md-textarea v-model="autogrow" md-autogrow></md-textarea>
+            </md-field>
+          </form>
+          <div class="btn-right">
+            <md-button class="md-dense md-raised md-warning" type="submit" @click="writeAdvise">
+              등록
+            </md-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { createAdvise } from '@/api/advise';
+
+function uploadSummernoteFile(file, editor) {
+  let data = new FormData();
+  data.append('file', file);
+  $.ajax({
+    data: data,
+    type: 'POST',
+    url: '/api/data',
+    cache: false,
+    contentType: false,
+    processData: false,
+    xhr: function() {
+      //Handle progress upload
+      let myXhr = $.ajaxSettings.xhr();
+      if (myXhr.upload) myXhr.upload.addEventListener('progress', progressHandlingFunction, false);
+      return myXhr;
+    },
+    success: function(reponse) {
+      console.dir(reponse);
+      // if (reponse.status === true) {
+      let listMimeImg = ['image/png', 'image/jpeg', 'image/webp', 'image/gif', 'image/svg'];
+      let listMimeAudio = ['audio/mpeg', 'audio/ogg'];
+      let listMimeVideo = ['video/mpeg', 'video/mp4', 'video/webm'];
+      let elem;
+      console.log(file);
+      if (listMimeImg.indexOf(file.type) > -1) {
+        //Picture
+        console.log('이미지', reponse);
+        $(editor).summernote('insertImage', reponse);
+      } else if (listMimeAudio.indexOf(file.type) > -1) {
+        //Audio
+        console.log('오디오', reponse);
+        elem = document.createElement('audio');
+        elem.setAttribute('src', reponse);
+        elem.setAttribute('controls', 'controls');
+        elem.setAttribute('preload', 'metadata');
+        $(editor).summernote('insertNode', elem);
+      } else if (listMimeVideo.indexOf(file.type) > -1) {
+        //Video
+        console.log('비디오', reponse);
+        elem = document.createElement('video');
+        elem.setAttribute('src', reponse);
+        elem.setAttribute('controls', 'controls');
+        elem.setAttribute('preload', 'metadata');
+        $(editor).summernote('insertNode', elem);
+      } else {
+        //Other file type
+        console.log('일반파일', reponse);
+        elem = document.createElement('a');
+        let linkText = document.createTextNode(file.name);
+        elem.appendChild(linkText);
+        elem.title = file.name;
+        elem.href = reponse;
+        $(editor).summernote('insertNode', elem);
+      }
+      // }
+    },
+  });
+}
+
+function progressHandlingFunction(e) {
+  if (e.lengthComputable) {
+    //Log current progress
+    console.log((e.loaded / e.total) * 100 + '%');
+
+    //Reset progress on complete
+    if (e.loaded === e.total) {
+      console.log('Upload finished.');
+    }
+  }
+}
+
+export default {
+  bodyClass: 'profile-page',
+  data() {
+    return {
+      title: '',
+      content: '',
+      category: '',
+      reservationDate: '',
+      autogrow: '',
+    };
+  },
+  props: {
+    header: {
+      type: String,
+      default: require('@/assets/img/jj02.gif'),
+    },
+  },
+  computed: {
+    headerStyle() {
+      return {
+        backgroundImage: `url(${this.header})`,
+      };
+    },
+  },
+  mounted() {
+    $(function() {
+      $('#summernote').summernote({
+        height: 300, // set editor height
+        width: '100%', // set editor weight
+        minHeight: null, // set minimum height of editor
+        maxHeight: null, // set maximum height of editor
+        dialogsInBody: true,
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'italic', 'underline', 'clear']],
+          ['fontname', ['fontname']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']],
+          ['table', ['table']],
+          ['insert', ['media', 'link', 'hr', 'picture', 'video', 'file']],
+          ['view', ['fullscreen', 'codeview']],
+        ],
+        callbacks: {
+          //여기 부분이 이미지를 첨부하는 부분
+          onFileUpload: function(files, editor, welEditable) {
+            for (var i = files.length - 1; i >= 0; i--) {
+              // console.log(files[i]);
+              uploadSummernoteFile(files[i], this);
+            }
+          },
+          onImageUpload: function(files, editor, welEditable) {
+            for (var i = files.length - 1; i >= 0; i--) {
+              // console.log(files[i]);
+              uploadSummernoteFile(files[i], this);
+            }
+          },
+          onPaste: function(e) {
+            // var clipboardData = e.originalEvent.clipboardData;
+            // if (clipboardData && clipboardData.items && clipboardData.items.length) {
+            //   var item = clipboardData.items[0];
+            //   if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+            //     e.preventDefault();
+            //   }
+            // }
+          },
+        },
+      });
+    });
+  },
+  methods: {
+    async writeAdvise() {
+      const data = {
+        uuid: this.$store.state.uuid,
+        lawyerUuid: this.$route.query.lawyerUuid,
+        reservationDate: this.reservationDate,
+        title: this.title,
+        writer: this.$store.state.name,
+        content: $('#summernote').summernote('code'),
+        category: this.category,
+      };
+
+      const response = await createAdvise(data);
+
+      this.$swal({
+        icon: 'success',
+        title: '글 작성 완료!!',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      this.profileGo();
+    },
+    profileGo() {
+      this.$router.push('profileUser');
+    },
+  },
+};
+</script>
+<style lang="scss" scoped>
+.kor {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+.btn-right {
+  text-align: right;
+}
+.titleSize {
+  margin: 10px;
+  width: 50%;
+  min-height: 30px;
+}
+.boxSize {
+  margin: 10px;
+  width: 50%;
+  min-height: 300px;
+  padding: 10px;
+}
+</style>
