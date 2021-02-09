@@ -60,7 +60,7 @@
             <input @click="moveMatch" class="button" value="변호사매칭" readonly onfocus="this.blur();" />
           </li>
           <li class="col-2">
-            <input @click="moveControversy" class="button" value="찬반매칭" readonly onfocus="this.blur();" />
+            <input @click="moveControversy" class="button" value="찬반토론" readonly onfocus="this.blur();" />
           </li>
         </div>
       </div>
