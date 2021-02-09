@@ -115,9 +115,7 @@ export default {
     nextQuestion() {
       this.step++;
     },
-    // pickedArrayPush(v) {
-    //   this.pickedArray.push(v);
-    // },
+
     start() {
       this.intro = false;
       this.$refs.QuizContainer;
@@ -151,7 +149,6 @@ export default {
         this.scrollEl(this.$refs.QuizContainer);
       }
     },
-    //벌금계산
     checkPenalty(updatePenalty) {
       this.total += updatePenalty;
     },
