@@ -13,5 +13,4 @@ public interface ControversyUseCase {
 	public boolean insert(ControversyDTO controversy) throws Exception;
 	public boolean delete(int controversyId) throws Exception;
 	public boolean update(ControversyDTO controversy) throws Exception;
-	public boolean check(int controversyId, int uuid, Role role) throws Exception;
 }

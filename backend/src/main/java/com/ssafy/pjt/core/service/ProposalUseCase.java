@@ -13,8 +13,6 @@ import com.ssafy.pjt.web.dto.SignupRequestDTO;
 
 public interface ProposalUseCase {
 	public List<ProposalRequestDTO> search(int controversyId) throws Exception;
-	public List<ProposalRequestDTO> searchAgree(int controversyId) throws Exception;
-	public List<ProposalRequestDTO> searchOpposition(int controversyId) throws Exception;
 	public boolean insert(ProposalRequestDTO proposal) throws Exception;
 	public boolean delete(int opinionId,int uuid) throws Exception;
 	public boolean update(ProposalRequestDTO proposal) throws Exception;
