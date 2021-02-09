@@ -146,7 +146,8 @@ export default {
           title: '닉네임을 입력해주세요!',
         });
       } else {
-        const { data } = await nameCheck(this.name);
+        const res = await nameCheck(this.name);
+        console.log(res);
         if (data == 'DUPLICATE') {
           this.$swal({
             icon: 'error',

@@ -182,12 +182,14 @@ export default {
       this.$store.commit('clearEmail');
       this.$store.commit('clearToken');
       this.$store.commit('clearNickname');
-      this.$store.commit('clearPwd');
+      this.$store.commit('clearPassword');
       this.$store.commit('clearName');
+      this.$store.commit('clearUuid');
+      this.$store.commit('clearImage');
       localStorage.clear();
       sessionStorage.clear();
       $cookies.keys().forEach((cookie) => $cookies.remove(cookie));
-      this.$router.go(this.$router.currentRoute);
+      this.$router.push({ name: 'login' });
     },
     bodyClick() {
       let bodyClick = document.getElementById('bodyClick');
