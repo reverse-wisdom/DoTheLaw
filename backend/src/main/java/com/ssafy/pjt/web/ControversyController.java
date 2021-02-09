@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,12 +45,11 @@ public class ControversyController {
 		}
 	}
 
-	@ApiOperation(value = "글 조회")
+	@ApiOperation(value = "찬반논쟁 글 조회")
 	@GetMapping("/search/detail")
 	private ResponseEntity<ControversyDTO> detail(@RequestParam(required = true) final int controversyId) {
 		ControversyDTO controversy;
 		try {
-			controversyService.hit(controversyId);
 			controversy = controversyService.detail(controversyId);
 			return new ResponseEntity<>(controversy, HttpStatus.OK);
 		} catch (Exception e) {
@@ -57,39 +57,65 @@ public class ControversyController {
 		}		
 	}
 	
-	@ApiOperation(value = "조회수 증가")
-	@PutMapping("/hit")
-	private ResponseEntity<String> hit(@Valid @RequestBody ControversyDTO controversy) {
+	@ApiOperation(value = "찬성 증가 controversyId, uuid ")
+	@PutMapping("/agree")
+	private ResponseEntity<String> agree (@Valid @RequestBody ControversyDTO controversy) {		
+		System.out.println(controversy);
 		try {
-			controversyService.hit(controversy.getControversyId());
+			controversyService.overlab(controversy.getUuid(), controversy.getControversyId());
+		}catch (DataIntegrityViolationException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+		}		
+		System.out.println("안넘어갔다");
+		try {
+			controversyService.hit(controversy.getControversyId(),"Y");
 			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+			e.printStackTrace();
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@ApiOperation(value = "반대 증가")
+	@PutMapping("/opposition")
+	private ResponseEntity<String> opposition(@Valid @RequestBody ControversyDTO controversy) {
+		try {
+			controversyService.overlab(controversy.getUuid(), controversy.getControversyId());
+		}catch (DataIntegrityViolationException e) {
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+		}	
+		
+		try {
+			controversyService.hit(controversy.getControversyId(),"N");
+			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
 	}
 
-	@ApiOperation(value = "글 생성")
+	@ApiOperation(value = "찬반논쟁 글 생성(ADMIN만)")
 	@PostMapping("/create")
 	private ResponseEntity<String> create(@Valid @RequestBody ControversyDTO controversy) {
 		try {
 			controversyService.insert(controversy);
 			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
 	}
 
-	@ApiOperation(value = "글 삭제")
+	@ApiOperation(value = "찬반논쟁 글 삭제")
 	@DeleteMapping("/delete")
 	private ResponseEntity<String> delete(@RequestParam(required = true) final int controversyId) {
 		try {
 			controversyService.delete(controversyId);
 			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
 	}
-	@ApiOperation(value = "글 수정")
+	@ApiOperation(value = "찬반논쟁 글 수정")
 	@PutMapping("/update")
 	private ResponseEntity<String> update(@Valid @RequestBody ControversyDTO controversy) {
 		try {
@@ -97,7 +123,7 @@ public class ControversyController {
 			controversyService.update(controversy);
 			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("FAIL", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
 		}
 	}
 
