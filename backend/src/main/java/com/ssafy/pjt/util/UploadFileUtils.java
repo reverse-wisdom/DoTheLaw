@@ -115,7 +115,7 @@ public class UploadFileUtils {
 	public static String fileSave(String uploadPath, String savePath, String filename, boolean thumbnail, MultipartFile file)
 			throws IllegalStateException, IOException {
 
-		File uploadPathDir = new File(uploadPath);
+		File uploadPathDir = new File(uploadPath + savePath);
 
 		if (!uploadPathDir.exists()) {
 			uploadPathDir.mkdirs();
@@ -125,7 +125,7 @@ public class UploadFileUtils {
 		String fileExtension = getExtension(originalfileName);
 		String saveFileName = filename + "." + fileExtension;
 
-		File target = new File(uploadPath, saveFileName);
+		File target = new File(uploadPath + savePath, saveFileName);
 		FileCopyUtils.copy(file.getBytes(), target);
 
 		if (thumbnail) {

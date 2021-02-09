@@ -9,6 +9,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UploadPathConfiguration {
 
+	@Bean(name = "isWindows")
+	public boolean isWin() {
+		String os = System.getProperty("os.name").toLowerCase();
+		if (os.contains("win")) {
+			return true;
+		}
+		else 
+			return false;
+	}
 	@Bean(name = "uploadPath")
 	public String uploadPath() {
 		String os = System.getProperty("os.name").toLowerCase();
