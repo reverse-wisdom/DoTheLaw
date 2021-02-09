@@ -1,13 +1,14 @@
 import { posts } from './index';
 
 function fetchAdviseLawyer(userData) {
-  return posts.get('/api/matching/search/', userData);
+  return posts.get(`api/matching/search?lawyerUuid=${userData}`);
 }
 function fetchAdviseMe(userData) {
   return posts.get(`/api/matching/contain?uuid=${userData}`);
 }
 function createAdvise(adviseData) {
-  return posts.post('/api/matching/create/', adviseData);
+  console.log('api', adviseData);
+  return posts.post('/api/matching/create', adviseData);
 }
 function detailAdvise(adviseData) {
   return posts.get(`/api/matching/search/detail?matchingId=${adviseData}`);

@@ -124,7 +124,7 @@ export default {
     },
   },
   methods: {
-    createAdvise() {
+    writeAdvise() {
       console.log(this.lawyer);
       const lawyerUuid = this.lawyer.uuid;
       this.$router.push({ name: 'AdviseWrite', query: { lawyerUuid: lawyerUuid } });
