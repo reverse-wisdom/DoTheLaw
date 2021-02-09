@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "chart.js": "^2.9.4",
     "compass": "^0.1.1",
     "compass-mixins": "^0.12.10",
     "core-js": "3.5.0",
@@ -25,6 +26,7 @@
     "v-tooltip": "2.0.2",
     "vue": "2.6.10",
     "vue-carousel": "0.18.0",
+    "vue-chartjs": "^3.5.1",
     "vue-clickaway": "2.2.2",
     "vue-cookies": "^1.7.4",
     "vue-fullpage.js": "0.0.1",

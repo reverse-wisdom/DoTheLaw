@@ -31,16 +31,6 @@ public class ProposalService implements ProposalUseCase {
 		return proposalMapper.search(controversyId);
 	}
 	
-	@Override
-	public List<ProposalRequestDTO> searchAgree(int controversyId) throws SQLException {
-		return proposalMapper.searchAgree(controversyId);
-	}
-	
-	@Override
-	public List<ProposalRequestDTO> searchOpposition(int controversyId) throws SQLException {
-		return proposalMapper.searchOpposition(controversyId);
-	}
-	
 	
 	@Override
 	public boolean insert(ProposalRequestDTO proposal) throws SQLException {

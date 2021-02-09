@@ -19,4 +19,5 @@ public class MatchingRequestDTO {
 	private String name;
 	private String remarks;
 	private String title;
+	private String category;
 }

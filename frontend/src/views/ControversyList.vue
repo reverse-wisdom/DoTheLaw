@@ -3,12 +3,9 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title text-center kor">추천 변호사 매칭</h2>
-        <hr class="div-hr" />
+        <hr />
         <div class="container">
-          <div class="row">
-            <LawyermatchList v-for="lawyer in lawyerlists.data" :key="lawyer.uuid" :lawyer="lawyer"></LawyermatchList>
-          </div>
+          <controversy />
         </div>
       </div>
     </div>
@@ -16,28 +13,18 @@
 </template>
 
 <script>
-import LawyermatchList from './components/LawyermatchList';
-import { LawyerList } from '@/api/auth';
-
+import Controversy from '@/views/components/controversy/Controversy';
 export default {
-  components: {
-    LawyermatchList,
-  },
+  components: { Controversy },
   bodyClass: 'profile-page',
-  data() {
-    return {
-      lawyerlists: [],
-    };
-  },
   props: {
     header: {
       type: String,
       default: require('@/assets/img/jj02.gif'),
     },
-  },
-  async created() {
-    const res = await LawyerList();
-    this.lawyerlists = res;
+    city: {
+      type: String,
+    },
   },
   computed: {
     headerStyle() {
@@ -49,8 +36,12 @@ export default {
 };
 </script>
 
-<style>
-h1 {
-  text-align: center;
+<style lang="scss" scoped>
+// 한글 폰트 설정
+.kor {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+.section {
+  padding: 0;
 }
 </style>
