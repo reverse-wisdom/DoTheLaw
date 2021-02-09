@@ -57,7 +57,7 @@ public class ControversyController {
 		}		
 	}
 	
-	@ApiOperation(value = "찬성 증가 controversyId, uuid ")
+	@ApiOperation(value = "찬성 증가 ")
 	@PutMapping("/agree")
 	private ResponseEntity<String> agree (@Valid @RequestBody ControversyDTO controversy) {		
 		System.out.println(controversy);
@@ -65,7 +65,7 @@ public class ControversyController {
 			controversyService.overlab(controversy.getUuid(), controversy.getControversyId());
 		}catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
-			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("FAIL", HttpStatus.OK);
 		}		
 		System.out.println("안넘어갔다");
 		try {
@@ -83,7 +83,7 @@ public class ControversyController {
 		try {
 			controversyService.overlab(controversy.getUuid(), controversy.getControversyId());
 		}catch (DataIntegrityViolationException e) {
-			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("FAIL", HttpStatus.OK);
 		}	
 		
 		try {
