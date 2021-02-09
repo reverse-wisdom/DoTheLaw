@@ -13,5 +13,6 @@ public class ControversyDTO {
 	private Date endDate;
 	private String title;
 	private String content;
-	private int hit;
+	private int agree;
+	private int opposition;
 }

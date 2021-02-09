@@ -12,8 +12,6 @@ import com.ssafy.pjt.web.dto.SignupRequestDTO;
 
 public interface ProposalMapper {
 	public List<ProposalRequestDTO> search(int controversyId) throws SQLException;
-	public List<ProposalRequestDTO> searchAgree(int controversyId) throws SQLException;
-	public List<ProposalRequestDTO> searchOpposition(int controversyId) throws SQLException;
 	public boolean insert(ProposalRequestDTO proposal) throws SQLException;
 	public boolean delete(int controversyId) throws SQLException;
 	public boolean update(ProposalRequestDTO proposal) throws SQLException;

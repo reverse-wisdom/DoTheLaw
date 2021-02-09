@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.pjt.core.repository.mapper.ControversyMapper;
@@ -27,13 +28,12 @@ public class ControversyService implements ControversyUseCase{
 	}
 	
 	@Override
-	public boolean hit(int controversyId) throws Exception {
-		return mapper.hit(controversyId);
+	public boolean hit(int controversyId,String check) throws Exception {
+		return mapper.hit(controversyId,check);
 	}
 	
 	@Override
 	public boolean insert(ControversyDTO controversy) throws Exception {
-		System.out.println("??");
 		return mapper.insert(controversy);
 	}
 
@@ -48,12 +48,9 @@ public class ControversyService implements ControversyUseCase{
 	}
 
 	@Override
-	public boolean check(int controversyId, int uuid, Role role) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+	public void overlab(int uuid, int controversyId) throws DataIntegrityViolationException {
+		mapper.overlab(uuid, controversyId);
 	}
-
-
 
 
 }
