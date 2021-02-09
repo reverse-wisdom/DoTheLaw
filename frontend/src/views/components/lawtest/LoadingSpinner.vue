@@ -24,8 +24,8 @@ export default {
   }
 
   .circular {
-    -webkit-animation: rotate 2s linear infinite;
-    animation: rotate 2s linear infinite;
+    -webkit-animation: rotate 1s linear infinite;
+    animation: rotate 1s linear infinite;
     height: 100%;
     -webkit-transform-origin: center center;
     -ms-transform-origin: center center;
@@ -40,8 +40,8 @@ export default {
     .path {
       stroke-dasharray: 1, 200;
       stroke-dashoffset: 0;
-      -webkit-animation: dash 1.5s ease-in-out infinite;
-      animation: dash 1.5s ease-in-out infinite;
+      -webkit-animation: dash 1s ease-in-out infinite;
+      animation: dash 1s ease-in-out infinite;
       stroke-linecap: round;
       stroke: #016afd;
     }
