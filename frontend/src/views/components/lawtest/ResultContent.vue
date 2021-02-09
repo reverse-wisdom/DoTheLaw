@@ -12,7 +12,6 @@
       </div>
     </div> -->
     <h2>당신의 벌금은 {{ total }}입니다</h2>
-    <button @click="clickRestart" class="button-submit">다시하기</button>
     <button @click="clickReset" class="button-submit ghost">처음으로 돌아가기</button>
   </div>
 </template>

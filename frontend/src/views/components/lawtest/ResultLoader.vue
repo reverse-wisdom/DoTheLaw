@@ -1,18 +1,18 @@
 <template>
   <div class="result-load-message">
-    <p>결과를 계산 중입니다.. 🤔</p>
+    <p>벌금을 계산 중입니다.. 🤔</p>
     <loadingSpinner />
   </div>
 </template>
 
 <script>
-// import LoadingSpinner from '../loading-animation/LoadingSpinner';
+import LoadingSpinner from '@/views/components/lawtest/LoadingSpinner';
 
 export default {
   name: 'ResultLoader',
-  // components: {
-  //   LoadingSpinner,
-  // },
+  components: {
+    LoadingSpinner,
+  },
 };
 </script>
 
