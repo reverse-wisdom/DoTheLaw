@@ -3,8 +3,6 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title text-center kor">마이페이지</h2>
-        <hr class="div-hr" />
         <div class="container">
           <div class="row">
             <div class="col-1"></div>
@@ -21,7 +19,7 @@
                 {{ value.introduction }}
               </div>
             </div>
-            <div class="row">
+            <div class="row ml-10">
               <div class="col-5 mx-auto" id="text-solid-margin">
                 관심분야
                 <hr />
@@ -50,9 +48,8 @@
             </div>
 
             <div id="map" ref="map" class="mx-auto" style="width: 100%; height: 400px; margin: 2rem;"></div>
-            <div class="col-9"></div>
-            <div class="btn btn-info col-1 mx-auto" style="float: right;" @click="moveLawyerUpdate">정보수정</div>
-            <div class="btn btn-info col-1" style="float: right;" @click="deleteLawyer">회원탈퇴</div>
+            <div class="col-11"></div>
+            <div class="btn btn-info col-1" style="float: right;" @click="moveLawyerUpdate">정보수정</div>
           </div>
         </div>
       </div>
@@ -64,7 +61,8 @@
 const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
 import AdviseLawyer from '@/views/components/advise/AdviseLawyer.vue';
 import axios from 'axios';
-import { searchLawyer, signoutUser } from '@/api/auth';
+import { searchLawyer } from '@/api/auth';
+import { searchLawyerAdvise } from '@/api/advise';
 
 export default {
   components: {
@@ -101,13 +99,14 @@ export default {
   async created() {
     const email = this.$store.state.email;
     const { data } = await searchLawyer(email);
-    console.log(data);
     this.value = data;
-    console.log('회원정보', data);
+    console.log('회원정보', this.value);
 
-    var query = data.address;
-    // console.log(query);
-
+    const lawyerId = this.$store.state.uuid;
+    const res = await searchLawyerAdvise(lawyerId);
+    console.log('자문', res);
+    this.advise = res.data;
+    var query = this.value.address;
     axios
       .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_MAP_KEY + '&address=' + query)
       .then(({ data }) => {
@@ -131,7 +130,6 @@ export default {
       })
       .catch();
   },
-  async mounted() {},
   watch: {
     // watch를 통해 mounted가 실패하더라도 다시호출함 지도가 랜더링 안되는 현상 방지함
     'mapState.initMap'(value) {
@@ -154,21 +152,6 @@ export default {
   methods: {
     moveLawyerUpdate() {
       this.$router.push({ name: 'profileLawyerUpdate' });
-    },
-    async deleteLawyer() {
-      const res = await signoutUser(this.value.uuid);
-      console.log(res);
-      this.$store.commit('clearEmail');
-      this.$store.commit('clearToken');
-      this.$store.commit('clearNickname');
-      this.$store.commit('clearPassword');
-      this.$store.commit('clearName');
-      this.$store.commit('clearUuid');
-      this.$store.commit('clearImage');
-      localStorage.clear();
-      sessionStorage.clear();
-      $cookies.keys().forEach((cookie) => $cookies.remove(cookie));
-      this.$router.push({ name: 'RegisterIndex' });
     },
   },
 };

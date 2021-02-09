@@ -71,9 +71,9 @@ function editLawyer(userData) {
 //회원탈퇴
 function signoutUser(userData) {
   console.log(userData);
-  return posts.delete('/api/member/delete', {
+  return instance.delete('/api/member/signout', {
     params: {
-      uuid: userData,
+      email: userData,
     },
   });
 }
