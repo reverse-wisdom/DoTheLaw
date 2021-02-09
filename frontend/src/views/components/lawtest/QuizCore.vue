@@ -8,8 +8,8 @@
             <start-content v-if="intro" @introEnd="start" />
             <template v-else>
               <range-counter @allQuestionFinish="result" :step="step" :stepRange="stepRange" />
-              <quiz-questions v-if="!finish" v-on:pickedArrayPush="pickedArrayPush" @nextQuestion="nextQuestion" :step="step" :items="items" />
-              <result-content class="result" v-else @clickRestart="restart" @clickReset="reset" v-bind:total="total" />
+              <quiz-questions v-if="!finish" @nextQuestion="nextQuestion" :step="step" :items="items" />
+              <result-content class="result" v-else @clickRestart="restart" @clickReset="reset" :total="total" />
               <result-loader v-if="resultLoading" />
             </template>
           </article>
@@ -51,7 +51,7 @@ export default {
           quiz: '1.허락없이 남의 편지나 이메일을 보는 행위',
           example: {
             exp: { exp1: '징역형 3년 또는 벌금 500만원', exp2: '징역형 1년 또는 벌금 100만원' },
-            penalty: 500,
+            penalty: 5000000,
             answer: '징역형 3년 또는 벌금 500만원',
           },
         },
@@ -59,7 +59,7 @@ export default {
           quiz: '2.허락없이 남의 핸드폰을 보는 행위',
           example: {
             exp: { exp1: '징역형 5년 또는 벌금 5000만원', exp2: '징역형 3년 또는 벌금 2000만원' },
-            penalty: 5000,
+            penalty: 50000000,
             answer: '징역형 5년 또는 벌금 5000만원',
           },
         },
@@ -67,7 +67,7 @@ export default {
           quiz: '3.허락없이 남의 연락처를 제3자한테 알려주는 행위',
           example: {
             exp: { exp1: '징역형 5년 또는 벌금 5000만원', exp2: '징역형 3년 또는 벌금 2000만원' },
-            penalty: 5000,
+            penalty: 50000000,
             answer: '징역형 5년 또는 벌금 5000만원',
           },
         },
@@ -75,7 +75,55 @@ export default {
           quiz: '4.반려동물은 땅에 묻어주어도 된다? 인된다?',
           example: {
             exp: { exp1: '된다', exp2: '안된다' },
-            penalty: 100,
+            penalty: 1000000,
+            answer: '안된다',
+          },
+        },
+        {
+          quiz: '5.반려동물은 땅에 묻어주어도 된다? 인된다?',
+          example: {
+            exp: { exp1: '된다', exp2: '안된다' },
+            penalty: 1000000,
+            answer: '안된다',
+          },
+        },
+        {
+          quiz: '6.반려동물은 땅에 묻어주어도 된다? 인된다?',
+          example: {
+            exp: { exp1: '된다', exp2: '안된다' },
+            penalty: 1000000,
+            answer: '안된다',
+          },
+        },
+        {
+          quiz: '7.반려동물은 땅에 묻어주어도 된다? 인된다?',
+          example: {
+            exp: { exp1: '된다', exp2: '안된다' },
+            penalty: 1000000,
+            answer: '안된다',
+          },
+        },
+        {
+          quiz: '8.반려동물은 땅에 묻어주어도 된다? 인된다?',
+          example: {
+            exp: { exp1: '된다', exp2: '안된다' },
+            penalty: 1000000,
+            answer: '안된다',
+          },
+        },
+        {
+          quiz: '8.반려동물은 땅에 묻어주어도 된다? 인된다?',
+          example: {
+            exp: { exp1: '된다', exp2: '안된다' },
+            penalty: 1000000,
+            answer: '안된다',
+          },
+        },
+        {
+          quiz: '8.반려동물은 땅에 묻어주어도 된다? 인된다?',
+          example: {
+            exp: { exp1: '된다', exp2: '안된다' },
+            penalty: 1000000,
             answer: '안된다',
           },
         },
@@ -136,18 +184,19 @@ export default {
       this.resultFinalArray = [];
       this.step = 1;
       this.finish = false;
+      this.total = 0;
 
-      if (isMobile().any) {
-        this.scrollEl(this.$refs.QuizContainer);
-      }
+      // if (isMobile().any) {
+      //   this.scrollEl(this.$refs.QuizContainer);
+      // }
     },
     reset() {
       this.intro = true;
       this.restart();
 
-      if (isMobile().any) {
-        this.scrollEl(this.$refs.QuizContainer);
-      }
+      // if (isMobile().any) {
+      //   this.scrollEl(this.$refs.QuizContainer);
+      // }
     },
     checkPenalty(updatePenalty) {
       this.total += updatePenalty;
