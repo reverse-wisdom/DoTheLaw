@@ -1,16 +1,5 @@
 <template>
   <div>
-    <!-- <div v-if="resultSingle()">
-      <h2>{{ resultFinalArray[0].quiz_result_title }}</h2>
-      <div class="contents" v-html="resultFinalArray[0].quiz_result_desc"></div>
-    </div>
-    <div v-else>
-      <div v-for="(item, index) in resultFinalArray" :key="item.quiz_result_match_value">
-        <h2 v-if="index >= 1" class="other">또한, 다음 유형과 일치합니다.</h2>
-        <h2>{{ item.quiz_result_title }}</h2>
-        <div class="contents" v-html="item.quiz_result_desc"></div>
-      </div>
-    </div> -->
     <h2>당신의 벌금은 {{ total }}입니다</h2>
     <button @click="clickReset" class="button-submit ghost">처음으로 돌아가기</button>
   </div>
@@ -23,13 +12,6 @@ export default {
     total: Number,
   },
   methods: {
-    resultSingle() {
-      if (this.resultFinalArray.length >= 2) {
-        return false;
-      }
-
-      return true;
-    },
     clickRestart() {
       this.$emit('clickRestart');
     },
