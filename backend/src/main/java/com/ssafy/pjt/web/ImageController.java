@@ -3,8 +3,10 @@ package com.ssafy.pjt.web;
 import java.net.URI;
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -39,6 +41,8 @@ public class ImageController {
 	ImageService imageService;
 	@Autowired
 	MemberService memberService;
+	@Autowired
+	ImageController self;
 
 	/**
 	 * 파일 업로드
@@ -110,6 +114,9 @@ public class ImageController {
 		}
 	}
 
+	@Autowired
+	private boolean isWindows;
+
 	/**
 	 * 프로필 이미지 다운로드
 	 * 
@@ -122,47 +129,65 @@ public class ImageController {
 	@ResponseBody
 	public ResponseEntity<?> serveProfileImage(@PathVariable int uuid, @PathVariable Optional<Integer> size) {
 		int imageSize = size.orElse(64);
+		if (imageSize % 16 != 0 || imageSize / 256 > 1)
+			imageSize = 64;
 		try {
 			MemberRequestDTO member = memberService.getMember(uuid);
 			if (member == null || member.getImage() == null || member.getImage().length() == 0) {
-				HttpHeaders headers = new HttpHeaders();
-				headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"default\"");
-				headers.setContentType(MediaType.IMAGE_PNG);
-				Path file = ResourceUtils.getFile("classpath:static/user-" + imageSize + ".png").toPath();
-				Resource resource = new UrlResource(file.toUri());
-				return ResponseEntity.ok().headers(headers).body(resource);
+				return self.serveProfileDefaultImage(imageSize);
 			}
-			String img = member.getImage();
-			if (img.startsWith("http") || img.chars().allMatch(Character::isDigit) == false) { // 숫자의 형태가 아니라면
-				URI redirectUri = new URI(img);
+			String ino = member.getImage();
+			if (ino.startsWith("http") || ino.chars().allMatch(Character::isDigit) == false) { // 숫자의 형태가 아니라면
+				URI redirectUri = new URI(ino);
 				HttpHeaders httpHeaders = new HttpHeaders();
 				httpHeaders.setLocation(redirectUri);
 				return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
 			}
-			UploadFileDTO uploadedFile = imageService.load(Integer.parseInt(member.getImage()));
+			UploadFileDTO uploadedFile = imageService.load(Integer.parseInt(ino));
+
 			HttpHeaders headers = new HttpHeaders();
-
-			String fileName = String.valueOf(uuid); /* uploadedFile.getOriginFileName(); */
-			headers.add(HttpHeaders.CONTENT_DISPOSITION,
-					"attachment; filename=\"" + new String(member.getName().getBytes("UTF-8"), "ISO-8859-1") + "\"");
-
-			if (MediaUtils.containsImageMediaType(uploadedFile.getContentType())) {
-				headers.setContentType(MediaType.valueOf(uploadedFile.getContentType()));
-			} else {
-				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-			}
 			Resource resource = null;
-			if (imageSize == 0 && uploadedFile.getSaveFileName().startsWith("c:"))
-				resource = imageService.loadAsResource(uploadedFile.getSaveFileName());
-			else {
-				String filename = UploadFileUtils.getThumbnailFileName(uploadedFile.getSaveFileName(), imageSize);
-				resource = imageService.loadAsResource(filename);
+
+			if ((isWindows && uploadedFile.getFilePath().toLowerCase().startsWith("c:"))
+					|| (!isWindows && uploadedFile.getFilePath().startsWith("/"))) {
+				String fileName = String.valueOf(uuid); /* uploadedFile.getOriginFileName(); */
+				headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""
+						+ new String(member.getName().getBytes("UTF-8"), "ISO-8859-1") + "\"");
+
+				if (MediaUtils.containsImageMediaType(uploadedFile.getContentType())) {
+					headers.setContentType(MediaType.valueOf(uploadedFile.getContentType()));
+				} else {
+					headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+				}
+				if (imageSize == 0)
+					resource = imageService.loadAsResource(uploadedFile.getSaveFileName());
+				else {
+					String filename = UploadFileUtils.getThumbnailFileName(uploadedFile.getSaveFileName(), imageSize);
+					resource = imageService.loadAsResource(filename);
+				}
+			} else {
+				return self.serveProfileDefaultImage(imageSize);
 			}
 			return ResponseEntity.ok().headers(headers).body(resource);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e);
+		}
+	}
+
+	@ResponseBody
+	@Cacheable(value = "defaultImage", key = "#imageSize")
+	public ResponseEntity<?> serveProfileDefaultImage(int imageSize) {
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"default\"");
+			headers.setContentType(MediaType.IMAGE_PNG);
+			Path file = ResourceUtils.getFile("classpath:static/user-" + imageSize + ".png").toPath();
+			Resource resource = new UrlResource(file.toUri());
+			return ResponseEntity.ok().headers(headers).body(resource);
+		} catch (Exception e) {
+			return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }
