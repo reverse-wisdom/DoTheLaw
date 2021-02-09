@@ -60,20 +60,17 @@
 		FROM member WHERE uuid = #{uuid};
 	</select>
 
-	<delete id="signout" parameterType="int">
-		delete
-		from member
-		where
-		member.uuid
-		= #{uuid}
-	</delete>
+	<update id="signout" parameterType="int">
+		UPDATE `member`
+		SET password='', email=CONCAT(uuid, '@remove.rm'), name=CONCAT('탈퇴한회원#', uuid), phone='', `role`='UNKNOWN', join_date=CURRENT_TIMESTAMP, image=null
+		WHERE uuid = #{uuid}
+	</update>
 
-	<delete id="signoutLawyer" parameterType="int">
-		delete
-		from lawyer
-		where lawyer.uuid
-		= #{uuid}
-	</delete>
+	<update id="signoutLawyer" parameterType="int">
+		UPDATE lawyer
+		SET career='', introduction='', address='', dept='', chck='N', bailiwick=''
+		WHERE uuid=#{uuid};
+	</update>
 
 	<select id="uuid" parameterType="String" resultType="int">
 		select uuid
