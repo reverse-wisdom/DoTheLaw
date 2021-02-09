@@ -71,6 +71,7 @@ export default {
   async created() {
     const postData = this.$route.query.boardId;
     const { data } = await detailBoard(postData);
+    console.log({ data });
     this.value = data;
     $(function() {
       $('#summernote').summernote({

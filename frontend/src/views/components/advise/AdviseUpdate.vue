@@ -4,17 +4,17 @@
     <div class="main main-raised" style="z-index:1">
       <div class="section profile-content">
         <div style="padding:80px">
-          <h2 class="title text-center kor">자문요청 글쓰기</h2>
+          <h2 class="title text-center kor">자문게시판 글수정</h2>
           <hr class="div-hr" />
-          <form @submit.prevent="writeContent">
+          <form @submit.prevent="modifyAdvise">
             <md-field>
               <label>제목</label>
-              <md-input id="title" type="text" ref="title" v-model="title"></md-input>
+              <md-input id="title" type="text" ref="title" v-model="value.title"></md-input>
             </md-field>
             <md-field>
               <v-row align="center">
                 <v-col cols="12">
-                  <v-select :items="items" :menu-props="{ bottom: true, offsetY: true }" label="카테고리" v-model="selected"></v-select>
+                  <v-select :items="items" :menu-props="{ bottom: true, offsetY: true }" label="카테고리" v-model="selected">{{ value.category }}</v-select>
                 </v-col>
               </v-row>
             </md-field>
@@ -26,12 +26,11 @@
               <input type="file" name="uploadFile" ref="fileData" />
               <!-- <input type="file" name="uploadFile" ref="fileData" @change="handleFilesUpload" /> -->
             </md-field>
-
             <div class="btn-right">
               <md-button class="md-dense md-raised md-warning" type="submit">
-                등록
+                수정완료
               </md-button>
-              <md-button class="md-dense md-raised md-info" type="button" @click="moveAdviseList">
+              <md-button class="md-dense md-raised md-info" @click="moveAdviseList">
                 목록
               </md-button>
             </div>
@@ -43,13 +42,13 @@
 </template>
 
 <script>
-import { createAdvise } from '@/api/advise';
+import { detailAdvise, editAdvise } from '@/api/advise';
 
 export default {
   bodyClass: 'profile-page',
-  data() {
+  data: function() {
     return {
-      title: '',
+      value: '',
       content: '',
       selected: '',
       items: ['교통/운전', '가정', '근로/노동', '부동산', '금융', '정보통신/기술'],
@@ -68,7 +67,11 @@ export default {
       };
     },
   },
-  mounted() {
+  async created() {
+    const adviseId = this.$route.query.matchingId;
+    const { data } = await detailAdvise(adviseId);
+    this.value = data;
+    // this.selected = data.category;
     $(function() {
       $('#summernote').summernote({
         height: 300, // set editor height
@@ -88,28 +91,31 @@ export default {
           ['view', ['fullscreen', 'codeview']],
         ],
       });
+      $('#summernote').summernote('pasteHTML', data.content);
     });
   },
   methods: {
-    async writeContent() {
-      const data = {
-        uuid: this.$store.state.uuid,
-        title: this.title,
-        writer: this.$store.state.name,
+    async modifyAdvise() {
+      const editData = {
+        matchingId: this.value.matchingId,
+        category: this.value.category,
         content: $('#summernote').summernote('code'),
-        category: this.selected,
+        title: this.value.title,
+        reservationDate: this.value.reservationDate,
+        state: this.value.state,
+        name: this.value.name,
+        uuid: this.value.uuid,
       };
-      const response = await createAdvise(data);
-      console.log('자문 작성 성공', response);
+
+      const uuid = this.$store.state.uuid;
+      const { data } = await editAdvise(editData, uuid);
 
       this.$swal({
-        position: 'top-end',
         icon: 'success',
-        title: '글 작성 완료!!',
-        showConfirmButton: false,
-        timer: 1500,
+        title: '글 수정 완료',
       });
-      this.moveAdviseList();
+      var matchingId = this.value.matchingId;
+      this.$router.push({ name: 'AdviseDetail', query: { matchingId: matchingId } });
     },
     moveAdviseList() {
       this.$router.push({ name: 'adviseList' });
@@ -117,22 +123,33 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
+// hr 설정
+.div-hr {
+  width: 80%;
+}
+// 한글 폰트 설정
 .kor {
   font-family: 'Nanum Gothic', sans-serif;
 }
-.btn-right {
-  text-align: right;
+// table css
+.styled-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
-.titleSize {
-  margin: 10px;
-  width: 50%;
-  min-height: 30px;
+.styled-table th {
+  background-color: #98cec3;
+  color: #ffffff;
+  text-align: center;
+  width: 10rem;
 }
-.boxSize {
-  margin: 10px;
-  width: 50%;
-  min-height: 300px;
-  padding: 10px;
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
 }
 </style>

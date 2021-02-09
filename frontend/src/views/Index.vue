@@ -182,6 +182,7 @@ input#searchWordMain {
 .kor {
   font-family: 'Nanum Gothic', sans-serif;
 }
+
 .home > div:nth-child(1) {
   background: gray;
 }

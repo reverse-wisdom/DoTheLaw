@@ -15,25 +15,27 @@
               </div>
             </div>
             <div class="col-1"></div>
-            <div class="col-7 row" id="content-sort">
-              <h1 class="col-12 r-4 mx-auto">사용자 {{ $store.state.name }}</h1>
-              <div class="col-11 mx-auto" id="text-solid-1">
-                한줄소개
-                <hr />
-              </div>
-              <div class="col-5 mx-auto" id="text-solid">
-                전화번호
-                <hr />
-              </div>
-              <div class="col-5 mx-auto" id="text-solid">
-                전화번호
-                <hr />
-              </div>
+            <div class="col-8 row" id="content-sort">
+              <h1 class="col-12 r-4">{{ $store.state.role }}, {{ $store.state.name }}</h1>
+              <div class="col-11" id="text-solid-1">한줄소개</div>
             </div>
             <div class="row ml-10">
-              <div class="col-12 mx-auto" id="text-solid-one">
-                최근 문의
+              <div class="col-5" id="text-solid-margin">
+                관심분야
                 <hr />
+              </div>
+              <div class="col-5 mx-auto" id="text-solid">
+                전화번호
+                <hr />
+              </div>
+              <div class="col-5 mx-auto" id="text-solid">
+                전화번호
+                <hr />
+              </div>
+              <div class="col-11" id="text-solid-one">
+                최근 자문요청
+                <AdviseMe />
+                <div></div>
               </div>
               <div class="col-11 mx-auto"></div>
               <div class="btn btn-info col-1 mt-5 mx-auto" style="float: right;" @click="moveUserUpdate">정보수정</div>
@@ -46,9 +48,11 @@
 </template>
 
 <script>
-import { searchUser } from '@/api/auth';
+import AdviseMe from '@/views/components/advise/AdviseMe.vue';
 export default {
-  components: {},
+  components: {
+    AdviseMe,
+  },
   bodyClass: 'profile-page',
   data() {
     return {
