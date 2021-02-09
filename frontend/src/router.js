@@ -21,7 +21,9 @@ import BoardWrite from './views/components/BoardWrite.vue';
 import BoardUpdate from './views/components/BoardUpdate.vue';
 
 import ProfileLawyer from './views/ProfileLawyer.vue';
+import ProfileLawyerUpdate from './views/components/ProfileLawyerUpdate.vue';
 import ProfileUser from './views/ProfileUser.vue';
+import ProfileUserUpdate from './views/components/ProfileUserUpdate.vue';
 
 // import AdviseList from './views/components/advise/AdviseList.vue';
 import AdviseDetail from './views/components/advise/AdviseDetail.vue';
@@ -106,9 +108,27 @@ export default new Router({
       },
     },
     {
+      path: '/profileLawyer/update',
+      name: 'profileLawyerUpdate',
+      components: { default: ProfileLawyerUpdate, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
       path: '/profileUser',
       name: 'profileUser',
       components: { default: ProfileUser, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/profileUser/update',
+      name: 'profileUserUpdate',
+      components: { default: ProfileUserUpdate, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
@@ -199,7 +219,11 @@ export default new Router({
     {
       path: '/webrtc',
       name: 'webrtc',
-      components: { default: WebrtcView, header: undefined, footer: undefined },
+      components: { default: WebrtcView, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
     },
     {
       path: '/dicttest',

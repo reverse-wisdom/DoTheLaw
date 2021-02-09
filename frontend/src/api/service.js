@@ -24,5 +24,8 @@ function lawDict() {
 function newsParsing() {
   return posts.get('/api/rss/news');
 }
-
-export { top, lawService, lawSearch, lawDict, newsParsing };
+function imageUpload(uuid, form) {
+  return posts.post(`/api/member/image/update/${uuid}`, form, { 'Content-Type': 'multipart/form-data' });
+}
+// form, { 'Content-Type': 'multipart/form-data'}
+export { top, lawService, lawSearch, lawDict, newsParsing, imageUpload };

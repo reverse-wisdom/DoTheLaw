@@ -12,12 +12,20 @@ import moment from 'moment';
 
 import MaterialKit from './plugins/material-kit';
 
+import WebRTC from 'vue-webrtc';
+import * as io from 'socket.io-client';
+window.io = io;
+
 const options = {
   confirmButtonColor: '#41b882',
   cancelButtonColor: '#ff7674',
 };
 
 moment.locale('ko');
+
+Vue.use(WebRTC);
+Vue.component('vueWebrtc', WebRTC['vue-webrtc']);
+
 Vue.use(vueMoment, { moment });
 
 Vue.use(VueSweetalert2, options); // alert API

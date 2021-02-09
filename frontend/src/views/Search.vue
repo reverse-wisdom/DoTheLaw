@@ -81,9 +81,6 @@
                   </tbody>
                 </v-simple-table>
 
-                <!-- <md-radio v-model="radio" :value="judgment.PrecService.판결요지">판결요지</md-radio>
-                <md-radio v-model="radio" :value="judgment.PrecService.참조조문">참조조문</md-radio>
-                <md-radio v-model="radio" :value="judgment.PrecService.판례내용">판례내용</md-radio> -->
                 <div class="radiobtn">
                   <input v-model="radio" :value="judgment.PrecService.판결요지" type="radio" id="판결요지" checked />
                   <label for="판결요지">판결요지</label>
