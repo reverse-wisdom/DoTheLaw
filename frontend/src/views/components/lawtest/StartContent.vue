@@ -9,7 +9,6 @@
         <img src="@/assets/img/main2.png" alt="" />
       </div>
     </div>
-
     <button @click="introEnd" class="button-submit">시작하기</button>
   </div>
 </template>
