@@ -3,49 +3,71 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title text-center kor">추천 변호사 상세</h2>
-        <hr class="div-hr" />
         <div class="container">
           <div class="row">
-            <div class="col-1 "></div>
-            <div class="col-3 colum mx-auto">
-              <img v-if="lawyer.image" class="col-12 r-10" id="profile" :src="lawyer.image" alt="" />
-              <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
-              <div class="r-2 mx-auto"></div>
+            <div class="col-3 row ml-5">
+              <img id="profile" class="col-12 r-10" :src="lawyer.image" alt="noimage" />
+              <div class="r-2" id="button-sort">
+                <button id="image-change-button">
+                  이미지 변경
+                </button>
+              </div>
             </div>
+            <div class="col-1"></div>
             <div class="col-8 row" id="content-sort">
-              <h1 class="col-10  mx-auto ">변호사 {{ lawyer.name }}</h1>
-              <md-button class="col-1" @click="createAdvise">자문요청</md-button>
-              <div class="col-11 mx-auto" id="text-solid-1">
+              <div>
+                <h1 class="col-12 r-4">변호사 {{ lawyer.name }}</h1>
+                <md-button @click="createAdvise">자문요청</md-button>
+              </div>
+              x
+              <div class="col-11" id="text-solid-1">
                 한줄소개
                 <hr />
                 {{ lawyer.introduction }}
               </div>
             </div>
-            <div class="row mx-auto">
-              <div class="col-5 mx-auto" id="text-solid-margin">
+            <div class="row ml-10">
+              <div class="col-5" id="text-solid-margin">
                 관심분야
                 <hr />
               </div>
-              <div class="col-5 mx-auto" id="text-solid">
-                전화번호
-                <hr />
+              <div class="col-5" id="text-solid">
                 {{ lawyer.phone }}
+                <hr />
               </div>
-              <div class="col-5 mx-auto" id="text-solid-margin">
+              <div class="col-5" id="text-solid-margin">
                 경력
                 <hr />
                 {{ lawyer.career }}
               </div>
-              <div class="col-5 mx-auto" id="text-solid">
+              <div class="col-5" id="text-solid">
                 이메일
                 <hr />
                 {{ lawyer.email }}
               </div>
-              <div class="col-11 mx-auto" id="text-solid-one">
+              <div class="col-11" id="text-solid-one">
                 최근답변
                 <hr />
-
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
                 <div></div>
               </div>
               <!-- <div class="col-5" id="text-solid">6</div> -->

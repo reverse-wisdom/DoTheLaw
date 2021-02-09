@@ -3,12 +3,10 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title text-center kor">추천 변호사 매칭</h2>
-        <hr class="div-hr" />
-        <div class="container">
-          <div class="row">
-            <LawyermatchList v-for="lawyer in lawyerlists.data" :key="lawyer.uuid" :lawyer="lawyer"></LawyermatchList>
-          </div>
+        <h1>추천 변호사 매칭</h1>
+        <hr />
+        <div class="row">
+          <LawyermatchList v-for="lawyer in lawyerlists.data" :key="lawyer.uuid" :lawyer="lawyer"></LawyermatchList>
         </div>
       </div>
     </div>
