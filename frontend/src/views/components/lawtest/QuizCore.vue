@@ -256,6 +256,11 @@ export default {
       this.dataFetch();
       this.reset();
     },
+    stepCheck: function(num) {
+      if (step == 5) {
+        this.quizFinish();
+      }
+    },
   },
   created() {
     EventBus.$on('nextQuestion', () => {
