@@ -3,12 +3,13 @@ package com.ssafy.pjt.web;
 import java.net.URI;
 import java.nio.file.Path;
 import java.util.Optional;
-import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -183,8 +184,11 @@ public class ImageController {
 			HttpHeaders headers = new HttpHeaders();
 			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"default\"");
 			headers.setContentType(MediaType.IMAGE_PNG);
-			Path file = ResourceUtils.getFile("classpath:static/user-" + imageSize + ".png").toPath();
-			Resource resource = new UrlResource(file.toUri());
+			ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+//			Resource[] resources = resolver.getResources("classpath*:static/*.png");
+			Resource resource = resolver.getResource("classpath:static/user-" + imageSize + ".png");
+//			Path file = ResourceUtils.getFile("classpath:static/user-" + imageSize + ".png").toPath();
+//			Resource resource = new UrlResource(file.toUri());
 			return ResponseEntity.ok().headers(headers).body(resource);
 		} catch (Exception e) {
 			return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);

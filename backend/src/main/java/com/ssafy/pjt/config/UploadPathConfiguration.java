@@ -12,9 +12,8 @@ public class UploadPathConfiguration {
 	@Bean(name = "isWindows")
 	public boolean isWin() {
 		String os = System.getProperty("os.name").toLowerCase();
-		if (os.contains("win")) {
+		if (os.contains("win"))
 			return true;
-		}
 		else 
 			return false;
 	}
