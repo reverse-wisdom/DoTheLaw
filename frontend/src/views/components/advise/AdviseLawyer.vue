@@ -6,7 +6,7 @@
         <p>아이디:{{ $store.state.uuid }}</p>
         <p>유저타입:{{ $store.state.role }}</p>
         <v-card-title>
-          내가 자문한 글
+          MyAdvise
           <v-spacer></v-spacer>
           <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
         </v-card-title>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { fetchAdviseMe } from '@/api/advise';
+import { fetchAdviseLawyer } from '@/api/advise';
 
 export default {
   bodyClass: 'profile-page',
@@ -40,7 +40,6 @@ export default {
         },
         { text: '제목', value: 'title' },
         { text: '작성자', value: 'name' },
-        { text: '조회수', value: 'hit' },
         { text: '진행상황', value: 'state' },
         { text: '업로드시간', value: 'createDate' },
         { text: '예약시간', value: 'reservationDate' },
@@ -50,20 +49,20 @@ export default {
   async mounted() {
     try {
       const userData = this.$store.state.uuid;
-      const { data } = await fetchAdviseMe(userData);
-
-      for (let i = 0; i < data.client.length; i++) {
+      const { data } = await fetchAdviseLawyer(userData);
+      console.log({ data });
+      for (let i = 0; i < data.length; i++) {
         this.values.push({
-          matchingId: data.client[i].matchingId,
-          lawyerUuid: data.client[i].lawyerUuid,
+          matchingId: data[i].matchingId,
+          lawyerUuid: data[i].lawyerUuid,
           // category: data[i].category,
-          uuid: data.client[i].uuid,
-          title: data.client[i].title,
-          state: data.client[i].state,
-          name: data.client[i].name,
+          uuid: data[i].uuid,
+          title: data[i].title,
+          state: data[i].state,
+          name: data[i].name,
           // hit: data.client[i].hit,
-          reservationDate: this.$moment(data.client[i].reservationDate).format('llll'),
-          createDate: this.$moment(data.client[i].createDate).format('llll'),
+          reservationDate: this.$moment(data[i].reservationDate).format('llll'),
+          createDate: this.$moment(data[i].createDate).format('llll'),
         });
       }
       // console.log('test', this.values);

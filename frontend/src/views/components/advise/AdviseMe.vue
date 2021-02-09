@@ -40,7 +40,6 @@ export default {
         },
         { text: '제목', value: 'title' },
         { text: '작성자', value: 'name' },
-        { text: '조회수', value: 'hit' },
         { text: '진행상황', value: 'state' },
         { text: '업로드시간', value: 'createDate' },
         { text: '예약시간', value: 'reservationDate' },

@@ -17,7 +17,7 @@
             <div class="col-8 row" id="content-sort">
               <div>
                 <h1 class="col-12 r-4">변호사 {{ lawyer.name }}</h1>
-                <md-button @click="createAdvise">자문요청</md-button>
+                <md-button @click="writeAdvise">자문요청</md-button>
               </div>
               x
               <div class="col-11" id="text-solid-1">
@@ -155,7 +155,7 @@ export default {
     },
   },
   methods: {
-    createAdvise() {
+    writeAdvise() {
       console.log(this.lawyer);
       const lawyerUuid = this.lawyer.uuid;
       this.$router.push({ name: 'AdviseWrite', query: { lawyerUuid: lawyerUuid } });
