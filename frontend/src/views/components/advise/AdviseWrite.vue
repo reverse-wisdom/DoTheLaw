@@ -39,10 +39,10 @@
               <label>예약시간</label>
               <md-input v-model="reservationDate"></md-input>
             </md-field>
-            <!-- <md-field>
+            <md-field>
               <label>비고란</label>
               <md-input v-model="remarks"></md-input>
-            </md-field> -->
+            </md-field>
           </form>
           <div class="btn-right">
             <v-btn color="primary" elevation="2" medium type="submit" @click="writeAdvise()">등록하기</v-btn>
@@ -207,12 +207,12 @@ export default {
         uuid: this.$store.state.uuid,
         lawyerUuid: this.$route.query.lawyerUuid,
         reservationDate: this.reservationDate,
-        // remarks: this.remarks,
+        remarks: this.remarks,
         state: this.state,
         title: this.title,
         // writer: this.$store.state.name,
         content: $('#summernote').summernote('code'),
-        // category: this.category,
+        category: this.category,
       };
       console.log(data, '1111');
       const response = await createAdvise(data);

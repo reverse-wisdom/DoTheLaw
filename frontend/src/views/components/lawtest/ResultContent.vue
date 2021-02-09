@@ -23,22 +23,6 @@ export default {
     clickReset() {
       this.$emit('clickReset');
     },
-    // totalConvertKR(total) {
-    //   var hanA = new Array('', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10');
-    //   var danA = new Array('', '십', '백', '천', '', '십', '백', '천', '', '십', '백', '천', '', '십', '백', '천');
-
-    //   for (i = 0; i < total.length; i++) {
-    //     str = '';
-    //     han = hanA[total.charAt(total.length - (i + 1))];
-    //     if (han != '') str += han + danA[i];
-    //     if (i == 4) str += '만';
-    //     if (i == 8) str += '억';
-    //     if (i == 12) str += '조';
-    //     result = str + result;
-    //   }
-    //   if (total != 0) result = result + '원';
-    //   return result;
-    // },
   },
   created() {
     if (this.total != 0) {
