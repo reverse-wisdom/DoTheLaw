@@ -24,8 +24,14 @@ function lawDict() {
 function newsParsing() {
   return posts.get('/api/rss/news');
 }
+
+// 이미지 업로드
 function imageUpload(uuid, form) {
   return posts.post(`/api/member/image/update/${uuid}`, form, { 'Content-Type': 'multipart/form-data' });
 }
-// form, { 'Content-Type': 'multipart/form-data'}
-export { top, lawService, lawSearch, lawDict, newsParsing, imageUpload };
+
+// 이미지 불러오기
+function saveImage(uuid) {
+  return posts.get(`/api/member/image/${uuid}`);
+}
+export { top, lawService, lawSearch, lawDict, newsParsing, imageUpload, saveImage };
