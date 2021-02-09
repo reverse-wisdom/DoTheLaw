@@ -13,7 +13,6 @@
 
 <script>
 import QuizQuestionItems from '@/views/components/lawtest/QuizQuestionItems.vue';
-
 export default {
   components: {
     QuizQuestionItems,
