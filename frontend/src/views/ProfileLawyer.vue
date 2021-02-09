@@ -46,7 +46,6 @@
                 <hr />
               </div>
             </div>
-
             <div id="map" ref="map" class="mx-auto" style="width: 100%; height: 400px; margin: 2rem;"></div>
             <div class="col-11"></div>
             <div class="btn btn-info col-1" style="float: right;" @click="moveLawyerUpdate">정보수정</div>
@@ -62,7 +61,6 @@ const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
 import AdviseLawyer from '@/views/components/advise/AdviseLawyer.vue';
 import axios from 'axios';
 import { searchLawyer } from '@/api/auth';
-import { searchLawyerAdvise } from '@/api/advise';
 
 export default {
   components: {
@@ -99,13 +97,11 @@ export default {
   async created() {
     const email = this.$store.state.email;
     const { data } = await searchLawyer(email);
+    // console.log(data, '확인');
     this.value = data;
+    this.$store.commit('setLawuuid', data.uuid);
     console.log('회원정보', this.value);
 
-    const lawyerId = this.$store.state.uuid;
-    const res = await searchLawyerAdvise(lawyerId);
-    console.log('자문', res);
-    this.advise = res.data;
     var query = this.value.address;
     axios
       .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_MAP_KEY + '&address=' + query)

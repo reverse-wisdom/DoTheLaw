@@ -48,26 +48,8 @@
               <div class="col-11" id="text-solid-one">
                 최근답변
                 <hr />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
+                <AdviseLawyer />
+
                 <div></div>
               </div>
               <!-- <div class="col-5" id="text-solid">6</div> -->
@@ -102,10 +84,14 @@
 // }
 import { LawyerDetail } from '@/api/auth';
 import axios from 'axios';
+import AdviseLawyer from '@/views/components/advise/AdviseLawyer.vue';
 const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
 
 export default {
   bodyClass: 'profile-page',
+  components: {
+    AdviseLawyer,
+  },
   data() {
     return {
       lawyer: '',
@@ -122,6 +108,7 @@ export default {
     const res = await LawyerDetail(email);
     console.log(res);
     this.lawyer = res.data;
+    this.$store.commit('setLawuuid', res.data.uuid);
 
     var query = this.lawyer.address;
     axios
