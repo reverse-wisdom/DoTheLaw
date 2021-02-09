@@ -47,13 +47,5 @@ public class ControversyService implements ControversyUseCase{
 		return mapper.update(controversy);
 	}
 
-	@Override
-	public boolean check(int controversyId, int uuid, Role role) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-
 
 }

@@ -7,16 +7,10 @@
 	<select id="search" parameterType="int" resultType="ProposalRequestDTO">
 		select * from proposal where proposal.controversy_id=#{controversyId}
 	</select>
-		<select id="searchAgree" parameterType="int" resultType="ProposalRequestDTO">
-		select * from proposal where proposal.controversy_id=#{controversyId} and proposal.agree = 'Y'
-	</select>
-		<select id="searchOpposition" parameterType="int" resultType="ProposalRequestDTO">
-		select * from proposal where proposal.controversy_id=#{controversyId} and proposal.agree = 'N'
-	</select>
-	
+
 	<insert id="insert" parameterType="ProposalRequestDTO">
-		INSERT INTO proposal (controversy_id, uuid, content,agree)
-		VALUES (#{controversyId}, #{uuid}, #{content}, #{agree})
+		INSERT INTO proposal (controversy_id, uuid, content)
+		VALUES (#{controversyId}, #{uuid}, #{content})
 	</insert>
 	
 	<delete id="delete" parameterType="int">
