@@ -5,7 +5,7 @@
       <div class="section profile-content">
         <hr />
         <div class="container">
-          <controversy :list-array="list" />
+          <controversy />
         </div>
       </div>
     </div>
@@ -13,16 +13,10 @@
 </template>
 
 <script>
-import Controversy from '@/views/components/Controversy';
-import { all, agree, opposition } from '@/api/controversy';
+import Controversy from '@/views/components/controversy/Controversy';
 export default {
   components: { Controversy },
   bodyClass: 'profile-page',
-  data() {
-    return {
-      list: [],
-    };
-  },
   props: {
     header: {
       type: String,
@@ -38,10 +32,6 @@ export default {
         backgroundImage: `url(${this.header})`,
       };
     },
-  },
-  async created() {
-    const { data } = await all();
-    this.list = data;
   },
 };
 </script>
