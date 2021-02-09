@@ -1,6 +1,6 @@
 <template>
   <div class="result-load-message">
-    <p>결과를 계산 중입니다.. 🤔</p>
+    <p>벌금을 계산 중입니다.. 🤔</p>
     <loadingSpinner />
   </div>
 </template>
