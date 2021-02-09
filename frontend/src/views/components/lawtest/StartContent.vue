@@ -1,6 +1,15 @@
 <template>
   <div>
     <div class="start-content" v-html="content"></div>
+    <div class="title">
+      <div class="">
+        <img src="@/assets/img/lawtitle.png" class="title-lawtest" alt="" />
+      </div>
+      <div class="">
+        <img src="@/assets/img/main2.png" alt="" />
+      </div>
+    </div>
+
     <button @click="introEnd" class="button-submit">시작하기</button>
   </div>
 </template>
@@ -19,28 +28,19 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.start-content {
-  p {
-    margin-bottom: 1em;
-  }
-
-  a {
-    display: block;
-    margin: 2rem 0 1rem;
-    color: #777;
-    text-decoration: none;
-    font-size: 0.9375rem;
-  }
-
-  img {
-    max-width: calc(100% + 40px);
-    margin: 0 -20px;
-
-    @media (min-width: 600px) {
-      width: 100%;
-      margin: 0;
-    }
-  }
+<style lang="scss"></style>
+<style scoped>
+.title-lawtest {
+  left: 50%;
+  animation: flipInX;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+.title {
+  text-align: center;
+}
+img {
+  max-width: 50%;
+  height: auto;
 }
 </style>

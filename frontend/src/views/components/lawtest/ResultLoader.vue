@@ -6,13 +6,13 @@
 </template>
 
 <script>
-// import LoadingSpinner from '../loading-animation/LoadingSpinner';
+import LoadingSpinner from '@/views/components/lawtest/LoadingSpinner';
 
 export default {
   name: 'ResultLoader',
-  // components: {
-  //   LoadingSpinner,
-  // },
+  components: {
+    LoadingSpinner,
+  },
 };
 </script>
 
