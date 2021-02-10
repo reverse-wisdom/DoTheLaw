@@ -122,6 +122,8 @@ export default {
     },
     logEvent(event) {
       console.log('Event : ', event);
+      console.log(this.test);
+      console.log(test);
     },
   },
 };
