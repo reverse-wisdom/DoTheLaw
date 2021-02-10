@@ -25,70 +25,8 @@
           {{ m.content }}
 				</div>
 			</li>
-			<!-- <li class="me">
-				<div class="entete">
-					<h3>10:12AM, Today</h3>
-					<h2>Vincent</h2>
-					<span class="status blue"></span>
-				</div>
-				<div class="triangle"></div>
-				<div class="message">
-					Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-				</div>
-			</li>
-			<li class="me">
-				<div class="entete">
-					<h3>10:12AM, Today</h3>
-					<h2>Vincent</h2>
-					<span class="status blue"></span>
-				</div>
-				<div class="triangle"></div>
-				<div class="message">
-					OK
-				</div>
-			</li>
-			<li class="other">
-				<div class="entete">
-					<span class="status green"></span>
-					<h2>Vincent</h2>
-					<h3>10:12AM, Today</h3>
-				</div>
-				<div class="triangle"></div>
-				<div class="message">
-					Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-				</div>
-			</li>
-			<li class="me">
-				<div class="entete">
-					<h3>10:12AM, Today</h3>
-					<h2>Vincent</h2>
-					<span class="status blue"></span>
-				</div>
-				<div class="triangle"></div>
-				<div class="message">
-					Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-				</div>
-			</li>
-			<li class="me">
-				<div class="entete">
-					<h3>10:12AM, Today</h3>
-					<h2>Vincent</h2>
-					<span class="status blue"></span>
-				</div>
-				<div class="triangle"></div>
-				<div class="message">
-					OK
-				</div>
-			</li> -->
 		</ul>
-    <!-- <div v-for="(m, idx) in msg" :key="idx">
-      <div v-bind:class="m.style">
-        <h5 style="margin:3px">
-          {{ m.name }}
-        </h5>
-        {{ m.content }}
-      </div>
-    </div> -->
+
     <hr />
     <input type="text" v-model="content" placeholder="보낼 메세지" size="100" />
     <button @click="sendMessage()">SEND</button>
