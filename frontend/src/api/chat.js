@@ -28,7 +28,7 @@ class WebChatClient {
           name: res.data[i].name,
           content: res.data[i].content,
           style: res.data[i].senderId == this.uuid ? 'me' : 'other',
-          regDate = res.data[i].regDate,
+          regDate: res.data[i].regDate,
         };
         console.log(m);
         this.msg.push(m);
