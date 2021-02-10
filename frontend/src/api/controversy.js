@@ -38,7 +38,7 @@ function searchProposoal(controversyId) {
 
 // 찬반논쟁 의견 삭제
 function deleteProposoal(opinionId, uuid) {
-  return posts.delete(`/api/proposal/create?opinionId=${opinionId}&uuid=${uuid}`);
+  return posts.delete(`/api/proposal/delete?opinionId=${opinionId}&uuid=${uuid}`);
 }
 
 export { all, detail, agree, opposition, createProposoal, searchProposoal, deleteProposoal };

@@ -21,10 +21,10 @@
               <h4 class="text-left">{{ list.content }}</h4>
             </v-card-text>
             <!-- 댓글 -->
-            <!-- <proposal-write :controversyId="list.controversyId" @uploadpProposal="uploadpProposal" />
-          <br /> -->
+            <proposal-write :controversyId="list.controversyId" v-on:updateProposal="updateProposal" />
+            <br />
             <ul v-for="(proposal, index) in proposals" :key="index">
-              <proposal-row :proposal="proposal" :controversyId="list.controversyId" />
+              <proposal-row :proposal="proposal" :controversyId="list.controversyId" v-on:updateProposal="updateProposal" />
             </ul>
           </v-card>
         </div>
@@ -35,11 +35,13 @@
 
 <script>
 import ProposalRow from '@/views/components/controversy/ProposalRow';
+import ProposalWrite from '@/views/components/controversy/ProposalWrite';
 import { detail, searchProposoal } from '@/api/controversy';
 export default {
   bodyClass: 'profile-page',
   components: {
     ProposalRow,
+    ProposalWrite,
   },
   data() {
     return {
@@ -69,12 +71,18 @@ export default {
     const { data } = await detail(controversyId);
     this.list = data;
     {
+      const controversyId = this.$route.query.controversyId;
       const { data } = await searchProposoal(controversyId);
       this.proposals = data;
-      console.log(this.proposals);
     }
   },
-  async mounted() {},
+  methods: {
+    async updateProposal() {
+      const controversyId = this.$route.query.controversyId;
+      const { data } = await searchProposoal(controversyId);
+      this.proposals = data;
+    },
+  },
 };
 </script>
 
