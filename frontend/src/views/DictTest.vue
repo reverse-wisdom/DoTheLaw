@@ -10,10 +10,8 @@
             <div class="md-layout-item my-2">
               <a @click="dictAlert(alertTest)">alertTest</a>
               <v-btn x-large color="blue-grey" dark @click="regexp">
-                정규식치환테스트
-                <v-icon right dark>
-                  mdi-account-check
-                </v-icon>
+                정규식치환테스
+                <v-icon right dark>mdi-account-check</v-icon>
               </v-btn>
               <p v-html="raw"></p>
             </div>
