@@ -1,17 +1,6 @@
 <template>
   <div>
-    <!-- <div v-if="resultSingle()">
-      <h2>{{ resultFinalArray[0].quiz_result_title }}</h2>
-      <div class="contents" v-html="resultFinalArray[0].quiz_result_desc"></div>
-    </div>
-    <div v-else>
-      <div v-for="(item, index) in resultFinalArray" :key="item.quiz_result_match_value">
-        <h2 v-if="index >= 1" class="other">또한, 다음 유형과 일치합니다.</h2>
-        <h2>{{ item.quiz_result_title }}</h2>
-        <div class="contents" v-html="item.quiz_result_desc"></div>
-      </div>
-    </div> -->
-    <h2>당신의 벌금은 {{ total }}입니다</h2>
+    <h2>당신의 벌금은 {{ result }}입니다</h2>
     <button @click="clickReset" class="button-submit ghost">처음으로 돌아가기</button>
   </div>
 </template>
@@ -22,20 +11,54 @@ export default {
   props: {
     total: Number,
   },
+  data() {
+    return {
+      result: '',
+    };
+  },
   methods: {
-    resultSingle() {
-      if (this.resultFinalArray.length >= 2) {
-        return false;
-      }
-
-      return true;
-    },
     clickRestart() {
       this.$emit('clickRestart');
     },
     clickReset() {
       this.$emit('clickReset');
     },
+    // totalConvertKR(total) {
+    //   var hanA = new Array('', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10');
+    //   var danA = new Array('', '십', '백', '천', '', '십', '백', '천', '', '십', '백', '천', '', '십', '백', '천');
+
+    //   for (i = 0; i < total.length; i++) {
+    //     str = '';
+    //     han = hanA[total.charAt(total.length - (i + 1))];
+    //     if (han != '') str += han + danA[i];
+    //     if (i == 4) str += '만';
+    //     if (i == 8) str += '억';
+    //     if (i == 12) str += '조';
+    //     result = str + result;
+    //   }
+    //   if (total != 0) result = result + '원';
+    //   return result;
+    // },
+  },
+  created() {
+    if (this.total != 0) {
+      const tmp = String(this.total);
+      var hanA = new Array('', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10');
+      var danA = new Array('', '십', '백', '천', '', '십', '백', '천', '', '십', '백', '천', '', '십', '백', '천');
+      var result = '';
+      for (var i = 0; i < tmp.length; i++) {
+        var str = '';
+        var han = hanA[tmp.charAt(tmp.length - (i + 1))];
+        if (han != '') str += han + danA[i];
+        if (i == 4) str += '만';
+        if (i == 8) str += '억';
+        if (i == 12) str += '조';
+        result = str + result;
+        // console.log(result);
+      }
+      if (tmp != 0) result = result + '원';
+      this.result = result;
+    }
   },
 };
 </script>
