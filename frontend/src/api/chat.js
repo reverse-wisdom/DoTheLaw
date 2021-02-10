@@ -28,9 +28,8 @@ class WebChatClient {
           name: res.data[i].name,
           content: res.data[i].content,
           style: res.data[i].uuid == this.uuid ? 'me' : 'other',
-          regDate: res.data[i].regDate,
+          regDate: moment(res.data[i].regDate).format('LT'),
         };
-        console.log(m);
         this.msg.push(m);
       }
     }),
