@@ -186,6 +186,7 @@ export default {
       this.$store.commit('clearPassword');
       this.$store.commit('clearUuid');
       this.$store.commit('clearImage');
+      this.$store.commit('clearLawuuid');
       localStorage.clear();
       sessionStorage.clear();
       $cookies.keys().forEach((cookie) => $cookies.remove(cookie));

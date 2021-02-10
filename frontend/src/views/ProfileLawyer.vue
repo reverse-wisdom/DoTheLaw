@@ -48,7 +48,6 @@
                 <hr />
               </div>
             </div>
-
             <div id="map" ref="map" class="mx-auto" style="width: 100%; height: 400px; margin: 2rem;"></div>
             <div class="col-9"></div>
             <div class="btn btn-info col-1 mx-auto" style="float: right;" @click="moveLawyerUpdate">정보수정</div>
@@ -106,9 +105,10 @@ export default {
   async created() {
     const email = this.$store.state.email;
     const { data } = await searchLawyer(email);
+    // console.log(data, '확인');
     this.value = data;
-    // this.value.image = `/data/${data.image}`;
-    console.log('회원정보', data);
+    this.$store.commit('setLawuuid', data.uuid);
+    console.log('회원정보', this.value);
 
     const imgres = await saveImage(data.image);
     console.log(imgres);

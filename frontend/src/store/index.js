@@ -27,6 +27,7 @@ export default new Vuex.Store({
     phone: '',
     uuid: '',
     role: '',
+    lawuuid: '',
   },
   getters: {
     isLogin(state) {
@@ -52,6 +53,13 @@ export default new Vuex.Store({
     clearNickname(state) {
       state.nickname = '';
     },
+    setLawuuid(state, lawuuid) {
+      state.lawuuid = lawuuid;
+    },
+    clearLawuuid(state) {
+      state.lawuuid = '';
+    },
+
     setPhone(state, phone) {
       state.phone = phone;
     },

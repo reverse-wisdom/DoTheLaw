@@ -26,6 +26,7 @@ import { fetchAdviseLawyer } from '@/api/advise';
 
 export default {
   bodyClass: 'profile-page',
+
   data() {
     return {
       values: [],
@@ -46,11 +47,12 @@ export default {
       ],
     };
   },
-  async mounted() {
+  async created() {
     try {
-      const userData = this.$store.state.uuid;
+      const userData = this.$store.state.lawuuid;
+      console.log(userData);
       const { data } = await fetchAdviseLawyer(userData);
-      console.log({ data });
+      // console.log({ data });
       for (let i = 0; i < data.length; i++) {
         this.values.push({
           matchingId: data[i].matchingId,
