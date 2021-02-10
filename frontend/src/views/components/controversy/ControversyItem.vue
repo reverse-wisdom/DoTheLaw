@@ -1,24 +1,26 @@
 <template>
-  <div @click="moveControversyDetail(list)">
-    <v-img class="white--text align-end" height="200px" :src="controversyImg">
-      <v-card-title>{{ list.title }}</v-card-title>
-    </v-img>
-    <v-card-text class="text--primary">
-      <div class="text-right endDate">찬성반대 종료시간:{{ '    ' + $moment(list.endDate).format('llll') }}</div>
-      <h4 class="text-left">{{ list.content }}</h4>
-      <span class="t_blue">
-        <b>찬성: {{ Math.round((list.agree / (list.agree + list.opposition)) * 100) }}</b>
-        %
-      </span>
-      <span class="gBar">
-        <span class="gAction4" v-bind:style="{ width: Math.round((list.agree / (list.agree + list.opposition)) * 100) + '%' }"></span>
-        <span class="gAction2" v-bind:style="{ width: Math.round((list.opposition / (list.agree + list.opposition)) * 100) + '%' }"></span>
-      </span>
-      <span class="t_red">
-        <b>반대: {{ Math.round((list.opposition / (list.agree + list.opposition)) * 100) }}</b>
-        %
-      </span>
-    </v-card-text>
+  <div>
+    <div @click="moveControversyDetail(list)">
+      <v-img class="white--text align-end" height="200px" :src="controversyImg">
+        <v-card-title>{{ list.title }}</v-card-title>
+      </v-img>
+      <v-card-text class="text--primary">
+        <div class="text-right endDate">찬성반대 종료시간:{{ '    ' + $moment(list.endDate).format('llll') }}</div>
+        <h4 class="text-left">{{ list.content }}</h4>
+        <span class="t_blue">
+          <b>찬성: {{ Math.round((list.agree / (list.agree + list.opposition)) * 100) }}</b>
+          %
+        </span>
+        <span class="gBar">
+          <span class="gAction4" v-bind:style="{ width: Math.round((list.agree / (list.agree + list.opposition)) * 100) + '%' }"></span>
+          <span class="gAction2" v-bind:style="{ width: Math.round((list.opposition / (list.agree + list.opposition)) * 100) + '%' }"></span>
+        </span>
+        <span class="t_red">
+          <b>반대: {{ Math.round((list.opposition / (list.agree + list.opposition)) * 100) }}</b>
+          %
+        </span>
+      </v-card-text>
+    </div>
     <v-row no-gutters>
       <v-col>
         <v-btn color="primary" x-large @click="agreeUp(list.controversyId)">
