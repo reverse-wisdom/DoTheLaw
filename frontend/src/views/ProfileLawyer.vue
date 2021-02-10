@@ -65,6 +65,7 @@ const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
 import AdviseLawyer from '@/views/components/advise/AdviseLawyer.vue';
 import axios from 'axios';
 import { searchLawyer, signoutUser } from '@/api/auth';
+import { saveImage } from '@/api/service';
 export default {
   components: {
     AdviseLawyer,
@@ -96,12 +97,22 @@ export default {
         backgroundImage: `url(${this.header})`,
       };
     },
+    headerStyle() {
+      return {
+        image: `url(${this.header})`,
+      };
+    },
   },
   async created() {
     const email = this.$store.state.email;
     const { data } = await searchLawyer(email);
     this.value = data;
+    // this.value.image = `/data/${data.image}`;
     console.log('회원정보', data);
+
+    const imgres = await saveImage(data.image);
+    console.log(imgres);
+    this.value.image = imgres.data;
 
     var query = this.value.address;
     axios
