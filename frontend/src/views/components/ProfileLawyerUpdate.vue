@@ -183,9 +183,11 @@ export default {
         form.append('file', this.files);
       }
 
-      // axios.post(`/api/data/${this.value.uuid}`, form, { 'Content-Type': 'multipart/form-data' }).then(function(response) {});
-      // const imageres = await imageUpload(this.value.uuid, form);
-      // console.log(imageres);
+      // axios.post(`api/mamber/image/update/${this.value.uuid}`, form, { 'Content-Type': 'multipart/form-data', headers: this.$store.state.token }).then(function(response) {
+      //   console.log(response);
+      // });
+      const imageres = await imageUpload(this.value.uuid, form);
+      console.log(imageres);
 
       console.log('인풋데이터 확인', userdata);
       const res = await editLawyer(userdata);

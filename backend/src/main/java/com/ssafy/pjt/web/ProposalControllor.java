@@ -48,37 +48,6 @@ public class ProposalControllor {
 		}
 	}
 	
-	@ApiOperation(value = "찬성 댓글 조회")
-	@GetMapping("/search/agree")
-	private ResponseEntity<List<ProposalRequestDTO>> searchAgree(@RequestParam(required = true) final int controversyId) {
-		List<ProposalRequestDTO> list;
-		try {
-			list = proposalService.searchAgree(controversyId);
-			for (ProposalRequestDTO proposal : list) {
-				proposal.setName(proposalService.searchMember(proposal.getUuid()).getName());
-			}
-			return new ResponseEntity<>(list, HttpStatus.OK);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-		}
-	}
-	@ApiOperation(value = "반대 댓글 조회")
-	@GetMapping("/search/opposition")
-	private ResponseEntity<List<ProposalRequestDTO>> searchOpposition(@RequestParam(required = true) final int controversyId) {
-		List<ProposalRequestDTO> list;
-		try {
-			list = proposalService.searchOpposition(controversyId);
-			for (ProposalRequestDTO proposal : list) {
-				proposal.setName(proposalService.searchMember(proposal.getUuid()).getName());
-			}
-			return new ResponseEntity<>(list, HttpStatus.OK);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-		}
-	}
-	
 	@ApiOperation(value = "찬반 댓글 생성")
 	@PostMapping("/create")
 	private ResponseEntity<String> create(@Valid @RequestBody ProposalRequestDTO proposal) {

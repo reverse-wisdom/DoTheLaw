@@ -7,9 +7,9 @@
           <article class="quizzes-container" ref="QuizContainer">
             <start-content v-if="intro" @introEnd="start" />
             <template v-else>
-              <!-- <range-counter v-on:allQuestionFinish="result" v-bind:step="step" v-bind:stepRange="stepRange" /> -->
-              <quiz-questions v-if="!finish" v-on:pickedArrayPush="pickedArrayPush" v-on:nextQuestion="nextQuestion" :step="step" :items="items" />
-              <result-content class="result" v-else v-on:clickRestart="restart" v-on:clickReset="reset" v-bind:total="total" />
+              <range-counter @allQuestionFinish="result" :step="step" :stepRange="stepRange" />
+              <quiz-questions v-if="!finish" @nextQuestion="nextQuestion" :step="step" :items="items" />
+              <result-content class="result" v-else @clickRestart="restart" @clickReset="reset" :total="total" />
               <result-loader v-if="resultLoading" />
             </template>
           </article>
@@ -24,17 +24,8 @@ import EventBus from '@/views/components/lawtest/EventBus';
 import QuizQuestions from '@/views/components/lawtest/QuizQuestions';
 import StartContent from '@/views/components/lawtest/StartContent';
 import ResultContent from '@/views/components/lawtest/ResultContent';
-// import RangeCounter from '@/views/components/lawtest//RangeCounter';
+import RangeCounter from '@/views/components/lawtest//RangeCounter';
 import ResultLoader from '@/views/components/lawtest/ResultLoader';
-
-// import NotFound from '../../pages/NotFound';
-// import isMobile from 'ismobilejs';
-// import ResultLoader from './ResultLoader';
-// import AsideQuizRatingWidget from '../blocks/AsideQuizRatingWidget';
-// import SpotilightContentGrid from '../blocks/SpotilightContentGrid';
-// import RecentlyContentGrid from '../blocks/RecentlyContentGrid';
-// import LoadingPlaceholderTitle from '../loading-animation/LoadingPlaceholderTitle';
-// import LoadingPlaceholderGrid from '../loading-animation/LoadingPlaceholderGrid';
 
 export default {
   name: 'QuizCore',
@@ -44,7 +35,7 @@ export default {
     StartContent,
     ResultLoader,
     ResultContent,
-    // RangeCounter,
+    RangeCounter,
   },
   props: {
     // id: Number && String,
@@ -60,7 +51,7 @@ export default {
           quiz: '1.허락없이 남의 편지나 이메일을 보는 행위',
           example: {
             exp: { exp1: '징역형 3년 또는 벌금 500만원', exp2: '징역형 1년 또는 벌금 100만원' },
-            penalty: 500,
+            penalty: 5000000,
             answer: '징역형 3년 또는 벌금 500만원',
           },
         },
@@ -68,7 +59,7 @@ export default {
           quiz: '2.허락없이 남의 핸드폰을 보는 행위',
           example: {
             exp: { exp1: '징역형 5년 또는 벌금 5000만원', exp2: '징역형 3년 또는 벌금 2000만원' },
-            penalty: 5000,
+            penalty: 50000000,
             answer: '징역형 5년 또는 벌금 5000만원',
           },
         },
@@ -76,7 +67,7 @@ export default {
           quiz: '3.허락없이 남의 연락처를 제3자한테 알려주는 행위',
           example: {
             exp: { exp1: '징역형 5년 또는 벌금 5000만원', exp2: '징역형 3년 또는 벌금 2000만원' },
-            penalty: 5000,
+            penalty: 50000000,
             answer: '징역형 5년 또는 벌금 5000만원',
           },
         },
@@ -84,7 +75,55 @@ export default {
           quiz: '4.반려동물은 땅에 묻어주어도 된다? 인된다?',
           example: {
             exp: { exp1: '된다', exp2: '안된다' },
-            penalty: 100,
+            penalty: 1000000,
+            answer: '안된다',
+          },
+        },
+        {
+          quiz: '5.반려동물은 땅에 묻어주어도 된다? 인된다?',
+          example: {
+            exp: { exp1: '된다', exp2: '안된다' },
+            penalty: 1000000,
+            answer: '안된다',
+          },
+        },
+        {
+          quiz: '6.반려동물은 땅에 묻어주어도 된다? 인된다?',
+          example: {
+            exp: { exp1: '된다', exp2: '안된다' },
+            penalty: 1000000,
+            answer: '안된다',
+          },
+        },
+        {
+          quiz: '7.반려동물은 땅에 묻어주어도 된다? 인된다?',
+          example: {
+            exp: { exp1: '된다', exp2: '안된다' },
+            penalty: 1000000,
+            answer: '안된다',
+          },
+        },
+        {
+          quiz: '8.반려동물은 땅에 묻어주어도 된다? 인된다?',
+          example: {
+            exp: { exp1: '된다', exp2: '안된다' },
+            penalty: 1000000,
+            answer: '안된다',
+          },
+        },
+        {
+          quiz: '8.반려동물은 땅에 묻어주어도 된다? 인된다?',
+          example: {
+            exp: { exp1: '된다', exp2: '안된다' },
+            penalty: 1000000,
+            answer: '안된다',
+          },
+        },
+        {
+          quiz: '8.반려동물은 땅에 묻어주어도 된다? 인된다?',
+          example: {
+            exp: { exp1: '된다', exp2: '안된다' },
+            penalty: 1000000,
             answer: '안된다',
           },
         },
@@ -108,111 +147,23 @@ export default {
         backgroundImage: `url(${this.header})`,
       };
     },
-    stepRange: function() {
-      if (this.wpdata.id !== undefined) {
-        // const questions = this.wpdata.acf.quiz_section;
-        return Object.keys(questions).length;
-      }
-
-      return false;
-    },
-    quizType: function() {
-      return this.wpdata.acf.quiz_type;
-    },
-    resultArray: function() {
-      // 퀴즈 유형에 따라 다른 키에서 데이터를 가져와 배열로 담음
-      if (this.wpdata.id !== undefined) {
-        if (this.quizType === 'score') {
-          return this.wpdata.acf.quiz_result_score.quiz_result_items;
-        } else if (this.quizType === 'match') {
-          return this.wpdata.acf.quiz_result_match.quiz_result_items;
-        }
-      }
-
-      return false;
+    stepRange: function(items) {
+      return this.items.length;
     },
   },
   methods: {
     result() {
-      if (this.wpdata.acf.quiz_type === 'score') {
-        this.scoreCalculator();
-        this.quizFinish();
-        return;
-      } else if (this.wpdata.acf.quiz_type === 'match') {
-        this.matchCaculator();
-        this.quizFinish();
-        return;
-      }
-
-      console.warn('무언가 잘못되었습니다! : method result error');
-    },
-    scoreCalculator() {
-      const reducer = (accumulator, currentValue) => Number(accumulator) + Number(currentValue);
-      const sum = this.pickedArray.reduce(reducer); // 숫자형 배열의 총 합
-      const resultLength = Object.keys(this.resultArray).length; // 결과 유형의 갯수
-
-      //console.log(sum)
-
-      for (let i = 0; i < resultLength; i++) {
-        const endResultRange = Number(this.resultArray[i].quiz_result_end_range);
-
-        if (endResultRange >= sum) {
-          this.resultIndex.push(i);
-
-          i = resultLength;
-        }
-      }
-
-      this.resultFinalArrayPush();
-    },
-    matchCaculator() {
-      // const testArr = ["a", "a", "b", "b", "c", "d"]
-      const resultLength = Object.keys(this.resultArray).length;
-      const mostPick = modeArray(this.pickedArray);
-
-      if (mostPick.length === 1) {
-        // 결과값이 한가지 일 때
-        for (let i = 0; i < resultLength; i++) {
-          const resultMatchValue = this.resultArray[i].quiz_result_match_value;
-          if (mostPick[0] === resultMatchValue) {
-            this.resultIndex.push(i);
-          }
-        }
-      } else if (mostPick.length >= 2) {
-        // 결과값이 복수 일 때
-        // const randomPick = mostPick[Math.floor(Math.random() * (mostPick.length - 1))]
-        for (let i = 0; i < mostPick.length; i++) {
-          for (let j = 0; j < resultLength; j++) {
-            const resultMatchValue = this.resultArray[j].quiz_result_match_value;
-            if (mostPick[i] === resultMatchValue) {
-              this.resultIndex.push(j);
-            }
-          }
-        }
-      }
-
-      this.resultFinalArrayPush();
-    },
-    resultFinalArrayPush() {
-      if (this.quizType === 'score') {
-        this.resultFinalArray.push(this.resultArray[this.resultIndex[0]]);
-      } else if (this.quizType === 'match') {
-        for (let i = 0; i < this.resultIndex.length; i++) {
-          this.resultFinalArray.push(this.resultArray[this.resultIndex[i]]);
-        }
-      }
+      this.quizFinish();
+      return;
     },
     scrollEl(el) {
       const positionTop = el.offsetTop;
-
       window.scrollTo(0, positionTop);
     },
     nextQuestion() {
       this.step++;
     },
-    pickedArrayPush(v) {
-      this.pickedArray.push(v);
-    },
+
     start() {
       this.intro = false;
       this.$refs.QuizContainer;
@@ -233,20 +184,20 @@ export default {
       this.resultFinalArray = [];
       this.step = 1;
       this.finish = false;
+      this.total = 0;
 
-      if (isMobile().any) {
-        this.scrollEl(this.$refs.QuizContainer);
-      }
+      // if (isMobile().any) {
+      //   this.scrollEl(this.$refs.QuizContainer);
+      // }
     },
     reset() {
       this.intro = true;
       this.restart();
 
-      if (isMobile().any) {
-        this.scrollEl(this.$refs.QuizContainer);
-      }
+      // if (isMobile().any) {
+      //   this.scrollEl(this.$refs.QuizContainer);
+      // }
     },
-    //벌금계산
     checkPenalty(updatePenalty) {
       this.total += updatePenalty;
     },

@@ -21,6 +21,10 @@
               <td>{{ value.state }}</td>
             </tr>
             <tr style="border-top: 1px solid;">
+              <th scope="col"></th>
+              <td>{{ value.remarks }}</td>
+            </tr>
+            <tr style="border-top: 1px solid;">
               <th scope="col">예약시간</th>
               <td>{{ this.$moment(value.reservationDate).format('llll') }}</td>
             </tr>
@@ -28,6 +32,7 @@
               <th scope="col">작성시간</th>
               <td>{{ this.$moment(value.createDate).format('llll') }}</td>
             </tr>
+
             <!-- <tr style="border-top: 1px solid;">
               <th scope="col">조회수</th>
               <td>{{ value.hit }}</td>
@@ -105,7 +110,7 @@ export default {
         showConfirmButton: false,
         timer: 1500,
       });
-      this.$router.push('/board');
+      this.$router.push('/profileUser');
     },
     updateAdvise(value) {
       var matchingId = value.matchingId;
