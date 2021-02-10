@@ -12,6 +12,7 @@ import moment from 'moment';
 
 import MaterialKit from './plugins/material-kit';
 
+import vuescroll from 'vue-scroll';
 import WebRTC from 'vue-webrtc';
 import * as io from 'socket.io-client';
 window.io = io;
@@ -23,6 +24,7 @@ const options = {
 
 moment.locale('ko');
 
+Vue.use(vuescroll)
 Vue.use(WebRTC);
 Vue.component('vueWebrtc', WebRTC['vue-webrtc']);
 
