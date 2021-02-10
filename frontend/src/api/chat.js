@@ -1,6 +1,8 @@
 import { posts } from './index';
 import Stomp from 'webstomp-client';
 import SockJS from 'sockjs-client';
+import moment from "moment";
+
 
 class WebChatClient {
   constructor(roomId, uuid, name, msg) {
@@ -28,7 +30,7 @@ class WebChatClient {
           name: res.data[i].name,
           content: res.data[i].content,
           style: res.data[i].uuid == this.uuid ? 'me' : 'other',
-          regDate: res.data[i].regDate,
+          regDate: moment(res.data[i].regDate).format("LT"),
         };
         console.log(">>here");
         console.log(m);
