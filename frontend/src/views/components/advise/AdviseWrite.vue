@@ -23,6 +23,10 @@
               </md-select>
             </md-field>
             <md-field>
+              <label>상태</label>
+              <md-input v-model="state"></md-input>
+            </md-field>
+            <md-field>
               <div id="summernote"></div>
             </md-field>
             <md-field>
@@ -33,13 +37,18 @@
             <!-- 예약시간: 임의로 textarea로 넣음 나중에 수정예정 -->
             <md-field>
               <label>예약시간</label>
-              <md-textarea v-model="autogrow" md-autogrow></md-textarea>
+              <md-input v-model="reservationDate"></md-input>
+            </md-field>
+            <md-field>
+              <label>비고란</label>
+              <md-input v-model="remarks"></md-input>
             </md-field>
           </form>
           <div class="btn-right">
-            <md-button class="md-dense md-raised md-warning" type="submit" @click="writeAdvise">
+            <v-btn color="primary" elevation="2" medium type="submit" @click="writeAdvise()">등록하기</v-btn>
+            <!-- <md-button class="md-dense md-raised md-warning" type="submit" @click="writeAdvise()">
               등록
-            </md-button>
+            </md-button> -->
           </div>
         </div>
       </div>
@@ -128,8 +137,9 @@ export default {
       title: '',
       content: '',
       category: '',
-      reservationDate: '',
-      autogrow: '',
+      state: '신청',
+      reservationDate: '2021-02-22T06:35:54.885Z',
+      remarks: '',
     };
   },
   props: {
@@ -197,13 +207,16 @@ export default {
         uuid: this.$store.state.uuid,
         lawyerUuid: this.$route.query.lawyerUuid,
         reservationDate: this.reservationDate,
+        remarks: this.remarks,
+        state: this.state,
         title: this.title,
-        writer: this.$store.state.name,
+        // writer: this.$store.state.name,
         content: $('#summernote').summernote('code'),
         category: this.category,
       };
-
+      console.log(data, '1111');
       const response = await createAdvise(data);
+      console.log(response, '2222');
 
       this.$swal({
         icon: 'success',

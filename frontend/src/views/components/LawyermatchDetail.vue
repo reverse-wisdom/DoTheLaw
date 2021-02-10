@@ -3,44 +3,40 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
+        <h2 class="title text-center kor">추천 변호사 상세</h2>
+        <hr class="div-hr" />
         <div class="container">
           <div class="row">
-            <div class="col-3 row ml-5">
-              <img id="profile" class="col-12 r-10" :src="lawyer.image" alt="noimage" />
-              <div class="r-2" id="button-sort">
-                <button id="image-change-button">
-                  이미지 변경
-                </button>
-              </div>
+            <div class="col-1 "></div>
+            <div class="col-3 colum mx-auto">
+              <img v-if="lawyer.image" class="col-12 r-7" id="profile" :src="lawyer.image" alt="" />
+              <img v-else id="profile" class="col-12 r-7" src="@/assets/img/noimage.jpg" alt="noimage" />
             </div>
-            <div class="col-1"></div>
-            <div class="col-8 row" id="content-sort">
-              <div>
-                <h1 class="col-12 r-4">변호사 {{ lawyer.name }}</h1>
-                <md-button @click="createAdvise">자문요청</md-button>
-              </div>
-              x
-              <div class="col-11" id="text-solid-1">
+            <div class="col-8 row">
+              <h1 class="col-12 r-4 mx-auto">변호사 {{ lawyer.name }}</h1>
+              <md-button class="col-1" @click="writeAdvise">자문요청</md-button>
+              <div class="col-11 mx-auto" id="text-solid-1">
                 한줄소개
                 <hr />
                 {{ lawyer.introduction }}
               </div>
             </div>
-            <div class="row ml-10">
-              <div class="col-5" id="text-solid-margin">
+            <div class="row mx-auto">
+              <div class="col-5 mx-auto" id="text-solid-margin">
                 관심분야
                 <hr />
               </div>
-              <div class="col-5" id="text-solid">
-                {{ lawyer.phone }}
+              <div class="col-5 mx-auto" id="text-solid">
+                잔화번호
                 <hr />
+                {{ lawyer.phone }}
               </div>
-              <div class="col-5" id="text-solid-margin">
+              <div class="col-5 mx-auto" id="text-solid-margin">
                 경력
                 <hr />
                 {{ lawyer.career }}
               </div>
-              <div class="col-5" id="text-solid">
+              <div class="col-5 mx-auto" id="text-solid">
                 이메일
                 <hr />
                 {{ lawyer.email }}
@@ -48,34 +44,12 @@
               <div class="col-11" id="text-solid-one">
                 최근답변
                 <hr />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
+                <AdviseLawyer />
+
                 <div></div>
               </div>
               <!-- <div class="col-5" id="text-solid">6</div> -->
             </div>
-            <!-- <md-field style="margin: 5rem 5rem 0 5rem ;">
-              <md-input id="address" type="text" ref="address" v-model="address" placeholder="주소 입력"></md-input>
-            </md-field>
-            <md-button class="md-info" style="margin: auto" @click="searchMap">주소로검색</md-button> -->
             <div id="map" ref="map" style="width: 100%; height: 400px; margin: 2rem;"></div>
           </div>
         </div>
@@ -101,11 +75,16 @@
 //   "chck": "Y"
 // }
 import { LawyerDetail } from '@/api/auth';
+import { saveImage } from '@/api/service';
 import axios from 'axios';
+import AdviseLawyer from '@/views/components/advise/AdviseLawyer.vue';
 const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
 
 export default {
   bodyClass: 'profile-page',
+  components: {
+    AdviseLawyer,
+  },
   data() {
     return {
       lawyer: '',
@@ -122,8 +101,12 @@ export default {
     const res = await LawyerDetail(email);
     console.log(res);
     this.lawyer = res.data;
+    this.$store.commit('setLawuuid', res.data.uuid);
 
-    var query = this.lawyer.address;
+    const imgres = await saveImage(res.data.uuid, res.data.image);
+    console.log(imgres);
+
+    var query = res.data.address;
     axios
       .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_MAP_KEY + '&address=' + query)
       .then(({ data }) => {
@@ -155,7 +138,7 @@ export default {
     },
   },
   methods: {
-    createAdvise() {
+    writeAdvise() {
       console.log(this.lawyer);
       const lawyerUuid = this.lawyer.uuid;
       this.$router.push({ name: 'AdviseWrite', query: { lawyerUuid: lawyerUuid } });

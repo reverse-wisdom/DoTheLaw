@@ -3,42 +3,41 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
+        <h2 class="title text-center kor">마이페이지</h2>
+        <hr class="div-hr" />
         <div class="container">
           <div class="row">
-            <div class="col-4 row ml-5">
-              <img v-if="value.image" id="profile" class="col-12 r-7 mx-auto" :src="value.image" alt="" />
+            <div class="col-1"></div>
+            <div class="col-3 colum mx-auto">
+              <img v-if="value.image" class="col-12 r-7 mx-auto" id="profile" :src="value.image" alt="" />
               <img v-else id="profile" class="col-12 r-7 mx-auto" src="@/assets/img/noimage.jpg" alt="noimage" />
-              <div class="r-2 mx-auto" id="button-sort">
-                <button id="image-change-button">
-                  이미지 변경
-                </button>
+            </div>
+            <div class="col-8 row" id="content-sort">
+              <h1 class="col-12 r-4">사용자 {{ $store.state.name }}</h1>
+              <div class="col-11 mx-auto" id="text-solid-1">
+                한줄소개
+                <hr />
               </div>
             </div>
-            <div class="col-1"></div>
-            <div class="col-8 row" id="content-sort">
-              <h1 class="col-12 r-4">{{ $store.state.role }}, {{ $store.state.name }}</h1>
-              <div class="col-11" id="text-solid-1">한줄소개</div>
-            </div>
-            <div class="row ml-10">
-              <div class="col-5" id="text-solid-margin">
+            <div class="row">
+              <div class="col-5 mx-auto" id="text-solid-margin">
                 관심분야
                 <hr />
               </div>
               <div class="col-5 mx-auto" id="text-solid">
                 전화번호
                 <hr />
+                {{ value.phone }}
               </div>
-              <div class="col-5 mx-auto" id="text-solid">
-                전화번호
-                <hr />
-              </div>
-              <div class="col-11" id="text-solid-one">
+              <div class="col-11 mx-auto" id="text-solid-one">
                 최근 자문요청
                 <AdviseMe />
-                <div></div>
               </div>
-              <div class="col-11 mx-auto"></div>
-              <div class="btn btn-info col-1 mt-5 mx-auto" style="float: right;" @click="moveUserUpdate">정보수정</div>
+            </div>
+            <div class="row mt-5">
+              <div class="col-9"></div>
+              <div class="btn btn-info col-1 mr-5" @click="moveUserUpdate">정보수정</div>
+              <div class="btn btn-info col-1" @click="deleteUser">회원탈퇴</div>
             </div>
           </div>
         </div>
@@ -49,6 +48,8 @@
 
 <script>
 import AdviseMe from '@/views/components/advise/AdviseMe.vue';
+import { searchUser, signoutUser } from '@/api/auth';
+
 export default {
   components: {
     AdviseMe,
@@ -82,6 +83,21 @@ export default {
   methods: {
     moveUserUpdate() {
       this.$router.push({ name: 'profileUserUpdate' });
+    },
+    async deleteUser() {
+      const res = await signoutUser(this.value.uuid);
+      console.log(res);
+      this.$store.commit('clearEmail');
+      this.$store.commit('clearToken');
+      this.$store.commit('clearNickname');
+      this.$store.commit('clearPassword');
+      this.$store.commit('clearName');
+      this.$store.commit('clearUuid');
+      this.$store.commit('clearImage');
+      localStorage.clear();
+      sessionStorage.clear();
+      $cookies.keys().forEach((cookie) => $cookies.remove(cookie));
+      this.$router.push({ name: 'RegisterIndex' });
     },
   },
 };

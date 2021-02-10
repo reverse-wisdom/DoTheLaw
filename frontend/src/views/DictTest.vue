@@ -11,9 +11,7 @@
               <a @click="dictAlert(alertTest)">alertTest</a>
               <v-btn x-large color="blue-grey" dark @click="regexp">
                 정규식치환테스트
-                <v-icon right dark>
-                  mdi-account-check
-                </v-icon>
+                <v-icon right dark>mdi-account-check</v-icon>
               </v-btn>
               <p v-html="raw"></p>
             </div>

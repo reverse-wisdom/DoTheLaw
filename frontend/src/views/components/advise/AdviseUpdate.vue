@@ -22,12 +22,16 @@
               <div id="summernote"></div>
             </md-field>
             <md-field>
+              <label>비고란</label>
+              <md-input v-model="remarks"></md-input>
+            </md-field>
+            <md-field>
               <!-- 파일의 경우 change 리스너로 감지해야함 -->
               <input type="file" name="uploadFile" ref="fileData" />
               <!-- <input type="file" name="uploadFile" ref="fileData" @change="handleFilesUpload" /> -->
             </md-field>
             <div class="btn-right">
-              <md-button class="md-dense md-raised md-warning" type="submit">
+              <md-button class="md-dense md-raised md-warning" type="submit" @click="modifyAdvise">
                 수정완료
               </md-button>
               <md-button class="md-dense md-raised md-info" @click="moveAdviseList">
@@ -99,6 +103,7 @@ export default {
       const editData = {
         matchingId: this.value.matchingId,
         category: this.value.category,
+        remarks: this.value.remarks,
         content: $('#summernote').summernote('code'),
         title: this.value.title,
         reservationDate: this.value.reservationDate,
