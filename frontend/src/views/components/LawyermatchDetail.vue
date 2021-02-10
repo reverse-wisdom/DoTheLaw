@@ -9,52 +9,34 @@
           <div class="row">
             <div class="col-1 "></div>
             <div class="col-3 colum mx-auto">
-              <img v-if="lawyer.image" class="col-12 r-10" id="profile" :src="lawyer.image" alt="" />
-              <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
-              <div class="r-2 mx-auto"></div>
-              <h1 class="col-10 mx-auto">변호사 {{ lawyer.name }}</h1>
-              <md-button class="col-1" @click="createAdvise">자문요청</md-button>
-              <div class="col-11 mx-auto" id="text-solid-1"></div>
-              한줄소개
-              <hr />
-              {{ lawyer.introduction }}
+              <img v-if="lawyer.image" class="col-12 r-7" id="profile" :src="lawyer.image" alt="" />
+              <img v-else id="profile" class="col-12 r-7" src="@/assets/img/noimage.jpg" alt="noimage" />
             </div>
-          </div>
-          <div class="row mx-auto">
-            <div class="col-5 mx-auto" id="text-solid-margin">
-              관심분야
-              <hr />
+            <div class="col-8 row">
+              <h1 class="col-12 r-4 mx-auto">변호사 {{ lawyer.name }}</h1>
+              <md-button class="col-1" @click="writeAdvise">자문요청</md-button>
+              <div class="col-11 mx-auto" id="text-solid-1">
+                한줄소개
+                <hr />
+                {{ lawyer.introduction }}
+              </div>
             </div>
-            <div class="col-5 mx-auto" id="text-solid">
-              잔화번호
-              <hr />
-              {{ lawyer.phone }}
-            </div>
-            <div class="col-5 mx-auto" id="text-solid-margin">
-              경력
-              <hr />
-              {{ lawyer.career }}
-            </div>
-            <div class="col-5 mx-auto" id="text-solid">
-              이메일
-              <hr />
-              {{ lawyer.email }}
-            </div>
-            <div class="row ml-10">
-              <div class="col-5" id="text-solid-margin">
+            <div class="row mx-auto">
+              <div class="col-5 mx-auto" id="text-solid-margin">
                 관심분야
                 <hr />
               </div>
-              <div class="col-5" id="text-solid">
-                {{ lawyer.phone }}
+              <div class="col-5 mx-auto" id="text-solid">
+                잔화번호
                 <hr />
+                {{ lawyer.phone }}
               </div>
-              <div class="col-5" id="text-solid-margin">
+              <div class="col-5 mx-auto" id="text-solid-margin">
                 경력
                 <hr />
                 {{ lawyer.career }}
               </div>
-              <div class="col-5" id="text-solid">
+              <div class="col-5 mx-auto" id="text-solid">
                 이메일
                 <hr />
                 {{ lawyer.email }}
@@ -68,8 +50,8 @@
               </div>
               <!-- <div class="col-5" id="text-solid">6</div> -->
             </div>
+            <div id="map" ref="map" style="width: 100%; height: 400px; margin: 2rem;"></div>
           </div>
-          <div id="map" ref="map" style="width: 100%; height: 400px; margin: 2rem;"></div>
         </div>
       </div>
     </div>
@@ -93,6 +75,7 @@
 //   "chck": "Y"
 // }
 import { LawyerDetail } from '@/api/auth';
+import { saveImage } from '@/api/service';
 import axios from 'axios';
 import AdviseLawyer from '@/views/components/advise/AdviseLawyer.vue';
 const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
@@ -120,7 +103,10 @@ export default {
     this.lawyer = res.data;
     this.$store.commit('setLawuuid', res.data.uuid);
 
-    var query = this.lawyer.address;
+    const imgres = await saveImage(res.data.uuid, res.data.image);
+    console.log(imgres);
+
+    var query = res.data.address;
     axios
       .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_MAP_KEY + '&address=' + query)
       .then(({ data }) => {
