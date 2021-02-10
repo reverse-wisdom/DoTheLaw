@@ -1,45 +1,47 @@
 <template>
   <div class="text-right">
-    <v-textarea label="댓글입력" rows="1" v-model="content" prepend-icon="mdi-comment"></v-textarea>
-    <v-btn color="success" @click="onSubmit">댓글등록</v-btn>
+    <v-textarea label="의견입력" rows="1" v-model="content" prepend-icon="mdi-comment"></v-textarea>
+    <v-btn color="success" @click="onSubmit">의견등록</v-btn>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import { createProposoal } from '@/api/controversy';
 
 export default {
   name: 'CommentWrite',
   data() {
     return {
-      commentId: '',
       content: '',
-      name: '',
     };
   },
   props: {
-    boardId: Number,
+    controversyId: Number,
+  },
+  created() {
+    console.log(this.controversyId);
   },
   methods: {
-    onSubmit() {
-      this.token = this.$store.state.token;
-      axios
-        .post('/api/comment/create', {
-          boardId: this.boardId,
-          content: this.content,
-          uuid: this.$store.state.uuid,
-        })
-        .then((data) => {
-          this.$emit('uploadComment');
-          this.content = '';
-        })
-        .catch();
-      //     .then(({ data }) => {
-      //       this.$router.go(this.$router.currentRoute);
-      //       // this.$router.go(-1);
-      //     })
-      //     .catch();
-      // },
+    async onSubmit() {
+      const proposoalData = {
+        content: this.content,
+        controversyId: this.controversyId,
+        uuid: this.$store.state.uuid,
+      };
+      const { data } = await createProposoal(proposoalData);
+
+      if (data == 'SUCCESS') {
+        this.$swal({
+          position: 'top-end',
+          icon: 'success',
+          title: '의견 등록 성공!!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.content = '';
+
+        this.$emit('updateProposal');
+      }
     },
   },
 };
