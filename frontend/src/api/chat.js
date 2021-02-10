@@ -30,6 +30,7 @@ class WebChatClient {
           style: res.data[i].uuid == this.uuid ? 'me' : 'other',
           regDate: res.data[i].regDate,
         };
+        console.log(">>here");
         console.log(m);
         this.msg.push(m);
       }
