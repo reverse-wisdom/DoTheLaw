@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div @click="moveControversyDetail(list)">
     <v-img class="white--text align-end" height="200px" :src="controversyImg">
       <v-card-title>{{ list.title }}</v-card-title>
     </v-img>
     <v-card-text class="text--primary">
-      <div class="text-right endDate">찬성반대 기간:{{ '    ' + $moment(list.endDate).format('llll') }}</div>
+      <div class="text-right endDate">찬성반대 종료시간:{{ '    ' + $moment(list.endDate).format('llll') }}</div>
       <h4 class="text-left">{{ list.content }}</h4>
       <span class="t_blue">
         <b>찬성: {{ Math.round((list.agree / (list.agree + list.opposition)) * 100) }}</b>
@@ -37,8 +37,12 @@
 </template>
 
 <script>
-import { all, agree, opposition } from '@/api/controversy';
+import ControversyDetail from '@/views/components/controversy/ControversyDetail';
+import { agree, opposition } from '@/api/controversy';
 export default {
+  components: {
+    ControversyDetail,
+  },
   data() {
     return {
       controversyImg: require('@/assets/img/controversy.png'),
@@ -51,6 +55,9 @@ export default {
     },
   },
   methods: {
+    moveControversyDetail(list) {
+      this.$router.push({ name: 'controversydetail', query: { controversyId: list.controversyId } });
+    },
     async agreeUp(controversyId) {
       if (this.$store.state.name == null || this.$store.state.name == '') {
         this.$swal({

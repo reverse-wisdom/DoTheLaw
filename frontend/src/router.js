@@ -40,6 +40,7 @@ import Lawyermatch from './views/Lawyermatch.vue';
 import LawyermatchDetail from './views/components/LawyermatchDetail.vue';
 
 import ControversyList from './views/ControversyList.vue';
+import ControversyDetail from '@/views/components/controversy/ControversyDetail';
 
 Vue.use(Router);
 
@@ -267,6 +268,15 @@ export default new Router({
       path: '/controversylist',
       name: 'controversylist',
       components: { default: ControversyList, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 100 },
+        footer: { backgroundColor: 'black' },
+      },
+    },
+    {
+      path: '/controversydetail',
+      name: 'controversydetail',
+      components: { default: ControversyDetail, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
