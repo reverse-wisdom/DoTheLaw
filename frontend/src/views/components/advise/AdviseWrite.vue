@@ -44,7 +44,8 @@
             <!-- 예약시간: 임의로 textarea로 넣음 나중에 수정예정 -->
             <md-field>
               <v-row>
-                <DateTimePicker :label="'예약날짜 (추후 변호사의 일정에 따라 변동될 수 있습니다.)'" @date="UTCconvert" />
+                <DateTimePicker :label="'예약날짜'" @date="UTCconvert" />
+                <p class="my-auto">추후 변호사의 일정에 따라 변동될 수 있습니다.</p>
               </v-row>
               <!-- <md-input v-model="reservationDate"></md-input> -->
             </md-field>
