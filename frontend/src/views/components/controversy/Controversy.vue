@@ -3,9 +3,11 @@
     <div class="md-layout">
       <div class="md-layout-item" style="text-align: center; ">
         <v-container grid-list-md>
-          <v-card class="pa-md-4 mb-8 mx-lg-auto " v-for="list in listData" :key="list.controversyId">
-            <controversy-item :list="list" v-on:updateContent="updateContent" />
-          </v-card>
+          <template v-for="list in listData">
+            <v-card class="pa-md-4 mb-8 mx-lg-auto " :key="list.controversyId">
+              <controversy-item  :list="list" v-on:updateContent="updateContent" />
+            </v-card>
+          </template>
         </v-container>
       </div>
     </div>
