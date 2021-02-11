@@ -1,19 +1,55 @@
 <template>
   <div>
-    <div v-if="loadCheck">
-      <div class="list-type2">
-        <ol id="olid" style="list-style: none;">
-          <div class="mt-10" v-for="item in items" :key="item.rank">
-            <li><a class="box-solid" @click="moveSearch(item.word)" v-text="item.word"></a></li>
-          </div>
-        </ol>
+    <!-- v-dialog -->
+    <v-dialog transition="dialog-bottom-transition" max-width="600">
+      <template v-slot:activator="{ on, attrs }">
+        <span class="rank-title" v-bind="attrs" v-on="on">
+          <v-icon right dark>
+            mdi-format-list-numbered
+          </v-icon>
+          검색어 순위
+        </span>
+      </template>
+      <template v-slot:default="dialog">
+        <v-card color="rgba(78, 29, 20, 0.8)">
+          <v-toolbar color="gray" dark>검색어 랭킹</v-toolbar>
+          <v-card-text>
+            <div class="list-type2">
+              <ol id="olid" style="list-style: none;">
+                <div class="mt-10" v-for="item in items" :key="item.rank">
+                  <li><a class="box-solid" @click="moveSearch(item.word)" v-text="item.word"></a></li>
+                </div>
+              </ol>
+            </div>
+          </v-card-text>
+          <v-card-actions class="justify-end">
+            <v-btn text @click="dialog.value = false">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </template>
+    </v-dialog>
+
+    <br />
+    <div class="text-center" style=" margin-top:30px; display:inline-flex;">
+      <!-- <v-carousel style="display:inline-block;" hide-delimiters cycle interval="3000" class="rank_outter" vertical height="200px" :prev-icon="false" :next-icon="false"> -->
+      <v-carousel style="display:inline-block;" hide-delimiters interval="3000" class="rank_outter" vertical height="200px" :prev-icon="false" :next-icon="false">
+        <v-carousel-item class="rank " v-for="item in items" :key="item.rank">
+          <v-card class="text-center" elevation="2" color="rgba(255, 255, 255, 0.1)" width="500px">
+            <a @click="moveSearch(item.word)" class="rank">{{ item.rank }}. {{ item.word }}</a>
+            &nbsp;
+          </v-card>
+        </v-carousel-item>
+      </v-carousel>
+
+      <div v-if="loadCheck">
+        <!-- <v-carousel hide-delimiters cycle interval="3000" class="rank_outter" vertical height="200px" :prev-icon="false" :next-icon="false"> -->
       </div>
-    </div>
-    <div v-else class="md-layout-item md-size-10 mx-auto">
-      <br />
-      <br />
-      <br />
-      <circle8></circle8>
+      <div v-else class="md-layout-item md-size-10 mx-auto">
+        <br />
+        <br />
+        <br />
+        <circle8></circle8>
+      </div>
     </div>
   </div>
 </template>
@@ -21,8 +57,9 @@
 <script>
 import { top } from '@/api/service';
 import { Circle8 } from 'vue-loading-spinner'; // npm 스피너 컴포넌트
+import { Modal } from '@/components';
 export default {
-  components: { Circle8 },
+  components: { Circle8, Modal },
   data() {
     return {
       items: [],
@@ -32,10 +69,10 @@ export default {
   async mounted() {
     this.loadCheck = false;
     const { data } = await top();
-    // 랭킹 5등까지만
-    for (let i = 0; i < 5; i++) {
+    // 랭킹 7등까지만
+    for (let i = 0; i < 7; i++) {
       this.items.push({
-        rank: i,
+        rank: i + 1,
         word: data.items[i].word,
       });
     }
@@ -52,6 +89,25 @@ export default {
 <style lang="scss" scoped>
 .kor {
   font-family: 'Nanum Gothic', sans-serif;
+}
+
+.rank {
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  color: white !important;
+  font-size: 30px;
+  font-family: 'Nanum Gothic', sans-serif;
+  padding-top: 30px;
+  display: 'inline-block';
+}
+.rank-title {
+  font-size: 40px;
+  color: white;
+  font-weight: bold;
+}
+.rank_outter {
+  padding-bottom: 30px;
 }
 
 .list-type2 {
@@ -112,40 +168,4 @@ export default {
   font-weight: bold;
   color: #fff;
 }
-
-//
-// .list-type a {
-//   text-decoration: none;
-//   color: white !important;
-//   font-size: 17px;
-//   font-family: 'Nanum Gothic', sans-serif;
-// }
-// /* #img2 {
-//   filter: brightness(60%);
-// } */
-// a + h2 {
-//   color: aliceblue;
-// }
-// .box-solid {
-//   box-sizing: border-box;
-//   border: 1px solid white;
-//   border-radius: 1.5rem;
-//   padding: 1rem;
-//   width: 500px;
-// }
-// #title-solid {
-//   box-sizing: content-box;
-//   border: 5px solid white;
-//   font-size: 50px;
-//   border-radius: 1.5rem;
-//   padding: 1rem;
-//   color: white;
-//   font-weight: bold;
-// }
-// #olid {
-//   box-sizing: content-box;
-// }
-// li {
-//   list-style: none;
-// }
 </style>
