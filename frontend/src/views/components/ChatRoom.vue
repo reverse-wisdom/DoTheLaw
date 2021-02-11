@@ -1,32 +1,32 @@
 <template>
-  <div class="room">
-    <h3>{{ title }}</h3>
-    <hr />
-    <!-- <ul id="chat" v-scroll="onScroll">
-      <li v-for="(m, idx) in msg" :key="idx">
-        <div v-bind:class="m.style">
-          <h5 style="margin:3px">
-            {{ m.name }}
-          </h5>
-          {{ m.regDate }}
+  <div class="container">
+    <!-- <h3>{{ title }}</h3>
+    <hr /> -->
+    <main>
+      <header>
+        <div>
+          <h2>Chat with Vincent Porter</h2>
         </div>
-      </li>
-    </ul> -->
-
-    <ul id="chat">
-      <li v-for="(m, idx) in msg" :key="idx" v-bind:class="m.style">
-        <div class="entete">
-          <span class="status green"></span>
-          <h2>{{ m.name }}</h2>
-          <h3>{{ m.regDate }}</h3>
-        </div>
-        <div class="triangle"></div>
-        <div class="message">
-          {{ m.content }}
-        </div>
-      </li>
-    </ul>
-
+      </header>
+      <ul id="chat">
+        <li v-for="(m, idx) in msg" :key="idx" v-bind:class="m.style">
+          <div class="entete">
+            <span class="status green"></span>
+            <h2>{{ m.name }}</h2>
+            <h3>{{ m.regDate }}</h3>
+          </div>
+          <!-- <div class="triangle"></div> -->
+          <div class="message">
+            {{ m.content }}
+          </div>
+        </li>
+      </ul>
+      <footer>
+        <textarea placeholder="Type your message"></textarea>
+        <button @click="sendMessage()">SEND</button>
+        <!-- <a href="#">Send</a> -->
+      </footer>
+    </main>
     <hr />
     <input type="text" v-model="content" placeholder="보낼 메세지" size="100" />
     <button @click="sendMessage()">SEND</button>
@@ -74,13 +74,6 @@ export default {
 </script>
 
 <style>
-.my {
-  text-align: right;
-  color: gray;
-}
-.other {
-  text-align: left;
-}
 ul {
   max-height: calc(100vh - 48px - 48px);
 }
@@ -110,11 +103,11 @@ aside {
   vertical-align: top;
 }
 main {
-  width: 490px;
   height: 800px;
   display: inline-block;
   font-size: 15px;
   vertical-align: top;
+  background-color: #abd9e9;
 }
 
 aside header {
@@ -251,8 +244,8 @@ main header h3 {
 #chat .message {
   padding: 20px;
   color: #fff;
-  line-height: 25px;
-  max-width: 90%;
+  line-height: 15px;
+  max-width: 85%;
   display: inline-block;
   text-align: left;
   border-radius: 5px;
@@ -278,18 +271,20 @@ main header h3 {
 }
 #chat .me .triangle {
   border-color: transparent transparent #6fbced transparent;
-  margin-left: 375px;
+  margin-left: 280px;
 }
 
 main footer {
-  height: 155px;
-  padding: 20px 30px 10px 20px;
+  /* height: 155px; */
+  display: flex;
+  flex-flow: row wrap;
+  /* padding: 20px 30px 10px 20px; */
 }
 main footer textarea {
   resize: none;
   border: none;
-  display: block;
-  width: 100%;
+  /* display: block; */
+  width: 80%;
   height: 80px;
   border-radius: 3px;
   padding: 20px;
@@ -303,14 +298,14 @@ main footer img {
   height: 30px;
   cursor: pointer;
 }
-main footer a {
+main footer button {
   text-decoration: none;
   text-transform: uppercase;
   font-weight: bold;
   color: #6fbced;
   vertical-align: top;
-  margin-left: 333px;
-  margin-top: 5px;
-  display: inline-block;
+  /* margin-left: 333px; */
+  /* margin-top: 5px; */
+  /* display: inline-block; */
 }
 </style>
