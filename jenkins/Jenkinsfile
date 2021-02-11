@@ -37,7 +37,7 @@ pipeline {
             agent any
             steps {
 		sh 'docker run -d --name base-pjt-back -v /volumes/data:/volumes/data --network base-pjt-net base-pjt-back:latest'
-		sh 'docker run -d --name base-pjt-front -p 80:80 -p 443:443 -v /volumes/nginx/keys:/usr/keys --network base-pjt-net base-pjt-front:latest'
+		sh 'docker run -d --name base-pjt-front -p 80:80 -p 443:443 -v /volumes/nginx/keys:/usr/keys -v /volumes/data:/volumes/data --network base-pjt-net base-pjt-front:latest'
             }
         }
     }
