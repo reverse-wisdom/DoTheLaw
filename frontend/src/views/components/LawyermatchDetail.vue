@@ -14,7 +14,12 @@
             </div>
             <div class="col-8 row">
               <h1 class="col-12 r-4 mx-auto">변호사 {{ lawyer.name }}</h1>
-              <md-button class="col-1" @click="writeAdvise">자문요청</md-button>
+              <div v-if="$store.state.role == 'USER'" style="text-align:right">
+                <md-button class="col-1" @click="writeAdvise">자문요청</md-button>
+                <!-- <md-button class="md-info" @click="moveBoard()">뒤로가기</md-button> -->
+              </div>
+              <!-- else -->
+
               <div class="col-11 mx-auto" id="text-solid-1">
                 한줄소개
                 <hr />
