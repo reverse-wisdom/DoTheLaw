@@ -30,7 +30,6 @@
                 />
               </div>
               <div class="col-4">
-                chatting
                 <!-- 채팅룸의 룸ID 값은 자문매칭의 ID와 같아야 하므로 임의로 4로 배정  -->
                 <chat-room :roomId="4" v-if="roomId"></chat-room>
               </div>
