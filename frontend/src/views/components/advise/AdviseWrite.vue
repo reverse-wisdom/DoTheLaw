@@ -43,13 +43,15 @@
             </md-field>
             <!-- 예약시간: 임의로 textarea로 넣음 나중에 수정예정 -->
             <md-field>
-              <label>예약시간</label>
-              <md-input v-model="reservationDate"></md-input>
+              <v-row>
+                <DateTimePicker :label="'예약날짜 (추후 변호사의 일정에 따라 변동될 수 있습니다.)'" @date="UTCconvert" />
+              </v-row>
+              <!-- <md-input v-model="reservationDate"></md-input> -->
             </md-field>
-            <md-field>
+            <!-- <md-field>
               <label>비고란</label>
               <md-input v-model="remarks"></md-input>
-            </md-field>
+            </md-field> -->
           </form>
           <div class="btn-right">
             <v-btn color="primary" elevation="2" medium type="submit" @click="writeAdvise()">등록하기</v-btn>
@@ -57,6 +59,7 @@
               등록
             </md-button> -->
           </div>
+          <!-- <h2>{{ date }}</h2> -->
         </div>
       </div>
     </div>
@@ -65,7 +68,7 @@
 
 <script>
 import { createAdvise } from '@/api/advise';
-
+import DateTimePicker from '@/views/components/advise/DateTimePicker.vue';
 function uploadSummernoteFile(file, editor) {
   let data = new FormData();
   data.append('file', file);
@@ -139,12 +142,16 @@ function progressHandlingFunction(e) {
 
 export default {
   bodyClass: 'profile-page',
+  components: {
+    DateTimePicker,
+  },
   data() {
     return {
       title: '',
       content: '',
       category: '',
-      state: '',
+      state: '신청',
+      // reservationDate: '2021-02-22T06:35:54.885Z',
       reservationDate: '2021-02-22T06:35:54.885Z',
       remarks: '',
     };
@@ -212,7 +219,8 @@ export default {
     async writeAdvise() {
       const data = {
         uuid: this.$store.state.uuid,
-        lawyerUuid: this.$route.query.lawyerUuid,
+        // lawyerUuid: this.$route.query.lawyerUuid,
+        lawyerUuid: this.$store.state.lawuuid,
         reservationDate: this.reservationDate,
         remarks: this.remarks,
         state: this.state,
@@ -221,17 +229,25 @@ export default {
         content: $('#summernote').summernote('code'),
         category: this.category,
       };
-      console.log(data, '1111');
+      console.log('est1', data);
       const response = await createAdvise(data);
-      console.log(response, '2222');
 
       this.$swal({
         icon: 'success',
-        title: '글 작성 완료!!',
+        title: '작성완료',
         showConfirmButton: false,
         timer: 1500,
       });
       this.profileGo();
+    },
+
+    //UTC형태로 변환
+    UTCconvert(olddate) {
+      var replaceAt = function(input, index, character) {
+        return input.substr(0, index) + character + input.substr(index + character.length);
+      };
+      this.reservationDate = replaceAt(olddate, 10, 'T');
+      console.log(this.reservationDate);
     },
     profileGo() {
       this.$router.push('profileUser');
