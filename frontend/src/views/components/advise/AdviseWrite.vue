@@ -6,7 +6,7 @@
         <div style="padding:80px">
           <h2 class="title text-center kor">자문요청</h2>
           <hr class="div-hr" />
-          <form v-on:submit.prevent="writeContent">
+          <form>
             <md-field>
               <label>제목</label>
               <md-input id="title" type="text" ref="title" v-model="title"></md-input>
@@ -24,7 +24,7 @@
             </md-field>
             <md-field>
               <label for="state">상태</label>
-              <md-select v-model="state" name="state" id="state">
+              <md-select v-model="state" name="state" id="state" disabled>
                 <md-option value="신청">신청</md-option>
                 <md-option value="접수">접수</md-option>
                 <md-option value="예약">예약</md-option>
@@ -41,13 +41,11 @@
               <input type="file" name="uploadFile" ref="fileData" />
               <!-- <input type="file" name="uploadFile" ref="fileData" @change="handleFilesUpload" /> -->
             </md-field>
-            <!-- 예약시간: 임의로 textarea로 넣음 나중에 수정예정 -->
             <md-field>
               <v-row>
                 <DateTimePicker :label="'예약날짜'" @date="UTCconvert" />
                 <p class="my-auto">추후 변호사의 일정에 따라 변동될 수 있습니다.</p>
               </v-row>
-              <!-- <md-input v-model="reservationDate"></md-input> -->
             </md-field>
             <!-- <md-field>
               <label>비고란</label>
@@ -152,8 +150,7 @@ export default {
       content: '',
       category: '',
       state: '신청',
-      // reservationDate: '2021-02-22T06:35:54.885Z',
-      reservationDate: '2021-02-22T06:35:54.885Z',
+      reservationDate: '',
       remarks: '',
     };
   },

@@ -1,4 +1,4 @@
-<template>
+<template id="datetimepick">
   <v-col cols="4" sm="6" md="4">
     <v-dialog ref="dialog" v-model="dateModal" :return-value.sync="date" persistent width="400px">
       <template v-slot:activator="{ on }">

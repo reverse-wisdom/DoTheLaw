@@ -44,21 +44,52 @@
           </table>
 
           <!-- 수정, 삭제는 자신이 쓴글일경우만 나타나게 처리함 -->
-          <div v-if="$store.state.name == value.name" style="text-align:right">
-            <md-button class="md-warning" @click="updateAdvise(value)">자문수정</md-button>
+          <div v-if="$store.state.role == 'USER'" style="text-align:right">
             <md-button class="md-rose" @click="adviseDelete">자문삭제</md-button>
+            <md-button class="md-warning" @click="updateAdvise(value)">자문수정</md-button>
             <!-- <md-button class="md-info" @click="moveBoard()">뒤로가기</md-button> -->
           </div>
           <!-- else -->
-          <div v-if="$store.state.name != value.name" style="text-align:right">
-            <md-button class="md-info" @click="moveBoard()">뒤로가기</md-button>
+          <div v-if="$store.state.role == 'LAWYER'" style="text-align:right">
+            <md-button class="md-info" @click="modal">자문일정</md-button>
+            <md-button class="md-info" @click="$router.go(-1)">뒤로가기</md-button>
+            <!-- 모달 -->
+            <div class="md-layout">
+              <div class="md-layout-item md-size-33">
+                <modal v-if="classicModal" @close="classicModalHide">
+                  <template slot="header">
+                    <h4 class="modal-title kor">{{ value.name }}과의 자문일정</h4>
+                    <md-button class="md-simple md-just-icon md-round modal-default-button" @click="classicModalHide">
+                      <md-icon>clear</md-icon>
+                    </md-button>
+                  </template>
+                  <template slot="body">
+                    <form v-on:submit.prevent="modifyAdvise">
+                      <md-field>
+                        <label for="state">자문 진행상태</label>
+                        <md-select v-model="state" name="state" id="state">
+                          <md-option value="신청">신청</md-option>
+                          <md-option value="접수">접수</md-option>
+                          <md-option value="예약">예약</md-option>
+                          <md-option value="진행">진행</md-option>
+                          <md-option value="완료">완료</md-option>
+                          <md-option value="종료">종료</md-option>
+                        </md-select>
+                      </md-field>
+                      <md-field>
+                        <v-row>
+                          <DateTimePicker :label="'예약날짜'" @date="UTCconvert" />
+                        </v-row>
+                      </md-field>
+                    </form>
+                  </template>
+                  <template slot="footer">
+                    <md-button class="md-danger md-simple" @click="modifyAdvise">완료</md-button>
+                  </template>
+                </modal>
+              </div>
+            </div>
           </div>
-          <!-- 댓글 -->
-          <!-- <comment-write :boardId="value.boardId" @uploadComment="uploadComment" />
-          <br />
-          <ul v-for="(comment, index) in comments" :key="index">
-            <comment-row :comment="comment" :boardId="value.boardId" @deleteComment="deleteComment" />
-          </ul> -->
         </div>
       </div>
     </div>
@@ -66,16 +97,22 @@
 </template>
 
 <script>
-import { detailAdvise, deleteAdvise } from '@/api/advise';
-import axios from 'axios';
-
+import { detailAdvise, deleteAdvise, editAdvise } from '@/api/advise';
+import { Modal } from '@/components';
+import DateTimePicker from '@/views/components/advise/DateTimePicker.vue';
 export default {
   bodyClass: 'profile-page',
-  components: {},
+  components: {
+    Modal,
+    DateTimePicker,
+  },
   data() {
     return {
       value: '',
+      state: '',
       comments: [],
+      classicModal: false,
+      reservationDate: '',
     };
   },
   props: {
@@ -97,9 +134,9 @@ export default {
     this.value = data;
   },
   methods: {
-    moveBoard() {
-      this.$router.push('/board');
-    },
+    // moveBoard() {
+    //   this.$router.go('/board');
+    // },
     async adviseDelete() {
       const uuid = this.$store.state.uuid;
       const matchingId = this.value.matchingId;
@@ -129,6 +166,49 @@ export default {
         return comment.comment_id === oldComment.comment_id;
       });
       this.comments.splice(commentIndex, 1);
+    },
+    // 모달 숨기기
+    classicModalHide() {
+      this.classicModal = false;
+    },
+    modal() {
+      this.classicModal = true;
+    },
+    //UTC형태로 변환
+    UTCconvert(olddate) {
+      var replaceAt = function(input, index, character) {
+        return input.substr(0, index) + character + input.substr(index + character.length);
+      };
+      this.reservationDate = replaceAt(olddate, 10, 'T');
+      console.log(this.reservationDate);
+    },
+    //수정 axios
+    async modifyAdvise() {
+      const editData = {
+        matchingId: this.value.matchingId,
+        category: this.value.category,
+        remarks: this.value.remarks,
+        // content: $('#summernote').summernote('code'),
+        title: this.value.title,
+        reservationDate: this.reservationDate,
+        state: this.state,
+        name: this.value.name,
+        uuid: this.value.uuid,
+      };
+      const uuid = this.$store.state.uuid;
+      const { data } = await editAdvise(editData, uuid);
+      this.classicModal = false;
+      this.$swal({
+        icon: 'success',
+        title: '글 수정 완료',
+      });
+      {
+        const adviseId = this.$route.query.matchingId;
+        const { data } = await detailAdvise(adviseId);
+        this.value = data;
+      }
+      var matchingId = this.value.matchingId;
+      this.$router.push({ name: 'AdviseDetail', query: { matchingId: matchingId } });
     },
   },
 };

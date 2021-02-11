@@ -11,6 +11,7 @@
               <label>제목</label>
               <md-input id="title" type="text" ref="title" v-model="value.title"></md-input>
             </md-field>
+
             <md-field>
               <v-row align="center">
                 <v-col cols="12">
@@ -18,17 +19,39 @@
                 </v-col>
               </v-row>
             </md-field>
+
+            <md-field>
+              <label for="state">상태</label>
+              <md-select v-model="state" name="state" id="state">
+                <md-option value="신청">신청</md-option>
+                <md-option value="접수">접수</md-option>
+                <md-option value="예약">예약</md-option>
+                <md-option value="진행">진행</md-option>
+                <md-option value="완료">완료</md-option>
+                <md-option value="종료">종료</md-option>
+              </md-select>
+            </md-field>
+
             <md-field>
               <div id="summernote"></div>
             </md-field>
+
             <md-field>
               <label>비고란</label>
               <md-input v-model="remarks"></md-input>
             </md-field>
+
             <md-field>
               <!-- 파일의 경우 change 리스너로 감지해야함 -->
               <input type="file" name="uploadFile" ref="fileData" />
               <!-- <input type="file" name="uploadFile" ref="fileData" @change="handleFilesUpload" /> -->
+            </md-field>
+
+            <md-field>
+              <v-row>
+                <DateTimePicker :label="'예약날짜'" @date="UTCconvert" />
+                <p class="my-auto">추후 변호사의 일정에 따라 변동될 수 있습니다.</p>
+              </v-row>
             </md-field>
             <div class="btn-right">
               <md-button class="md-dense md-raised md-warning" type="submit" @click="modifyAdvise">
@@ -47,14 +70,19 @@
 
 <script>
 import { detailAdvise, editAdvise } from '@/api/advise';
-
+import DateTimePicker from '@/views/components/advise/DateTimePicker.vue';
 export default {
   bodyClass: 'profile-page',
+  components: {
+    DateTimePicker,
+  },
   data: function() {
     return {
       value: '',
       content: '',
       selected: '',
+      state: '',
+      remarks: '',
       items: ['교통/운전', '가정', '근로/노동', '부동산', '금융', '정보통신/기술'],
     };
   },
@@ -114,7 +142,7 @@ export default {
 
       const uuid = this.$store.state.uuid;
       const { data } = await editAdvise(editData, uuid);
-
+      console.log('update', data);
       this.$swal({
         icon: 'success',
         title: '글 수정 완료',
@@ -124,6 +152,14 @@ export default {
     },
     moveAdviseList() {
       this.$router.push({ name: 'adviseList' });
+    },
+    //UTC형태로 변환
+    UTCconvert(olddate) {
+      var replaceAt = function(input, index, character) {
+        return input.substr(0, index) + character + input.substr(index + character.length);
+      };
+      this.reservationDate = replaceAt(olddate, 10, 'T');
+      console.log(this.reservationDate);
     },
   },
 };
