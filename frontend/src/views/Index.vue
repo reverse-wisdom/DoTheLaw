@@ -2,7 +2,7 @@
   <div class="home">
     <full-page :options="options">
       <div class="section pb-0" :style="image_1" data-width="1200" data-height="730">
-        <form @submit="detailSearch()" autocomplete="off" background-color="white">
+        <form @submit="detailSearch()" autocomplete="off" background-color="white" style="padding-top:50px">
           <fieldset id="searchbar" class="text-center">
             <v-text-field id="searchWordMain" clearable color="white" height="50px" v-model="query" style="backgroundcolor: white; width: 1500px; float: left;">
               <template v-slot:label>
@@ -13,28 +13,27 @@
                 </v-icon>
               </template>
             </v-text-field>
-
             <v-btn depressed x-large color="primary" @click="detailSearch">
               검색
             </v-btn>
           </fieldset>
         </form>
+        <div class="text-center" style="margin-left:30px; margin-top:30px">
+          <v-card style="text-align:center; margin: 0 auto;" color="rgba(255, 255, 255, 0.1)" width="50%" height="200px">
+            <!-- <span class="rank-title">검색어 순위&nbsp;</span> -->
+            <!-- <br /> -->
+            <search-rank class="text-center"></search-rank>
+          </v-card>
+        </div>
       </div>
 
       <div id="section1" class="section pb-0" :style="image_2" data-width="1200" data-height="730">
         <div class="md-layout ">
-          <div class="md-layout-item md-medium-size-50 md-small-size-100 ">
+          <div class="md-layout-item md-medium-size-100 md-small-size-100 ">
             <v-card elevation="7" color="rgba(255, 255, 255, 0.1)" class="custom-card text-center">
               <span class="title-solid text-center">실시간 법원/검찰 뉴스</span>
               <law-rss-news :key="componentKey"></law-rss-news>
               <button id="f5" @click="forceRerender">새로고침</button>
-            </v-card>
-          </div>
-
-          <div class="md-layout-item md-medium-size-50 md-small-size-100">
-            <v-card elevation="7" color="rgba(255, 255, 255, 0.1)" class="custom-card text-center">
-              <span class="title-solid">검색어 순위</span>
-              <search-rank></search-rank>
             </v-card>
           </div>
         </div>
@@ -84,13 +83,9 @@ export default {
   data() {
     return {
       query: '',
-
       componentKey: 0,
       options: {
-        // paddingTop: '30px',
         navigation: true,
-        // sectionsColor: ['#f2f2f2', '#4BBFC3', '#7BAABE'],
-        // image: [require('@/assets/img/mainbg1.png'), require('@/assets/img/mainbg2.jpg'), require('@/assets/img/mainbg3.jpg')],
       },
     };
   },
@@ -173,13 +168,6 @@ input#searchWordMain {
   font-size: 200%;
   text-align: center;
 }
-// #fp-nav ul li a span,
-// .fp-slidesNav ul li a span {
-//   background: rgba(236, 206, 140, 0.356) !important;
-//   /* height: 20px !important;
-//   width: 20px !important;
-//   margin: -2px 0 0 -2px !important; */
-// }
 </style>
 <style scoped>
 .kor {
@@ -243,6 +231,12 @@ input#searchWordMain {
   color: white;
   font-weight: bold;
 }
+.rank-title {
+  font-size: 40px;
+  color: white;
+  font-weight: bold;
+}
+
 #olid {
   box-sizing: content-box;
 }
