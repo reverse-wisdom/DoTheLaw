@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div v-bind:style="[checkDate ? { opacity: 0.4 } : {}]">
     <div @click="moveControversyDetail(list)">
-      <v-img class="white--text align-end" height="200px" :src="controversyImg">
+      <v-img class="white--text align-end" height="200px" :src="controversyImg" :disabled="checkDate">
         <v-card-title>{{ list.title }}</v-card-title>
       </v-img>
       <v-card-text class="text--primary">
@@ -23,13 +23,13 @@
     </div>
     <v-row no-gutters>
       <v-col>
-        <v-btn color="primary" x-large @click="agreeUp(list.controversyId)">
+        <v-btn color="primary" x-large @click="agreeUp(list.controversyId)" :disabled="checkDate">
           <v-icon>mdi-pencil</v-icon>
           <div class="keep-spaces">&nbsp;찬성</div>
         </v-btn>
       </v-col>
       <v-col>
-        <v-btn color="error" x-large class="text-right" @click="oppositionUp(list.controversyId)">
+        <v-btn color="error" x-large class="text-right" @click="oppositionUp(list.controversyId)" :disabled="checkDate">
           <v-icon>mdi-pencil</v-icon>
           <div class="keep-spaces">&nbsp;반대</div>
         </v-btn>
@@ -48,6 +48,7 @@ export default {
   data() {
     return {
       controversyImg: require('@/assets/img/controversy.png'),
+      checkDate: true,
     };
   },
   props: {
@@ -56,9 +57,20 @@ export default {
       required: true,
     },
   },
+  mounted() {
+    if (new Date(this.list.endDate) > Date.now()) {
+      this.checkDate = false;
+    }
+  },
   methods: {
     moveControversyDetail(list) {
-      this.$router.push({ name: 'controversydetail', query: { controversyId: list.controversyId } });
+      if (!this.checkDate) this.$router.push({ name: 'controversydetail', query: { controversyId: list.controversyId } });
+      else {
+        this.$swal({
+          icon: 'error',
+          title: '종료된 논쟁입니다.!!',
+        });
+      }
     },
     async agreeUp(controversyId) {
       if (this.$store.state.name == null || this.$store.state.name == '') {
@@ -183,5 +195,9 @@ export default {
 }
 .donut-inner span {
   font-size: 20px;
+}
+.disabled {
+  pointer-events: none;
+  opacity: 0.4;
 }
 </style>
