@@ -23,8 +23,15 @@
               </md-select>
             </md-field>
             <md-field>
-              <label>상태</label>
-              <md-input v-model="state"></md-input>
+              <label for="state">상태</label>
+              <md-select v-model="state" name="state" id="state">
+                <md-option value="신청">신청</md-option>
+                <md-option value="접수">접수</md-option>
+                <md-option value="예약">예약</md-option>
+                <md-option value="진행">진행</md-option>
+                <md-option value="완료">완료</md-option>
+                <md-option value="종료">종료</md-option>
+              </md-select>
             </md-field>
             <md-field>
               <div id="summernote"></div>
@@ -137,7 +144,7 @@ export default {
       title: '',
       content: '',
       category: '',
-      state: '신청',
+      state: '',
       reservationDate: '2021-02-22T06:35:54.885Z',
       remarks: '',
     };
