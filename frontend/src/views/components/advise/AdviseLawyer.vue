@@ -10,7 +10,13 @@
           <v-spacer></v-spacer>
           <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
         </v-card-title>
-        <v-data-table :headers="headers" :items-per-page="5" :items="values" :search="search" @click:row="adviseDetail" class="elevation-1"></v-data-table>
+        <v-data-table :headers="headers" :items-per-page="5" :items="values" :search="search" @click:row="adviseDetail" class="elevation-1">
+          <!-- <template v-slot:item.name="{ item }">
+            <v-chip :color="getColor(item.name)" dark>
+              {{ item.name }}
+            </v-chip>
+          </template> -->
+        </v-data-table>
       </v-card>
       <!-- <div class="btn-right">
         <md-button class="md-dense md-raised md-info" type="button" @click="writePage">
@@ -62,6 +68,7 @@ export default {
           title: data[i].title,
           state: data[i].state,
           name: data[i].name,
+
           // hit: data.client[i].hit,
           reservationDate: this.$moment(data[i].reservationDate).format('llll'),
           createDate: this.$moment(data[i].createDate).format('llll'),
@@ -76,6 +83,10 @@ export default {
     adviseDetail(value) {
       var matchingId = value.matchingId;
       this.$router.push({ name: 'AdviseDetail', query: { matchingId: matchingId } });
+    },
+    getColor(name) {
+      var colors = ['red', 'green', 'blue', 'orange', 'yellow'];
+      return colors[Math.floor(Math.random() * colors.length)];
     },
   },
 };
