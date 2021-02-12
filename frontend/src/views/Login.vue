@@ -22,7 +22,7 @@ export default {
   props: {
     header: {
       type: String,
-      default: require('@/assets/img/jj02.gif'),
+      default: require('@/assets/img/images.jpg'),
     },
   },
   computed: {

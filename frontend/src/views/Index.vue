@@ -4,7 +4,7 @@
       <div class="section pb-0" :style="image_1" data-width="1200" data-height="730">
         <form @submit="detailSearch()" autocomplete="off" background-color="white" style="padding-top:50px">
           <fieldset id="searchbar" class="text-center">
-            <v-text-field id="searchWordMain" clearable color="white" height="50px" v-model="query" style="backgroundcolor: white; width: 1500px; float: left;">
+            <v-text-field id="searchWordMain" clearable color="white" height="50px" v-model="query" style="margin-top:50px; backgroundcolor: white; width: 1500px; float: left;">
               <template v-slot:label>
                 <strong>검색어</strong>
                 를입력해주세요!
@@ -20,8 +20,6 @@
         </form>
         <div class="text-center" style="margin-left:30px; margin-top:30px">
           <v-card style="text-align:center; margin: 0 auto;" color="rgba(255, 255, 255, 0.1)" width="50%" height="200px">
-            <!-- <span class="rank-title">검색어 순위&nbsp;</span> -->
-            <!-- <br /> -->
             <search-rank class="text-center"></search-rank>
           </v-card>
         </div>
