@@ -9,7 +9,7 @@
           <div class="row">
             <div class="col-1"></div>
             <div class="col-3 colum mx-auto">
-              <img v-if="value.image" class="col-12 r-10" id="profile" :src="value.image" alt="" />
+              <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + $store.state.uuid + '/512'" alt="" />
               <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
               <div class="r-2 mx-auto"></div>
             </div>
@@ -110,9 +110,9 @@ export default {
     this.$store.commit('setLawuuid', data.uuid);
     console.log('회원정보', this.value);
 
-    const imgres = await saveImage(data.image);
-    console.log(imgres);
-    this.value.image = imgres.data;
+    // const imgres = await saveImage(data.image);
+    // console.log(imgres);
+    // this.value.image = imgres.data;
 
     var query = this.value.address;
     axios
