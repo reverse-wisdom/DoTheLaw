@@ -23,7 +23,7 @@ export default new Vuex.Store({
     password: '',
     nickname: '',
     name: '',
-    image: '',
+    // image: '',
     phone: '',
     uuid: '',
     role: '',
@@ -67,13 +67,13 @@ export default new Vuex.Store({
     clearPhone(state) {
       state.phone = '';
     },
-    setImage(state, image) {
-      state.image = image;
-    },
+    // setImage(state, image) {
+    //   state.image = image;
+    // },
 
-    clearImage(state) {
-      state.image = '';
-    },
+    // clearImage(state) {
+    //   state.image = '';
+    // },
     setName(state, name) {
       state.name = name;
     },
@@ -112,7 +112,7 @@ export default new Vuex.Store({
           commit('setName', data.data.member.name);
           commit('setUuid', data.data.member.uuid);
           commit('setPhone', data.data.member.phone);
-          commit('setImage', data.data.member.image);
+          // commit('setImage', data.data.member.image);
           commit('setRole', data.data.member.role.substring(5).trim());
           router.push('/');
         }
@@ -133,7 +133,7 @@ export default new Vuex.Store({
         commit('setUuid', data.member.uuid);
         commit('setName', data.member.name);
         commit('setPhone', data.member.phone);
-        commit('setImage', data.member.image);
+        // commit('setImage', data.member.image);
         commit('setRole', data.member.role.substring(5).trim());
         router.push('/');
       } else {

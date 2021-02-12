@@ -9,7 +9,7 @@
           <div class="row">
             <div class="col-1"></div>
             <div class="col-3 colum mx-auto">
-              <img v-if="value.image" class="col-12 r-7 mx-auto" id="profile" :src="value.image" alt="" />
+              <img v-if="$store.state.uuid" class="col-12 r-7 mx-auto" id="profile" :src="'/api/member/image/' + $store.state.uuid + '512'" alt="" />
               <img v-else id="profile" class="col-12 r-7 mx-auto" src="@/assets/img/noimage.jpg" alt="noimage" />
             </div>
             <div class="col-8 row" id="content-sort">
