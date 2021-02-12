@@ -1,9 +1,7 @@
 <template>
   <ol>
-    <li v-for="(item, index) in items" v-show="index + 1 === step" :key="index">
+    <li v-for="(item, index) in items" v-show="index + 1 === step" :key="index" style="list-style-type: none;">
       <span class="question">
-        <!-- <span>{{ index + 1 }}.</span> -->
-        <!-- <div v-html="quiz.quiz_question" /> -->
         <span>{{ item.quiz }}</span>
       </span>
       <quiz-question-items :parentIndex="index" v-bind:items="item.example" />
