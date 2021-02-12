@@ -130,7 +130,7 @@ public class ImageController {
 	@ResponseBody
 	public ResponseEntity<?> serveProfileImage(@PathVariable int uuid, @PathVariable Optional<Integer> size) {
 		int imageSize = size.orElse(64);
-		if (imageSize % 16 != 0 || imageSize / 256 > 1)
+		if (imageSize % 16 != 0 || imageSize / 512 > 1)
 			imageSize = 64;
 		try {
 			MemberRequestDTO member = memberService.getMember(uuid);
@@ -183,10 +183,10 @@ public class ImageController {
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"default\"");
-			headers.setContentType(MediaType.IMAGE_PNG);
+			headers.setContentType(MediaType.IMAGE_JPEG);
 			ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 //			Resource[] resources = resolver.getResources("classpath*:static/*.png");
-			Resource resource = resolver.getResource("classpath:static/user-" + imageSize + ".png");
+			Resource resource = resolver.getResource("classpath:static/user-" + imageSize + ".jpg");
 //			Path file = ResourceUtils.getFile("classpath:static/user-" + imageSize + ".png").toPath();
 //			Resource resource = new UrlResource(file.toUri());
 			return ResponseEntity.ok().headers(headers).body(resource);
