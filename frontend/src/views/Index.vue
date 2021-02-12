@@ -61,6 +61,11 @@
           <li class="col-2">
             <input @click="moveControversy" class="button" value="찬반토론" readonly onfocus="this.blur();" />
           </li>
+          <div class="col-5"></div>
+
+          <li class="col-2">
+            <input @click="moveScourtExp" class="button" value="모의판사체험" readonly onfocus="this.blur();" />
+          </li>
         </div>
       </div>
     </full-page>
@@ -152,6 +157,9 @@ export default {
     },
     moveControversy() {
       this.$router.push({ name: 'controversylist' });
+    },
+    moveScourtExp() {
+      location.href = 'https://i4d103.p.ssafy.io/exp/main.html';
     },
   },
 };
