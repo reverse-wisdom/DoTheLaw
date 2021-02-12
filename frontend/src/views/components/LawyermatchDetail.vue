@@ -44,7 +44,7 @@
                 <hr />
                 {{ lawyer.email }}
               </div>
-              <div class="col-11" id="text-solid-one">
+              <div class="col-11 mx-auto" id="text-solid-one">
                 최근답변
                 <hr />
                 <AdviseLawyer />
