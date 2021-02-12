@@ -22,7 +22,7 @@
             </tr>
             <tr style="border-top: 1px solid;">
               <th scope="col">비고란</th>
-              <td>{{ remarks }}</td>
+              <td>{{ value.remarks }}</td>
             </tr>
             <tr style="border-top: 1px solid;">
               <th scope="col">예약시간</th>
@@ -224,11 +224,10 @@ export default {
     },
     //수정 axios
     async modifyAdvise() {
-      console.log(this.value.remarks);
       const editData = {
         matchingId: this.value.matchingId,
         category: this.value.category,
-        remarks: this.remarks,
+        remarks: this.value.remarks,
         // content: $('#summernote').summernote('code'),
         title: this.value.title,
         reservationDate: this.reservationDate,

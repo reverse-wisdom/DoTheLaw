@@ -20,7 +20,7 @@ export default {
   props: {
     header: {
       type: String,
-      default: require('@/assets/img/jj02.gif'),
+      default: require('@/assets/img/Law2-1.gif'),
     },
     city: {
       type: String,

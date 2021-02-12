@@ -14,7 +14,7 @@ function detailAdvise(adviseData) {
   return posts.get(`/api/matching/search/detail?matchingId=${adviseData}`);
 }
 function editAdvise(modifyData) {
-  return posts.put('api/matching/update/', modifyData);
+  return posts.put('api/matching/update', modifyData);
 }
 function deleteAdvise(userData, adviseData, userId) {
   return posts.delete(`api/matching/delete?matchingId=${adviseData}&uuid=${userData}`);
