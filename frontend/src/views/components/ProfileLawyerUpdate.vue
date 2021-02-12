@@ -7,7 +7,7 @@
           <div class="row">
             <div class="col-1"></div>
             <div class="col-3 row mx-auto">
-              <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + $store.state.uuid + '/512'" alt="" />
+              <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + $store.state.uuid + '/512?t=' + new Date().getTime()" alt="" />
               <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
               <!-- <img id="profile" class="col-12 r-10" :src="'/api/member/image/' + $store.state.uuid + '/256'" alt="noimage" /> -->
               <div class="r-2 mx-auto" id="button-sort">
@@ -177,18 +177,18 @@ export default {
         role: 'LAWYER',
       };
 
-      var FormData = require('form-data');
-      var form = new FormData();
+      // var FormData = require('form-data');
+      // var form = new FormData();
 
-      if (this.files != null) {
-        form.append('file', this.files);
-      }
+      // if (this.files != null) {
+      //   form.append('file', this.files);
+      // }
 
-      // axios.post(`api/mamber/image/update/${this.value.uuid}`, form, { 'Content-Type': 'multipart/form-data', headers: this.$store.state.token }).then(function(response) {
-      //   console.log(response);
-      // });
-      const imageres = await imageUpload(this.value.uuid, form);
-      console.log(imageres);
+      // // axios.post(`api/mamber/image/update/${this.value.uuid}`, form, { 'Content-Type': 'multipart/form-data', headers: this.$store.state.token }).then(function(response) {
+      // //   console.log(response);
+      // // });
+      // const imageres = await imageUpload(this.value.uuid, form);
+      // console.log(imageres);
 
       console.log('인풋데이터 확인', userdata);
       const res = await editLawyer(userdata);
@@ -222,7 +222,20 @@ export default {
     },
     handleFilesUpload(file) {
       this.files = file;
-      // this.value.image = file;
+      if (file) {
+        var frm = new FormData();
+        frm.append('file', file);
+
+        axios
+          .post(`api/member/image/update/${this.$store.state.uuid}`, frm, { 'Content-Type': 'multipart/form-data', headers: { 'x-auth-token': this.$store.state.token } })
+          .then((response) => {
+            // console.log('프로필 업로드 성공', response);
+            this.$forceUpdate();
+          })
+          .catch((err) => console.log(err));
+        // const imageres = await imageUpload(this.value.uuid, form);
+        // console.log(imageres);
+      }
     },
   },
 };
