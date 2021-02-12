@@ -74,6 +74,7 @@ export default {
       dict: [],
       alertTest: '쀼쀼쀼',
       swal: null,
+      createWebChatClient: createWebChatClient,
 
       // 모달
       classicModal: false,
@@ -103,11 +104,11 @@ export default {
         mean: String.raw`${data[i].mean}`.replace(/\\n/g, '\n'),
       });
     }
-    var newText = this.raw.replace(/<(\/a|a)([^>]*)>/gi, '');
+    // var newText = this.raw.replace(/<(\/a|a)([^>]*)>/gi, '');
 
-    this.swal = this.$swal;
-    this.raw = newText;
-    this.regexp();
+    // this.swal = this.$swal;
+    // this.raw = newText;
+    // this.regexp();
   },
   methods: {
     // 모달 숨기기
