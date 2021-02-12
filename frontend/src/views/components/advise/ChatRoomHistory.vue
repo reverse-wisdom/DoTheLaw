@@ -1,35 +1,23 @@
 <template>
-  <div class="container">
+  <div class="">
     <!-- <h3>{{ title }}</h3>
     <hr /> -->
-    <main>
-      <header>
-        <div>
-          <h2>Chat with Vincent Porter</h2>
+
+    <ul id="chat">
+      <li v-for="(m, idx) in msg" :key="idx" v-bind:class="m.style">
+        <div class="entete">
+          <span class="status green"></span>
+          <h2>{{ m.name }}</h2>
+          <h3>{{ m.regDate }}</h3>
         </div>
-      </header>
-      <ul id="chat">
-        <li v-for="(m, idx) in msg" :key="idx" v-bind:class="m.style">
-          <div class="entete">
-            <span class="status green"></span>
-            <h2>{{ m.name }}</h2>
-            <h3>{{ m.regDate }}</h3>
-          </div>
-          <!-- <div class="triangle"></div> -->
-          <div class="message">
-            {{ m.content }}
-          </div>
-        </li>
-      </ul>
-      <!-- <footer>
-        <textarea placeholder="Type your message"></textarea>
-        <button @click="sendMessage()">SEND</button>
-        <a href="#">Send</a>
-      </footer> -->
-    </main>
+        <!-- <div class="triangle"></div> -->
+        <div class="message">
+          {{ m.content }}
+        </div>
+      </li>
+    </ul>
+
     <hr />
-    <input type="text" v-model="content" placeholder="보낼 메세지" size="100" />
-    <button @click="sendMessage()">SEND</button>
   </div>
 </template>
 
@@ -95,13 +83,6 @@ aside {
   display: inline-block;
   font-size: 15px;
   vertical-align: top;
-}
-main {
-  height: 800px;
-  display: inline-block;
-  font-size: 15px;
-  vertical-align: top;
-  background-color: #abd9e9;
 }
 
 aside header {
