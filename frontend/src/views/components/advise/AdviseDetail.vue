@@ -21,7 +21,7 @@
               <td>{{ value.state }}</td>
             </tr>
             <tr style="border-top: 1px solid;">
-              <th scope="col"></th>
+              <th scope="col">비고란</th>
               <td>{{ value.remarks }}</td>
             </tr>
             <tr style="border-top: 1px solid;">
@@ -64,7 +64,7 @@
                     </md-button>
                   </template>
                   <template slot="body">
-                    <form v-on:submit.prevent="modifyAdvise">
+                    <form @submit.prevent="modifyAdvise">
                       <md-field>
                         <label for="state">자문 진행상태</label>
                         <md-select v-model="state" name="state" id="state">
@@ -81,10 +81,14 @@
                           <DateTimePicker :label="'예약날짜'" @date="UTCconvert" />
                         </v-row>
                       </md-field>
+                      <md-field>
+                        <label>비고란</label>
+                        <md-input v-model="remarks"></md-input>
+                      </md-field>
                     </form>
                   </template>
                   <template slot="footer">
-                    <md-button class="md-danger md-simple" @click="modifyAdvise">완료</md-button>
+                    <md-button class="md-danger md-simple" type="submit" @click="modifyAdvise()">완료</md-button>
                   </template>
                 </modal>
               </div>
@@ -110,6 +114,7 @@ export default {
     return {
       value: '',
       state: '',
+      remarks: '',
       comments: [],
       classicModal: false,
       reservationDate: '',
@@ -131,6 +136,7 @@ export default {
   async created() {
     const adviseId = this.$route.query.matchingId;
     const { data } = await detailAdvise(adviseId);
+    console.log(data);
     this.value = data;
   },
   methods: {
@@ -190,11 +196,12 @@ export default {
         remarks: this.value.remarks,
         // content: $('#summernote').summernote('code'),
         title: this.value.title,
-        reservationDate: this.reservationDate,
+        reservationDate: this.value.reservationDate,
         state: this.state,
         name: this.value.name,
         uuid: this.value.uuid,
       };
+      console.log('zzz', editData);
       const uuid = this.$store.state.uuid;
       const { data } = await editAdvise(editData, uuid);
       this.classicModal = false;
@@ -207,7 +214,8 @@ export default {
         const { data } = await detailAdvise(adviseId);
         this.value = data;
       }
-      var matchingId = this.value.matchingId;
+
+      // var matchingId = this.value.matchingId;
       // this.$router.push({ name: 'AdviseDetail', query: { matchingId: matchingId } });
     },
   },
