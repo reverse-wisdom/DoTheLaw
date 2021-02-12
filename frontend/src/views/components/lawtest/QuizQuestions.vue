@@ -1,6 +1,7 @@
 <template>
   <ol>
     <li v-for="(item, index) in items" v-show="index + 1 === step" :key="index" style="list-style-type: none;">
+      <img :src="item.image" />
       <span class="question">
         <span>{{ item.quiz }}</span>
       </span>

@@ -3,9 +3,6 @@
     <div class="start-content" v-html="content"></div>
     <div class="title">
       <div class="">
-        <img src="@/assets/img/lawtitle.png" class="title-lawtest" alt="" />
-      </div>
-      <div class="">
         <img src="@/assets/img/main2.png" alt="" />
       </div>
     </div>
