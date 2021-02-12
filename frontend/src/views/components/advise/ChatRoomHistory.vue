@@ -2,18 +2,21 @@
   <div class="">
     <!-- <h3>{{ title }}</h3>
     <hr /> -->
-
+    <label for="">채팅기록검색:</label>
+    <input type="text" v-model="search" />
     <ul id="chat">
       <li v-for="(m, idx) in msg" :key="idx" v-bind:class="m.style">
-        <div class="entete">
-          <span class="status green"></span>
-          <h2>{{ m.name }}</h2>
-          <h3>{{ m.regDate }}</h3>
-        </div>
-        <!-- <div class="triangle"></div> -->
-        <div class="message">
-          {{ m.content }}
-        </div>
+        <template v-if="m.content.includes(search)">
+          <div class="entete">
+            <span class="status green"></span>
+            <h2>{{ m.name }}</h2>
+            <h3>{{ m.regDate }}</h3>
+          </div>
+          <!-- <div class="triangle"></div> -->
+          <div class="message">
+            {{ m.content }}
+          </div>
+        </template>
       </li>
     </ul>
 
@@ -30,6 +33,7 @@ export default {
       title: '',
       content: '',
       client: null,
+      search: '',
       msg: [],
       uuid: this.$store.state.uuid,
     };
@@ -41,6 +45,11 @@ export default {
     this.client.getChatBeforeMessage();
     this.client.connect();
   },
+  // computed: {
+  //   filteredRecord() {
+  //     return this.msg.filter((item) => item.match(this.search));
+  //   },
+  // },
   methods: {
     setTitle(title) {
       this.title = title;

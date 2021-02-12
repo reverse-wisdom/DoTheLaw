@@ -110,7 +110,8 @@
             </md-button>
           </template>
           <template slot="body">
-            <chat-room-history :roomId="value.matchingId" v-if="roomId"></chat-room-history>
+            <!-- <chat-room-history :roomId="value.matchingId" v-if="roomId"></chat-room-history> -->
+            <chat-room-history :roomId="4" v-if="roomId"></chat-room-history>
           </template>
           <template slot="footer">
             <md-button class="md-danger md-simple" type="submit" @click="classicModalHide2">닫기</md-button>
