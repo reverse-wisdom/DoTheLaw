@@ -13,7 +13,7 @@
               <img v-else id="profile" class="col-12 r-7 mx-auto" src="@/assets/img/noimage.jpg" alt="noimage" />
             </div>
             <div class="col-8 row" id="content-sort">
-              <h1 class="col-12 r-4">사용자 {{ $store.state.name }}</h1>
+              <h1 class="col-12 r-4">사용자 {{ value.name }}</h1>
               <div class="col-11 mx-auto" id="text-solid-1">
                 한줄소개
                 <hr />
@@ -21,8 +21,9 @@
             </div>
             <div class="row">
               <div class="col-5 mx-auto" id="text-solid-margin">
-                관심분야
+                이메일
                 <hr />
+                {{ value.email }}
               </div>
               <div class="col-5 mx-auto" id="text-solid">
                 전화번호
