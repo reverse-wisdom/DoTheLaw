@@ -214,6 +214,7 @@ export default {
         const { data } = await detailAdvise(adviseId);
         this.value = data;
       }
+
       // var matchingId = this.value.matchingId;
       // this.$router.push({ name: 'AdviseDetail', query: { matchingId: matchingId } });
     },
