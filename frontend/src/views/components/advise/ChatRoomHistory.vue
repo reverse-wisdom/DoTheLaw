@@ -1,22 +1,21 @@
 <template>
-  <div class="">
-    <!-- <h3>{{ title }}</h3>
-    <hr /> -->
+  <div>
     <label for="">채팅기록검색:</label>
-    <input type="text" v-model="search" />
+    <hr />
+    <input type="text" v-model="query" @keydown="move" />
     <ul id="chat">
-      <li v-for="(m, idx) in msg" :key="idx" v-bind:class="m.style">
-        <template v-if="m.content.includes(search)">
-          <div class="entete">
-            <span class="status green"></span>
-            <h2>{{ m.name }}</h2>
-            <h3>{{ m.regDate }}</h3>
-          </div>
-          <!-- <div class="triangle"></div> -->
-          <div class="message">
-            {{ m.content }}
-          </div>
-        </template>
+      <li v-for="(m, idx) in msg" :key="idx" :id="'message-' + idx" v-bind:class="m.style">
+        <!-- <li v-for="(m, idx) in query" :key="idx"> -->
+        <!-- <template v-if="m.content.includes(query)"> -->
+        <div class="entete">
+          <span class="status green"></span>
+          <h2>{{ m.name }}</h2>
+          <h3>{{ m.regDate }}</h3>
+        </div>
+        <div class="message">
+          {{ m.content }}
+        </div>
+        <!-- </template> -->
       </li>
     </ul>
 
@@ -33,7 +32,7 @@ export default {
       title: '',
       content: '',
       client: null,
-      search: '',
+      query: '',
       msg: [],
       uuid: this.$store.state.uuid,
     };
@@ -45,20 +44,35 @@ export default {
     this.client.getChatBeforeMessage();
     this.client.connect();
   },
-  // computed: {
-  //   filteredRecord() {
-  //     return this.msg.filter((item) => item.match(this.search));
-  //   },
-  // },
+  computed: {
+    // query() {
+    //   let idx = 0;
+    //   for (let index = 0; index < this.msg.length; index++) {
+    //     if (this.msg[index].content.includes(this.query)) {
+    //       idx = index;
+    //     }
+    //   }
+    //   var el = document.getElementById('message-' + idx);
+    //   // console.log(el);
+    //   //  var el = this.$el.getElementsByClassName("actual-month")[0];
+    //   //takes a bit for dom to actually update
+    //   el.scrollIntoView({ behavior: 'smooth' });
+    // },
+  },
   methods: {
-    setTitle(title) {
-      this.title = title;
-    },
-    sendMessage() {
-      if (this.conent != '') {
-        this.client.sendMessage(this.content);
-        this.content = '';
+    move() {
+      let idx = 0;
+      for (let index = 0; index < this.msg.length; index++) {
+        if (this.msg[index].content.includes(this.query)) {
+          idx = index;
+        }
       }
+      console.log(idx);
+      var el = document.getElementById('message-' + idx);
+      // console.log(el);
+      //  var el = this.$el.getElementsByClassName("actual-month")[0];
+      //takes a bit for dom to actually update
+      el.scrollIntoView({ behavior: 'smooth' });
     },
   },
 };
