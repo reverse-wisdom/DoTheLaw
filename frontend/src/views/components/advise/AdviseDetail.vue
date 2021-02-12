@@ -47,12 +47,14 @@
           <div v-if="$store.state.role == 'USER'" style="text-align:right">
             <md-button class="md-rose" @click="adviseDelete">자문삭제</md-button>
             <md-button class="md-warning" @click="updateAdvise(value)">자문수정</md-button>
+            <md-button class="md-success" @click="modal2()">화상채팅기록</md-button>
             <!-- <md-button class="md-info" @click="moveBoard()">뒤로가기</md-button> -->
           </div>
           <!-- else -->
           <div v-if="$store.state.role == 'LAWYER'" style="text-align:right">
             <md-button class="md-info" @click="modal">자문일정</md-button>
             <md-button class="md-info" @click="$router.go(-1)">뒤로가기</md-button>
+            <md-button class="md-success" @click="modal2()">화상채팅기록</md-button>
             <!-- 모달 -->
             <div class="md-layout">
               <div class="md-layout-item md-size-33">
@@ -97,18 +99,41 @@
         </div>
       </div>
     </div>
+    <!-- 화상채팅기록 모달 -->
+    <div class="md-layout">
+      <div class="md-layout-item md-size-33">
+        <modal v-if="classicModal2" @close="classicModalHide2">
+          <template slot="header">
+            <h4 class="modal-title kor">{{ value.name }}과의 채팅기록</h4>
+            <md-button class="md-simple md-just-icon md-round modal-default-button" @click="classicModalHide2">
+              <md-icon>clear</md-icon>
+            </md-button>
+          </template>
+          <template slot="body">
+            <chat-room-history :roomId="value.matchingId" v-if="roomId"></chat-room-history>
+          </template>
+          <template slot="footer">
+            <md-button class="md-danger md-simple" type="submit" @click="classicModalHide2">닫기</md-button>
+          </template>
+        </modal>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { detailAdvise, deleteAdvise, editAdvise } from '@/api/advise';
+import { createWebChatClient } from '@/api/chat';
+import ChatRoomHistory from '@/views/components/advise/ChatRoomHistory.vue';
 import { Modal } from '@/components';
 import DateTimePicker from '@/views/components/advise/DateTimePicker.vue';
+
 export default {
   bodyClass: 'profile-page',
   components: {
     Modal,
     DateTimePicker,
+    ChatRoomHistory,
   },
   data() {
     return {
@@ -117,7 +142,10 @@ export default {
       remarks: '',
       comments: [],
       classicModal: false,
+      classicModal2: false,
       reservationDate: '',
+      messgage: Object,
+      roomId: 'private-room',
     };
   },
   props: {
@@ -136,7 +164,7 @@ export default {
   async created() {
     const adviseId = this.$route.query.matchingId;
     const { data } = await detailAdvise(adviseId);
-    console.log(data);
+    // console.log(data);
     this.value = data;
   },
   methods: {
@@ -180,6 +208,12 @@ export default {
     modal() {
       this.classicModal = true;
     },
+    classicModalHide2() {
+      this.classicModal2 = false;
+    },
+    modal2() {
+      this.classicModal2 = true;
+    },
     //UTC형태로 변환
     UTCconvert(olddate) {
       var replaceAt = function(input, index, character) {
@@ -193,10 +227,10 @@ export default {
       const editData = {
         matchingId: this.value.matchingId,
         category: this.value.category,
-        remarks: this.value.remarks,
+        remarks: this.remarks,
         // content: $('#summernote').summernote('code'),
         title: this.value.title,
-        reservationDate: this.value.reservationDate,
+        reservationDate: this.reservationDate,
         state: this.state,
         name: this.value.name,
         uuid: this.value.uuid,
@@ -204,6 +238,7 @@ export default {
       console.log('zzz', editData);
       const uuid = this.$store.state.uuid;
       const { data } = await editAdvise(editData, uuid);
+
       this.classicModal = false;
       this.$swal({
         icon: 'success',
@@ -213,10 +248,8 @@ export default {
         const adviseId = this.$route.query.matchingId;
         const { data } = await detailAdvise(adviseId);
         this.value = data;
+        console.log('1111', this.value);
       }
-
-      // var matchingId = this.value.matchingId;
-      // this.$router.push({ name: 'AdviseDetail', query: { matchingId: matchingId } });
     },
   },
 };
