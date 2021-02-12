@@ -68,8 +68,8 @@ public class OcrController {
 			System.err.println(e.getMessage());
 			return new ResponseEntity<>("Error while reading image", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-//		System.out.println(result);	
-		for (String s : Arrays.asList("명 서", "위의 사람은", "변호사", "합격")) {
+		System.out.println(result);	
+		for (String s : Arrays.asList("명 서", "의 사람은", "변호사", "합격")) {
 			if (!result.contains(s))
 				return new ResponseEntity<>("잘못된 증명서 입니다.", HttpStatus.BAD_REQUEST);
 		}

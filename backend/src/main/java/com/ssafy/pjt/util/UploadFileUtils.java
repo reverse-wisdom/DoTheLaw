@@ -129,7 +129,7 @@ public class UploadFileUtils {
 		FileCopyUtils.copy(file.getBytes(), target);
 
 		if (thumbnail) {
-			for (int size : new int[] { 16, 32, 64, 128, 256 }) {
+			for (int size : new int[] { 16, 32, 64, 128, 256, 512 }) {
 				String thumbnailName = filename + "_" + size + "." + fileExtension;
 				makeThumbnail(uploadPath, savePath, saveFileName, thumbnailName, size, size);
 			}
