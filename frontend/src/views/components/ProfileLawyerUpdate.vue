@@ -7,8 +7,9 @@
           <div class="row">
             <div class="col-1"></div>
             <div class="col-3 row mx-auto">
-              <img v-if="value.image" class="col-12 r-10" id="profile" :src="value.image" alt="" />
+              <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + $store.state.uuid + '/512'" alt="" />
               <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
+              <!-- <img id="profile" class="col-12 r-10" :src="'/api/member/image/' + $store.state.uuid + '/256'" alt="noimage" /> -->
               <div class="r-2 mx-auto" id="button-sort">
                 <v-file-input
                   type="file"
