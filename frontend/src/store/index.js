@@ -112,6 +112,7 @@ export default new Vuex.Store({
           commit('setName', data.data.member.name);
           commit('setUuid', data.data.member.uuid);
           commit('setPhone', data.data.member.phone);
+          commit('setLawuuid', data.data.member.lawuuid);
           // commit('setImage', data.data.member.image);
           commit('setRole', data.data.member.role.substring(5).trim());
           router.push('/');
