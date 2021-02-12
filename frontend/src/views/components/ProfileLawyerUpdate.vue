@@ -24,8 +24,9 @@
             </div>
             <div class="col-8 row" id="content-sort">
               <h1 class="col-12 r-4">변호사 {{ value.name }}</h1>
+              <v-file-input type="file" name="uploadFile" accept="image/png, image/jpeg, image/bmp" placeholder="자격증 인증" ref="ocr" @change="check"></v-file-input>
               <div class="col-11 mx-auto " id="text-solid-1">
-                한줄소개
+                공사중
                 <hr />
                 <input class="col-12 text-solid-input" v-model="value.introduction" />
               </div>
@@ -85,6 +86,7 @@ export default {
   data() {
     return {
       files: null,
+      ocr: null,
       image: this.$store.state.image,
       map: null,
       mapState: window.mapState,
@@ -133,6 +135,7 @@ export default {
         });
       })
       .catch();
+
     const email = this.$store.state.email;
     const { data } = await searchLawyer(email);
     this.value = data;
@@ -175,6 +178,7 @@ export default {
         phone: this.value.phone,
         uuid: this.$store.state.uuid,
         role: 'LAWYER',
+        check: this.value.check,
       };
 
       // var FormData = require('form-data');
@@ -220,16 +224,36 @@ export default {
         })
         .catch();
     },
-    handleFilesUpload(file) {
+    async handleFilesUpload(file) {
       this.files = file;
       if (file) {
         var frm = new FormData();
         frm.append('file', file);
+        console.log(frm);
 
-        axios
+        await axios
           .post(`api/member/image/update/${this.$store.state.uuid}`, frm, { 'Content-Type': 'multipart/form-data', headers: { 'x-auth-token': this.$store.state.token } })
           .then((response) => {
             // console.log('프로필 업로드 성공', response);
+            console.log(this.value);
+            this.$forceUpdate();
+          })
+          .catch((err) => console.log(err));
+        // const imageres = await imageUpload(this.value.uuid, form);
+        // console.log(imageres);
+      }
+    },
+    check(ocr) {
+      this.ocr = ocr;
+      if (ocr) {
+        var form = new FormData();
+        form.append('image', ocr);
+        console.log(form);
+        axios
+          .post(`api/ocr?uuid=${this.value.uuid}`, form, { 'Content-Type': 'multipart/form-data', headers: { 'x-auth-token': this.$store.state.token } })
+          .then((response) => {
+            // console.log('프로필 업로드 성공', response);
+            this.value.check = 'Y';
             this.$forceUpdate();
           })
           .catch((err) => console.log(err));
