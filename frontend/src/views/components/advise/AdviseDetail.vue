@@ -208,7 +208,7 @@ export default {
         this.value = data;
       }
       var matchingId = this.value.matchingId;
-      this.$router.push({ name: 'AdviseDetail', query: { matchingId: matchingId } });
+      // this.$router.push({ name: 'AdviseDetail', query: { matchingId: matchingId } });
     },
   },
 };
