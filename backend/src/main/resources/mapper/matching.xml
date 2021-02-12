@@ -25,7 +25,7 @@
 	<select id="detail" parameterType="int"
 		resultType="MatchingRequestDTO">
 		select b.matching_id, b.uuid, b.lawyer_uuid, m.name as name,
-		b.create_date, b.content, b.state, b.reservation_date, b.title, b.category
+		b.create_date, b.content, b.state, b.reservation_date, b.title, b.category, b.remarks 
 		from matching b left
 		join member m
 		on b.uuid = m.uuid
