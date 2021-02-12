@@ -17,7 +17,8 @@
 	
 	<select id="selectDictAll" resultType="searchDictDTO">
 	SELECT id, word, mean
-		FROM dict;
+		FROM dict
+		ORDER BY CHAR_LENGTH(word) desc;
 	</select>
 <!-- 
 	<select id="all" resultType="BoardRequestDTO">

@@ -3,7 +3,7 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised kor">
       <div class="section section-basic">
-        <v-row no-gutters justify="center">
+        <v-row no-gutters justify="center" align-content="center">
           <v-col cols="6" md="4">
             <form @submit="searchLaw()" onSubmit="return false;">
               <v-toolbar dense>
@@ -186,21 +186,28 @@ export default {
       this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(/<(\/a|a)([^>]*)>/gi, '');
       this.radio = this.judgment.PrecService.판결요지;
       console.log(this.dict);
+      var count = 0;
+
       this.dict.forEach((element) => {
         var regEx = new RegExp(element.word, 'g');
+
+        this.judgment.PrecService.판결요지 = this.judgment.PrecService.판결요지.replace(regEx, '#obj-' + count + '#');
+
+        this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(regEx, '#obj-' + count + '#');
+        this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, '#obj-' + count + '#');
+        console.log('인코딩 : ' + regEx + '->' + '#obj-' + count + '#');
+        count++;
+      });
+      count = 0;
+      this.dict.forEach((element) => {
+        var regEx = new RegExp('#obj-' + count + '#', 'g');
 
         this.judgment.PrecService.판결요지 = this.judgment.PrecService.판결요지.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
 
         this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
         this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
-
-        // this.judgment.PrecService.판결요지 = "딸기수박바나나 딸기 수박수 수박 과일 딸기바나나........................".replace("딸기", "<a title=딸기는 과일이다/>");
-        // this.judgment.PrecService.판결요지 = "딸기수박바나나 딸기 수박수 수박 과일 딸기바나나........................".replace("과일", "<a title=과일은 야채가 아니다/>");
-        // this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(new RegExp('\\b' + regEx + '\\b'), element.mean);
-
-        // if (this.matchExact(this.judgment.PrecService.판례내용, element.mean)) {
-        //   this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, element.mean);
-        // }
+        console.log('디코딩 : ' + regEx + '->' + `<a data-title="${element.mean}">${element.word}</a>`);
+        count++;
       });
     },
   },
