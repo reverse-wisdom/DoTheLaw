@@ -25,15 +25,12 @@ import ProfileLawyerUpdate from './views/components/ProfileLawyerUpdate.vue';
 import ProfileUser from './views/ProfileUser.vue';
 import ProfileUserUpdate from './views/components/ProfileUserUpdate.vue';
 
-// import AdviseList from './views/components/advise/AdviseList.vue';
 import AdviseDetail from './views/components/advise/AdviseDetail.vue';
 import AdviseWrite from './views/components/advise/AdviseWrite.vue';
 import AdviseUpdate from './views/components/advise/AdviseUpdate.vue';
 import AdviseMe from './views/components/advise/AdviseMe.vue';
 import AdviseLawyer from './views/components/advise/AdviseLawyer.vue';
 
-// import LawTest from './views/LawTest.vue';
-// import GoLawTest from './views/components/GoLawTest.vue';
 import QuizCore from './views/components/lawtest/QuizCore.vue';
 
 import Lawyermatch from './views/Lawyermatch.vue';
