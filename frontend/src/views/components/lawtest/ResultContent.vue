@@ -1,25 +1,23 @@
 <template>
-  <div>
-    <h2>당신의 벌금은 {{ result }}입니다</h2>
+  <div class="text-center">
+    <h2>
+      당신의 벌금은
+      <u>{{ result }}</u>
+      입니다
+    </h2>
     <button @click="clickReset" class="button-submit ghost">처음으로 돌아가기</button>
     <button @click="explainModal" class="button-submit ghost">문제해설</button>
     <!-- 모달 -->
     <div class="md-layout">
       <div class="md-layout-item md-size-33">
         <modal id="resultModal" v-if="classicModal" @close="explainModalHide">
-          <template slot="header">
-            <h4 class="modal-title kor">문제해설</h4>
-            <md-button class="md-simple md-just-icon md-round modal-default-button" @click="explainModalHide">
-              <md-icon>clear</md-icon>
-            </md-button>
-          </template>
           <template slot="body">
             <v-carousel>
               <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src" reverse-transition="fade-transition" transition="fade-transition"></v-carousel-item>
             </v-carousel>
           </template>
           <template slot="footer">
-            <md-button class="md-danger md-simple" type="submit" @click="explainModalHide">닫기</md-button>
+            <md-button class="md-success md-simple" type="submit" @click="explainModalHide"><span class="close">닫기</span></md-button>
           </template>
         </modal>
       </div>
@@ -102,14 +100,22 @@ export default {
 }
 </style>
 <style lang="scss" scoped>
+.close {
+  font-size: 2rem;
+  font-family: 'MaplestoryOTFBold';
+}
 .result {
   h2,
   h3 {
-    font-size: 1.25rem;
+    font-size: 4rem;
+    font-family: 'MaplestoryOTFBold';
     font-weight: 500;
     margin: 0 0 20px 0;
     padding: 0;
     color: #016afd;
+    u {
+      color: red;
+    }
   }
 
   .other {

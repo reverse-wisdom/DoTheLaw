@@ -87,18 +87,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@font-face {
-  font-family: 'Cafe24Ohsquare';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Cafe24Ohsquare.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'S-CoreDream-6Bold';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-6Bold.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
 .conv-text {
   font-family: 'Cafe24Ohsquare';
 }
