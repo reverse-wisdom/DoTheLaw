@@ -9,7 +9,7 @@
             <h2>{{ lawyer.bailiwick }}</h2>
             <p>{{ lawyer.introduction }}</p>
           </div>
-          <div id="colorId" class="icons center container">
+          <div :id="'colorId-' + lawyer.uuid" class="icons center container" :style="{ 'background-color': color }">
             <v-img class="i" :src="'/api/member/image/' + lawyer.uuid + '/512'" height="200px" v-if="$store.state.uuid"></v-img>
             <v-img class="i" src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" height="200px" v-else></v-img>
             <h2 class="">{{ lawyer.name }}</h2>
@@ -37,12 +37,19 @@ export default {
       type: Number,
       required: true,
     },
+    color: {
+      type: String,
+      required: true,
+    },
   },
   methods: {
     moveLawyermatchDetail() {
       const email = this.lawyer.email;
       this.$router.push({ name: 'lawyermatchdetail', query: { email: email } });
     },
+  },
+  created() {
+    console.log(this.color);
   },
   computed: {
     // backcolor() {
@@ -62,7 +69,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss">
+// .card:nth-child(odd) {
+//   background: rgb(random(255), random(255), random(255));
+// }
+</style>
+
+<style lang="scss" scoped>
+@mixin random-bgr() {
+  background: rgb(random(255), random(255), random(255));
+}
 /* a:link {
   color: black;
   text-decoration: none;
@@ -93,6 +109,7 @@ a:hover {
   width: 350px;
   height: 400px;
   position: relative;
+  // background: rgb(random(255), random(255), random(255));
   box-shadow: 2px 2px 10px rgb(85, 85, 85);
   overflow: hidden;
 }
@@ -112,7 +129,7 @@ a:hover {
 .icons {
   width: 100%;
   height: 100%;
-  background: rgb(0, 156, 223);
+  // background: rgb(random(255), random(255), random(255));
   position: absolute;
   top: 0;
   left: 0;
@@ -121,6 +138,10 @@ a:hover {
   transition: all 0.4s;
   cursor: pointer;
 }
+
+// .icons:nth-child(odd) {
+//   background: rgb(random(255), random(255), random(255));
+// }
 .icons .i {
   margin: 10px 0px;
 }
