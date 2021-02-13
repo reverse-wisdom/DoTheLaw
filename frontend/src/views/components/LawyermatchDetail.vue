@@ -9,8 +9,8 @@
           <div class="row">
             <div class="col-1 "></div>
             <div class="col-3 colum mx-auto">
-              <img v-if="lawyer.image" class="col-12 r-7" id="profile" :src="lawyer.image" alt="" />
-              <img v-else id="profile" class="col-12 r-7" src="@/assets/img/noimage.jpg" alt="noimage" />
+              <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + lawyer.uuid + '/512'" alt="" />
+              <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
             </div>
             <div class="col-8 row">
               <h1 class="col-12 r-4 mx-auto">변호사 {{ lawyer.name }}</h1>
@@ -28,6 +28,7 @@
               <div class="col-5 mx-auto" id="text-solid-margin">
                 관심분야
                 <hr />
+                {{ lawyer.bailiwick }}
               </div>
               <div class="col-5 mx-auto" id="text-solid">
                 잔화번호
@@ -106,9 +107,6 @@ export default {
     this.lawyer = res.data;
     this.$store.commit('setLawuuid', res.data.uuid);
 
-    const imgres = await saveImage(res.data.uuid, res.data.image);
-    console.log(imgres);
-
     var query = res.data.address;
     axios
       .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_MAP_KEY + '&address=' + query)
@@ -169,4 +167,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#profile {
+  border-radius: 70%;
+}
+</style>

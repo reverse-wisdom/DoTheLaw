@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Index from './views/Index.vue';
+import store from '@/store/index';
 
 import Login from './views/Login.vue';
 
@@ -41,7 +42,7 @@ import ControversyDetail from '@/views/components/controversy/ControversyDetail'
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -278,6 +279,8 @@ export default new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      // 로그인 이전에  원하는 페이지 이동 막기 아래 코드 추가하면됨
+      // meta: { auth: true },
     },
   ],
   scrollBehavior: (to) => {
@@ -288,3 +291,14 @@ export default new Router({
     }
   },
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.auth && !store.getters.isLogin) {
+    console.log('인증이 필요합니다.');
+    next('/login');
+    return;
+  }
+  next();
+});
+
+export default router;
