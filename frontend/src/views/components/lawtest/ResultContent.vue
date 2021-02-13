@@ -6,7 +6,7 @@
     <!-- 모달 -->
     <div class="md-layout">
       <div class="md-layout-item md-size-33">
-        <modal v-if="explainModal" @close="explainModalHide">
+        <modal id="resultModal" v-if="classicModal" @close="explainModalHide">
           <template slot="header">
             <h4 class="modal-title kor">문제해설</h4>
             <md-button class="md-simple md-just-icon md-round modal-default-button" @click="explainModalHide">
@@ -94,6 +94,13 @@ export default {
 };
 </script>
 
+<style>
+#resultModal > .modal-container {
+  max-width: 800px !important;
+  /* width: 800px; */
+  margin: 0px auto;
+}
+</style>
 <style lang="scss" scoped>
 .result {
   h2,
@@ -130,16 +137,9 @@ export default {
     }
   }
 }
-.modal-explain {
-  max-width: 800px;
-  margin: 0px auto;
-  position: relative;
-  background-color: #fff;
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-  -webkit-box-shadow: 0 27px 24px 0 rgb(0 0 0 / 20%), 0 40px 77px 0 rgb(0 0 0 / 22%);
-  box-shadow: 0 27px 24px 0 rgb(0 0 0 / 20%), 0 40px 77px 0 rgb(0 0 0 / 22%);
-  border-radius: 6px;
-  border: none;
-}
+// .modal-explain .modal-container {
+//   max-width: none !important;
+//   width: 800px;
+//   margin: 0px auto;
+// }
 </style>
