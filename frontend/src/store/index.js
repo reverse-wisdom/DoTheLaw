@@ -31,7 +31,7 @@ export default new Vuex.Store({
   },
   getters: {
     isLogin(state) {
-      return state.email !== '';
+      return state.name !== '';
     },
   },
   mutations: {
