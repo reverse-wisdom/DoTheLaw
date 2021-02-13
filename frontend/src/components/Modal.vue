@@ -53,5 +53,6 @@ export default {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+  max-width: 1000px;
 }
 </style>
