@@ -7,7 +7,7 @@
         <hr class="div-hr" />
         <div class="container">
           <div class="row">
-            <LawyermatchList v-for="lawyer in lawyerlists.data" :key="lawyer.uuid" :lawyer="lawyer" :i="i" @inum="inum"></LawyermatchList>
+            <LawyermatchList v-for="lawyer in lawyerlists.data" :key="lawyer.uuid" :lawyer="lawyer" :i="i" @inum="inum" :color="lawyer.color"></LawyermatchList>
           </div>
         </div>
       </div>
@@ -39,7 +39,12 @@ export default {
   async created() {
     const res = await LawyerList();
     this.lawyerlists = res;
-    console.log(res);
+    for (let index = 0; index < this.lawyerlists.data.length; index++) {
+      var r = Math.floor(Math.random() * 255);
+      var g = Math.floor(Math.random() * 255);
+      var b = Math.floor(Math.random() * 255);
+      this.lawyerlists.data[index].color = 'rgb(' + r + ',' + g + ',' + b + ')';
+    }
   },
   computed: {
     headerStyle() {
@@ -56,8 +61,4 @@ export default {
 };
 </script>
 
-<style>
-h1 {
-  text-align: center;
-}
-</style>
+<style lang="scss"></style>
