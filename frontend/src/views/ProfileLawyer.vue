@@ -97,11 +97,6 @@ export default {
         backgroundImage: `url(${this.header})`,
       };
     },
-    headerStyle() {
-      return {
-        image: `url(${this.header})`,
-      };
-    },
   },
   async created() {
     const email = this.$store.state.email;

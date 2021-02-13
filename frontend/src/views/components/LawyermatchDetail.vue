@@ -8,15 +8,20 @@
         <div class="container">
           <div class="row">
             <div class="col-1 "></div>
-            <div class="col-3 colum mx-auto">
+            <div class="col-3 colum mx-auto text-center">
               <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + lawyer.uuid + '/512'" alt="" />
               <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
+              <h1>{{ lawyer.name }}</h1>
             </div>
             <div class="col-8 row">
-              <h1 class="col-12 r-4 mx-auto">{{ lawyer.name }}</h1>
+              <div class="col-12 r-4 mx-auto">
+                <chart :list="values" style="height: 250px"></chart>
+              </div>
+              <br />
               <div v-if="$store.state.role == 'USER'" style="text-align:right">
                 <md-button class="col-1" @click="writeAdvise">자문요청</md-button>
               </div>
+
               <div class="col-11 mx-auto" id="text-solid-intro">
                 <div>
                   한줄소개
@@ -69,7 +74,7 @@
                   최근답변
                 </div>
                 <hr />
-                <AdviseLawyer />
+                <AdviseLawyer v-bind:values="values" />
               </div>
             </div>
             <div id="map" ref="map" style="width: 100%; height: 400px; margin: 2rem;"></div>
@@ -82,18 +87,24 @@
 
 <script>
 import { LawyerDetail } from '@/api/auth';
+import { fetchAdviseLawyer } from '@/api/advise';
 import { saveImage } from '@/api/service';
+
 import axios from 'axios';
 import AdviseLawyer from '@/views/components/advise/AdviseLawyer.vue';
+import Chart from '@/views/components/Chart.vue';
+
 const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
 
 export default {
   bodyClass: 'profile-page',
   components: {
     AdviseLawyer,
+    Chart,
   },
   data() {
     return {
+      values: [],
       lawyer: '',
     };
   },
@@ -106,7 +117,6 @@ export default {
   async created() {
     const email = this.$route.query.email;
     const res = await LawyerDetail(email);
-    console.log(res);
     this.lawyer = res.data;
     this.$store.commit('setLawuuid', res.data.uuid);
 
@@ -133,6 +143,25 @@ export default {
         });
       })
       .catch();
+    try {
+      const userData = this.$store.state.lawuuid;
+      const { data } = await fetchAdviseLawyer(userData);
+      for (let i = 0; i < data.length; i++) {
+        this.values.push({
+          matchingId: data[i].matchingId,
+          lawyerUuid: data[i].lawyerUuid,
+          category: data[i].category,
+          uuid: data[i].uuid,
+          title: data[i].title,
+          state: data[i].state,
+          name: data[i].name,
+          reservationDate: this.$moment(data[i].reservationDate).format('llll'),
+          createDate: this.$moment(data[i].createDate).format('llll'),
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   },
   computed: {
     headerStyle() {
@@ -143,7 +172,6 @@ export default {
   },
   methods: {
     writeAdvise() {
-      console.log(this.lawyer);
       const lawyerUuid = this.lawyer.uuid;
       this.$router.push({ name: 'AdviseWrite', query: { lawyerUuid: lawyerUuid } });
     },
