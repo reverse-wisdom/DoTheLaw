@@ -16,9 +16,9 @@ import WebrtcView from './views/WebRtcView.vue';
 import DictTest from './views/DictTest.vue';
 
 import Board from './views/Board.vue';
-import BoardDetail from './views/components/BoardDetail.vue';
-import BoardWrite from './views/components/BoardWrite.vue';
-import BoardUpdate from './views/components/BoardUpdate.vue';
+import BoardDetail from './views/components/board/BoardDetail.vue';
+import BoardWrite from './views/components/board/BoardWrite.vue';
+import BoardUpdate from './views/components/board/BoardUpdate.vue';
 
 import ProfileLawyer from './views/ProfileLawyer.vue';
 import ProfileLawyerUpdate from './views/components/ProfileLawyerUpdate.vue';
