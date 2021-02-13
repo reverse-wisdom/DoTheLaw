@@ -13,46 +13,64 @@
               <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
             </div>
             <div class="col-8 row">
-              <h1 class="col-12 r-4 mx-auto">변호사 {{ lawyer.name }}</h1>
+              <h1 class="col-12 r-4 mx-auto">{{ lawyer.name }}</h1>
               <div v-if="$store.state.role == 'USER'" style="text-align:right">
                 <md-button class="col-1" @click="writeAdvise">자문요청</md-button>
               </div>
-
-              <div class="col-11 mx-auto" id="text-solid-1">
-                한줄소개
+              <div class="col-11 mx-auto" id="text-solid-intro">
+                <div>
+                  한줄소개
+                </div>
                 <hr />
-                {{ lawyer.introduction }}
+                <span class="padding">
+                  {{ lawyer.introduction }}
+                </span>
               </div>
             </div>
             <div class="row mx-auto">
               <div class="col-5 mx-auto" id="text-solid-margin">
-                관심분야
+                <div>
+                  관심분야
+                </div>
                 <hr />
-                {{ lawyer.bailiwick }}
+                <span class="padding">
+                  {{ lawyer.bailiwick }}
+                </span>
               </div>
               <div class="col-5 mx-auto" id="text-solid">
-                잔화번호
+                <div>
+                  전화번호
+                </div>
                 <hr />
-                {{ lawyer.phone }}
+                <span class="padding">
+                  {{ lawyer.phone }}
+                </span>
               </div>
               <div class="col-5 mx-auto" id="text-solid-margin">
-                경력
+                <div>
+                  경력
+                </div>
                 <hr />
-                {{ lawyer.career }}
+                <span class="padding">
+                  {{ lawyer.career }}
+                </span>
               </div>
               <div class="col-5 mx-auto" id="text-solid">
-                이메일
+                <div>
+                  이메일
+                </div>
                 <hr />
-                {{ lawyer.email }}
+                <span class="padding">
+                  {{ lawyer.email }}
+                </span>
               </div>
-              <div class="col-11 mx-auto" id="text-solid-one">
-                최근답변
+              <div class="col-11 mx-auto" id="text-solid-advise">
+                <div>
+                  최근답변
+                </div>
                 <hr />
                 <AdviseLawyer />
-
-                <div></div>
               </div>
-              <!-- <div class="col-5" id="text-solid">6</div> -->
             </div>
             <div id="map" ref="map" style="width: 100%; height: 400px; margin: 2rem;"></div>
           </div>
@@ -63,21 +81,6 @@
 </template>
 
 <script>
-//   {
-//   "uuid": 125,
-//   "email": "lawyer24@ssafy.com",
-//   "password": "$2a$10$GASjX.Qu.2i5NpVWlYeSluwDJF4gVcw3YDb.BKwdLBRDR3LLh6WT.",
-//   "name": "lawyer24",
-//   "phone": "010-1234-1234",
-//   "role": "ROLE_LAWYER",
-//   "joinDate": "2021-02-07T13:01:21.000+00:00",
-//   "image": "string",
-//   "career": "경력1",
-//   "introduction": "자기소개",
-//   "address": "경북 구미시 3공단 3로 302",
-//   "dept": "싸피",
-//   "chck": "Y"
-// }
 import { LawyerDetail } from '@/api/auth';
 import { saveImage } from '@/api/service';
 import axios from 'axios';
@@ -167,8 +170,82 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #profile {
   border-radius: 70%;
+}
+#profile {
+  border-radius: 70%;
+}
+
+#image-change-button {
+  border: 1px solid gray;
+  margin-top: 3px;
+}
+#button-sort {
+  justify-items: center;
+}
+#text-solid {
+  width: auto;
+  height: auto;
+  margin-top: 2rem;
+  border: 1px solid gray;
+  border-radius: 1rem;
+  padding: 0px;
+}
+#text-solid > div {
+  background: skyblue;
+  border: 2px solid skyblue;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+  padding-left: 1rem;
+}
+#text-solid-intro {
+  width: auto;
+  height: auto;
+  border: 1px solid skyblue;
+  border-radius: 1rem;
+  padding: 0px;
+}
+#text-solid-intro > div {
+  background: skyblue;
+  border: 2px solid skyblue;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+  padding-left: 2rem;
+}
+#text-solid-margin {
+  width: auto;
+  height: auto;
+  margin-top: 2rem;
+  margin-right: 4.7rem;
+  border: 1px solid gray;
+  border-radius: 1rem;
+  padding: 0px;
+}
+#text-solid-margin > div {
+  background: skyblue;
+  border: 2px solid skyblue;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+  padding-left: 1rem;
+  padding: auto;
+}
+#text-solid-advise {
+  height: auto;
+  margin-top: 2rem;
+  text-align: center;
+  border: 1px solid gray;
+  border-radius: 1rem;
+  background: whitesmoke;
+}
+#info-update {
+  text-align: end;
+}
+hr {
+  margin: 3px;
+}
+.padding {
+  padding: 1rem;
 }
 </style>
