@@ -7,7 +7,7 @@
         <hr class="div-hr" />
         <div class="container">
           <div class="row">
-            <LawyermatchList v-for="lawyer in lawyerlists.data" :key="lawyer.uuid" :lawyer="lawyer"></LawyermatchList>
+            <LawyermatchList v-for="lawyer in lawyerlists.data" :key="lawyer.uuid" :lawyer="lawyer" :i="i" @inum="inum"></LawyermatchList>
           </div>
         </div>
       </div>
@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       lawyerlists: [],
+      i: -1,
     };
   },
   props: {
@@ -38,12 +39,18 @@ export default {
   async created() {
     const res = await LawyerList();
     this.lawyerlists = res;
+    console.log(res);
   },
   computed: {
     headerStyle() {
       return {
         backgroundImage: `url(${this.header})`,
       };
+    },
+  },
+  methods: {
+    inum(i) {
+      this.i = i;
     },
   },
 };

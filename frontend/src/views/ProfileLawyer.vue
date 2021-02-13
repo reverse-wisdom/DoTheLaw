@@ -9,7 +9,7 @@
           <div class="row">
             <div class="col-1"></div>
             <div class="col-3 colum mx-auto">
-              <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + $store.state.uuid + '/512'" alt="" />
+              <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + value.uuid + '/512'" alt="" />
               <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
               <div class="r-2 mx-auto"></div>
             </div>
@@ -48,7 +48,8 @@
                 <hr />
               </div>
             </div>
-            <div id="map" ref="map" class="mx-auto" style="width: 100%; height: 400px; margin: 2rem;"></div>
+            <div class="col-3 mt-4 mx-auto">찾아오시는 길</div>
+            <div id="map" ref="map" class="col-9 mx-auto" style="width: 100%; height: 400px; margin: 2rem;"></div>
             <div class="col-9"></div>
             <div class="btn btn-info col-1 mx-auto" style="float: right;" @click="moveLawyerUpdate">정보수정</div>
             <div class="btn btn-info col-1" style="float: right;" @click="deleteLawyer">회원탈퇴</div>
@@ -105,14 +106,10 @@ export default {
   async created() {
     const email = this.$store.state.email;
     const { data } = await searchLawyer(email);
-    // console.log(data, '확인');
+
     this.value = data;
     this.$store.commit('setLawuuid', data.uuid);
     console.log('회원정보', this.value);
-
-    // const imgres = await saveImage(data.image);
-    // console.log(imgres);
-    // this.value.image = imgres.data;
 
     var query = this.value.address;
     axios
