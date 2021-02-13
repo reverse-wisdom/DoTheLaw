@@ -3,7 +3,8 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised kor">
       <div class="section section-basic">
-        <v-row no-gutters justify="center" align-content="center">
+        <h2 class="title text-center kor">판례 검색</h2>
+        <v-row justify="center" style="margin : 5px">
           <v-col cols="6" md="4">
             <form @submit="searchLaw()" onSubmit="return false;">
               <v-toolbar dense>
@@ -44,20 +45,7 @@
             </v-card>
           </v-col>
           <v-col cols="12" md="8" class="mr">
-            <v-card class="pa-2 overflow-y-auto" max-height="1024" max-width="1200" outlined tile>
-              <div class="container">
-                <md-button class="md-info" style="margin: auto">
-                  <i class="material-icons">search</i>
-                  변호사찾기
-                </md-button>
-                <md-button class="md-info" style="margin: auto">
-                  <i class="material-icons">search</i>
-                  커뮤니티에 검색
-                </md-button>
-              </div>
-              <div class="container text-center"></div>
-              <br />
-
+            <v-card class="pa-2 overflow-y-auto" max-height="1024" max-width="1400" style="margin : 5px" outlined tile>
               <template v-if="render">
                 <h3 v-html="judgment.PrecService.사건명" class="text-center"></h3>
                 <v-simple-table>
@@ -97,9 +85,22 @@
                 </div>
                 <p v-html="radio"></p>
               </template>
+
+              <div class="container text-center"></div>
             </v-card>
           </v-col>
         </v-row>
+        <br />
+        <div class="text-center">
+          <md-button class="md-info" style="margin: 5px">
+            <i class="material-icons">search</i>
+            변호사찾기
+          </md-button>
+          <md-button class="md-info" style="margin: 5px">
+            <i class="material-icons">search</i>
+            커뮤니티에 검색
+          </md-button>
+        </div>
       </div>
     </div>
   </div>
@@ -173,7 +174,9 @@ export default {
       if (!this.history.includes(this.search)) {
         this.history.push(this.search);
       }
+      this.detailJudgment(this.contents[0].no);
     },
+
     async detailJudgment(ID) {
       this.render = false;
       this.judgment = {};
@@ -195,7 +198,7 @@ export default {
 
         this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(regEx, '#obj-' + count + '#');
         this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, '#obj-' + count + '#');
-        console.log('인코딩 : ' + regEx + '->' + '#obj-' + count + '#');
+        // console.log('인코딩 : ' + regEx + '->' + '#obj-' + count + '#');
         count++;
       });
       count = 0;
@@ -206,7 +209,7 @@ export default {
 
         this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
         this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
-        console.log('디코딩 : ' + regEx + '->' + `<a data-title="${element.mean}">${element.word}</a>`);
+        //console.log('디코딩 : ' + regEx + '->' + `<a data-title="${element.mean}">${element.word}</a>`);
         count++;
       });
     },
