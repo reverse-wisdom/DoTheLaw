@@ -5,7 +5,7 @@
         <v-container grid-list-md>
           <template v-for="list in listData">
             <v-card class="pa-md-4 mb-8 mx-lg-auto " :key="list.controversyId">
-              <controversy-item  :list="list" v-on:updateContent="updateContent" />
+              <controversy-item :list="list" v-on:updateContent="updateContent" />
             </v-card>
           </template>
         </v-container>

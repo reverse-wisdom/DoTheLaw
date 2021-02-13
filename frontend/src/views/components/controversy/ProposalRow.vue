@@ -14,7 +14,7 @@
             </template>
           </v-row>
         </template>
-        <v-text-field color="black" :value="proposal.content" id="content"></v-text-field>
+        <v-text-field readonly color="black" :value="proposal.content" id="content"></v-text-field>
       </v-card>
     </v-col>
   </v-row>
