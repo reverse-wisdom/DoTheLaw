@@ -42,17 +42,18 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .question-item {
   .seletor {
     display: block;
     width: 100%;
     background-color: #fff;
-    color: #999999;
+    color: black;
     border: 1px solid #dedede;
     margin-bottom: 10px;
     padding: 10px;
     font-size: 18px;
+    font-family: 'MaplestoryOTFBold';
     text-align: left;
 
     &:hover,
