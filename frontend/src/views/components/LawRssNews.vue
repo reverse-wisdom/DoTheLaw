@@ -4,7 +4,7 @@
     <div v-if="loadCheck">
       <br />
 
-      <md-button class="md-info" disabled id="rss_time">{{ refresh_time }}</md-button>
+      <md-button class="md-raised" disabled id="rss_time">{{ refresh_time }}</md-button>
       <br />
       <div class="list-type">
         <ol id="olid" style="list-style: none;">

@@ -1,10 +1,12 @@
 <template>
   <div class="home">
     <full-page :options="options">
-      <div class="section pb-0" :style="image_1" data-width="1200" data-height="730">
-        <form @submit="detailSearch()" autocomplete="off" background-color="white" style="padding-top:50px">
-          <fieldset id="searchbar" class="text-center">
-            <v-text-field id="searchWordMain" clearable color="white" height="50px" v-model="query" style="margin-top:50px; backgroundcolor: white; width: 1500px; float: left;">
+      <div class="section pb-0  " :style="image_1" data-width="1200" data-height="730">
+        <img class="logo" :src="logo" alt="logo" />
+
+        <form class="searchForm " @submit="detailSearch()" autocomplete="off" background-color="white" style="position: inherit">
+          <fieldset id="searchbar" class="text-center" style="margin-top: 400px;">
+            <v-text-field id="searchWordMain" clearable color="white" height="50px" v-model="query" style="backgroundcolor: white; width: 70%; float: left;">
               <template v-slot:label>
                 <strong>검색어</strong>
                 를입력해주세요!
@@ -17,27 +19,37 @@
               검색
             </v-btn>
           </fieldset>
+          <div class="text-center" style="position: inherit">
+            <v-card style="text-align:center; margin: 0 auto;" color="rgba(255, 255, 255, 0.1)" width="50%" height="200px">
+              <search-rank class="text-center"></search-rank>
+            </v-card>
+          </div>
         </form>
-        <div class="text-center" style="margin-left:30px; margin-top:30px">
-          <v-card style="text-align:center; margin: 0 auto;" color="rgba(255, 255, 255, 0.1)" width="50%" height="200px">
-            <search-rank class="text-center"></search-rank>
-          </v-card>
-        </div>
+        <!-- <div class="text-center" style="margin-left:30px; margin-top:30px; position: absolute"> -->
       </div>
 
-      <div id="section1" class="section pb-0" :style="image_2" data-width="1200" data-height="730">
+      <div class="section pb-0" :style="image_2" data-width="1200" data-height="730">
         <div class="md-layout ">
-          <div class="md-layout-item md-medium-size-100 md-small-size-100 ">
+          <div class="md-layout-item md-medium-size-50 md-small-size-100">
             <v-card elevation="7" color="rgba(255, 255, 255, 0.1)" class="custom-card text-center">
               <span class="title-solid text-center">실시간 법원/검찰 뉴스</span>
-              <law-rss-news :key="componentKey"></law-rss-news>
+              <br />
               <button id="f5" @click="forceRerender">새로고침</button>
+              <law-rss-news :key="componentKey"></law-rss-news>
+            </v-card>
+          </div>
+          <div class="md-layout-item md-medium-size-50 md-small-size-100">
+            <v-card elevation="7" color="rgba(255, 255, 255, 0.1)" class="custom-card text-center">
+              <span class="title-solid text-center">실시간 법원/검찰 뉴스</span>
+              <br />
+              <button id="f5" @click="forceRerender">새로고침</button>
+              <law-rss-news :key="componentKey"></law-rss-news>
             </v-card>
           </div>
         </div>
       </div>
 
-      <div id="section1" class="section pb-0" :style="image_3" data-width="1200" data-height="730">
+      <div class="section pb-0" :style="image_3" data-width="1200" data-height="730">
         <div class="row" style="padding-top: 100px">
           <li class="col-2">
             <input @click="moveBoard" class="button" value="자유게시판" readonly onfocus="this.blur();" />
@@ -105,6 +117,10 @@ export default {
     image3: {
       type: String,
       default: require('@/assets/img/mainbg3.jpg'),
+    },
+    logo: {
+      type: String,
+      default: require('@/assets/img/main1-logo.png'),
     },
   },
   destroyed() {
@@ -176,6 +192,25 @@ input#searchWordMain {
 }
 </style>
 <style scoped>
+@media (max-width: 600px) {
+  .searchForm {
+    margin-top: -400px;
+    position: unset;
+    width: 100%;
+  }
+  #searchWordMain {
+    width: auto;
+    float: none;
+  }
+}
+.logo {
+  position: absolute;
+  right: 30%;
+  top: 10%;
+  width: 35%;
+  z-index: 9;
+}
+
 .kor {
   font-family: 'Nanum Gothic', sans-serif;
 }
@@ -189,14 +224,12 @@ input#searchWordMain {
 .home > div:nth-child(3) {
   background: green;
 }
-#section1 {
-  padding-left: 7rem;
-}
 .section {
   width: 100vw;
   height: 100vh;
   z-index: -1;
   padding: 0px;
+  padding-left: 7rem;
 }
 #img2 {
   width: 100%;

@@ -1,7 +1,6 @@
 <template>
   <md-toolbar id="toolbar" md-elevation="0" class="md-transparent md-absolute" :class="extraNavClasses" :color-on-scroll="colorOnScroll">
     <div class="md-toolbar-row md-collapse-lateral">
-      <!-- <div class="md-toolbar-section-start" style="margin-left: -200px;"> -->
       <div class="md-toolbar-section-start">
         <h3 class="md-title">
           <router-link to="/" class="md-title kor">
@@ -27,26 +26,26 @@
                     <drop-down direction="down">
                       <md-button slot="title" class="md-button md-button-link md-white md-simple dropdown-toggle" data-toggle="dropdown">
                         <i class="material-icons">dashboard</i>
-                        <p>추가정보</p>
+                        <p>추가 서비스</p>
                       </md-button>
                       <ul class="dropdown-menu dropdown-with-icons">
                         <li>
                           <router-link to="/lawtest">
-                            <i class="material-icons">store</i>
+                            <i class="material-icons">quiz</i>
                             법상식테스트
                           </router-link>
                         </li>
                         <li>
-                          <router-link to="/">
-                            <i class="material-icons">masks</i>
-                            ssafy
+                          <router-link to="/controversylist">
+                            <i class="material-icons">supervisor_account</i>
+                            찬반토론
                           </router-link>
                         </li>
                         <li>
-                          <router-link to="/">
-                            <i class="material-icons">local_hospital</i>
-                            ssafy
-                          </router-link>
+                          <a @click="moveScourtExp">
+                            <i class="material-icons">gavel</i>
+                            모의판사체험
+                          </a>
                         </li>
                       </ul>
                     </drop-down>
@@ -99,6 +98,7 @@
                   </div>
                 </li>
               </template>
+
               <!-- 비로그인 -->
               <template v-else>
                 <!-- 로그인 부분 -->
@@ -178,6 +178,9 @@ export default {
     },
   },
   methods: {
+    moveScourtExp() {
+      location.href = 'https://i4d103.p.ssafy.io/exp/main.html';
+    },
     logoutUser() {
       this.$store.commit('clearEmail');
       this.$store.commit('clearToken');
