@@ -9,7 +9,7 @@
             <template v-else>
               <range-counter @allQuestionFinish="result" :step="step" :stepRange="stepRange" />
               <quiz-questions v-if="!finish" @nextQuestion="nextQuestion" :step="step" :items="items" />
-              <result-content class="result" v-else @clickRestart="restart" @clickReset="reset" :total="total" />
+              <result-content class="result" v-else @clickReset="reset" :total="total" />
               <result-loader v-if="resultLoading" />
             </template>
           </article>
@@ -51,15 +51,14 @@ export default {
           quiz: '허락없이 남의 편지나 이메일을 보는 행위의 처벌규정으로 옳은 것은?',
           image: require('@/assets/img/envelope.png'),
           example: {
-            exp: { exp1: '함부로 본다니! 불법이야', exp2: '우편물 간혹가다 남꺼 볼 수도 있지! 합법!' },
+            exp: { exp1: '최대 징역형 3년 또는 벌금 500만원', exp2: '최대 징역형 1년 또는 벌금 100만원' },
             penalty: 5000000,
-            answer: '함부로 본다니! 불법이야',
-            remarks: '징역형 3년 또는 벌금 500만원',
+            answer: '최대 징역형 3년 또는 벌금 500만원',
+            remarks: '최대 징역형 3년 또는 벌금 500만원',
           },
         },
         {
-          quiz: `부부끼리 휴대전화를 몰래 들여다보는 일은 현실에서도 흔히 있는 일입니다.\n
-          부부간 휴대전화를 몰래 훔쳐 보거나, 위치 추적 장치를 달아 상대방의 동선을 확인하는 행위는 불법일까요?`,
+          quiz: `부부끼리 휴대전화를 몰래 들여다보는 일은 현실에서도 흔히 있는 일입니다. 부부간 잠금장치를 해제해서 휴대전화를 몰래 훔쳐 보는 행위는 불법일까요?`,
           image: require('@/assets/img/smartphone.jpg'),
           example: {
             exp: { exp1: '부부내에서는 합법이지~', exp2: '부부도 예외없다. 불법이다!' },
@@ -72,14 +71,14 @@ export default {
           quiz: '츄리닝안경 네오는 혜지한테 두상이 연락처를 부탁했다. 혜지는 두상이에게 별도의 확인 없이 연락처를 내어주었다. 이는 불법일까? 아닐까?',
           image: require('@/assets/img/phonenumber.png'),
           example: {
-            exp: { exp1: '에이, 저정도는 흔한 일인데! 불법 아니다 ', exp2: '허락없이? 당연 불법이지!' },
+            exp: { exp1: '에이, 저정도는 흔한 일인데! 불법 아니다', exp2: '허락없이? 당연 불법이지!' },
             penalty: 50000000,
             answer: '허락없이? 당연 불법이지!',
             remarks: '징역형 5년 또는 벌금 5000만원',
           },
         },
         {
-          quiz: '우회전 차선에 신호를 대기하고 있는데 뒷차가 우회전하고 싶다고 빵빵거릴 때 안비켜줘도 된다(?)',
+          quiz: '우회전 차선에 신호를 대기하고 있는데 뒷차가 우회전하고 싶다고 빵빵거릴 때 안 비켜줘도 된다(?)',
           image: require('@/assets/img/right.png'),
           example: {
             exp: { exp1: '빵빵거리면 버티고 있을 순 없자? 비켜줘야지', exp2: '내가 먼저지!' },
@@ -104,7 +103,7 @@ export default {
           quiz: '반려견이 무지개다리를 건넜다. 사체를 쓰레기봉투에 폐기물로 처리해야할까? 땅에 묻어줘야할까?',
           image: require('@/assets/img/bridge1.jpg'),
           example: {
-            exp: { exp1: '사유지 범위 안이면 땅에 묻어줘도 된다', exp2: '안타깝지만, 쓰레기봉투에 버려야한다' },
+            exp: { exp1: '내 집 앞마당에서는 땅에 묻어줘도 된다', exp2: '안타깝지만, 쓰레기봉투에 버려야한다' },
             penalty: 1000000,
             answer: '안타깝지만, 쓰레기봉투에 버려야한다',
             remarks:
@@ -113,7 +112,7 @@ export default {
         },
 
         {
-          quiz: '특별한 지인을 위해 수제로 만든 캔들을 만들어 선물을 해주었다! 관련된 처벌규정 내용으로는? ',
+          quiz: '특별한 지인을 위해 수제로 만든 캔들을 만들어 선물을 해주었다! 이 경우와 관련된 처벌규정 내용으로는? ',
           image: require('@/assets/img/candle1.png'),
           example: {
             exp: { exp1: '최대 징역형 1년 또는 벌금 1000만원', exp2: '최대 징역형 3년 또는 벌금 3000만원', exp3: '최대 징역형 5년 또는 벌금 5000만원', exp4: '최대 징역형 7년 또는 벌금 7000만원' },
