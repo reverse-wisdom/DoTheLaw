@@ -24,7 +24,14 @@
             </div>
             <div class="col-8 row" id="content-sort">
               <h1 class="col-12 r-4">변호사 {{ value.name }}</h1>
-              <v-file-input type="file" name="uploadFile" accept="image/png, image/jpeg, image/bmp" placeholder="자격증 인증" ref="ocr" @change="check"></v-file-input>
+              <div v-if="loadCheck">
+                <v-file-input type="file" name="uploadFile" accept="image/png, image/jpeg, image/bmp" placeholder="자격증 인증" ref="ocr" @change="check"></v-file-input>
+              </div>
+              <div v-else class="md-layout-item md-size-4 mx-auto">
+                <br />
+                <circle8></circle8>
+                <br />
+              </div>
               <div class="col-11 mx-auto " id="text-solid-1">
                 공사중
                 <hr />
@@ -56,16 +63,16 @@
                 최근답변
                 <hr />
               </div>
-            </div>
 
-            <md-field class="mt-10">
-              <label>주소입력</label>
-              <md-input id="address" type="text" ref="address" v-model="value.address"></md-input>
-            </md-field>
-            <md-button class="md-info" style="margin: auto" @click="searchMap">주소로검색</md-button>
-            <div id="map" ref="map" class="mx-auto" style="width: 100%; height: 400px; margin: 2rem;"></div>
-            <div class="col-11"></div>
-            <div class="btn btn-info col-1" style="float: right;" @click="LawyerUpdate">수정완료</div>
+              <md-field class="mt-10">
+                <label>주소입력</label>
+                <md-input id="address" type="text" ref="address" v-model="value.address"></md-input>
+              </md-field>
+              <md-button class="md-info" style="margin: auto" @click="searchMap">주소로검색</md-button>
+              <div id="map" ref="map" class="mx-auto" style="width: 100%; height: 400px; margin: 2rem;"></div>
+              <div class="col-11"></div>
+              <div class="btn btn-info col-1" style="float: right;" @click="LawyerUpdate">수정완료</div>
+            </div>
           </div>
         </div>
       </div>
@@ -76,17 +83,19 @@
 <script>
 const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
 import axios from 'axios';
+import { Circle8 } from 'vue-loading-spinner';
 import { searchLawyer, editLawyer } from '@/api/auth';
 import { imageUpload } from '@/api/service';
 // import { searchLawyerAdvise } from '@/api/advise';
 
 export default {
-  components: {},
+  components: { Circle8 },
   bodyClass: 'profile-page',
   data() {
     return {
       files: null,
       ocr: null,
+      loadCheck: true,
       image: this.$store.state.image,
       map: null,
       mapState: window.mapState,
@@ -243,20 +252,34 @@ export default {
         // console.log(imageres);
       }
     },
-    check(ocr) {
+    async check(ocr) {
       this.ocr = ocr;
+      this.loadCheck = false;
       if (ocr) {
         var form = new FormData();
         form.append('image', ocr);
         console.log(form);
-        axios
+        await axios
           .post(`api/ocr?uuid=${this.value.uuid}`, form, { 'Content-Type': 'multipart/form-data', headers: { 'x-auth-token': this.$store.state.token } })
           .then((response) => {
-            // console.log('프로필 업로드 성공', response);
+            this.$swal({
+              icon: 'success',
+              title: '인증성공',
+            });
             this.value.check = 'Y';
+            this.loadCheck = true;
             this.$forceUpdate();
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            console.log(err);
+            this.$swal({
+              icon: 'error',
+              title: '인증실패',
+            });
+            this.value.check = 'N';
+            this.loadCheck = true;
+          });
+
         // const imageres = await imageUpload(this.value.uuid, form);
         // console.log(imageres);
       }

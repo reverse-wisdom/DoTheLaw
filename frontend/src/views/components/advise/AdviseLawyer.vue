@@ -2,8 +2,7 @@
   <!-- 자문 게시판 페이지 -->
   <div id="app">
     <div class="container">
-      {{ data }}
-      <!-- <v-card>
+      <v-card>
         <p>아이디:{{ $store.state.uuid }}</p>
         <p>유저타입:{{ $store.state.role }}</p>
         <v-card-title>
@@ -11,9 +10,8 @@
           <v-spacer></v-spacer>
           <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
         </v-card-title>
-        <v-data-table :headers="headers" :items-per-page="5" :items="values" :search="search" @click:row="adviseDetail" class="elevation-1">
-        </v-data-table>
-      </v-card> -->
+        <v-data-table :headers="headers" :items-per-page="5" :items="values" :search="search" @click:row="adviseDetail" class="elevation-1"></v-data-table>
+      </v-card>
     </div>
   </div>
 </template>
@@ -23,12 +21,7 @@ import { fetchAdviseLawyer } from '@/api/advise';
 
 export default {
   bodyClass: 'profile-page',
-  props: {
-    data: {
-      type: Object,
-      required: true,
-    },
-  },
+  props: {},
   data() {
     return {
       values: [],
@@ -59,7 +52,7 @@ export default {
         this.values.push({
           matchingId: data[i].matchingId,
           lawyerUuid: data[i].lawyerUuid,
-          // category: data[i].category,
+          category: data[i].category,
           uuid: data[i].uuid,
           title: data[i].title,
           state: data[i].state,
@@ -70,7 +63,7 @@ export default {
           createDate: this.$moment(data[i].createDate).format('llll'),
         });
       }
-      // console.log('test', this.values);
+      console.log('test', this.values);
     } catch (err) {
       console.log(err);
     }
