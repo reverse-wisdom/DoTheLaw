@@ -1,5 +1,5 @@
 <template>
-  <!-- 게시판  페이지 -->
+  <!-- 게시판 페이지 -->
   <div class="wrapper">
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
