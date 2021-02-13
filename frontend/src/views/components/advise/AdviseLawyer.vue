@@ -17,14 +17,11 @@
 </template>
 
 <script>
-import { fetchAdviseLawyer } from '@/api/advise';
-
 export default {
   bodyClass: 'profile-page',
-  props: {},
+  props: ['values'],
   data() {
     return {
-      values: [],
       token: '',
       name: this.$store.state.name,
       search: '',
@@ -41,32 +38,6 @@ export default {
         { text: '예약시간', value: 'reservationDate' },
       ],
     };
-  },
-  async created() {
-    try {
-      const userData = this.$store.state.lawuuid;
-      console.log(userData);
-      const { data } = await fetchAdviseLawyer(userData);
-      // console.log({ data });
-      for (let i = 0; i < data.length; i++) {
-        this.values.push({
-          matchingId: data[i].matchingId,
-          lawyerUuid: data[i].lawyerUuid,
-          category: data[i].category,
-          uuid: data[i].uuid,
-          title: data[i].title,
-          state: data[i].state,
-          name: data[i].name,
-
-          // hit: data.client[i].hit,
-          reservationDate: this.$moment(data[i].reservationDate).format('llll'),
-          createDate: this.$moment(data[i].createDate).format('llll'),
-        });
-      }
-      console.log('test', this.values);
-    } catch (err) {
-      console.log(err);
-    }
   },
   methods: {
     adviseDetail(value) {

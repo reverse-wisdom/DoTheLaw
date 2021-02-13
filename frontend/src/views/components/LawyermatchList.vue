@@ -44,9 +44,6 @@ export default {
       this.$router.push({ name: 'lawyermatchdetail', query: { email: email } });
     },
   },
-  created() {
-    console.log(this.color);
-  },
   computed: {},
 };
 </script>
