@@ -228,7 +228,7 @@ export default {
       const editData = {
         matchingId: this.value.matchingId,
         category: this.value.category,
-        remarks: this.value.remarks,
+        remarks: this.remarks,
         // content: $('#summernote').summernote('code'),
         title: this.value.title,
         reservationDate: this.reservationDate,
