@@ -7,51 +7,45 @@
         <hr class="div-hr" />
         <div class="container">
           <div class="row">
-            <div class="col-8">
-              <div class="col-11 mx-auto" id="text-solid-one">
-                최근답변
-                <AdviseLawyer v-for="(data, idx) in advise" :key="idx" :data="data" />
+            <div class="col-1"></div>
+            <div class="col-3 colum mx-auto">
+              <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + value.uuid + '/512'" alt="" />
+              <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
+              <div class="r-2 mx-auto"></div>
+            </div>
+            <div class="col-8 row" id="content-sort">
+              <h1 class="col-12 r-4">변호사 {{ value.name }}</h1>
+              <div class="col-11 mx-auto" id="text-solid-1">
+                한줄소개
                 <hr />
+                {{ value.introduction }}
               </div>
             </div>
-            <div class="col-4 colum mx-auto" id="text-solid-one">
-              <img v-if="$store.state.uuid" class="col-12 r-6" id="profile" :src="'/api/member/image/' + value.uuid + '/512'" alt="" />
-              <img v-else id="profile" class="col-12 r-6" src="@/assets/img/noimage.jpg" alt="noimage" />
-              <div class="r-2 mx-auto"></div>
-
-              <div class="col-12 row" id="content-sort">
+            <div class="row">
+              <div class="col-5 mx-auto" id="text-solid-margin">
+                관심분야
                 <hr />
-                <h2 class="col-12 r-4">변호사 {{ value.name }}</h2>
-                <div class="col-11 mx-auto" id="">
-                  <hr />
-                  한줄소개
-                  <hr class="mb-3" />
-                  {{ value.introduction }}
-                </div>
-                <div class="col-5 mx-auto" id="">
-                  <hr />
-                  관심분야
-                  <hr class="mb-3" />
-                  {{ value.bailiwick }}
-                </div>
-                <div class="col-5 mx-auto" id="">
-                  <hr />
-                  전화번호
-                  <hr class="mb-3" />
-                  {{ value.phone }}
-                </div>
-                <div class="col-5 mx-auto" id="">
-                  <hr class="mb-3" />
-                  경력
-                  <hr class="mb-3" />
-                  {{ value.career }}
-                </div>
-                <div class="col-5 mx-auto" id="">
-                  <hr />
-                  이메일
-                  <hr class="mb-3" />
-                  {{ value.email }}
-                </div>
+                {{ value.bailiwick }}
+              </div>
+              <div class="col-5 mx-auto" id="text-solid">
+                전화번호
+                <hr />
+                {{ value.phone }}
+              </div>
+              <div class="col-5 mx-auto" id="text-solid-margin">
+                경력
+                <hr />
+                {{ value.career }}
+              </div>
+              <div class="col-5 mx-auto" id="text-solid">
+                이메일
+                <hr />
+                {{ value.email }}
+              </div>
+              <div class="col-11 mx-auto" id="text-solid-one">
+                최근답변
+                <AdviseLawyer />
+                <hr />
               </div>
             </div>
             <div class="col-3 mt-4 mx-auto">찾아오시는 길</div>
@@ -71,8 +65,7 @@ const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
 import AdviseLawyer from '@/views/components/advise/AdviseLawyer.vue';
 import axios from 'axios';
 import { searchLawyer, signoutUser } from '@/api/auth';
-import { fetchAdviseLawyer } from '@/api/advise';
-
+import { saveImage } from '@/api/service';
 export default {
   components: {
     AdviseLawyer,
@@ -141,12 +134,6 @@ export default {
         });
       })
       .catch();
-
-    const userData = this.$store.state.lawuuid;
-    // console.log(userData);
-    const res = await fetchAdviseLawyer(userData);
-    // console.log(res.data);
-    this.advise = res.data;
   },
   watch: {
     // watch를 통해 mounted가 실패하더라도 다시호출함 지도가 랜더링 안되는 현상 방지함
@@ -203,30 +190,29 @@ export default {
   justify-items: center;
 }
 #text-solid {
+  border: 1px solid black;
   width: auto;
   height: auto;
   margin-top: 2rem;
 }
 #text-solid-1 {
+  border: 1px solid black;
   width: auto;
   height: auto;
 }
 #text-solid-margin {
+  border: 1px solid black;
   width: auto;
   height: auto;
   margin-top: 2rem;
   margin-right: 4.7rem;
 }
 #text-solid-one {
+  border: 1px solid black;
   height: auto;
   margin-top: 2rem;
-  text-align: center;
-  background: whitesmoke;
 }
 #info-update {
   text-align: end;
-}
-hr {
-  margin: 3px;
 }
 </style>

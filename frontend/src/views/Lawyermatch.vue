@@ -7,7 +7,7 @@
         <hr class="div-hr" />
         <div class="container">
           <div class="row">
-            <LawyermatchList v-for="lawyer in lawyerlists.data" :key="lawyer.uuid" :lawyer="lawyer" :i="i" @inum="inum" :color="lawyer.color"></LawyermatchList>
+            <LawyermatchList v-for="lawyer in lawyerlists.data" :key="lawyer.uuid" :lawyer="lawyer" :color="lawyer.color"></LawyermatchList>
           </div>
         </div>
       </div>
@@ -27,7 +27,6 @@ export default {
   data() {
     return {
       lawyerlists: [],
-      i: -1,
     };
   },
   props: {

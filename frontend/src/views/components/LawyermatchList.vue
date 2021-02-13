@@ -33,10 +33,6 @@ export default {
       type: Object,
       required: true,
     },
-    i: {
-      type: Number,
-      required: true,
-    },
     color: {
       type: String,
       required: true,
@@ -51,46 +47,11 @@ export default {
   created() {
     console.log(this.color);
   },
-  computed: {
-    // backcolor() {
-    //   var i = this.i + 1;
-    //   console.log(i);
-    //   if (i > 5) {
-    //     i = 0;
-    //   }
-    //   var color = ['(226, 56, 56)', '(247, 130, 0)', '(255, 185, 0)', '(94, 189, 62)', '(0, 156, 223)', '(151, 57, 153)'];
-    //   console.log(color[i]);
-    //   this.$emit('inum', i);
-    //   return {
-    //     // background: `rgb${color[i]}`,
-    //   };
-    // },
-  },
+  computed: {},
 };
 </script>
 
-<style lang="scss">
-// .card:nth-child(odd) {
-//   background: rgb(random(255), random(255), random(255));
-// }
-</style>
-
 <style lang="scss" scoped>
-@mixin random-bgr() {
-  background: rgb(random(255), random(255), random(255));
-}
-/* a:link {
-  color: black;
-  text-decoration: none;
-}
-a:visited {
-  color: black;
-  text-decoration: none;
-}
-a:hover {
-  color: black;
-  text-decoration: underline;
-} */
 * {
   margin: 0;
   padding: 0;
@@ -109,7 +70,6 @@ a:hover {
   width: 350px;
   height: 400px;
   position: relative;
-  // background: rgb(random(255), random(255), random(255));
   box-shadow: 2px 2px 10px rgb(85, 85, 85);
   overflow: hidden;
 }
@@ -129,7 +89,7 @@ a:hover {
 .icons {
   width: 100%;
   height: 100%;
-  // background: rgb(random(255), random(255), random(255));
+
   position: absolute;
   top: 0;
   left: 0;
@@ -139,9 +99,6 @@ a:hover {
   cursor: pointer;
 }
 
-// .icons:nth-child(odd) {
-//   background: rgb(random(255), random(255), random(255));
-// }
 .icons .i {
   margin: 10px 0px;
 }
