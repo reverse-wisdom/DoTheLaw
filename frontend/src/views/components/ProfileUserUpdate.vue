@@ -97,7 +97,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .text-solid-input {
   border: 1px solid black;
   width: 100%;
