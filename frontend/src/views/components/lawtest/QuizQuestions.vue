@@ -1,9 +1,9 @@
 <template>
   <ol>
-    <li v-for="(item, index) in items" v-show="index + 1 === step" :key="index" style="list-style-type: none;">
+    <li class="text-center" v-for="(item, index) in items" v-show="index + 1 === step" :key="index" style="list-style-type: none;">
       <img :src="item.image" />
       <span class="question">
-        <span>{{ item.quiz }}</span>
+        {{ item.quiz }}
       </span>
       <quiz-question-items :parentIndex="index" v-bind:items="item.example" />
     </li>
@@ -24,7 +24,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .question {
   display: block;
   position: relative;
@@ -32,7 +32,8 @@ export default {
   padding-left: 1.5em;
   margin-bottom: 20px;
   color: #666666;
-  font-size: 18px;
+  font-size: 30px;
+  font-family: 'MaplestoryOTFBold';
   line-height: 1.3;
   word-break: keep-all;
   span {

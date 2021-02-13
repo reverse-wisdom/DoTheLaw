@@ -1,6 +1,6 @@
 <template>
   <div class="result-load-message">
-    <p>벌금을 계산 중입니다.. 🤔</p>
+    <p class="result">벌금을 계산 중입니다.. 🤔</p>
     <loadingSpinner />
   </div>
 </template>
@@ -20,7 +20,12 @@ export default {
 .result-load-message {
   padding: 4rem 0;
   color: #666;
-  font-size: 0.875rem;
+  font-size: 3rem;
   text-align: center;
+}
+.result {
+  font-family: 'MaplestoryOTFBold';
+  font-size: 3rem;
+  color: black;
 }
 </style>
