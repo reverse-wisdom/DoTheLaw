@@ -7,13 +7,15 @@
             <v-col class="text-left ml-3">
               <strong>{{ comment.name }}</strong>
             </v-col>
-            <v-col class="text-right mr-3">
-              <md-button class="md-warning" @click="modifyComment">수정</md-button>
-              <md-button class="md-rose" @click="deleteComment">삭제</md-button>
-            </v-col>
+            <template v-if="comment.uuid == $store.state.uuid">
+              <v-col class="text-right mr-3">
+                <md-button class="md-warning" @click="modifyComment">수정</md-button>
+                <md-button class="md-rose" @click="deleteComment">삭제</md-button>
+              </v-col>
+            </template>
           </v-row>
         </template>
-        <v-text-field :disabled="disabled == 1" color="black" :value="comment.content" id="content"></v-text-field>
+        <v-text-field :readonly="disabled == 1" color="black" :value="comment.content" id="content"></v-text-field>
       </v-card>
     </v-col>
   </v-row>

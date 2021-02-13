@@ -2,11 +2,11 @@
   <div v-bind:style="[checkDate ? { opacity: 0.4 } : {}]">
     <div @click="moveControversyDetail(list)">
       <v-img class="white--text align-end" height="200px" :src="controversyImg" :disabled="checkDate">
-        <v-card-title>{{ list.title }}</v-card-title>
+        <v-card-title class="conv-title">{{ list.title }}</v-card-title>
       </v-img>
       <v-card-text class="text--primary">
-        <div class="text-right endDate">찬성반대 종료시간:{{ '    ' + $moment(list.endDate).format('llll') }}</div>
-        <h4 class="text-left">{{ list.content }}</h4>
+        <div class="text-right endDate conv-text">찬성반대 종료시간:{{ '    ' + $moment(list.endDate).format('llll') }}</div>
+        <h3 class="text-left conv-text">{{ list.content }}</h3>
         <span class="t_blue">
           <b>찬성: {{ Math.round((list.agree / (list.agree + list.opposition)) * 100) }}</b>
           %
@@ -123,6 +123,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@font-face {
+  font-family: 'Cafe24Ohsquare';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Cafe24Ohsquare.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'S-CoreDream-6Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-6Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+.conv-text {
+  font-family: 'Cafe24Ohsquare';
+}
+.conv-title {
+  font-family: 'S-CoreDream-6Bold';
+  font-size: 1.8rem;
+}
+
 // 한글 폰트 설정
 .kor {
   font-family: 'Nanum Gothic', sans-serif;
@@ -176,7 +196,6 @@ export default {
 }
 
 .endDate {
-  font-family: 'Work Sans';
   letter-spacing: -1px;
   line-height: 110%;
   font-size: 20px;
