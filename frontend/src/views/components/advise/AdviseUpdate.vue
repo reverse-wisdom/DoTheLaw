@@ -89,7 +89,7 @@ export default {
   props: {
     header: {
       type: String,
-      default: require('@/assets/img/jj02.gif'),
+      default: require('@/assets/img/bg_matching.png'),
     },
   },
   computed: {
