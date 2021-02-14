@@ -20,7 +20,7 @@ function getEasyLawList(type, callback, errCallback) {
 }
 /** 생활법령 상세 정보 */
 function getEasyLawDetail(no, callback, errCallback) {
-  posts
+  return posts
     .get('/api/easylaw/detail', { params: { no } })
     .then((response) => callback(response))
     .catch((err) => {

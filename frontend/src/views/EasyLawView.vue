@@ -15,20 +15,20 @@
             <v-tabs v-model="tab" background-color="orange " centered dark icons-and-text>
               <v-tabs-slider></v-tabs-slider>
 
-              <v-tab v-for="(item, index) in items" :key="item.type" :href="'#tab-' + index">
+              <v-tab v-for="(item, index) in items" :key="index" :href="'#tab-' + index">
                 <v-img :src="item.img.off" max-height="60"></v-img>
                 {{ item.name }}
               </v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-              <v-tab-item v-for="(item, index) in items" :key="item.type" :value="'tab-' + index">
+              <v-tab-item v-for="(item, index) in items" :key="index" :value="'tab-' + index">
                 <v-card flat>
                   <!-- <v-card-text>{{ item.content }}</v-card-text> -->
                   <v-item-group active-class="item--active">
                     <v-container>
                       <v-row>
-                        <v-col v-for="(obj, index) in item.content" :key="'k' + index" cols="12" md="12">
+                        <v-col v-for="(obj, index) in item.content" :key="index" cols="12" md="12">
                           <v-item v-slot="{ active, toggle }">
                             <v-card class="d-flex align-center" @click="toggle">
                               <v-scroll-y-transition>
@@ -39,7 +39,7 @@
                                   <span>
                                     {{ obj.content }}
                                   </span>
-                                  <div v-if="active"></div>
+                                  <easy-law-detail-card v-if="active" :no="obj.no"></easy-law-detail-card>
                                 </div>
                               </v-scroll-y-transition>
                             </v-card>
@@ -59,6 +59,8 @@
 </template>
 <script>
 import { getEasyLawMain, getEasyLawList, getEasyLawDetail } from '@/api/easylaw.js';
+import EasyLawDetailCard from './components/EasyLawDetailCard.vue';
+
 export default {
   data() {
     return {
@@ -66,17 +68,31 @@ export default {
       items: [],
     };
   },
+  components: { EasyLawDetailCard },
   mounted() {
+    this.tab = 'tab-5';
     getEasyLawMain((response) => {
       // console.dir(response.data);
       this.items = response.data;
       this.items.forEach((el) => {
         getEasyLawList(el.type, (response) => {
-          console.dir(response.data);
+          // console.dir(response.data);
           el.content = response.data;
         });
       });
     });
+    setTimeout(() => {
+      this.tab = 'tab-0';
+    }, 500);
+  },
+  methods: {
+    getItemDetail(no) {
+      // console.log('받은 no', no);
+      const data = (async () => {
+        return await getEasyLawDetail(no, (response) => response);
+      })();
+      // console.log(data);
+    },
   },
   bodyClass: 'profile-page',
   props: {
