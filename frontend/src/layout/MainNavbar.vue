@@ -21,7 +21,7 @@
             <mobile-menu nav-mobile-section-start="false"></mobile-menu>
             <md-list>
               <li class="md-list-item">
-                <a href="javascript:void(0)" class="md-list-item-router md-list-item-container md-button-clean dropdown">
+                <!-- <a href="javascript:void(0)" class="md-list-item-router md-list-item-container md-button-clean dropdown">
                   <div class="md-list-item-content">
                     <drop-down direction="down">
                       <md-button slot="title" class="md-button md-button-link md-white md-simple dropdown-toggle" data-toggle="dropdown">
@@ -41,27 +41,16 @@
                             찬반토론
                           </router-link>
                         </li>
-                        <li>
-                          <a @click="moveScourtExp">
-                            <i class="material-icons">gavel</i>
-                            모의판사체험
-                          </a>
+                        <li class="">
+                          <router-link to="/board">
+                            <i class="material-icons">assignment_turned_in</i>
+                            게시판
+                          </router-link>
                         </li>
                       </ul>
                     </drop-down>
                   </div>
-                </a>
-              </li>
-
-              <li class="md-list-item">
-                <router-link to="/board" class="md-list-item-router md-list-item-container md-button-clean">
-                  <div class="md-list-item-content">
-                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
-                      <i class="material-icons">assignment_turned_in</i>
-                      게시판
-                    </md-button>
-                  </div>
-                </router-link>
+                </a> -->
               </li>
 
               <li class="md-list-item">
@@ -76,14 +65,57 @@
                 </router-link>
               </li>
 
+              <li class="md-list-item">
+                <router-link to="/lawyermatch" class="md-list-item-router md-list-item-container md-button-clean">
+                  <!-- <router-link to="/adviseList" class="md-list-item-router md-list-item-container md-button-clean"> -->
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <a @click="moveScourtExp">
+                        <i class="material-icons">gavel</i>
+                        모의판사체험
+                      </a>
+                    </md-button>
+                  </div>
+                </router-link>
+              </li>
+              <li class="md-list-item">
+                <router-link to="/controversylist" class="md-list-item-router md-list-item-container md-button-clean">
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">supervisor_account</i>
+                      찬반토론
+                    </md-button>
+                  </div>
+                </router-link>
+              </li>
+              <li class="md-list-item">
+                <router-link to="/lawtest" class="md-list-item-router md-list-item-container md-button-clean">
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">quiz</i>
+                      법상식테스트
+                    </md-button>
+                  </div>
+                </router-link>
+              </li>
+
+              <li class="md-list-item">
+                <router-link to="/board" class="md-list-item-router md-list-item-container md-button-clean">
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">assignment_turned_in</i>
+                      게시판
+                    </md-button>
+                  </div>
+                </router-link>
+              </li>
               <template v-if="this.$store.state.token">
                 <li class="md-list-item">
-                  <!-- USER프로필 완성되면 to경로 바꾸깅 -->
                   <router-link :to="role == 'USER' ? { name: 'profileUser' } : { name: 'profileLawyer' }" class="md-list-item-router md-list-item-container md-button-clean">
                     <div class="md-list-item-content">
                       <md-button slot="title" class="md-button md-button-link md-white md-simple">
                         <i class="material-icons">account_circle</i>
-                        {{ $store.state.email }}({{ $store.state.name }})님 환영합니다.
+                        {{ $store.state.name }}의 프로필
                       </md-button>
                     </div>
                   </router-link>
