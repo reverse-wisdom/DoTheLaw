@@ -2,16 +2,25 @@
   <!-- 자문 게시판 페이지 -->
   <div id="app">
     <div class="container">
-      <v-card>
-        <p>아이디:{{ $store.state.uuid }}</p>
-        <p>유저타입:{{ $store.state.role }}</p>
+      <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ data }}</h5>
+              <p class="card-text"></p>
+              <p class="card-text"><small class="text-muted"></small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <v-card>
         <v-card-title>
           MyAdvise
           <v-spacer></v-spacer>
           <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
         </v-card-title>
         <v-data-table :headers="headers" :items-per-page="5" :items="values" :search="search" @click:row="adviseDetail" class="elevation-1"></v-data-table>
-      </v-card>
+      </v-card> -->
     </div>
   </div>
 </template>
@@ -19,7 +28,12 @@
 <script>
 export default {
   bodyClass: 'profile-page',
-  props: ['values'],
+  props: {
+    data: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       token: '',
@@ -54,6 +68,9 @@ export default {
 
 <style lang="scss" scoped>
 // hr 설정
+#app {
+  background: white;
+}
 .div-hr {
   width: 80%;
 }
