@@ -13,7 +13,7 @@
         <modal id="resultModal" v-if="classicModal" @close="explainModalHide">
           <template slot="body">
             <v-carousel>
-              <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src" reverse-transition="fade-transition" transition="fade-transition"></v-carousel-item>
+              <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src"></v-carousel-item>
             </v-carousel>
           </template>
           <template slot="footer">
@@ -51,6 +51,15 @@ export default {
         },
         {
           src: require('@/assets/img/q4.png'),
+        },
+        {
+          src: require('@/assets/img/q5.png'),
+        },
+        {
+          src: require('@/assets/img/q6.png'),
+        },
+        {
+          src: require('@/assets/img/q7.png'),
         },
       ],
     };
