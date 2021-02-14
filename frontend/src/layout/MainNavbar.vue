@@ -79,7 +79,7 @@
               <template v-if="this.$store.state.token">
                 <li class="md-list-item">
                   <!-- USER프로필 완성되면 to경로 바꾸깅 -->
-                  <router-link :to="role == 'USER' ? { name: 'profileUser' } : { name: 'profileLawyer' }" class="md-list-item-router md-list-item-container md-button-clean">
+                  <router-link :to="this.$store.state.role == 'USER' ? { name: 'profileUser' } : { name: 'profileLawyer' }" class="md-list-item-router md-list-item-container md-button-clean">
                     <div class="md-list-item-content">
                       <md-button slot="title" class="md-button md-button-link md-white md-simple">
                         <i class="material-icons">account_circle</i>
@@ -188,7 +188,7 @@ export default {
       this.$store.commit('clearName');
       this.$store.commit('clearPassword');
       this.$store.commit('clearUuid');
-      this.$store.commit('clearImage');
+      // this.$store.commit('clearImage');
       this.$store.commit('clearLawuuid');
       localStorage.clear();
       sessionStorage.clear();
