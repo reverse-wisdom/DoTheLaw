@@ -34,6 +34,8 @@ import AdviseLawyer from './views/components/advise/AdviseLawyer.vue';
 
 import QuizCore from './views/components/lawtest/QuizCore.vue';
 
+import EasyLawView from './views/EasyLawView.vue';
+
 import Lawyermatch from './views/Lawyermatch.vue';
 import LawyermatchDetail from './views/components/LawyermatchDetail.vue';
 
@@ -301,6 +303,15 @@ const router = new Router({
       meta: { auth: true },
       // 로그인 이전에  원하는 페이지 이동 막기 아래 코드 추가하면됨
       // meta: { auth: true },
+    },
+    {
+      path: '/easyLaw',
+      name: 'easyLaw',
+      components: { default: EasyLawView, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: 'black' },
+      },
     },
   ],
   scrollBehavior: (to) => {
