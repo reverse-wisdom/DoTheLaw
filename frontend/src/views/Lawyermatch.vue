@@ -32,7 +32,7 @@ export default {
   props: {
     header: {
       type: String,
-      default: require('@/assets/img/bg_matching.jpg'),
+      default: require('@/assets/img/bg_matching.png'),
     },
   },
   async created() {
