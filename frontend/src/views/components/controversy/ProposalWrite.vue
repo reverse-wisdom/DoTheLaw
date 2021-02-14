@@ -18,9 +18,6 @@ export default {
   props: {
     controversyId: Number,
   },
-  created() {
-    console.log(this.controversyId);
-  },
   methods: {
     async onSubmit() {
       const proposoalData = {
