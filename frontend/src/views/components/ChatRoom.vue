@@ -101,7 +101,7 @@ main {
   display: inline-block;
   font-size: 15px;
   vertical-align: top;
-  background-color: #abd9e9;
+  /* background-color: #abd9e9; */
 }
 
 aside header {
