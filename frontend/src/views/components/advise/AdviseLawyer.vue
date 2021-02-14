@@ -14,14 +14,6 @@
       <!-- <i class="icon ion-md-trash" ></i> -->
     </div>
   </li>
-  <!-- <v-card>
-        <v-card-title>
-          MyAdvise
-          <v-spacer></v-spacer>
-          <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
-        </v-card-title>
-        <v-data-table :headers="headers" :items-per-page="5" :items="values" :search="search" @click:row="adviseDetail" class="elevation-1"></v-data-table>
-      </v-card> -->
 </template>
 
 <script>

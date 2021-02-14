@@ -1,12 +1,11 @@
 <template>
   <div>
-    <label for="">채팅기록검색:</label>
-    <hr />
-    <input type="text" v-model="query" @keydown="move" />
+    <div class="input-group mb-3 d-flex">
+      <span class="input-group-text" id="inputGroup-sizing-default">채팅기록검색</span>
+      <input v-model="query" @keydown="move" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+    </div>
     <ul id="chat">
       <li v-for="(m, idx) in msg" :key="idx" :id="'message-' + idx" v-bind:class="m.style">
-        <!-- <li v-for="(m, idx) in query" :key="idx"> -->
-        <!-- <template v-if="m.content.includes(query)"> -->
         <div class="entete">
           <span class="status green"></span>
           <h2>{{ m.name }}</h2>
@@ -15,11 +14,8 @@
         <div class="message">
           {{ m.content }}
         </div>
-        <!-- </template> -->
       </li>
     </ul>
-
-    <hr />
   </div>
 </template>
 
@@ -37,7 +33,12 @@ export default {
       uuid: this.$store.state.uuid,
     };
   },
-  props: ['roomId'],
+  props: {
+    roomId: {
+      type: String,
+      required: true,
+    },
+  },
   mounted() {
     this.client = createWebChatClient(this.roomId, this.$store.state.uuid, this.$store.state.name, this.msg);
     this.title = this.client.getRoomTitle(this.setTitle);
@@ -78,7 +79,17 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+#chat {
+  background: rgb(201, 233, 240);
+}
+#inputGroup-sizing-default {
+  width: 40%;
+  margin-top: 5px;
+}
+input {
+  width: 100%;
+}
 ul {
   max-height: calc(100vh - 48px - 48px);
 }
@@ -93,7 +104,7 @@ body {
 #container {
   width: 750px;
   height: 800px;
-  background: #eff3f7;
+  background: white;
   margin: 0 auto;
   font-size: 0;
   border-radius: 5px;
@@ -305,5 +316,8 @@ main footer button {
   /* margin-left: 333px; */
   /* margin-top: 5px; */
   /* display: inline-block; */
+}
+#soild {
+  border: 1px solid black;
 }
 </style>
