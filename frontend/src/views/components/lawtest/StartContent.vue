@@ -3,10 +3,10 @@
     <div class="start-content" v-html="content"></div>
     <div class="title">
       <div class="">
-        <img src="@/assets/img/main2.png" alt="" />
+        <img src="@/assets/img/main2.png" class="animate__animated animate__heartBeat animate__infinite" alt="" />
       </div>
     </div>
-    <button @click="introEnd" class="button-submit">시작하기</button>
+    <button @click="introEnd" class="button-submit animate__animated animate__shakeX animate__infinite">시작하기</button>
   </div>
 </template>
 

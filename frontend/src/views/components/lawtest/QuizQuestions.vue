@@ -1,10 +1,11 @@
 <template>
   <ol>
     <li class="text-center" v-for="(item, index) in items" v-show="index + 1 === step" :key="index" style="list-style-type: none;">
-      <img :src="item.image" />
       <span class="question">
         {{ item.quiz }}
       </span>
+      <img :src="item.image" />
+
       <quiz-question-items :parentIndex="index" v-bind:items="item.example" />
     </li>
   </ol>
