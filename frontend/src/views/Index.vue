@@ -76,6 +76,10 @@
           <li class="col-2">
             <input @click="moveScourtExp" class="button" value="모의판사체험" readonly onfocus="this.blur();" />
           </li>
+
+          <li class="col-2">
+            <input @click="moveEasyLaw" class="button" value="생활법령" readonly onfocus="this.blur();" />
+          </li>
         </div>
       </div>
     </full-page>
@@ -174,6 +178,9 @@ export default {
     },
     moveScourtExp() {
       location.href = 'https://i4d103.p.ssafy.io/exp/main.html';
+    },
+    moveEasyLaw() {
+      this.$router.push({ name: 'easyLaw' });
     },
   },
 };
