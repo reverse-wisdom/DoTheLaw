@@ -28,7 +28,7 @@
               </div>
               <div class="col-4">
                 <!-- 채팅룸의 룸ID 값은 자문매칭의 ID와 같아야 하므로 임의로 4로 배정  -->
-                <chat-room :roomId="4" v-if="roomId"></chat-room>
+                <chat-room :roomId="roomId" v-if="roomId"></chat-room>
               </div>
             </div>
 
@@ -63,6 +63,7 @@ import WebRTC from 'vue-webrtc';
 import * as io from 'socket.io-client';
 
 import ChatRoom from './components/ChatRoom.vue';
+import { fetchAdviseMe } from '@/api/advise';
 
 window.io = io;
 
@@ -76,7 +77,7 @@ export default {
   data() {
     return {
       img: null,
-      roomId: 'private-room', // 방이름 (영어와 _만 가능)
+      roomId: '', // 방이름 (영어와 _만 가능)
       socketURL: 'https://rtcmulticonnection.herokuapp.com:443/',
     };
   },
@@ -92,6 +93,12 @@ export default {
         backgroundImage: `url(${this.header})`,
       };
     },
+  },
+  async created() {
+    console.log(this.$route.query.matchingId);
+    this.roomId = this.$route.query.matchingId;
+    // const { data } = await fetchAdviseMe(this.$route.query.matchingId);
+    // console.log(data);
   },
 
   methods: {

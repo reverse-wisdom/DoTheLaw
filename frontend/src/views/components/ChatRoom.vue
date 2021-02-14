@@ -46,7 +46,12 @@ export default {
       uuid: this.$store.state.uuid,
     };
   },
-  props: ['roomId'],
+  props: {
+    roomId: {
+      type: String,
+      required: true,
+    },
+  },
   mounted() {
     this.client = createWebChatClient(this.roomId, this.$store.state.uuid, this.$store.state.name, this.msg);
     this.title = this.client.getRoomTitle(this.setTitle);

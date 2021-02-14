@@ -17,6 +17,10 @@
               <td>{{ value.name }}</td>
             </tr>
             <tr style="border-top: 1px solid;">
+              <th scope="col">카테고리</th>
+              <td>{{ value.category }}</td>
+            </tr>
+            <tr style="border-top: 1px solid;">
               <th scope="col">진행상황</th>
               <td>{{ value.state }}</td>
             </tr>
@@ -47,14 +51,16 @@
           <div v-if="$store.state.role == 'USER'" style="text-align:right">
             <md-button class="md-rose" @click="adviseDelete">자문삭제</md-button>
             <md-button class="md-warning" @click="updateAdvise(value)">자문수정</md-button>
-            <md-button class="md-success" @click="modal2()">화상채팅기록</md-button>
-            <!-- <md-button class="md-info" @click="moveBoard()">뒤로가기</md-button> -->
+            <md-button class="md-primary" style="float: left;" @click="webrtc()">화상미팅</md-button>
+            <md-button class="md-success" style="float: left;" @click="modal2()">화상채팅기록</md-button>
+            <md-button class="md-info" @click="$router.go(-1)">뒤로가기</md-button>
           </div>
           <!-- else -->
           <div v-if="$store.state.role == 'LAWYER'" style="text-align:right">
-            <md-button class="md-info" @click="modal">자문일정</md-button>
-            <md-button class="md-info" @click="$router.go(-1)">뒤로가기</md-button>
+            <md-button class="md-rose" @click="modal">자문일정</md-button>
+            <md-button class="md-primary" @click="webrtc()">화상미팅</md-button>
             <md-button class="md-success" @click="modal2()">화상채팅기록</md-button>
+            <md-button class="md-info" @click="$router.go(-1)">뒤로가기</md-button>
             <!-- 모달 -->
             <div class="md-layout">
               <div class="md-layout-item md-size-33">
@@ -104,14 +110,13 @@
       <div class="md-layout-item md-size-33">
         <modal v-if="classicModal2" @close="classicModalHide2">
           <template slot="header">
-            <h4 class="modal-title kor">{{ value.name }}과의 채팅기록</h4>
+            <h4 class="modal-title kor mb-5">{{ value.name }}과의 채팅기록</h4>
             <md-button class="md-simple md-just-icon md-round modal-default-button" @click="classicModalHide2">
               <md-icon>clear</md-icon>
             </md-button>
           </template>
           <template slot="body">
-            <!-- <chat-room-history :roomId="value.matchingId" v-if="roomId"></chat-room-history> -->
-            <chat-room-history :roomId="4" v-if="roomId"></chat-room-history>
+            <chat-room-history :roomId="value.matchingId" v-if="roomId"></chat-room-history>
           </template>
           <template slot="footer">
             <md-button class="md-danger md-simple" type="submit" @click="classicModalHide2">닫기</md-button>
@@ -188,6 +193,10 @@ export default {
       var matchingId = value.matchingId;
       this.$router.push({ name: 'AdviseUpdate', query: { matchingId: matchingId } });
     },
+    webrtc() {
+      var matchingId = this.value.matchingId;
+      this.$router.push({ name: 'webrtc', query: { matchingId: matchingId } });
+    },
     uploadComment(newComment) {
       axios
         .get('/api/comment/search?boardId=' + this.$route.query.boardId, {})
@@ -257,6 +266,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// .modal-header {
+//   background: rgb(29, 80, 191);
+// }
 // hr 설정
 .div-hr {
   width: 80%;
