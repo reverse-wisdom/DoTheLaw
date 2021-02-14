@@ -1,10 +1,7 @@
 <template>
   <!-- 로그인 페이지 -->
   <div class="wrapper">
-    <parallax
-      class="section page-header header-filter"
-      :style="headerStyle"
-    ></parallax>
+    <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised kor">
       <div class="section profile-content">
         <hr />
@@ -39,15 +36,9 @@
               <div>
                 <div>
                   <md-button class="md-success" @click="onJoin">Join</md-button>
-                  <md-button class="md-success" @click="onLeave"
-                    >Leave</md-button
-                  >
-                  <md-button class="md-success" @click="onCapture"
-                    >Capture Photo</md-button
-                  >
-                  <md-button class="md-success" @click="onShareScreen"
-                    >Share Screen</md-button
-                  >
+                  <md-button class="md-success" @click="onLeave">Leave</md-button>
+                  <md-button class="md-success" @click="onCapture">Capture Photo</md-button>
+                  <md-button class="md-success" @click="onShareScreen">Share Screen</md-button>
                 </div>
               </div>
             </div>
