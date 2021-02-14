@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
-    <div class="main main-raised kor">
-      <div class="section section-basic">
-        <h2 class="title text-center kor">판례 검색</h2>
+    <div class="main main-raised paybooc">
+      <div class="section section-basic paybooc">
+        <h2 class="title text-center">판례 검색</h2>
         <v-row justify="center" style="margin : 5px">
           <v-col cols="6" md="4">
             <form @submit="searchLaw()" onSubmit="return false;">
@@ -16,7 +16,7 @@
             </form>
             <br />
 
-            <v-card class="mx-auto" tile>
+            <v-card class="mx-auto" tile elevation="5">
               <v-subheader>검색기록</v-subheader>
               <hr />
               <v-list-item v-for="(word, i) in history" :key="i">
@@ -27,7 +27,7 @@
             </v-card>
 
             <br />
-            <v-card class="mx-auto" max-width="auto" tile>
+            <v-card class="mx-auto " max-width="auto" tile elevation="5">
               <v-subheader>판례목록</v-subheader>
               <hr />
               <v-list style="max-height: 400px" class="overflow-y-auto">
@@ -45,7 +45,7 @@
             </v-card>
           </v-col>
           <v-col cols="12" md="8" class="mr">
-            <v-card class="pa-2 overflow-y-auto" max-height="1024" max-width="1400" style="margin : 5px" outlined tile>
+            <v-card class="pa-2 overflow-y-auto" max-height="1024" max-width="1400" style="margin : 5px" outlined tile elevation="5">
               <template v-if="render">
                 <h3 v-html="judgment.PrecService.사건명" class="text-center"></h3>
                 <v-simple-table>
@@ -70,6 +70,11 @@
                 </v-simple-table>
 
                 <div class="radiobtn">
+                  <input v-model="radio" :value="judgment.PrecService.판례내용" type="radio" id="판례내용" />
+                  <label for="판례내용">판례내용</label>
+                </div>
+
+                <div class="radiobtn">
                   <input v-model="radio" :value="judgment.PrecService.판결요지" type="radio" id="판결요지" checked />
                   <label for="판결요지">판결요지</label>
                 </div>
@@ -79,11 +84,15 @@
                   <label for="참조조문">참조조문</label>
                 </div>
 
-                <div class="radiobtn">
-                  <input v-model="radio" :value="judgment.PrecService.판례내용" type="radio" id="판례내용" />
-                  <label for="판례내용">판례내용</label>
-                </div>
-                <p v-html="radio"></p>
+                <!-- <p v-html="radio"></p> -->
+                <v-expand-transition>
+                  <div v-show="radio">
+                    <v-divider></v-divider>
+                    <v-card-text>
+                      <p v-html="radio"></p>
+                    </v-card-text>
+                  </div>
+                </v-expand-transition>
               </template>
 
               <div class="container text-center"></div>
@@ -123,6 +132,9 @@ export default {
       radio: false,
       dict: [],
       history: [],
+      show1: false,
+      show2: false,
+      show3: false,
     };
   },
   props: {
@@ -188,7 +200,6 @@ export default {
       this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(/<(\/a|a)([^>]*)>/gi, '');
       this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(/<(\/a|a)([^>]*)>/gi, '');
       this.radio = this.judgment.PrecService.판결요지;
-      console.log(this.dict);
       var count = 0;
 
       this.dict.forEach((element) => {
@@ -252,6 +263,12 @@ export default {
 .kor {
   font-family: 'Nanum Gothic', sans-serif;
 }
+.paybooc {
+  font-family: 'paybooc-Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 .mr {
   padding: 5px;
 }
@@ -264,7 +281,7 @@ tbody {
 }
 
 // 라디오 버튼 스타일
-$accentcolor: #fcae2c;
+$accentcolor: #a8a6a3;
 $lightcolor: #fff;
 $darkcolor: #444;
 
@@ -353,5 +370,12 @@ $darkcolor: #444;
   100% {
     background-color: lighten($accentcolor, 15%);
   }
+}
+
+@font-face {
+  font-family: 'paybooc-Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 </style>
