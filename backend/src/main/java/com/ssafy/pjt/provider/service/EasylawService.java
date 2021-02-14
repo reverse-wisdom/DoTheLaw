@@ -105,6 +105,7 @@ public class EasylawService {
 				String content = elm.child(1).attr("title");// 내용
 				map.put("title", title);
 				map.put("href", href.replace("/CSP/CsmMain.laf?csmSeq=", "/api/easylaw/detail?no="));
+				map.put("no", href.replace("/CSP/CsmMain.laf?csmSeq=", ""));
 				map.put("content", content);
 				result.add(map);
 			}
@@ -120,8 +121,8 @@ public class EasylawService {
 		final String MAIN_URL = "https://www.easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&ccfNo=1&cciNo=1&cnpClsNo=1&csmSeq=";
 		Map result = new HashMap();
 		try {
-			Connection conn = Jsoup.connect(DETAIL_URL + no).followRedirects(false).timeout(3000);
-			Connection conn2 = Jsoup.connect(MAIN_URL + no).followRedirects(false).timeout(3000);
+			Connection conn = Jsoup.connect(DETAIL_URL + no).followRedirects(false).timeout(100000);
+			Connection conn2 = Jsoup.connect(MAIN_URL + no).followRedirects(false).timeout(100000);
 			Document html = conn.get();
 			Document html2 = conn2.get();
 			Element imageElm = html.selectFirst(".toon_img > img");
@@ -129,8 +130,8 @@ public class EasylawService {
 			Element contentElm = html2.selectFirst("#ovDiv > div");
 			String image = imageElm.attr("src");
 			String summary = summaryElm.text();
-			String content = contentElm.html().replaceAll("<img([\\w\\W]+?)/>", "");
-			result.put("image", image);
+			String content = contentElm.html().replaceAll("<img src=\"/", "<img src=\"https://www.easylaw.go.kr/");
+			result.put("image", "https://www.easylaw.go.kr"+ image);
 			result.put("summary", summary);
 			result.put("content", content);
 		}catch (Exception e) {
