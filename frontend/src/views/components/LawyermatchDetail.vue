@@ -93,6 +93,7 @@ import { saveImage } from '@/api/service';
 
 import axios from 'axios';
 import AdviseLawyer from '@/views/components/advise/AdviseLawyer.vue';
+import Chart from '@/views/components/Chart.vue';
 
 const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
 
@@ -100,6 +101,7 @@ export default {
   bodyClass: 'profile-page',
   components: {
     AdviseLawyer,
+    Chart,
   },
   data() {
     return {
@@ -119,11 +121,12 @@ export default {
     const res = await LawyerDetail(email);
     this.lawyer = res.data;
     this.$store.commit('setLawuuid', res.data.uuid);
+
     {
       const userData = this.$store.state.lawuuid;
       const { data } = await fetchAdviseLawyer(userData);
       this.advise = data;
-      console.log(advise);
+      console.log(data);
     }
 
     var query = res.data.address;
