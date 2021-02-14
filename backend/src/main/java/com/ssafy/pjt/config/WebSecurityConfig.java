@@ -50,7 +50,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
+                
+                .antMatchers("/swagger-resources/**").permitAll() //swagger
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/v2/api-docs").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+
                 .antMatchers("/api/**").permitAll() // 로그인
+
 //                .antMatchers("/api/member/login/**").permitAll() // 로그인
 //                .antMatchers("/api/member/signup/**").permitAll() // 회원가입
 //
@@ -63,10 +70,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                
 //                .antMatchers("/api/rss/**").permitAll() // RSS 파싱 관련
 //                
-//                .antMatchers("/swagger-resources/**").permitAll() //swagger
-//                .antMatchers("/swagger-ui.html").permitAll()
-//                .antMatchers("/v2/api-docs").permitAll()
-//                .antMatchers("/webjars/**").permitAll()
 //                
 //
 //                .antMatchers("/api/board/").hasAnyAuthority(Role.USER.getCode(), Role.LAWYER.getCode(), Role.ADMIN.getCode()) //test
