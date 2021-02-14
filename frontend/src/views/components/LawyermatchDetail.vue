@@ -11,16 +11,13 @@
             <div class="col-3 colum mx-auto text-center">
               <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + lawyer.uuid + '/512'" alt="" />
               <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
-              <h1>{{ lawyer.name }}</h1>
+              <h2>{{ lawyer.name }}</h2>
             </div>
             <div class="col-8 row">
               <div class="col-12 r-4 mx-auto">
                 <chart :list="values" style="height: 250px"></chart>
               </div>
               <br />
-              <div v-if="$store.state.role == 'USER'" style="text-align:right">
-                <md-button class="col-1" @click="writeAdvise">자문요청</md-button>
-              </div>
 
               <div class="col-11 mx-auto" id="text-solid-intro">
                 <div>
@@ -33,7 +30,7 @@
               </div>
             </div>
 
-            <div class="row mx-auto">
+            <div class="col-12 row mx-auto">
               <div class="col-5 mx-auto" id="text-solid-margin">
                 <div>
                   관심분야
@@ -70,13 +67,21 @@
                   {{ lawyer.email }}
                 </span>
               </div>
-              <div class="col-11 mx-auto" id="text-solid-advise">
+              <div class="col-11 mx-auto mb-10" id="text-solid-advise">
                 <div>
                   최근답변
                 </div>
                 <hr />
-                <AdviseLawyer id="text-solids" v-for="(data, idx) in advise" :key="idx" :data="data" />
+                <ul>
+                  <AdviseLawyer id="text-solids" v-for="(data, idx) in advise" :key="idx" :data="data" />
+                </ul>
+                <div v-if="$store.state.role == 'USER'" style="text-align:right">
+                  <md-button class="col-1" @click="writeAdvise">자문요청</md-button>
+                </div>
               </div>
+            </div>
+            <div class="col-3 d-flex ml-10">
+              <h3 id="hexagon">찾아오시는 길</h3>
             </div>
             <div id="map" ref="map" style="width: 100%; height: 400px; margin: 2rem;"></div>
           </div>
@@ -108,6 +113,7 @@ export default {
       values: [],
       lawyer: '',
       advise: [],
+      search: '',
     };
   },
   props: {
@@ -125,7 +131,8 @@ export default {
     {
       const userData = this.$store.state.lawuuid;
       const { data } = await fetchAdviseLawyer(userData);
-      this.advise = data;
+
+      this.advise = data.reverse();
       console.log(data);
     }
 
@@ -152,25 +159,6 @@ export default {
         });
       })
       .catch();
-    try {
-      const userData = this.$store.state.lawuuid;
-      const { data } = await fetchAdviseLawyer(userData);
-      for (let i = 0; i < data.length; i++) {
-        this.values.push({
-          matchingId: data[i].matchingId,
-          lawyerUuid: data[i].lawyerUuid,
-          category: data[i].category,
-          uuid: data[i].uuid,
-          title: data[i].title,
-          state: data[i].state,
-          name: data[i].name,
-          reservationDate: this.$moment(data[i].reservationDate).format('llll'),
-          createDate: this.$moment(data[i].createDate).format('llll'),
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
   },
   computed: {
     headerStyle() {
@@ -208,6 +196,10 @@ export default {
 </script>
 
 <style scoped>
+ul {
+  display: flex;
+  flex-wrap: wrap;
+}
 #profile {
   border-radius: 70%;
 }
@@ -271,7 +263,7 @@ export default {
 #text-solid-advise {
   height: auto;
   margin-top: 2rem;
-  text-align: center;
+  /* text-align: center; */
   border: 1px solid gray;
   border-radius: 1rem;
   /* background: whitesmoke; */
@@ -287,5 +279,35 @@ hr {
 }
 #text-solids {
   background: white;
+}
+#hexagon {
+  color: white;
+  text-align: center;
+  width: 250px;
+  height: auto;
+  background: skyblue;
+  position: relative;
+}
+#hexagon:before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 250px;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 20px solid skyblue;
+}
+#hexagon:after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  width: 250px;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-top: 20px solid skyblue;
 }
 </style>

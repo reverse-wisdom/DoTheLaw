@@ -34,6 +34,8 @@ import AdviseLawyer from './views/components/advise/AdviseLawyer.vue';
 
 import QuizCore from './views/components/lawtest/QuizCore.vue';
 
+import EasyLawView from './views/EasyLawView.vue';
+
 import Lawyermatch from './views/Lawyermatch.vue';
 import LawyermatchDetail from './views/components/LawyermatchDetail.vue';
 
@@ -98,6 +100,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/profileLawyer',
@@ -107,6 +110,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/profileLawyer/update',
@@ -116,6 +120,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/profileUser',
@@ -125,6 +130,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/profileUser/update',
@@ -134,6 +140,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/board',
@@ -143,6 +150,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/boardDetail',
@@ -152,6 +160,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/boardWrite',
@@ -161,6 +170,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/boardUpdate',
@@ -170,6 +180,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
 
     {
@@ -189,6 +200,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/adviseUpdate',
@@ -198,6 +210,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/adviseme',
@@ -207,6 +220,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/adviselawyer',
@@ -216,6 +230,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/webrtc',
@@ -225,6 +240,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/dicttest',
@@ -234,6 +250,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/lawtest',
@@ -243,6 +260,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/lawyermatch',
@@ -252,6 +270,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/lawyermatchdetail',
@@ -261,6 +280,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/controversylist',
@@ -270,6 +290,7 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
     },
     {
       path: '/controversydetail',
@@ -279,8 +300,18 @@ const router = new Router({
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
       },
+      meta: { auth: true },
       // 로그인 이전에  원하는 페이지 이동 막기 아래 코드 추가하면됨
       // meta: { auth: true },
+    },
+    {
+      path: '/easyLaw',
+      name: 'easyLaw',
+      components: { default: EasyLawView, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: 'black' },
+      },
     },
   ],
   scrollBehavior: (to) => {
