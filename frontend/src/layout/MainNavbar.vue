@@ -98,6 +98,16 @@
                   </div>
                 </router-link>
               </li>
+              <li class="md-list-item">
+                <router-link to="/easylaw" class="md-list-item-router md-list-item-container md-button-clean">
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">info</i>
+                      생활법령
+                    </md-button>
+                  </div>
+                </router-link>
+              </li>
 
               <li class="md-list-item">
                 <router-link to="/board" class="md-list-item-router md-list-item-container md-button-clean">
