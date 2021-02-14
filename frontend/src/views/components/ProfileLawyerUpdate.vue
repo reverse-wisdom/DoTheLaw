@@ -9,7 +9,6 @@
             <div class="col-3 row mx-auto">
               <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + $store.state.uuid + '/512?t=' + new Date().getTime()" alt="" />
               <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
-              <!-- <img id="profile" class="col-12 r-10" :src="'/api/member/image/' + $store.state.uuid + '/256'" alt="noimage" /> -->
               <div class="r-2 mx-auto" id="button-sort">
                 <v-file-input
                   type="file"
@@ -23,8 +22,8 @@
               </div>
             </div>
             <div class="col-8 row" id="content-sort">
-              <h1 class="col-12 r-4">변호사 {{ value.name }}</h1>
-              <div v-if="loadCheck">
+              <h1 class="col-3 r-4 mx-auto">{{ value.name }}</h1>
+              <div class="col-6 mt-10" v-if="loadCheck">
                 <v-file-input type="file" name="uploadFile" accept="image/png, image/jpeg, image/bmp" placeholder="자격증 인증" ref="ocr" @change="check"></v-file-input>
               </div>
               <div v-else class="md-layout-item md-size-4 mx-auto">
@@ -33,9 +32,9 @@
                 <br />
               </div>
               <div class="col-11 mx-auto " id="text-solid-1">
-                공사중
+                한줄 소개
                 <hr />
-                <input class="col-12 text-solid-input" v-model="value.introduction" />
+                <input class="col-12 text-solid-input-intro" v-model="value.introduction" />
               </div>
             </div>
             <div class="row ml-10">
@@ -85,8 +84,6 @@ const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
 import axios from 'axios';
 import { Circle8 } from 'vue-loading-spinner';
 import { searchLawyer, editLawyer } from '@/api/auth';
-import { imageUpload } from '@/api/service';
-// import { searchLawyerAdvise } from '@/api/advise';
 
 export default {
   components: { Circle8 },
@@ -302,12 +299,12 @@ export default {
 #text-solid {
   border: 1px solid black;
   width: 200px;
-  height: 120px;
+  height: auto;
   margin-top: 2rem;
 }
 #text-solid-1 {
   border: 1px solid black;
-  width: 200px;
+  width: auto;
   height: auto;
 }
 .text-solid-input {
@@ -316,9 +313,15 @@ export default {
   height: auto;
   margin-bottom: 5px;
 }
+.text-solid-input-intro {
+  border: 1px solid black;
+  width: 100%;
+  height: auto;
+  margin-bottom: 5px;
+}
 #text-solid-margin {
   border: 1px solid black;
-  width: 200px;
+  width: auto;
   height: auto;
   margin-top: 2rem;
   margin-right: 4.7rem;

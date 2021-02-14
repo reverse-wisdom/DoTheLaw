@@ -54,10 +54,10 @@
               </v-row>
             </md-field>
             <div class="btn-right">
-              <md-button class="md-dense md-raised md-warning" type="submit" @click="modifyAdvise">
+              <md-button class="md-dense md-raised md-warning" style="float: right;" type="submit">
                 수정완료
               </md-button>
-              <md-button class="md-dense md-raised md-info" @click="moveAdviseList">
+              <md-button class="md-dense md-raised md-info" style="float: right;" @click="moveAdviseList">
                 목록
               </md-button>
             </div>
@@ -103,7 +103,7 @@ export default {
     const adviseId = this.$route.query.matchingId;
     const { data } = await detailAdvise(adviseId);
     this.value = data;
-    // this.selected = data.category;
+    this.selected = data.category;
     $(function() {
       $('#summernote').summernote({
         height: 300, // set editor height
@@ -130,12 +130,12 @@ export default {
     async modifyAdvise() {
       const editData = {
         matchingId: this.value.matchingId,
-        category: this.value.category,
+        category: this.selected,
         remarks: this.value.remarks,
         content: $('#summernote').summernote('code'),
         title: this.value.title,
         reservationDate: this.value.reservationDate,
-        state: this.value.state,
+        state: this.state,
         name: this.value.name,
         uuid: this.value.uuid,
       };
