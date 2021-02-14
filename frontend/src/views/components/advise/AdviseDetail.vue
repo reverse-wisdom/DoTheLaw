@@ -17,6 +17,10 @@
               <td>{{ value.name }}</td>
             </tr>
             <tr style="border-top: 1px solid;">
+              <th scope="col">카테고리</th>
+              <td>{{ value.category }}</td>
+            </tr>
+            <tr style="border-top: 1px solid;">
               <th scope="col">진행상황</th>
               <td>{{ value.state }}</td>
             </tr>

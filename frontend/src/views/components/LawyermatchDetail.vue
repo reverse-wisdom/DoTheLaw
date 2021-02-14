@@ -11,7 +11,7 @@
             <div class="col-3 colum mx-auto text-center">
               <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + lawyer.uuid + '/512'" alt="" />
               <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
-              <h1>{{ lawyer.name }}</h1>
+              <h2>{{ lawyer.name }}</h2>
             </div>
             <div class="col-8 row">
               <div class="col-12 r-4 mx-auto">
@@ -30,7 +30,7 @@
               </div>
             </div>
 
-            <div class="row mx-auto">
+            <div class="col-12 row mx-auto">
               <div class="col-5 mx-auto" id="text-solid-margin">
                 <div>
                   관심분야
@@ -73,11 +73,6 @@
                 </div>
                 <hr />
                 <ul>
-                  <!-- <div class="col-8"></div>
-                  <div class="col-4">
-                    <v-spacer></v-spacer>
-                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
-                  </div> -->
                   <AdviseLawyer id="text-solids" v-for="(data, idx) in advise" :key="idx" :data="data" />
                 </ul>
                 <div v-if="$store.state.role == 'USER'" style="text-align:right">
@@ -85,8 +80,9 @@
                 </div>
               </div>
             </div>
-            <h3 class="text-center mx-auto">찾아오시는 길</h3>
-            <hr />
+            <div class="col-3 d-flex ml-10">
+              <h3 id="hexagon">찾아오시는 길</h3>
+            </div>
             <div id="map" ref="map" style="width: 100%; height: 400px; margin: 2rem;"></div>
           </div>
         </div>
@@ -267,7 +263,7 @@ ul {
 #text-solid-advise {
   height: auto;
   margin-top: 2rem;
-  text-align: center;
+  /* text-align: center; */
   border: 1px solid gray;
   border-radius: 1rem;
   /* background: whitesmoke; */
@@ -283,5 +279,35 @@ hr {
 }
 #text-solids {
   background: white;
+}
+#hexagon {
+  color: white;
+  text-align: center;
+  width: 250px;
+  height: auto;
+  background: skyblue;
+  position: relative;
+}
+#hexagon:before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 250px;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 20px solid skyblue;
+}
+#hexagon:after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  width: 250px;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-top: 20px solid skyblue;
 }
 </style>

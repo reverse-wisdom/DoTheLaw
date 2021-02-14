@@ -7,49 +7,79 @@
         <hr class="div-hr" />
         <div class="container">
           <div class="row">
-            <div class="col-1"></div>
-            <div class="col-3 colum mx-auto">
-              <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + value.uuid + '/512'" alt="" />
+            <div class="col-1 "></div>
+            <div class="col-3 colum mx-auto text-center">
+              <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + lawyer.uuid + '/512'" alt="" />
               <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
-              <div class="r-2 mx-auto"></div>
+              <h2>{{ lawyer.name }}</h2>
             </div>
-            <div class="col-8 row" id="content-sort">
-              <h1 class="col-12 r-4">변호사 {{ value.name }}</h1>
-              <div class="col-11 mx-auto" id="text-solid-1">
-                한줄소개
+            <div class="col-8 row">
+              <div class="col-12 r-4 mx-auto">
+                <chart :list="values" style="height: 250px"></chart>
+              </div>
+              <br />
+
+              <div class="col-11 mx-auto" id="text-solid-intro">
+                <div>
+                  한줄소개
+                </div>
                 <hr />
-                {{ value.introduction }}
+                <span class="padding">
+                  {{ lawyer.introduction }}
+                </span>
               </div>
             </div>
-            <div class="row">
+            <div class="row mx-auto">
               <div class="col-5 mx-auto" id="text-solid-margin">
-                관심분야
+                <div>
+                  관심분야
+                </div>
                 <hr />
-                {{ value.bailiwick }}
+                <span class="padding">
+                  {{ lawyer.bailiwick }}
+                </span>
               </div>
               <div class="col-5 mx-auto" id="text-solid">
-                전화번호
+                <div>
+                  전화번호
+                </div>
                 <hr />
-                {{ value.phone }}
+                <span class="padding">
+                  {{ lawyer.phone }}
+                </span>
               </div>
               <div class="col-5 mx-auto" id="text-solid-margin">
-                경력
+                <div>
+                  경력
+                </div>
                 <hr />
-                {{ value.career }}
+                <span class="padding">
+                  {{ lawyer.career }}
+                </span>
               </div>
               <div class="col-5 mx-auto" id="text-solid">
-                이메일
+                <div>
+                  이메일
+                </div>
                 <hr />
-                {{ value.email }}
+                <span class="padding">
+                  {{ lawyer.email }}
+                </span>
               </div>
-              <div class="col-11 mx-auto" id="text-solid-one">
-                최근답변
-                <AdviseLawyer />
+              <div class="col-11 mx-auto" id="text-solid-advise">
+                <div>
+                  최근답변
+                </div>
                 <hr />
+                <ul>
+                  <AdviseLawyer id="text-solids" v-for="(data, idx) in advise" :key="idx" :data="data" />
+                </ul>
               </div>
             </div>
-            <div class="col-3 mt-4 mx-auto">찾아오시는 길</div>
-            <div id="map" ref="map" class="col-9 mx-auto" style="width: 100%; height: 400px; margin: 2rem;"></div>
+            <div class="col-3 d-flex ml-5 mt-10">
+              <h3 id="hexagon">위치</h3>
+            </div>
+            <div id="map" ref="map" class="col-12 mx-auto" style="width: 100%; height: 400px; margin: 2rem;"></div>
             <div class="col-9"></div>
             <div class="btn btn-info col-1 mx-auto" style="float: right;" @click="moveLawyerUpdate">정보수정</div>
             <div class="btn btn-info col-1" style="float: right;" @click="deleteLawyer">회원탈퇴</div>
@@ -64,11 +94,13 @@
 const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
 import AdviseLawyer from '@/views/components/advise/AdviseLawyer.vue';
 import axios from 'axios';
+import Chart from '@/views/components/Chart.vue';
+import { fetchAdviseLawyer } from '@/api/advise';
 import { searchLawyer, signoutUser } from '@/api/auth';
-import { saveImage } from '@/api/service';
 export default {
   components: {
     AdviseLawyer,
+    Chart,
   },
   bodyClass: 'profile-page',
   data() {
@@ -81,7 +113,8 @@ export default {
         lat: 37.5665734,
         lng: 126.978179,
       },
-      value: [],
+      values: [],
+      lawyer: [],
       advise: [],
     };
   },
@@ -102,11 +135,19 @@ export default {
     const email = this.$store.state.email;
     const { data } = await searchLawyer(email);
 
-    this.value = data;
+    this.lawyer = data;
     this.$store.commit('setLawuuid', data.uuid);
-    console.log('회원정보', this.value);
+    console.log('회원정보', this.lawyer);
 
-    var query = this.value.address;
+    {
+      const userData = this.$store.state.lawuuid;
+      const { data } = await fetchAdviseLawyer(userData);
+
+      this.advise = data.reverse();
+      console.log(data);
+    }
+
+    var query = this.lawyer.address;
     axios
       .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_MAP_KEY + '&address=' + query)
       .then(({ data }) => {
@@ -154,7 +195,7 @@ export default {
       this.$router.push({ name: 'profileLawyerUpdate' });
     },
     async deleteLawyer() {
-      const res = await signoutUser(this.value.uuid);
+      const res = await signoutUser(this.lawyer.uuid);
       console.log(res);
       this.$store.commit('clearEmail');
       this.$store.commit('clearToken');
@@ -162,7 +203,7 @@ export default {
       this.$store.commit('clearPassword');
       this.$store.commit('clearName');
       this.$store.commit('clearUuid');
-      this.$store.commit('clearImage');
+      // this.$store.commit('clearImage');
       localStorage.clear();
       sessionStorage.clear();
       $cookies.keys().forEach((cookie) => $cookies.remove(cookie));
@@ -173,6 +214,10 @@ export default {
 </script>
 
 <style scoped>
+ul {
+  display: flex;
+  flex-wrap: wrap;
+}
 #profile {
   border-radius: 70%;
 }
@@ -185,29 +230,109 @@ export default {
   justify-items: center;
 }
 #text-solid {
-  border: 1px solid black;
   width: auto;
   height: auto;
   margin-top: 2rem;
+  border: 1px solid gray;
+  border-radius: 1rem;
+  padding: 0px;
 }
-#text-solid-1 {
-  border: 1px solid black;
+#text-solid > div {
+  background: skyblue;
+  border: 2px solid skyblue;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+  padding-left: 1rem;
+}
+#text-solid-intro {
   width: auto;
   height: auto;
+  border: 1px solid skyblue;
+  border-radius: 1rem;
+  padding: 0px;
+}
+#text-solid-intro > div {
+  background: skyblue;
+  border: 2px solid skyblue;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+  padding-left: 2rem;
 }
 #text-solid-margin {
-  border: 1px solid black;
   width: auto;
   height: auto;
   margin-top: 2rem;
   margin-right: 4.7rem;
+  border: 1px solid gray;
+  border-radius: 1rem;
+  padding: 0px;
 }
-#text-solid-one {
-  border: 1px solid black;
-  height: auto;
-  margin-top: 2rem;
+#text-solid-margin > div {
+  background: skyblue;
+  border: 2px solid skyblue;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+  padding-left: 1rem;
+  padding: auto;
 }
 #info-update {
   text-align: end;
+}
+hr {
+  margin: 3px;
+}
+.padding {
+  margin: 1rem;
+}
+#text-solids {
+  overflow: auto;
+  background: white;
+}
+#text-solid-advise {
+  height: auto;
+  margin-top: 2rem;
+  /* text-align: center; */
+  border: 1px solid gray;
+  border-radius: 1rem;
+  padding-bottom: 2rem;
+  padding: 0;
+  /* background: whitesmoke; */
+}
+#text-solid-advise > div {
+  background: skyblue;
+  border: 2px solid skyblue;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+  padding-left: 1rem;
+}
+#hexagon {
+  color: white;
+  text-align: center;
+  width: 250px;
+  height: auto;
+  background: skyblue;
+  position: relative;
+}
+#hexagon:before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 250px;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 20px solid skyblue;
+}
+#hexagon:after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  width: 250px;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-top: 20px solid skyblue;
 }
 </style>

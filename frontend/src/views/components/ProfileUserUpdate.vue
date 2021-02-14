@@ -7,39 +7,28 @@
         <hr class="div-hr" />
         <div class="container">
           <div class="row">
-            <div class="col-1"></div>
-            <div class="col-3 colum mx-auto">
-              <img v-if="value.image" class="col-12 r-7 mx-auto" id="profile" :src="value.image" alt="" />
-              <img v-else id="profile" class="col-12 r-7 mx-auto" src="@/assets/img/noimage.jpg" alt="noimage" />
+            <div class="col-1 "></div>
+            <div class="col-3 colum mx-auto text-center">
+              <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + $store.state.uuid + '/512?t=' + new Date().getTime()" alt="" />
+              <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
+              <h2>{{ value.name }}</h2>
             </div>
             <div class="col-8 row" id="content-sort">
-              <h1 class="col-12 r-4">
-                사용자
-                <input class="col-12 text-solid-input" v-model="value.name" />
-              </h1>
-              <div class="col-11 mx-auto" id="text-solid-1">
-                한줄소개
-                <hr />
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5 mx-auto" id="text-solid-margin">
-                이메일
-                <hr />
-                {{ value.email }}
-              </div>
-              <div class="col-5 mx-auto" id="text-solid">
-                전화번호
-                <hr />
-                <input class="col-12 text-solid-input" v-model="value.phone" />
-              </div>
-              <div class="col-11 mx-auto" id="text-solid-one">
-                최근 자문요청
-                <AdviseMe />
+              <div class="row">
+                <div class="col-12 mx-auto" id="text-solid">
+                  이메일
+                  <hr />
+                  {{ value.email }}
+                </div>
+                <div class="col-12 mx-auto" id="text-solid">
+                  전화번호
+                  <hr />
+                  <input class="col-12 text-solid-input" v-model="value.phone" />
+                </div>
               </div>
             </div>
             <div class="row mt-5">
-              <div class="col-9"></div>
+              <div class="col-10"></div>
               <div class="btn btn-info col-1 mr-5" @click="UserUpdata">수정완료</div>
             </div>
           </div>
@@ -98,10 +87,19 @@ export default {
 </script>
 
 <style scoped>
+#profile {
+  border-radius: 70%;
+}
 .text-solid-input {
   border: 1px solid black;
   width: 100%;
   height: auto;
   margin-bottom: 5px;
+}
+#text-solid {
+  border: 1px solid black;
+  width: auto;
+  height: auto;
+  margin-top: 2rem;
 }
 </style>
