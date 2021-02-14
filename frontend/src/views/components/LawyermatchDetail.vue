@@ -93,7 +93,6 @@ import { saveImage } from '@/api/service';
 
 import axios from 'axios';
 import AdviseLawyer from '@/views/components/advise/AdviseLawyer.vue';
-import { fetchAdviseLawyer } from '@/api/advise';
 
 const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
 
@@ -101,7 +100,6 @@ export default {
   bodyClass: 'profile-page',
   components: {
     AdviseLawyer,
-    Chart,
   },
   data() {
     return {
