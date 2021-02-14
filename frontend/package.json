@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "bootstrap": "^3.3.7",
     "chart.js": "^2.9.4",
     "compass": "^0.1.1",
     "compass-mixins": "^0.12.10",
@@ -39,6 +40,7 @@
     "vue-scroll": "^2.1.13",
     "vue-sweetalert2": "^4.1.1",
     "vue-webrtc": "^1.2.2",
+    "vuejs-paginate": "^2.1.0",
     "vuetify": "^2.4.3",
     "vuex": "^3.6.0",
     "vuex-persistedstate": "^4.0.0-beta.3",
