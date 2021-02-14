@@ -5,7 +5,7 @@
         <template>
           <v-row class="m-1">
             <v-col class="text-left ml-3">
-              <strong>{{ proposal.name }}</strong>
+              <v-btn>{{ proposal.name }}</v-btn>
             </v-col>
             <template v-if="proposal.uuid == $store.state.uuid">
               <v-col class="text-right mr-3">
@@ -14,7 +14,7 @@
             </template>
           </v-row>
         </template>
-        <v-text-field readonly color="black" :value="proposal.content" id="content"></v-text-field>
+        <v-text-field readonly color="black" class="px-3" :value="proposal.content" id="content"></v-text-field>
       </v-card>
     </v-col>
   </v-row>
