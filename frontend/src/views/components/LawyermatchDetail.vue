@@ -18,9 +18,6 @@
                 <chart :list="values" style="height: 250px"></chart>
               </div>
               <br />
-              <div v-if="$store.state.role == 'USER'" style="text-align:right">
-                <md-button class="col-1" @click="writeAdvise">자문요청</md-button>
-              </div>
 
               <div class="col-11 mx-auto" id="text-solid-intro">
                 <div>
@@ -70,14 +67,26 @@
                   {{ lawyer.email }}
                 </span>
               </div>
-              <div class="col-11 mx-auto" id="text-solid-advise">
+              <div class="col-11 mx-auto mb-10" id="text-solid-advise">
                 <div>
                   최근답변
                 </div>
                 <hr />
-                <AdviseLawyer id="text-solids" v-for="(data, idx) in advise" :key="idx" :data="data" />
+                <ul>
+                  <!-- <div class="col-8"></div>
+                  <div class="col-4">
+                    <v-spacer></v-spacer>
+                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
+                  </div> -->
+                  <AdviseLawyer id="text-solids" v-for="(data, idx) in advise" :key="idx" :data="data" />
+                </ul>
+                <div v-if="$store.state.role == 'USER'" style="text-align:right">
+                  <md-button class="col-1" @click="writeAdvise">자문요청</md-button>
+                </div>
               </div>
             </div>
+            <h3 class="text-center mx-auto">찾아오시는 길</h3>
+            <hr />
             <div id="map" ref="map" style="width: 100%; height: 400px; margin: 2rem;"></div>
           </div>
         </div>
@@ -108,6 +117,7 @@ export default {
       values: [],
       lawyer: '',
       advise: [],
+      search: '',
     };
   },
   props: {
@@ -125,7 +135,8 @@ export default {
     {
       const userData = this.$store.state.lawuuid;
       const { data } = await fetchAdviseLawyer(userData);
-      this.advise = data;
+
+      this.advise = data.reverse();
       console.log(data);
     }
 
@@ -152,25 +163,6 @@ export default {
         });
       })
       .catch();
-    try {
-      const userData = this.$store.state.lawuuid;
-      const { data } = await fetchAdviseLawyer(userData);
-      for (let i = 0; i < data.length; i++) {
-        this.values.push({
-          matchingId: data[i].matchingId,
-          lawyerUuid: data[i].lawyerUuid,
-          category: data[i].category,
-          uuid: data[i].uuid,
-          title: data[i].title,
-          state: data[i].state,
-          name: data[i].name,
-          reservationDate: this.$moment(data[i].reservationDate).format('llll'),
-          createDate: this.$moment(data[i].createDate).format('llll'),
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
   },
   computed: {
     headerStyle() {
@@ -208,6 +200,10 @@ export default {
 </script>
 
 <style scoped>
+ul {
+  display: flex;
+  flex-wrap: wrap;
+}
 #profile {
   border-radius: 70%;
 }
