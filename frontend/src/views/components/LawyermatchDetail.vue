@@ -27,6 +27,7 @@
                 </span>
               </div>
             </div>
+
             <div class="row mx-auto">
               <div class="col-5 mx-auto" id="text-solid-margin">
                 <div>
@@ -69,7 +70,7 @@
                   최근답변
                 </div>
                 <hr />
-                <AdviseLawyer />
+                <AdviseLawyer id="text-solids" v-for="(data, idx) in advise" :key="idx" :data="data" />
               </div>
             </div>
             <div id="map" ref="map" style="width: 100%; height: 400px; margin: 2rem;"></div>
@@ -85,6 +86,8 @@ import { LawyerDetail } from '@/api/auth';
 import { saveImage } from '@/api/service';
 import axios from 'axios';
 import AdviseLawyer from '@/views/components/advise/AdviseLawyer.vue';
+import { fetchAdviseLawyer } from '@/api/advise';
+
 const GOOGLE_MAP_KEY = 'AIzaSyCcSBj7dF4tkNfeV7U2YzwdAupmh2GYpoc';
 
 export default {
@@ -95,6 +98,7 @@ export default {
   data() {
     return {
       lawyer: '',
+      advise: [],
     };
   },
   props: {
@@ -109,6 +113,12 @@ export default {
     console.log(res);
     this.lawyer = res.data;
     this.$store.commit('setLawuuid', res.data.uuid);
+    {
+      const userData = this.$store.state.lawuuid;
+      const { data } = await fetchAdviseLawyer(userData);
+      this.advise = data;
+      console.log(advise);
+    }
 
     var query = res.data.address;
     axios
@@ -237,7 +247,7 @@ export default {
   text-align: center;
   border: 1px solid gray;
   border-radius: 1rem;
-  background: whitesmoke;
+  /* background: whitesmoke; */
 }
 #info-update {
   text-align: end;
@@ -246,6 +256,9 @@ hr {
   margin: 3px;
 }
 .padding {
-  padding: 1rem;
+  margin: 1rem;
+}
+#text-solids {
+  background: white;
 }
 </style>
