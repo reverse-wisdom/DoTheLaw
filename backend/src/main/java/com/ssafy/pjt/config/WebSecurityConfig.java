@@ -50,51 +50,52 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/member/login/**").permitAll() // 로그인
-                .antMatchers("/api/member/signup/**").permitAll() // 회원가입
-
-                .antMatchers("/api/member/social/**").permitAll() // 소셜로그인
-                .antMatchers("/api/member/check/**").permitAll() // 중복 체크
-                .antMatchers("/api/member/lookup/lawyer/all").permitAll()
-                .antMatchers("/api/member/image/**").permitAll()
-
-
-                
-                .antMatchers("/api/rss/**").permitAll() // RSS 파싱 관련
-                
-                .antMatchers("/swagger-resources/**").permitAll() //swagger
-                .antMatchers("/swagger-ui.html").permitAll()
-                .antMatchers("/v2/api-docs").permitAll()
-                .antMatchers("/webjars/**").permitAll()
-                
-
-                .antMatchers("/api/board/").hasAnyAuthority(Role.USER.getCode(), Role.LAWYER.getCode(), Role.ADMIN.getCode()) //test
-                .antMatchers("/api/board/search/**").permitAll()
-                             
-                
-                .antMatchers("/api/ocr/**").permitAll() //test
-                .antMatchers("/api/image/**").permitAll() //test
-                .antMatchers("/api/data/**").permitAll() //test
-
-                .antMatchers("/api/search/**").permitAll() //test
-                
-                .antMatchers("/api/comment/**").permitAll() //test
-                
-
-                .antMatchers("/api/member/update/image/**").permitAll() //test
-
-                .antMatchers("/api/proposal/**").permitAll() //test
-                
-                .antMatchers("/api/controversy/**").permitAll() //test
-
-                .antMatchers("/api/matching/**").permitAll() //test
-               
-                .antMatchers("/api/email/**").permitAll() //test
-                
-                .antMatchers("/api/ws/**").permitAll() //test
-                .antMatchers("/api/chat/**").permitAll() //test
-
-                .antMatchers("/api/easylaw/**").permitAll() //test
+                .antMatchers("/api/**").permitAll() // 로그인
+//                .antMatchers("/api/member/login/**").permitAll() // 로그인
+//                .antMatchers("/api/member/signup/**").permitAll() // 회원가입
+//
+//                .antMatchers("/api/member/social/**").permitAll() // 소셜로그인
+//                .antMatchers("/api/member/check/**").permitAll() // 중복 체크
+//                .antMatchers("/api/member/lookup/lawyer/all").permitAll()
+//                .antMatchers("/api/member/image/**").permitAll()
+//
+//
+//                
+//                .antMatchers("/api/rss/**").permitAll() // RSS 파싱 관련
+//                
+//                .antMatchers("/swagger-resources/**").permitAll() //swagger
+//                .antMatchers("/swagger-ui.html").permitAll()
+//                .antMatchers("/v2/api-docs").permitAll()
+//                .antMatchers("/webjars/**").permitAll()
+//                
+//
+//                .antMatchers("/api/board/").hasAnyAuthority(Role.USER.getCode(), Role.LAWYER.getCode(), Role.ADMIN.getCode()) //test
+//                .antMatchers("/api/board/search/**").permitAll()
+//                             
+//                
+//                .antMatchers("/api/ocr/**").permitAll() //test
+//                .antMatchers("/api/image/**").permitAll() //test
+//                .antMatchers("/api/data/**").permitAll() //test
+//
+//                .antMatchers("/api/search/**").permitAll() //test
+//                
+//                .antMatchers("/api/comment/**").permitAll() //test
+//                
+//
+//                .antMatchers("/api/member/update/image/**").permitAll() //test
+//
+//                .antMatchers("/api/proposal/**").permitAll() //test
+//                
+//                .antMatchers("/api/controversy/**").permitAll() //test
+//
+//                .antMatchers("/api/matching/**").permitAll() //test
+//               
+//                .antMatchers("/api/email/**").permitAll() //test
+//                
+//                .antMatchers("/api/ws/**").permitAll() //test
+//                .antMatchers("/api/chat/**").permitAll() //test
+//
+//                .antMatchers("/api/easylaw/**").permitAll() //test
 
                 .anyRequest().authenticated()
 
