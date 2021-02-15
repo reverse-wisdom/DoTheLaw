@@ -2,8 +2,11 @@
   <div class="wrapper">
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised paybooc">
-      <div class="section section-basic paybooc">
-        <h2 class="title text-center">판례 검색</h2>
+      <div class="section profile-content paybooc">
+        <h2 class="text-center font-weight-bold display-3">
+          판례검색
+        </h2>
+        <br />
         <v-row justify="center" style="margin : 5px">
           <v-col cols="6" md="4">
             <form @submit="searchLaw()" onSubmit="return false;">
@@ -47,7 +50,7 @@
           <v-col cols="12" md="8" class="mr">
             <v-card class="pa-2 overflow-y-auto" max-height="1024" max-width="1400" style="margin : 5px" outlined tile elevation="5">
               <template v-if="render">
-                <h3 v-html="judgment.PrecService.사건명" class="text-center"></h3>
+                <h1 v-html="judgment.PrecService.사건명" class="text-center font-weight-bold display-1"></h1>
                 <v-simple-table>
                   <tbody>
                     <tr>
@@ -70,13 +73,13 @@
                 </v-simple-table>
 
                 <div class="radiobtn">
-                  <input v-model="radio" :value="judgment.PrecService.판례내용" type="radio" id="판례내용" />
-                  <label for="판례내용">판례내용</label>
+                  <input v-model="radio" :value="judgment.PrecService.판결요지" type="radio" id="판결요지" checked />
+                  <label for="판결요지">판결요지</label>
                 </div>
 
                 <div class="radiobtn">
-                  <input v-model="radio" :value="judgment.PrecService.판결요지" type="radio" id="판결요지" checked />
-                  <label for="판결요지">판결요지</label>
+                  <input v-model="radio" :value="judgment.PrecService.판례내용" type="radio" id="판례내용" />
+                  <label for="판례내용">판례내용</label>
                 </div>
 
                 <div class="radiobtn">
@@ -101,11 +104,11 @@
         </v-row>
         <br />
         <div class="text-center">
-          <md-button class="md-info" style="margin: 5px">
+          <md-button class="md-info" style="margin: 5px" @click="moveMatch">
             <i class="material-icons">search</i>
             변호사찾기
           </md-button>
-          <md-button class="md-info" style="margin: 5px">
+          <md-button class="md-info" style="margin: 5px" @click="moveBoard">
             <i class="material-icons">search</i>
             커뮤니티에 검색
           </md-button>
@@ -140,7 +143,7 @@ export default {
   props: {
     header: {
       type: String,
-      default: require('@/assets/img/book.jpg'),
+      default: require('@/assets/img/book.png'),
     },
   },
   computed: {
@@ -199,17 +202,15 @@ export default {
       this.judgment.PrecService.판결요지 = this.judgment.PrecService.판결요지.replace(/<(\/a|a)([^>]*)>/gi, '');
       this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(/<(\/a|a)([^>]*)>/gi, '');
       this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(/<(\/a|a)([^>]*)>/gi, '');
-      this.radio = this.judgment.PrecService.판결요지;
+
       var count = 0;
 
       this.dict.forEach((element) => {
         var regEx = new RegExp(element.word, 'g');
 
         this.judgment.PrecService.판결요지 = this.judgment.PrecService.판결요지.replace(regEx, '#obj-' + count + '#');
-
         this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(regEx, '#obj-' + count + '#');
         this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, '#obj-' + count + '#');
-        // console.log('인코딩 : ' + regEx + '->' + '#obj-' + count + '#');
         count++;
       });
       count = 0;
@@ -217,12 +218,17 @@ export default {
         var regEx = new RegExp('#obj-' + count + '#', 'g');
 
         this.judgment.PrecService.판결요지 = this.judgment.PrecService.판결요지.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
-
         this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
         this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
-        //console.log('디코딩 : ' + regEx + '->' + `<a data-title="${element.mean}">${element.word}</a>`);
         count++;
       });
+      this.radio = this.judgment.PrecService.판결요지;
+    },
+    moveMatch() {
+      this.$router.push({ name: 'lawyermatch' });
+    },
+    moveBoard() {
+      this.$router.push({ name: 'board' });
     },
   },
 };
@@ -265,9 +271,6 @@ export default {
 }
 .paybooc {
   font-family: 'paybooc-Bold';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
 }
 .mr {
   padding: 5px;
@@ -370,12 +373,5 @@ $darkcolor: #444;
   100% {
     background-color: lighten($accentcolor, 15%);
   }
-}
-
-@font-face {
-  font-family: 'paybooc-Bold';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
 }
 </style>
