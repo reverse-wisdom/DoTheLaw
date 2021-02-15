@@ -84,6 +84,9 @@ export default {
       default: require('@/assets/img/bg_webRTC.jpg'),
     },
   },
+  mounted() {
+    this.$refs.webrtc.join();
+  },
   computed: {
     headerStyle() {
       return {

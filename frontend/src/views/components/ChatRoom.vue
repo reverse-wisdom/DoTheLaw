@@ -1,13 +1,6 @@
 <template>
   <div class="container">
-    <!-- <h3>{{ title }}</h3>
-    <hr /> -->
     <main>
-      <header>
-        <div>
-          <h2>Chat with Vincent Porter</h2>
-        </div>
-      </header>
       <ul id="chat">
         <li v-for="(m, idx) in msg" :key="idx" v-bind:class="m.style">
           <div class="entete">
@@ -21,15 +14,14 @@
           </div>
         </li>
       </ul>
-      <!-- <footer>
-        <textarea placeholder="Type your message"></textarea>
+      <footer>
+        <textarea v-model="content" placeholder="Type your message"></textarea>
         <button @click="sendMessage()">SEND</button>
-        <a href="#">Send</a>
-      </footer> -->
+      </footer>
     </main>
-    <hr />
+    <!-- <hr />
     <input type="text" v-model="content" placeholder="보낼 메세지" size="100" />
-    <button @click="sendMessage()">SEND</button>
+    <button @click="sendMessage()">SEND</button> -->
   </div>
 </template>
 
@@ -93,79 +85,13 @@ body {
   border-radius: 5px;
   overflow: hidden;
 }
-aside {
-  width: 260px;
-  height: 800px;
-  background-color: #3b3e49;
-  display: inline-block;
-  font-size: 15px;
-  vertical-align: top;
-}
+
 main {
   height: 800px;
   display: inline-block;
   font-size: 15px;
   vertical-align: top;
   /* background-color: #abd9e9; */
-}
-
-aside header {
-  padding: 30px 20px;
-}
-aside input {
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  padding: 0 50px 0 20px;
-  background-color: #5e616a;
-  border: none;
-  border-radius: 3px;
-  color: #fff;
-  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_search.png);
-  background-repeat: no-repeat;
-  background-position: 170px;
-  background-size: 40px;
-}
-aside input::placeholder {
-  color: #fff;
-}
-aside ul {
-  padding-left: 0;
-  margin: 0;
-  list-style-type: none;
-  overflow-y: scroll;
-  height: 690px;
-}
-aside li {
-  padding: 10px 0;
-}
-aside li:hover {
-  background-color: #5e616a;
-}
-h2,
-h3 {
-  margin: 0;
-}
-aside li img {
-  border-radius: 50%;
-  margin-left: 20px;
-  margin-right: 8px;
-}
-aside li div {
-  display: inline-block;
-  vertical-align: top;
-  margin-top: 12px;
-}
-aside li h2 {
-  font-size: 14px;
-  color: #fff;
-  font-weight: normal;
-  margin-bottom: 5px;
-}
-aside li h3 {
-  font-size: 12px;
-  color: #7e818a;
-  font-weight: normal;
 }
 
 .status {
