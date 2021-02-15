@@ -12,11 +12,13 @@
               <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + lawyer.uuid + '/512'" alt="" />
               <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
               <h2>{{ lawyer.name }}</h2>
-              <h2>{{ uuid }}</h2>
+              <div v-if="$store.state.role == 'USER'" style="">
+                <md-button class="col-1" @click="writeAdvise">자문요청</md-button>
+              </div>
             </div>
             <div class="col-8 row">
               <div class="col-12 r-4 mx-auto">
-                <chart v-bind:lawyer_uuid="uuid" style="height: 250px"></chart>
+                <chart :lawyer_uuid="uuid" style="height: 250px"></chart>
               </div>
               <br />
 
@@ -31,42 +33,35 @@
               </div>
             </div>
 
-            <div class="col-12 row mx-auto">
+            <div class="row mx-auto">
               <div class="col-5 mx-auto" id="text-solid-margin">
-                <div>
-                  관심분야
-                </div>
-                <hr />
-                <span class="padding">
-                  {{ lawyer.bailiwick }}
-                </span>
-              </div>
-              <div class="col-5 mx-auto" id="text-solid">
-                <div>
-                  전화번호
-                </div>
-                <hr />
-                <span class="padding">
-                  {{ lawyer.phone }}
-                </span>
-              </div>
-              <div class="col-5 mx-auto" id="text-solid-margin">
-                <div>
+                <div class="pt-3" style="height:50px">
                   경력
                 </div>
                 <hr />
-                <span class="padding">
-                  {{ lawyer.career }}
-                </span>
+                <p style="white-space: pre-line;" class="padding">{{ lawyer.career }}</p>
               </div>
-              <div class="col-5 mx-auto" id="text-solid">
-                <div>
-                  이메일
+              <div class="col-5 mx-auto">
+                <div class="row-1"></div>
+                <div class="col-12 mt-5" id="text-solid">
+                  <div>
+                    전화번호
+                  </div>
+                  <hr />
+                  <span class="padding">
+                    {{ lawyer.phone }}
+                  </span>
                 </div>
-                <hr />
-                <span class="padding">
-                  {{ lawyer.email }}
-                </span>
+                <div class="row-1"></div>
+                <div class="col-12 mt-5 " id="text-solid">
+                  <div>
+                    이메일
+                  </div>
+                  <hr />
+                  <span class="padding">
+                    {{ lawyer.email }}
+                  </span>
+                </div>
               </div>
               <div class="col-11 mx-auto mb-10" id="text-solid-advise">
                 <div>
@@ -76,15 +71,12 @@
                 <ul>
                   <AdviseLawyer id="text-solids" v-for="(data, idx) in advise" :key="idx" :data="data" />
                 </ul>
-                <div v-if="$store.state.role == 'USER'" style="text-align:right">
-                  <md-button class="col-1" @click="writeAdvise">자문요청</md-button>
-                </div>
               </div>
             </div>
-            <div class="col-3 d-flex ml-10">
+            <div class="col-3 d-flex mt-5">
               <h3 id="hexagon">찾아오시는 길</h3>
             </div>
-            <div id="map" ref="map" style="width: 100%; height: 400px; margin: 2rem;"></div>
+            <div id="map" ref="map" style="width: 100%; height: 400px; margin: 0 2rem 2rem 2rem;"></div>
           </div>
         </div>
       </div>
@@ -202,12 +194,9 @@ ul {
 #profile {
   border-radius: 70%;
 }
-#profile {
-  border-radius: 70%;
-}
 
 #image-change-button {
-  border: 1px solid gray;
+  border: 1px solid skyblue;
   margin-top: 3px;
 }
 #button-sort {
@@ -217,29 +206,27 @@ ul {
   width: auto;
   height: auto;
   margin-top: 2rem;
-  border: 1px solid gray;
-  border-radius: 1rem;
+  /* border: 1px solid skyblue; */
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   padding: 0px;
 }
 #text-solid > div {
   background: skyblue;
   border: 2px solid skyblue;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
+
   padding-left: 1rem;
 }
 #text-solid-intro {
   width: auto;
   height: auto;
-  border: 1px solid skyblue;
-  border-radius: 1rem;
+  /* border: 1px solid skyblue; */
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   padding: 0px;
 }
 #text-solid-intro > div {
   background: skyblue;
   border: 2px solid skyblue;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
+
   padding-left: 2rem;
 }
 #text-solid-margin {
@@ -247,15 +234,14 @@ ul {
   height: auto;
   margin-top: 2rem;
   margin-right: 4.7rem;
-  border: 1px solid gray;
-  border-radius: 1rem;
+  /* border: 1px solid skyblue; */
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   padding: 0px;
 }
 #text-solid-margin > div {
   background: skyblue;
   border: 2px solid skyblue;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
+
   padding-left: 1rem;
   padding: auto;
 }
@@ -263,8 +249,8 @@ ul {
   height: auto;
   margin-top: 2rem;
   /* text-align: center; */
-  border: 1px solid gray;
-  border-radius: 1rem;
+  /* border: 1px solid skyblue; */
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   /* background: whitesmoke; */
   padding: 0;
   padding-bottom: 2rem;
@@ -272,9 +258,8 @@ ul {
 #text-solid-advise > div {
   background: skyblue;
   border: 2px solid skyblue;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
-  padding-left: 1rem;
+
+  padding: 1rem;
 }
 #info-update {
   text-align: end;
@@ -295,27 +280,5 @@ hr {
   height: auto;
   background: skyblue;
   position: relative;
-}
-#hexagon:before {
-  content: '';
-  position: absolute;
-  top: -20px;
-  left: 0;
-  width: 250px;
-  height: 0;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  border-bottom: 20px solid skyblue;
-}
-#hexagon:after {
-  content: '';
-  position: absolute;
-  bottom: -20px;
-  left: 0;
-  width: 250px;
-  height: 0;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  border-top: 20px solid skyblue;
 }
 </style>
