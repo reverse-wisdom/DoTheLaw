@@ -3,7 +3,7 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised paybooc">
       <div class="section profile-content paybooc">
-        <h2 class="text-center font-weight-bold display-3">
+        <h2 class="title-solid text-center">
           판례검색
         </h2>
         <br />
