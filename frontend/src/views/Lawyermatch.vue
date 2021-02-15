@@ -62,6 +62,4 @@ export default {
 #overflow {
   overflow: auto;
 }
-#listBlock {
-}
 </style>
