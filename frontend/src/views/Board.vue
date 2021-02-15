@@ -4,7 +4,7 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title text-center kor">게시판</h2>
+        <h2 class="title title-solid text-center kor">게시판</h2>
         <hr class="div-hr" />
         <div class="container">
           <v-card>
@@ -94,6 +94,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.title-solid {
+  // box-sizing: content-box;
+  border: 0.2rem solid black;
+  font-size: 2.3rem;
+  border-radius: 1.5rem;
+  padding: 1rem;
+  color: black;
+  font-weight: bold;
+  margin-left: 50px;
+}
+
 // hr 설정
 .div-hr {
   width: 80%;
