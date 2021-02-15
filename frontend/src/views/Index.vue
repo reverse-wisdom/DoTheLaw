@@ -238,16 +238,17 @@ input#searchWordMain {
   text-align: center;
 }
 .title-solid {
+  letter-spacing: 5px;
   border: 0.2rem solid;
   font-size: 2.3rem;
   border-radius: 3rem;
-  padding: 1rem;
+  padding: 0.2rem;
   color: white;
   background-color: rgb(21, 52, 80);
-  font-weight: bold;
+  // font-weight: bold;
   margin-left: 20rem;
   margin-right: 20rem;
-  font-family: 'S-CoreDream-6Bold';
+  font-family: 'NEXON Lv1 Gothic OTF';
 }
 .searchBtn {
   margin-bottom: 10px;

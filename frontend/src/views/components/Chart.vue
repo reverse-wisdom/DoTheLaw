@@ -13,7 +13,7 @@ export default {
         labels: ['교통/운전', '가정', '근로/노동', '부동산', '금융', '정보통신/기술'],
         datasets: [
           {
-            backgroundColor: [],
+            backgroundColor: ['rgb(224, 58, 60)', 'rgb(246, 130, 31)', 'rgb(252, 184, 39)', 'rgb(98, 187, 71)', 'rgb(0, 157, 220)', 'rgb(150, 61, 151)'],
             data: [0, 0, 0, 0, 0, 0],
           },
         ],
@@ -64,10 +64,10 @@ export default {
         }
 
         // 차트색 rgb 랜덤 추출
-        var r = Math.floor(Math.random() * 255);
-        var g = Math.floor(Math.random() * 255);
-        var b = Math.floor(Math.random() * 255);
-        this.chartData.datasets[0].backgroundColor.push('rgb(' + r + ',' + g + ',' + b + ')');
+        // var r = Math.floor(Math.random() * 255);
+        // var g = Math.floor(Math.random() * 255);
+        // var b = Math.floor(Math.random() * 255);
+        // this.chartData.datasets[0].backgroundColor.push('rgb(' + r + ',' + g + ',' + b + ')');
       }
       console.log(this.chartData);
 

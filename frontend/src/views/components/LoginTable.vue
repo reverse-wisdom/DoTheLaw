@@ -3,7 +3,7 @@
   <div class="wrapper kor" id="login">
     <!-- <login-card header-color="info" style="padding-bottom:-3px;" v-if="isLoad"> -->
     <login-card style="padding-bottom:-3px;" v-if="isLoad">
-      <h4 slot="title" class="kor" style="font-size:250%;">로그인</h4>
+      <h4 slot="title" class="kor" style="font-size:250%;">LOGIN</h4>
       <template slot="inputs">
         <br />
         <md-field class="md-form-group">
@@ -30,17 +30,16 @@
         </h6>
 
         <br />
-        <v-btn width="250" height="50" color="success" @click="login()">
-          로그인
+        <v-btn width="250" height="50" class="kor" color="rgb(68,114,148)" style="color:rgb(255,255,255);" @click="login()">
+          LOGIN
         </v-btn>
         <hr />
         <br />
-        <h4 class="text-center">소셜 아이디로 로그인</h4>
-        <hr />
+        <!-- <h4 class="text-center">소셜 아이디로 로그인</h4> -->
 
         <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess" ref="Glogin"></GoogleLogin>
-        <hr />
-
+        <br />
+        <br />
         <a id="reauthenticate-popup-btn" @click="loginFormWithKakao">
           <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="40px" />
         </a>
@@ -220,6 +219,12 @@ export default {
 <style lang="scss">
 #login > .md-card > .md-card-header {
   background-color: rgb(143, 188, 219);
+  color: rgb(255, 255, 255);
+  height: 70px;
+  padding-top: 0.4rem;
+}
+#login > div > div.md-card-actions.md-alignment-right > div > button > span {
+  letter-spacing: 5px;
 }
 </style>
 <style lang="scss" scoped>

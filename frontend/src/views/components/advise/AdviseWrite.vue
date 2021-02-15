@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { createAdvise } from '@/api/advise';
+import { createAdvise, detailAdvise } from '@/api/advise';
 import DateTimePicker from '@/views/components/advise/DateTimePicker.vue';
 function uploadSummernoteFile(file, editor) {
   let data = new FormData();
@@ -215,10 +215,10 @@ export default {
   },
   methods: {
     async writeAdvise() {
-      const data = {
+      const adviseData = {
         uuid: this.$store.state.uuid,
-        // lawyerUuid: this.$route.query.lawyerUuid,
-        lawyerUuid: this.$store.state.lawuuid,
+        lawyerUuid: this.$route.query.lawyerUuid,
+        // lawyerUuid: this.$store.state.lawuuid,
         reservationDate: this.reservationDate,
         remarks: this.remarks,
         state: this.state,
@@ -227,16 +227,16 @@ export default {
         content: $('#summernote').summernote('code'),
         category: this.category,
       };
-      console.log('est1', data);
-      const response = await createAdvise(data);
-
+      console.log('est1', adviseData);
+      const res = await createAdvise(adviseData);
+      console.log(res.config.data);
       this.$swal({
         icon: 'success',
         title: '작성완료',
         showConfirmButton: false,
         timer: 1500,
       });
-      this.profileGo();
+      this.detailGo();
     },
 
     //UTC형태로 변환
@@ -247,8 +247,10 @@ export default {
       this.reservationDate = replaceAt(olddate, 10, 'T');
       console.log(this.reservationDate);
     },
-    profileGo() {
-      this.$router.push('profileUser');
+    detailGo() {
+      console.log(email);
+      const email = this.$route.query.email;
+      this.$router.push({ name: 'lawyermatchdetail', query: { email: email } });
     },
   },
 };

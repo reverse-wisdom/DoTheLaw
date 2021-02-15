@@ -1,7 +1,12 @@
 <template>
   <!-- 회원가입 페이지 테이블 컴포넌트 -->
+<<<<<<< HEAD
   <div class="wrapper kor">
     <login-card header-color="green" style="padding-bottom:-3px;">
+=======
+  <div class="wrapper" id="signup-lawyer">
+    <login-card style="padding-bottom:-3px;">
+>>>>>>> dbb4ee693ae8e70ef8db13a8ced342c10d0a2379
       <h4 slot="title" class="title kor" style="font-size:250%;">변호사 회원가입</h4>
 
       <template slot="inputs">
@@ -289,7 +294,14 @@ export default {
   },
 };
 </script>
-
+<style lang="scss">
+#signup-lawyer > .md-card > .md-card-header {
+  background-color: rgb(143, 188, 219);
+  color: rgb(255, 255, 255);
+  height: 70px;
+  padding-top: 1rem;
+}
+</style>
 <style lang="scss" scoped>
 .kor {
   font-family: 'paybooc-Bold' !important;
