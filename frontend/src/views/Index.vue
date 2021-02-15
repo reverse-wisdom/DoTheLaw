@@ -172,7 +172,6 @@ export default {
     },
     moveWebRTC() {
       window.open('webrtc', '_blank');
-      // this.$router.push({ name: 'webrtc' });
     },
     moveSearch() {
       this.$router.push({ name: 'dicttest' });
@@ -229,27 +228,10 @@ input#searchWordMain {
 }
 </style>
 <style scoped>
-/* @media (max-width: 600px) {
-  .searchForm {
-    margin-top: -400px;
-    position: unset;
-    width: 100%;
-  }
-  #searchWordMain {
-    width: auto;
-    float: none;
-  }
-} */
 .logo {
-  /* position: absolute;
-  right: 30%;
-  top: 10%;
-  width: 35%;
-  z-index: 9; */
   width: 100%;
   height: auto;
 }
-
 .kor {
   font-family: 'Nanum Gothic', sans-serif;
 }
@@ -274,7 +256,6 @@ input#searchWordMain {
   width: 100%;
   height: 100%;
 }
-
 .custom-card {
   background-color: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.1);
@@ -284,7 +265,6 @@ input#searchWordMain {
   margin-top: 30px;
   margin-right: 50px;
 }
-
 #f5 {
   border: 0.2rem solid white;
   padding: 0.5rem;

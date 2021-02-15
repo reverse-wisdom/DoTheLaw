@@ -108,7 +108,8 @@ ol {
   list-style: none;
 }
 li {
-  background: #37bc9b;
+  // background: #37bc9b;
+  background: rgb(33, 133, 89);
   color: #fff;
   counter-increment: myCounter;
   margin: 0 0 30px 0;
@@ -126,7 +127,8 @@ li:before {
   text-align: center;
   font-size: 2em;
   line-height: 1.3em;
-  background-color: #48cfad;
+  // background-color: #48cfad;
+  background-color: rgb(33, 133, 89);
   padding: 10px;
   font-weight: bold;
   position: absolute;
@@ -137,6 +139,7 @@ li:before {
 }
 
 li:nth-child(even) {
-  background-color: #434a54;
+  // background-color: #434a54;
+  background-color: rgb(25, 40, 35);
 }
 </style>
