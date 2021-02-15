@@ -12,7 +12,7 @@
                 생활법령
               </h2>
             </v-card-title>
-            <v-tabs v-model="tab" background-color="orange " centered dark icons-and-text>
+            <v-tabs v-model="tab" background-color="#ebf3fe " class="primary--text" centered icons-and-text>
               <v-tabs-slider></v-tabs-slider>
 
               <v-tab v-for="(item, index) in items" :key="index" :href="'#tab-' + index">
@@ -121,5 +121,12 @@ export default {
 }
 div.item--active {
   color: green;
+}
+.v-tab.v-tab--active {
+  color: #1976d2;
+}
+.v-tab:hover {
+  background-color: #1986d244;
+  color: #1976d2;
 }
 </style>
