@@ -17,7 +17,7 @@
           </v-card>
 
           <div class="btn-right">
-            <v-btn class="md-dense md-raised mt-3" style="background-color:#06a4cb; color: white;" @click="writePage">글쓰기</v-btn>
+            <v-btn class="md-dense md-raised mt-3" style="background-color: rgb(21, 52, 80); color: white;" @click="writePage">글쓰기</v-btn>
           </div>
         </div>
       </div>
