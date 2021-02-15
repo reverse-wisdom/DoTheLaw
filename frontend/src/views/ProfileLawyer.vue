@@ -13,7 +13,7 @@
             </div>
             <div class="col-8 row">
               <div class="col-12 r-4 mx-auto">
-                <chart :list="values" style="height: 250px"></chart>
+                <chart :lawyer_uuid="lawyer.uuid" style="height: 250px"></chart>
               </div>
               <br />
 
@@ -28,41 +28,34 @@
               </div>
             </div>
             <div class="row mx-auto">
-              <div class="col-5 mx-auto" id="text-solid-margin">
-                <div>
-                  관심분야
-                </div>
-                <hr />
-                <span class="padding">
-                  {{ lawyer.bailiwick }}
-                </span>
-              </div>
-              <div class="col-5 mx-auto" id="text-solid">
-                <div>
-                  전화번호
-                </div>
-                <hr />
-                <span class="padding">
-                  {{ lawyer.phone }}
-                </span>
-              </div>
-              <div class="col-5 mx-auto" id="text-solid-margin">
-                <div>
+              <div class="col-5 mx-auto " id="text-solid-margin">
+                <div class="pt-3" style="height:50px">
                   경력
                 </div>
                 <hr />
-                <span class="padding">
-                  {{ lawyer.career }}
-                </span>
+                <p style="white-space: pre-line;" class="padding">{{ lawyer.career }}</p>
               </div>
-              <div class="col-5 mx-auto" id="text-solid">
-                <div>
-                  이메일
+              <div class="col-5 mx-auto">
+                <div class="row-1"></div>
+                <div class="col-12 mt-5" id="text-solid">
+                  <div>
+                    전화번호
+                  </div>
+                  <hr />
+                  <span class="padding">
+                    {{ lawyer.phone }}
+                  </span>
                 </div>
-                <hr />
-                <span class="padding">
-                  {{ lawyer.email }}
-                </span>
+                <div class="row-1"></div>
+                <div class="col-12 mt-5 " id="text-solid">
+                  <div>
+                    이메일
+                  </div>
+                  <hr />
+                  <span class="padding">
+                    {{ lawyer.email }}
+                  </span>
+                </div>
               </div>
               <div class="col-11 mx-auto" id="text-solid-advise">
                 <div>
@@ -74,10 +67,10 @@
                 </ul>
               </div>
             </div>
-            <div class="col-3 d-flex ml-5 mt-10">
+            <div class="col-3 d-flex mt-5">
               <h3 id="hexagon">위치</h3>
             </div>
-            <div id="map" ref="map" class="col-12 mx-auto" style="width: 100%; height: 400px; margin: 2rem;"></div>
+            <div id="map" ref="map" class="col-12 mx-auto" style="width: 100%; height: 400px; margin: 0 2rem 2rem 2rem;"></div>
             <div class="col-9"></div>
             <div class="btn btn-info col-1 mx-auto" style="float: right;" @click="moveLawyerUpdate">정보수정</div>
             <div class="btn btn-info col-1" style="float: right;" @click="deleteLawyer">회원탈퇴</div>
@@ -221,7 +214,7 @@ ul {
 }
 
 #image-change-button {
-  border: 1px solid gray;
+  border: 1px solid skyblue;
   margin-top: 3px;
 }
 #button-sort {
@@ -229,31 +222,28 @@ ul {
 }
 #text-solid {
   width: auto;
-  height: auto;
+  height: 100px;
+  /* border: 1px solid skyblue; */
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   margin-top: 2rem;
-  border: 1px solid gray;
-  border-radius: 1rem;
   padding: 0px;
 }
 #text-solid > div {
   background: skyblue;
   border: 2px solid skyblue;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
   padding-left: 1rem;
 }
 #text-solid-intro {
   width: auto;
   height: auto;
-  border: 1px solid skyblue;
-  border-radius: 1rem;
+  /* border: 1px solid skyblue; */
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
+
   padding: 0px;
 }
 #text-solid-intro > div {
   background: skyblue;
   border: 2px solid skyblue;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
   padding-left: 2rem;
 }
 #text-solid-margin {
@@ -261,15 +251,13 @@ ul {
   height: auto;
   margin-top: 2rem;
   margin-right: 4.7rem;
-  border: 1px solid gray;
-  border-radius: 1rem;
+  /* border: 1px solid skyblue; */
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   padding: 0px;
 }
 #text-solid-margin > div {
   background: skyblue;
   border: 2px solid skyblue;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
   padding-left: 1rem;
   padding: auto;
 }
@@ -290,17 +278,16 @@ hr {
   height: auto;
   margin-top: 2rem;
   /* text-align: center; */
-  border: 1px solid gray;
-  border-radius: 1rem;
-  padding-bottom: 2rem;
+  /* border: 1px solid skyblue; */
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
+
   padding: 0;
   /* background: whitesmoke; */
 }
 #text-solid-advise > div {
   background: skyblue;
   border: 2px solid skyblue;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
+
   padding-left: 1rem;
 }
 #hexagon {
@@ -310,27 +297,5 @@ hr {
   height: auto;
   background: skyblue;
   position: relative;
-}
-#hexagon:before {
-  content: '';
-  position: absolute;
-  top: -20px;
-  left: 0;
-  width: 250px;
-  height: 0;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  border-bottom: 20px solid skyblue;
-}
-#hexagon:after {
-  content: '';
-  position: absolute;
-  bottom: -20px;
-  left: 0;
-  width: 250px;
-  height: 0;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  border-top: 20px solid skyblue;
 }
 </style>
