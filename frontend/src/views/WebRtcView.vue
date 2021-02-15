@@ -1,5 +1,4 @@
 <template>
-  <!-- 로그인 페이지 -->
   <div class="wrapper">
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised kor">
@@ -27,7 +26,6 @@
                 />
               </div>
               <div class="col-4">
-                <!-- 채팅룸의 룸ID 값은 자문매칭의 ID와 같아야 하므로 임의로 4로 배정  -->
                 <chat-room :roomId="roomId" v-if="roomId"></chat-room>
               </div>
             </div>
@@ -42,16 +40,15 @@
                 </div>
               </div>
             </div>
+            <div>
+              <div class="col-md-12">
+                <figure class="figure">
+                  <img :src="img" class="img-responsive" />
+                </figure>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div>
-      <div class="col-md-12">
-        <h2>Captured Image</h2>
-        <figure class="figure">
-          <img :src="img" class="img-responsive" />
-        </figure>
       </div>
     </div>
   </div>
