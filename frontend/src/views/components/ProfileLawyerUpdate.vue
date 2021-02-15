@@ -20,9 +20,9 @@
                   @change="handleFilesUpload"
                 ></v-file-input>
               </div>
+              <h2 class="col-12 my-0 py-0 pl-10 mx-auto">{{ value.name }}</h2>
             </div>
             <div class="col-8 row" id="content-sort">
-              <h1 class="col-3 r-4 mx-auto">{{ value.name }}</h1>
               <div class="col-6 mt-10" v-if="loadCheck">
                 <v-file-input type="file" name="uploadFile" accept="image/png, image/jpeg, image/bmp" placeholder="자격증 인증" ref="ocr" @change="check"></v-file-input>
               </div>
@@ -32,35 +32,43 @@
                 <br />
               </div>
               <div class="col-11 mx-auto " id="text-solid-1">
-                한줄 소개
-                <hr />
+                <div>
+                  한줄 소개
+                </div>
                 <input class="col-12 text-solid-input-intro" v-model="value.introduction" />
               </div>
             </div>
             <div class="row ml-10">
               <div class="col-5 mx-auto" id="text-solid-margin">
-                관심분야
-                <hr />
+                <div>
+                  관심분야
+                </div>
+
                 <input class="col-12 text-solid-input" v-model="value.bailiwick" />
               </div>
               <div class="col-5 mx-auto " id="text-solid">
-                전화번호
-                <hr />
+                <div>
+                  전화번호
+                </div>
+
                 <input class="col-12 text-solid-input" v-model="value.phone" />
               </div>
               <div class="col-5 mx-auto" id="text-solid-margin">
-                경력
-                <hr />
-                <textarea class="col-12 text-solid-input" v-model="value.career" style="height:60px" />
+                <div>
+                  경력
+                </div>
+
+                <textarea class="col-12 text-solid-input" v-model="value.career" style="height:120px" />
               </div>
               <div class="col-5 mx-auto " id="text-solid">
-                이메일
-                <hr />
+                <div>
+                  이메일
+                </div>
+
                 {{ value.email }}
               </div>
               <div class="col-11 mx-auto" id="text-solid-one">
                 최근답변
-                <hr />
               </div>
 
               <md-field class="mt-10">
@@ -297,34 +305,55 @@ export default {
   justify-items: center;
 }
 #text-solid {
-  border: 1px solid black;
   width: 200px;
   height: auto;
+  padding: 0;
   margin-top: 2rem;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
 }
+#text-solid > div {
+  background: skyblue;
+  border: 2px solid skyblue;
+  padding-left: 1rem;
+}
+#text-solid .divId {
+}
+
 #text-solid-1 {
-  border: 1px solid black;
   width: auto;
   height: auto;
+  padding: 0;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
+}
+#text-solid-1 > div {
+  background: skyblue;
+  border: 2px solid skyblue;
+  padding-left: 1rem;
 }
 .text-solid-input {
   border: 1px solid black;
-  width: 100%;
+  width: 90%;
   height: auto;
-  margin-bottom: 5px;
+  margin: 1rem 1rem 1rem 1rem;
 }
 .text-solid-input-intro {
   border: 1px solid black;
-  width: 100%;
+  width: 90%;
   height: auto;
-  margin-bottom: 5px;
+  margin: 2rem 1rem 1rem 1rem;
 }
 #text-solid-margin {
-  border: 1px solid black;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   width: auto;
   height: auto;
+  padding: 0;
   margin-top: 2rem;
   margin-right: 4.7rem;
+}
+#text-solid-margin > div {
+  background: skyblue;
+  border: 2px solid skyblue;
+  padding-left: 1rem;
 }
 #text-solid-one {
   border: 1px solid black;
