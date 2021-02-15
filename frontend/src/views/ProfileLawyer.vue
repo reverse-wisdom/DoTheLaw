@@ -18,11 +18,11 @@
               <br />
 
               <div class="col-11 mx-auto" id="text-solid-intro">
-                <div>
+                <div style="padding: 12px 0px 12px 15px">
                   한줄소개
                 </div>
                 <hr />
-                <span class="padding">
+                <span class="padding" style=" font-size: 12px;">
                   {{ lawyer.introduction }}
                 </span>
               </div>
@@ -38,7 +38,7 @@
               <div class="col-5 mx-auto">
                 <div class="row-1"></div>
                 <div class="col-12 mt-5" id="text-solid">
-                  <div>
+                  <div style="padding: 12px 0px 12px 15px">
                     전화번호
                   </div>
                   <hr />
@@ -48,7 +48,7 @@
                 </div>
                 <div class="row-1"></div>
                 <div class="col-12 mt-5 " id="text-solid">
-                  <div>
+                  <div style="padding: 12px 0px 12px 15px">
                     이메일
                   </div>
                   <hr />
@@ -58,7 +58,7 @@
                 </div>
               </div>
               <div class="col-11 mx-auto" id="text-solid-advise">
-                <div>
+                <div style="padding: 12px 0px 12px 15px">
                   최근답변
                 </div>
                 <hr />
@@ -72,8 +72,8 @@
             </div>
             <div id="map" ref="map" class="col-12 mx-auto" style="width: 100%; height: 400px; margin: 0 2rem 2rem 2rem;"></div>
             <div class="col-9"></div>
-            <div class="btn btn-info col-1 mx-auto" style="float: right;" @click="moveLawyerUpdate">정보수정</div>
-            <div class="btn btn-info col-1" style="float: right;" @click="deleteLawyer">회원탈퇴</div>
+            <div class="btn btn-info col-1 mx-auto mr-1" style="float: right; background-color:rgb(68, 114, 148); border: 0px solid white; " @click="moveLawyerUpdate">정보수정</div>
+            <div class="btn btn-info col-1" style="float: right; background-color:rgb(68,114,148); border: 0px solid white;" @click="deleteLawyer">회원탈퇴</div>
           </div>
         </div>
       </div>
@@ -208,6 +208,7 @@ export default {
 ul {
   display: flex;
   flex-wrap: wrap;
+  overflow: auto;
 }
 #profile {
   border-radius: 70%;
@@ -229,21 +230,24 @@ ul {
   padding: 0px;
 }
 #text-solid > div {
-  background: skyblue;
-  border: 2px solid skyblue;
+  background: rgb(68, 114, 148);
+  color: white;
+  /* border: 2px solid skyblue; */
   padding-left: 1rem;
 }
 #text-solid-intro {
   width: auto;
   height: auto;
   /* border: 1px solid skyblue; */
+
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
 
   padding: 0px;
 }
 #text-solid-intro > div {
-  background: skyblue;
-  border: 2px solid skyblue;
+  background: rgb(68, 114, 148);
+  /* border: 2px solid skyblue; */
+  color: white;
   padding-left: 2rem;
 }
 #text-solid-margin {
@@ -256,9 +260,10 @@ ul {
   padding: 0px;
 }
 #text-solid-margin > div {
-  background: skyblue;
-  border: 2px solid skyblue;
+  background: rgb(68, 114, 148);
+  /* border: 2px solid white; */
   padding-left: 1rem;
+  color: white;
   padding: auto;
 }
 #info-update {
@@ -285,8 +290,9 @@ hr {
   /* background: whitesmoke; */
 }
 #text-solid-advise > div {
-  background: skyblue;
-  border: 2px solid skyblue;
+  background: rgb(68, 114, 148);
+  border: 2px solid white;
+  color: white;
 
   padding-left: 1rem;
 }
@@ -295,7 +301,7 @@ hr {
   text-align: center;
   width: 250px;
   height: auto;
-  background: skyblue;
+  background: rgb(68, 114, 148);
   position: relative;
 }
 </style>

@@ -4,16 +4,18 @@
       <div class="main center">
         <div class="card">
           <div class="content center">
-            <div class="img"></div>
-
-            <h2>{{ lawyer.bailiwick }}</h2>
-            <p>{{ lawyer.introduction }}</p>
-          </div>
-          <div :id="'colorId-' + lawyer.uuid" class="icons center container" :style="{ 'background-color': color }">
             <v-img class="i" :src="'/api/member/image/' + lawyer.uuid + '/512'" height="200px" v-if="$store.state.uuid"></v-img>
             <v-img class="i" src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" height="200px" v-else></v-img>
             <h2 class="">{{ lawyer.name }}</h2>
             <div class="">{{ lawyer.email }}</div>
+            <p>{{ lawyer.bailiwick }}</p>
+            <!-- <p>{{ lawyer.introduction }}</p> -->
+          </div>
+          <div :id="'colorId-' + lawyer.uuid" class="icons center container" :style="{ 'background-color': color }">
+            <!-- <v-img class="i" :src="'/api/member/image/' + lawyer.uuid + '/512'" height="200px" v-if="$store.state.uuid"></v-img>
+            <v-img class="i" src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" height="200px" v-else></v-img>
+            <h2 class="">{{ lawyer.name }}</h2>
+            <div class="">{{ lawyer.email }}</div> -->
           </div>
         </div>
       </div>
@@ -91,7 +93,7 @@ export default {
   top: 0;
   left: 0;
   color: white;
-  transform: translateX(0);
+  transform: translateX(-95%);
   transition: all 0.4s;
   cursor: pointer;
 }
@@ -99,7 +101,7 @@ export default {
 .icons .i {
   margin: 10px 0px;
 }
-.card:hover > .icons {
+.card > .icons:hover {
   transform: translateX(-95%);
 }
 .i {
