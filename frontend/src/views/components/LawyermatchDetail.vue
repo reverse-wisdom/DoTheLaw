@@ -168,7 +168,8 @@ export default {
   methods: {
     writeAdvise() {
       const lawyerUuid = this.lawyer.uuid;
-      this.$router.push({ name: 'AdviseWrite', query: { lawyerUuid: lawyerUuid } });
+      const email = this.$route.query.email;
+      this.$router.push({ name: 'AdviseWrite', query: { lawyerUuid: lawyerUuid, email: email } });
     },
   },
   watch: {
