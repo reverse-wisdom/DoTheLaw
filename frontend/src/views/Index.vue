@@ -2,30 +2,39 @@
   <div class="home">
     <full-page :options="options">
       <div class="section pb-0  " :style="image_1" data-width="1200" data-height="730">
-        <img class="logo" :src="logo" alt="logo" />
+        <v-container fluid grid-list-sm pa-0>
+          <v-row class="text-center" no-gutters>
+            <v-col>
+              <v-img contain max-height="300" max-width="1000" :src="logo"></v-img>
+            </v-col>
+          </v-row>
+          <v-row class="text-center">
+            <form class="searchForm " @submit="detailSearch()" autocomplete="off" background-color="white">
+              <fieldset id="searchbar" class="text-center">
+                <v-text-field id="searchWordMain" clearable color="white" height="50px" v-model="query" style="backgroundcolor: white;">
+                  <template v-slot:label>
+                    <strong>검색어</strong>
+                    를입력해주세요!
+                    <v-icon color="white" style="vertical-align: middle">
+                      mdi-file-find
+                    </v-icon>
+                  </template>
+                </v-text-field>
+                <v-btn depressed x-large color="primary" @click="detailSearch">
+                  검색
+                </v-btn>
+              </fieldset>
+            </form>
+          </v-row>
 
-        <form class="searchForm " @submit="detailSearch()" autocomplete="off" background-color="white" style="position: inherit">
-          <fieldset id="searchbar" class="text-center" style="margin-top: 400px;">
-            <v-text-field id="searchWordMain" clearable color="white" height="50px" v-model="query" style="backgroundcolor: white; width: 70%; float: left;">
-              <template v-slot:label>
-                <strong>검색어</strong>
-                를입력해주세요!
-                <v-icon color="white" style="vertical-align: middle">
-                  mdi-file-find
-                </v-icon>
-              </template>
-            </v-text-field>
-            <v-btn depressed x-large color="primary" @click="detailSearch">
-              검색
-            </v-btn>
-          </fieldset>
-          <div class="text-center" style="position: inherit">
-            <v-card style="text-align:center; margin: 0 auto;" color="rgba(255, 255, 255, 0.1)" width="50%" height="200px">
-              <search-rank class="text-center"></search-rank>
-            </v-card>
-          </div>
-        </form>
-        <!-- <div class="text-center" style="margin-left:30px; margin-top:30px; position: absolute"> -->
+          <v-row class="text-center ">
+            <div class="text-center searchRank">
+              <v-card color="rgba(255, 255, 255, 0.1)" max-height="100px">
+                <search-rank></search-rank>
+              </v-card>
+            </div>
+          </v-row>
+        </v-container>
       </div>
 
       <div class="section pb-0" :style="image_2" data-width="1200" data-height="730">
@@ -33,14 +42,13 @@
           <div class="md-layout-item md-medium-size-50 md-small-size-100">
             <v-card elevation="7" color="rgba(255, 255, 255, 0.1)" class="custom-card text-center">
               <span class="title-solid text-center">실시간 법원/검찰 뉴스</span>
-              <br />
               <button id="f5" @click="forceRerender">새로고침</button>
               <law-rss-news :key="componentKey"></law-rss-news>
             </v-card>
           </div>
           <div class="md-layout-item md-medium-size-50 md-small-size-100">
             <v-card elevation="7" color="rgba(255, 255, 255, 0.1)" class="custom-card text-center">
-              <span class="title-solid text-center">실시간 법원/검찰 뉴스</span>
+              <span class="title-solid text-center">유튜브공간?</span>
               <br />
               <button id="f5" @click="forceRerender">새로고침</button>
               <law-rss-news :key="componentKey"></law-rss-news>
@@ -105,6 +113,7 @@ export default {
       componentKey: 0,
       options: {
         navigation: true,
+        responsiveWidth: 900,
       },
     };
   },
@@ -219,7 +228,7 @@ input#searchWordMain {
 }
 </style>
 <style scoped>
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   .searchForm {
     margin-top: -400px;
     position: unset;
@@ -229,13 +238,15 @@ input#searchWordMain {
     width: auto;
     float: none;
   }
-}
+} */
 .logo {
-  position: absolute;
+  /* position: absolute;
   right: 30%;
   top: 10%;
   width: 35%;
-  z-index: 9;
+  z-index: 9; */
+  width: 100%;
+  height: auto;
 }
 
 .kor {
@@ -274,12 +285,12 @@ input#searchWordMain {
 }
 
 #f5 {
-  border: 1px solid white;
-  padding: 1rem;
-  margin-top: 3rem;
+  border: 0.2rem solid white;
+  padding: 0.5rem;
+  margin-top: 1rem;
   color: white;
   border-radius: 1rem;
-  margin-left: 10rem;
+  margin-left: 1rem;
 }
 #box-solid {
   box-sizing: border-box;
@@ -290,12 +301,13 @@ input#searchWordMain {
 }
 .title-solid {
   box-sizing: content-box;
-  border: 5px solid white;
-  font-size: 40px;
+  border: 0.2rem solid white;
+  font-size: 2.3rem;
   border-radius: 1.5rem;
   padding: 1rem;
   color: white;
   font-weight: bold;
+  margin-left: 50px;
 }
 .rank-title {
   font-size: 40px;
@@ -308,7 +320,7 @@ input#searchWordMain {
 }
 #searchbar {
   border: 1px solid white;
-  margin: 20rem 10rem 0 10rem;
+  margin: auto;
   font-size: 50px;
 }
 .button {
@@ -341,5 +353,14 @@ li {
 input {
   color: transparent;
   text-shadow: 0 0 0 black;
+}
+</style>
+<style lang="scss" scoped>
+.searchForm {
+  width: 300%;
+}
+.searchRank {
+  width: 300%;
+  height: 50%;
 }
 </style>
