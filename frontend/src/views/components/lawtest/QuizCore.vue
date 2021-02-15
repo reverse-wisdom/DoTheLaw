@@ -41,7 +41,7 @@ export default {
     // id: Number && String,
     header: {
       type: String,
-      default: require('@/assets/img/bg_lawtest.jpg'),
+      default: require('@/assets/img/bg_lawtest_1.jpg'),
     },
   },
   data() {
