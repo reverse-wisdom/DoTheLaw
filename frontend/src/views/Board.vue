@@ -94,19 +94,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .title-solid {
-//   border: 0.2rem solid;
-//   font-size: 2.3rem;
-//   border-radius: 3rem;
-//   padding: 1rem;
-//   color: white;
-//   background-color: rgb(21, 52, 80);
-//   font-weight: bold;
-//   margin-left: 20rem;
-//   margin-right: 20rem;
-//   font-family: 'S-CoreDream-6Bold';
-// }
-
 // hr 설정
 .div-hr {
   width: 80%;

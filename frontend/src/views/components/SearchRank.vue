@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div style="height: 0.0rem">
     <!-- v-dialog -->
-    <v-dialog transition="dialog-bottom-transition" max-width="600">
+    <v-dialog transition="dialog-bottom-transition" max-width="400">
       <template v-slot:activator="{ on, attrs }">
+        <br />
         <span class="rank-title" v-bind="attrs" v-on="on">
           <v-icon right dark>
             mdi-format-list-numbered
@@ -11,25 +12,25 @@
         </span>
       </template>
       <template v-slot:default="dialog">
-        <v-card color="rgba(78, 29, 20, 0.8)">
+        <v-card color="#D3D3D3">
           <v-toolbar color="gray" dark>검색어 랭킹</v-toolbar>
           <v-card-text>
             <div class="list-type2">
               <ol id="olid" style="list-style: none;">
-                <div class="mt-10" v-for="item in items" :key="item.rank">
-                  <li><a class="box-solid" @click="moveSearch(item.word)" v-text="item.word"></a></li>
+                <div class="mt-7" v-for="item in items" :key="item.rank">
+                  <li><a @click="moveSearch(item.word)" v-text="item.word"></a></li>
                 </div>
               </ol>
             </div>
           </v-card-text>
           <v-card-actions class="justify-end">
-            <v-btn text @click="dialog.value = false">Close</v-btn>
+            <v-btn text @click="dialog.value = false">닫기</v-btn>
           </v-card-actions>
         </v-card>
       </template>
     </v-dialog>
 
-    <!-- <br /> -->
+    <br />
     <div class="text-center" style=" display:inline-flex;">
       <v-carousel style="display:inline-block;" hide-delimiters cycle interval="3000" class="rank_outter" vertical height="100px" :prev-icon="false" :next-icon="false">
         <v-carousel-item class="rank  " v-for="item in items" :key="item.rank">
@@ -96,12 +97,12 @@ export default {
   text-decoration: none;
   color: white !important;
   font-size: 30px;
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: 'paybooc-Bold';
   padding-top: 30px;
   display: 'inline-block';
 }
 .rank-title {
-  font-size: 2.3rem;
+  font-size: 1.7rem;
   color: white;
   font-weight: bold;
 }
@@ -110,7 +111,7 @@ export default {
 }
 
 .list-type2 {
-  width: 400px;
+  width: 200px;
   margin: 0 auto;
 }
 
@@ -119,7 +120,7 @@ export default {
   list-style: none;
   *list-style: decimal;
   font-size: 15px;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'MaplestoryOTFBold';
   padding: 0;
   margin-bottom: 4em;
 }
@@ -135,18 +136,16 @@ export default {
   *padding: 0.4em;
   margin: 0.5em 0;
   background: rgba(255, 255, 255, 0.3);
-  // border: #fc756f;
-
   text-decoration: none;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
-  color: white !important;
+  color: black !important;
   font-size: 17px;
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: 'paybooc-Bold';
 }
 
 .list-type2 a:hover {
-  background: #d6d4d4;
+  background: white;
   text-decoration: none;
   transform: scale(1.1);
 }
