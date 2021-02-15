@@ -151,7 +151,8 @@ export default {
       classicModal2: false,
       reservationDate: '',
       messgage: Object,
-      roomId: 'private-room',
+      // roomId: 'private-room',
+      checkDate: false,
     };
   },
   props: {
@@ -172,6 +173,11 @@ export default {
     const { data } = await detailAdvise(adviseId);
     // console.log(data);
     this.value = data;
+  },
+  mounted() {
+    if (new Date(this.reservationDate) < Date.now()) {
+      this.checkDate = false;
+    }
   },
   methods: {
     // moveBoard() {
@@ -194,8 +200,19 @@ export default {
       this.$router.push({ name: 'AdviseUpdate', query: { matchingId: matchingId } });
     },
     webrtc() {
-      var matchingId = this.value.matchingId;
-      this.$router.push({ name: 'webrtc', query: { matchingId: matchingId } });
+      if (new Date(this.reservationDate) < Date.now()) {
+        this.checkDate = true;
+      }
+
+      if (this.checkDate) {
+        var matchingId = this.value.matchingId;
+        this.$router.push({ name: 'webrtc', query: { matchingId: matchingId } });
+      } else {
+        this.$swal({
+          icon: 'error',
+          title: '예약시간이 아닙니다.!!',
+        });
+      }
     },
     uploadComment(newComment) {
       axios
@@ -266,6 +283,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
 // .modal-header {
 //   background: rgb(29, 80, 191);
 // }
