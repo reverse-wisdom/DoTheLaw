@@ -42,6 +42,13 @@ import LawyermatchDetail from './views/components/LawyermatchDetail.vue';
 import ControversyList from './views/ControversyList.vue';
 import ControversyDetail from '@/views/components/controversy/ControversyDetail';
 
+import VueSweetalert2 from 'vue-sweetalert2';
+const options = {
+  confirmButtonColor: '#41b882',
+  cancelButtonColor: '#ff7674',
+};
+Vue.use(VueSweetalert2, options); // alert API
+
 Vue.use(Router);
 
 const router = new Router({
@@ -257,7 +264,7 @@ const router = new Router({
       name: 'lawtest',
       components: { default: QuizCore, header: MainNavbar, footer: MainFooter },
       props: {
-        header: { colorOnScroll: 100 },
+        header: { colorOnScroll: 10 },
         footer: { backgroundColor: 'black' },
       },
       meta: { auth: true },
@@ -325,6 +332,13 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.auth && !store.getters.isLogin) {
+    Vue.swal({
+      icon: 'error',
+      position: 'top-end',
+      title: '로그인후 사용가능한 서비스입니다.!!',
+      showConfirmButton: false,
+      timer: 1500,
+    });
     console.log('인증이 필요합니다.');
     next('/login');
     return;
