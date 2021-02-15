@@ -1,33 +1,39 @@
 <template>
   <div class="home">
     <full-page :options="options">
-      <div class="section pb-0  " :style="image_1" data-width="1200" data-height="730">
-        <v-container fluid grid-list-sm pa-0>
+      <div class="section pb-0" :style="image_1" data-width="1200" data-height="730">
+        <v-container fluid grid-list-sm pa-0 style="padding-left: 5rem !important; margin-top: -200px;">
           <v-row class="text-center" no-gutters>
             <v-col>
-              <v-img contain max-height="300" max-width="1000" :src="logo"></v-img>
+              <v-img contain max-height="300" max-width="1000" :src="logo" style="margin-left: 30px;"></v-img>
             </v-col>
           </v-row>
-          <v-row class="text-center">
-            <form class="searchForm " @submit="detailSearch()" autocomplete="off" background-color="white">
-              <fieldset id="searchbar" class="text-center">
-                <v-text-field id="searchWordMain" clearable color="white" height="50px" v-model="query" style="backgroundcolor: white;">
-                  <template v-slot:label>
-                    <strong>검색어</strong>
-                    를입력해주세요!
-                    <v-icon color="white" style="vertical-align: middle">
-                      mdi-file-find
-                    </v-icon>
-                  </template>
-                </v-text-field>
-                <v-btn depressed x-large color="primary" @click="detailSearch">
-                  검색
-                </v-btn>
-              </fieldset>
-            </form>
+          <v-row class="text-center searchBox">
+            <v-col class="nonPadding" cols="12" xs="10" sm="10" md="10" style="height: 0.1rem">
+              <form class=" " @submit="detailSearch()" autocomplete="off" background-color="black">
+                <fieldset id="" class="text-center">
+                  <v-text-field id="searchWordMain" clearable color="black" height="50px" v-model="query" style="backgroundcolor: white; ">
+                    <template v-slot:label>
+                      <strong>검색어</strong>
+                      를입력해주세요!
+                      <v-icon color="black" style="vertical-align: middle">
+                        mdi-file-find
+                      </v-icon>
+                    </template>
+                  </v-text-field>
+                </fieldset>
+              </form>
+            </v-col>
+            <v-col class="nonPadding" cols="6" xs="2" sm="2" md="2">
+              <v-btn class="searchBtn mx-2" fab dark small color="rgb(21, 52, 80)" @click="detailSearch">
+                <v-icon color="white" style="vertical-align: middle">
+                  mdi-text-search
+                </v-icon>
+              </v-btn>
+            </v-col>
           </v-row>
 
-          <v-row class="text-center ">
+          <v-row class="text-center" style="height: 10px">
             <div class="text-center searchRank">
               <v-card color="rgba(255, 255, 255, 0.1)" max-height="100px">
                 <search-rank></search-rank>
@@ -38,7 +44,7 @@
       </div>
 
       <div class="section pb-0" :style="image_2" data-width="1200" data-height="730">
-        <div class="md-layout ">
+        <div class="md-layout" style="padding-left: 5rem">
           <div class="md-layout-item md-medium-size-50 md-small-size-100">
             <v-card elevation="7" color="rgba(255, 255, 255, 0.1)" class="custom-card text-center">
               <span class="main-title-solid text-center">실시간 법원/검찰 뉴스</span>
@@ -58,36 +64,30 @@
       </div>
 
       <div class="section pb-0" :style="image_3" data-width="1200" data-height="730">
-        <div class="row" style="padding-top: 100px">
-          <li class="col-2">
-            <input @click="moveBoard" class="button" value="자유게시판" readonly onfocus="this.blur();" />
-          </li>
-          <li class="col-2">
-            <input @click="moveWebRTC" class="button" value="WebRTC" readonly onfocus="this.blur();" />
-          </li>
-          <li class="col-2">
-            <input @click="moveHome" type="text" class="button" value="HOME" readonly onfocus="this.blur();" />
-          </li>
-          <div class="col-5"></div>
+        <div>
+          <v-row class="menu">
+            <v-col cols="6" md="6" class="text-right">
+              <input @click="moveBoard" class="button" value="자유게시판" readonly onfocus="this.blur();" />
+            </v-col>
+            <v-col cols="6" md="6">
+              <input @click="moveMatch" class="button" value="변호사매칭" readonly onfocus="this.blur();" />
+            </v-col>
+          </v-row>
 
-          <li class="col-2">
-            <input @click="moveSearch" class="button" value="판례필터TEST" readonly onfocus="this.blur();" />
-          </li>
-          <li class="col-2">
-            <input @click="moveMatch" class="button" value="변호사매칭" readonly onfocus="this.blur();" />
-          </li>
-          <li class="col-2">
-            <input @click="moveControversy" class="button" value="찬반토론" readonly onfocus="this.blur();" />
-          </li>
-          <div class="col-5"></div>
+          <v-row class="menu">
+            <v-col cols="6" md="6" class="text-right">
+              <input @click="moveControversy" class="button" value="찬반토론" readonly onfocus="this.blur();" />
+            </v-col>
+            <v-col cols="6" md="6">
+              <input @click="moveScourtExp" class="button" value="모의판사체험" readonly onfocus="this.blur();" />
+            </v-col>
+          </v-row>
 
-          <li class="col-2">
-            <input @click="moveScourtExp" class="button" value="모의판사체험" readonly onfocus="this.blur();" />
-          </li>
-
-          <li class="col-2">
-            <input @click="moveEasyLaw" class="button" value="생활법령" readonly onfocus="this.blur();" />
-          </li>
+          <v-row class="menu">
+            <v-col cols="6" md="6" class="text-right">
+              <input @click="moveEasyLaw" class="button" value="생활법령" readonly onfocus="this.blur();" />
+            </v-col>
+          </v-row>
         </div>
       </div>
     </full-page>
@@ -170,15 +170,6 @@ export default {
     moveAdvise() {
       this.$router.push({ name: 'adviseList' });
     },
-    moveWebRTC() {
-      window.open('webrtc', '_blank');
-    },
-    moveSearch() {
-      this.$router.push({ name: 'dicttest' });
-    },
-    moveHome() {
-      this.$router.push({ name: 'index' });
-    },
     moveMatch() {
       this.$router.push({ name: 'lawyermatch' });
     },
@@ -221,11 +212,26 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
-#searchWordMain {
-  color: white;
+
+div.row.menu {
+  margin-right: 0px;
 }
-#searchbar > div > div > div.v-input__slot > div > label {
-  color: white;
+
+.menu {
+  @media (min-width: 1200px) {
+    margin-right: 50rem !important;
+    // margin-left: 10rem !important;
+    // padding: 1rem !important;
+  }
+}
+#searchWordMain {
+  color: black;
+}
+form > fieldset > div > div.v-input__control {
+  padding-left: 30px;
+}
+> div.v-input__slot > div.v-text-field__slot > label {
+  color: black;
 }
 input#searchWordMain {
   font-size: 200%;
@@ -243,6 +249,12 @@ input#searchWordMain {
   margin-left: 20rem;
   margin-right: 20rem;
   font-family: 'NEXON Lv1 Gothic OTF';
+}
+.searchBtn {
+  margin-bottom: 10px;
+}
+> span.v-btn__content {
+  color: #fff;
 }
 </style>
 <style scoped>
@@ -268,7 +280,6 @@ input#searchWordMain {
   height: 100vh;
   z-index: -1;
   padding: 0px;
-  padding-left: 7rem;
 }
 #img2 {
   width: 100%;
@@ -319,27 +330,10 @@ input#searchWordMain {
 }
 #searchbar {
   border: 1px solid white;
-  margin: auto;
+  /* margin: auto; */
   font-size: 50px;
 }
-.button {
-  width: 70%;
-  height: 120px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 15px;
-  text-transform: uppercase;
-  text-align: center;
-  letter-spacing: 2.5px;
-  font-weight: 500;
-  color: black;
 
-  border: 1px solid black;
-  border-radius: 4px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease 0s;
-  cursor: pointer;
-  outline: none;
-}
 .button:hover {
   background-color: #3c99dc;
   box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.4);
@@ -355,11 +349,37 @@ input {
 }
 </style>
 <style lang="scss" scoped>
+.searchBox {
+  font-size: 50px;
+  background-color: white;
+  border: 0.2rem solid;
+  border-radius: 3rem;
+}
 .searchForm {
   width: 300%;
 }
 .searchRank {
   width: 300%;
   height: 50%;
+}
+.nonPadding {
+  padding: 0 !important;
+}
+.button {
+  width: 10rem;
+  height: 10rem;
+  font-family: 'MaplestoryOTFBold';
+  font-size: 1rem;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 0.5rem;
+  color: black;
+
+  border: 0.18rem solid black;
+  border-radius: 1rem;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
 }
 </style>
