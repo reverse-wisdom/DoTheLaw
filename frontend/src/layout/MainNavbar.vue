@@ -1,5 +1,5 @@
 <template>
-  <md-toolbar id="toolbar" md-elevation="0" class="md-transparent md-absolute" :class="extraNavClasses" :color-on-scroll="colorOnScroll">
+  <md-toolbar id="toolbar" md-elevation="0" class="md-transparent md-absolute kor" :class="extraNavClasses" :color-on-scroll="colorOnScroll">
     <div class="md-toolbar-row md-collapse-lateral">
       <div class="md-toolbar-section-start">
         <h3 class="md-title">
@@ -257,3 +257,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import url(http://fonts.googleapis.com/earlyaccess/cwtexhei.css);
+
+.kor {
+  font-family: 'cwTeXHei', 'S-CoreDream-6Bold'; // 한자폰트 + 한글폰트
+}
+</style>

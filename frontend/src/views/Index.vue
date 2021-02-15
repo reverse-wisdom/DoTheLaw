@@ -41,14 +41,14 @@
         <div class="md-layout ">
           <div class="md-layout-item md-medium-size-50 md-small-size-100">
             <v-card elevation="7" color="rgba(255, 255, 255, 0.1)" class="custom-card text-center">
-              <span class="title-solid text-center">실시간 법원/검찰 뉴스</span>
+              <span class="main-title-solid text-center">실시간 법원/검찰 뉴스</span>
               <button id="f5" @click="forceRerender">새로고침</button>
               <law-rss-news :key="componentKey"></law-rss-news>
             </v-card>
           </div>
           <div class="md-layout-item md-medium-size-50 md-small-size-100">
             <v-card elevation="7" color="rgba(255, 255, 255, 0.1)" class="custom-card text-center">
-              <span class="title-solid text-center">유튜브공간?</span>
+              <span class="main-title-solid text-center">유튜브공간?</span>
               <br />
               <button id="f5" @click="forceRerender">새로고침</button>
               <law-rss-news :key="componentKey"></law-rss-news>
@@ -172,7 +172,6 @@ export default {
     },
     moveWebRTC() {
       window.open('webrtc', '_blank');
-      // this.$router.push({ name: 'webrtc' });
     },
     moveSearch() {
       this.$router.push({ name: 'dicttest' });
@@ -232,29 +231,24 @@ input#searchWordMain {
   font-size: 200%;
   text-align: center;
 }
+.title-solid {
+  border: 0.2rem solid;
+  font-size: 2.3rem;
+  border-radius: 3rem;
+  padding: 1rem;
+  color: white;
+  background-color: rgb(21, 52, 80);
+  font-weight: bold;
+  margin-left: 20rem;
+  margin-right: 20rem;
+  font-family: 'S-CoreDream-6Bold';
+}
 </style>
 <style scoped>
-/* @media (max-width: 600px) {
-  .searchForm {
-    margin-top: -400px;
-    position: unset;
-    width: 100%;
-  }
-  #searchWordMain {
-    width: auto;
-    float: none;
-  }
-} */
 .logo {
-  /* position: absolute;
-  right: 30%;
-  top: 10%;
-  width: 35%;
-  z-index: 9; */
   width: 100%;
   height: auto;
 }
-
 .kor {
   font-family: 'Nanum Gothic', sans-serif;
 }
@@ -279,7 +273,6 @@ input#searchWordMain {
   width: 100%;
   height: 100%;
 }
-
 .custom-card {
   background-color: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.1);
@@ -289,7 +282,6 @@ input#searchWordMain {
   margin-top: 30px;
   margin-right: 50px;
 }
-
 #f5 {
   border: 0.2rem solid white;
   padding: 0.5rem;
@@ -305,7 +297,7 @@ input#searchWordMain {
   padding: 1rem;
   width: 200px;
 }
-.title-solid {
+.main-title-solid {
   box-sizing: content-box;
   border: 0.2rem solid white;
   font-size: 2.3rem;
