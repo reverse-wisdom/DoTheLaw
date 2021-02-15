@@ -245,7 +245,7 @@ input#searchWordMain {
   padding: 0.2rem;
   color: white;
   background-color: rgb(21, 52, 80);
-  font-weight: bold;
+  // font-weight: bold;
   margin-left: 20rem;
   margin-right: 20rem;
   font-family: 'NEXON Lv1 Gothic OTF';
