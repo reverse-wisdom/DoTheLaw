@@ -5,7 +5,8 @@
         <h3 class="md-title">
           <router-link to="/" class="md-title kor">
             <i class="material-icons">gavel</i>
-            法대로 합시다
+            <!-- 法대로 합시다 -->
+            법대로 합시다
           </router-link>
         </h3>
       </div>
