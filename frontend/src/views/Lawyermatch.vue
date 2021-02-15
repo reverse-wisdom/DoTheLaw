@@ -37,10 +37,10 @@ export default {
     const res = await LawyerList();
     this.lawyerlists = res;
     for (let index = 0; index < this.lawyerlists.data.length; index++) {
-      var r = Math.floor(Math.random() * 255);
-      var g = Math.floor(Math.random() * 255);
-      var b = Math.floor(Math.random() * 255);
-      this.lawyerlists.data[index].color = 'rgb(' + r + ',' + g + ',' + b + ')';
+      // var r = Math.floor(Math.random() * 255);
+      // var g = Math.floor(Math.random() * 255);
+      // var b = Math.floor(Math.random() * 255);
+      this.lawyerlists.data[index].color = 'rgb(68, 114, 148)';
     }
   },
   computed: {

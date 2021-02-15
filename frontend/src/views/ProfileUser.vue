@@ -46,8 +46,10 @@
             </div>
             <div class="col-12"></div>
             <div class="col-9"></div>
-            <div class="btn btn-info col-1 mx-auto" style="float: right;" @click="moveUserUpdate">정보수정</div>
-            <div class="btn btn-info col-1" style="float: right;" @click="deleteUser">회원탈퇴</div>
+            <div style="display:flex;">
+              <v-btn color="rgb(142, 188, 219)" dark @click="moveUserUpdate">정보수정</v-btn>
+              <v-btn color="rgb(142, 188, 219)" dark class="user-delete" @click="deleteUser">회원탈퇴</v-btn>
+            </div>
           </div>
         </div>
       </div>
@@ -147,8 +149,8 @@ ul {
   padding: 0px;
 }
 #text-solid > div {
-  background: skyblue;
-
+  background: rgb(68, 114, 148);
+  color: white;
   padding-left: 1rem;
 }
 #text-solid-intro {
@@ -159,7 +161,7 @@ ul {
 }
 #text-solid-intro > div {
   background: skyblue;
-
+  color: white;
   padding-left: 2rem;
 }
 #text-solid-margin {
@@ -171,8 +173,8 @@ ul {
   padding: 0px;
 }
 #text-solid-margin > div {
-  background: skyblue;
-
+  background: rgb(68, 114, 148);
+  color: white;
   padding-left: 1rem;
   padding: auto;
 }
@@ -201,8 +203,10 @@ hr {
   /* background: whitesmoke; */
 }
 #text-solid-advise > div {
-  background: skyblue;
-
+  background: rgb(68, 114, 148);
+  color: white;
   padding-left: 1rem;
+}
+.user-delete {
 }
 </style>

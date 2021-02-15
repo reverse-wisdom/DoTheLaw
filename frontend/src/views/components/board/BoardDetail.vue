@@ -30,13 +30,13 @@
 
           <!-- 수정, 삭제는 자신이 쓴글일경우만 나타나게 처리함 -->
           <div v-if="$store.state.name == value.name" style="text-align:right">
-            <md-button class="md-warning" @click="updatePage(value)">글수정</md-button>
-            <md-button class="md-rose" @click="deletePage()">글 삭제</md-button>
-            <md-button class="md-info" @click="moveBoard()">뒤로가기</md-button>
+            <v-btn color="rgb(68, 114, 148)" dark @click="updatePage(value)">글수정</v-btn>
+            <v-btn color="rgb(68, 114, 148)" class="mx-2" dark @click="deletePage()">글 삭제</v-btn>
+            <v-btn color="rgb(68, 114, 148)" dark @click="moveBoard()">뒤로가기</v-btn>
           </div>
           <!-- else -->
           <div v-if="$store.state.name != value.name" style="text-align:right">
-            <md-button class="md-info" @click="moveBoard()">뒤로가기</md-button>
+            <v-btn color="rgb(68, 114, 148)" dark @click="moveBoard()">뒤로가기</v-btn>
           </div>
           <!-- 댓글 -->
           <comment-write :boardId="value.boardId" @uploadComment="uploadComment" />
@@ -151,7 +151,7 @@ export default {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 .styled-table th {
-  background-color: #98cec3;
+  background-color: rgb(68, 114, 148);
   color: #ffffff;
   width: 10rem;
   text-align: center;

@@ -9,8 +9,8 @@
             </v-col>
             <template v-if="comment.uuid == $store.state.uuid">
               <v-col class="text-right mr-3">
-                <md-button class="md-warning" @click="modifyComment">수정</md-button>
-                <md-button class="md-rose" @click="deleteComment">삭제</md-button>
+                <v-btn color="rgb(33,133,89)" class="mr-1" dark @click="modifyComment">수정</v-btn>
+                <v-btn color="red" dark @click="deleteComment">삭제</v-btn>
               </v-col>
             </template>
           </v-row>
