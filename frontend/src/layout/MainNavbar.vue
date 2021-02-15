@@ -259,8 +259,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url(http://fonts.googleapis.com/earlyaccess/cwtexhei.css);
-
 .kor {
   font-family: 'cwTeXHei', 'S-CoreDream-6Bold'; // 한자폰트 + 한글폰트
 }
