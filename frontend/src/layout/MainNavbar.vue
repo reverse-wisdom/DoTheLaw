@@ -21,39 +21,6 @@
             <mobile-menu nav-mobile-section-start="false"></mobile-menu>
             <md-list>
               <li class="md-list-item">
-                <!-- <a href="javascript:void(0)" class="md-list-item-router md-list-item-container md-button-clean dropdown">
-                  <div class="md-list-item-content">
-                    <drop-down direction="down">
-                      <md-button slot="title" class="md-button md-button-link md-white md-simple dropdown-toggle" data-toggle="dropdown">
-                        <i class="material-icons">dashboard</i>
-                        <p>추가 서비스</p>
-                      </md-button>
-                      <ul class="dropdown-menu dropdown-with-icons">
-                        <li>
-                          <router-link to="/lawtest">
-                            <i class="material-icons">quiz</i>
-                            법상식테스트
-                          </router-link>
-                        </li>
-                        <li>
-                          <router-link to="/controversylist">
-                            <i class="material-icons">supervisor_account</i>
-                            찬반토론
-                          </router-link>
-                        </li>
-                        <li class="">
-                          <router-link to="/board">
-                            <i class="material-icons">assignment_turned_in</i>
-                            게시판
-                          </router-link>
-                        </li>
-                      </ul>
-                    </drop-down>
-                  </div>
-                </a> -->
-              </li>
-
-              <li class="md-list-item">
                 <router-link to="/lawyermatch" class="md-list-item-router md-list-item-container md-button-clean">
                   <!-- <router-link to="/adviseList" class="md-list-item-router md-list-item-container md-button-clean"> -->
                   <div class="md-list-item-content">
@@ -66,11 +33,11 @@
               </li>
 
               <li class="md-list-item">
-                <router-link to="/lawyermatch" class="md-list-item-router md-list-item-container md-button-clean">
+                <router-link to="" class="md-list-item-router md-list-item-container md-button-clean">
                   <!-- <router-link to="/adviseList" class="md-list-item-router md-list-item-container md-button-clean"> -->
                   <div class="md-list-item-content">
                     <md-button slot="title" class="md-button md-button-link md-white md-simple">
-                      <a @click="moveScourtExp">
+                      <a @click="moveScourtExp" target="_blank">
                         <i class="material-icons">gavel</i>
                         모의판사체험
                       </a>
@@ -222,7 +189,7 @@ export default {
   },
   methods: {
     moveScourtExp() {
-      location.href = 'https://i4d103.p.ssafy.io/exp/main.html';
+      window.open('about:blank').location.href = 'https://i4d103.p.ssafy.io/exp/main.html';
     },
     logoutUser() {
       this.$store.commit('clearEmail');

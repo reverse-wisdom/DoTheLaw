@@ -9,7 +9,7 @@
     </div>
     <div>작성자 : {{ data.name }}</div>
     <div class="post-time">
-      {{ data.createDate }}
+      {{ this.$moment(data.createDate).format('llll') }}
       <i class="icon ion-md-create" @click="adviseDetail"></i>
       <!-- <i class="icon ion-md-trash" ></i> -->
     </div>
