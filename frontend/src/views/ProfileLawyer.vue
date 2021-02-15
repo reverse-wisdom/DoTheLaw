@@ -3,8 +3,6 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title-solid text-center">마이페이지</h2>
-        <hr class="div-hr" />
         <div class="container">
           <div class="row">
             <div class="col-1 "></div>

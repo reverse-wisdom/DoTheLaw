@@ -197,6 +197,7 @@ export default {
 ul {
   display: flex;
   flex-wrap: wrap;
+  overflow: auto;
 }
 #profile {
   border-radius: 70%;
@@ -265,6 +266,15 @@ ul {
   border: 1px solid gray;
   border-radius: 1rem;
   /* background: whitesmoke; */
+  padding: 0;
+  padding-bottom: 2rem;
+}
+#text-solid-advise > div {
+  background: skyblue;
+  border: 2px solid skyblue;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+  padding-left: 1rem;
 }
 #info-update {
   text-align: end;
