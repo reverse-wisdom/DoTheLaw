@@ -1,7 +1,7 @@
 <template>
   <div class="text-right">
     <v-textarea label="댓글입력" rows="1" v-model="content" prepend-icon="mdi-comment"></v-textarea>
-    <v-btn color="success" @click="onSubmit">댓글등록</v-btn>
+    <v-btn color="rgb(68, 114, 148)" dark @click="onSubmit">댓글등록</v-btn>
   </div>
 </template>
 

@@ -10,8 +10,7 @@
             생활법령
           </h2>
           <v-card>
-            <v-card-title class="text-center justify-center py-6"></v-card-title>
-            <v-tabs v-model="tab" background-color="#ebf3fe " class="primary--text" centered icons-and-text>
+            <v-tabs v-model="tab" background-color="#ebf3fe" class="primary--text " centered icons-and-text>
               <v-tabs-slider></v-tabs-slider>
 
               <v-tab v-for="(item, index) in items" :key="index" :href="'#tab-' + index">
@@ -20,7 +19,7 @@
               </v-tab>
             </v-tabs>
 
-            <v-tabs-items v-model="tab">
+            <v-tabs-items v-model="tab" class="tab-item-wrapper">
               <v-tab-item v-for="(item, index) in items" :key="index" :value="'tab-' + index">
                 <v-card flat>
                   <!-- <v-card-text>{{ item.content }}</v-card-text> -->
@@ -109,7 +108,7 @@ export default {
   },
 };
 </script>
-
+<style lang="scss"></style>
 <style lang="scss" scoped>
 // 한글 폰트 설정
 .kor {
