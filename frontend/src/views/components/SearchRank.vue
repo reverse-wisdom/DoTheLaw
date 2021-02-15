@@ -29,9 +29,9 @@
       </template>
     </v-dialog>
 
-    <br />
-    <div class="text-center" style=" margin-top:30px; display:inline-flex;">
-      <v-carousel style="display:inline-block;" hide-delimiters cycle interval="3000" class="rank_outter" vertical height="200px" :prev-icon="false" :next-icon="false">
+    <!-- <br /> -->
+    <div class="text-center" style=" display:inline-flex;">
+      <v-carousel style="display:inline-block;" hide-delimiters cycle interval="3000" class="rank_outter" vertical height="100px" :prev-icon="false" :next-icon="false">
         <v-carousel-item class="rank  " v-for="item in items" :key="item.rank">
           <v-card class="text-center" elevation="2" color="rgba(255, 255, 255, 0.1)" width="200px">
             <a @click="moveSearch(item.word)" class="rank">{{ item.rank }}. {{ item.word }}</a>
@@ -101,7 +101,7 @@ export default {
   display: 'inline-block';
 }
 .rank-title {
-  font-size: 40px;
+  font-size: 2.3rem;
   color: white;
   font-weight: bold;
 }
