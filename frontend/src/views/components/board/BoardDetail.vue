@@ -3,6 +3,7 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised board">
       <div class="section profile-content">
+        <h2 class="title-solid text-center">상세보기</h2>
         <hr class="div-hr" />
         <div class="container">
           <table class="styled-table" style="width: 100%">
