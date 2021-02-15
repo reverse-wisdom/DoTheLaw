@@ -42,7 +42,7 @@
           <comment-write :boardId="value.boardId" @uploadComment="uploadComment" />
           <br />
           <ul v-for="(comment, index) in comments" :key="index">
-            <comment-row :comment="comment" :boardId="value.boardId" @deleteComment="deleteComment" />
+            <comment-row :comment="comment" :boardId="value.boardId" @deleteComment="deleteComment" @modifyComment="modifyComment" />
           </ul>
         </div>
       </div>
@@ -114,7 +114,7 @@ export default {
       var boardId = value.boardId;
       this.$router.push({ name: 'boardUpdate', query: { boardId: boardId } });
     },
-    uploadComment(newComment) {
+    uploadComment() {
       axios
         .get('/api/comment/search?boardId=' + this.$route.query.boardId, {})
         .then(({ data }) => {
@@ -122,11 +122,11 @@ export default {
         })
         .catch();
     },
-    deleteComment(oldComment) {
-      const commentIndex = this.comments.findIndex((comment) => {
-        return comment.comment_id === oldComment.comment_id;
-      });
-      this.comments.splice(commentIndex, 1);
+    deleteComment() {
+      this.uploadComment();
+    },
+    modifyComment() {
+      this.uploadComment();
     },
   },
 };

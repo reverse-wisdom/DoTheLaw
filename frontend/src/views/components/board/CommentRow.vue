@@ -15,7 +15,7 @@
             </template>
           </v-row>
         </template>
-        <v-text-field :readonly="disabled == 1" color="black" :value="comment.content" id="content"></v-text-field>
+        <v-text-field v-model="comment.content" :readonly="disabled == 1" color="black"></v-text-field>
       </v-card>
     </v-col>
   </v-row>
@@ -40,7 +40,6 @@ export default {
       axios
         .delete('/api/comment/delete?commentId=' + this.comment.commentId + '&uuid=' + this.comment.uuid)
         .then(({ data }) => {
-          // this.$router.go(this.$router.currentRoute);
           this.$emit('deleteComment', data);
         })
         .catch();
@@ -51,17 +50,14 @@ export default {
       if (this.btnCnt == 1) {
         this.disabled = (this.disabled + 1) % 2;
       } else {
-        var content = document.getElementById('content').value;
-        this.comment.content = content;
-
         axios.put('/api/comment/update', {
           commentId: this.comment.commentId,
           content: this.comment.content,
           uuid: this.$store.state.uuid,
         });
-
         this.btnCnt = 0;
         this.disabled = 1;
+        this.$emit('modifyComment');
       }
     },
   },
