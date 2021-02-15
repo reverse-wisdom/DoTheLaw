@@ -15,7 +15,7 @@
             </template>
           </v-row>
         </template>
-        <v-text-field v-model="comment.content" :readonly="disabled == 1" color="black"></v-text-field>
+        <v-text-field v-model="comment.content" class="px-3" :readonly="disabled == 1" color="black"></v-text-field>
       </v-card>
     </v-col>
   </v-row>
