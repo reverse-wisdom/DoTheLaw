@@ -109,7 +109,25 @@ export default {
       this.$refs.webrtc.join();
     },
     onLeave() {
-      this.$refs.webrtc.leave();
+      this.$swal({
+        icon: 'info',
+        title: '종료하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '승인',
+        cancelButtonText: '취소',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$refs.webrtc.leave();
+
+          window.close();
+        } else {
+        }
+      });
+      // this.$refs.webrtc.leave();
+
+      // window.close();
     },
     onShareScreen() {
       this.img = this.$refs.webrtc.shareScreen();
@@ -119,8 +137,6 @@ export default {
     },
     logEvent(event) {
       console.log('Event : ', event);
-      console.log(this.test);
-      console.log(test);
     },
   },
 };

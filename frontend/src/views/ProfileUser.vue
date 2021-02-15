@@ -3,19 +3,18 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title-solid text-center">마이페이지</h2>
+        <h2 class="title-solid text-center">PROFILE</h2>
         <hr class="div-hr" />
         <div class="container">
           <div class="row">
-            <div class="col-1"></div>
             <div class="col-3 colum mx-auto text-center">
               <img v-if="$store.state.uuid" class="col-12 r-7 mx-auto" id="profile" :src="'/api/member/image/' + $store.state.uuid + '/512'" alt="" />
               <img v-else id="profile" class="col-12 r-7 mx-auto" src="@/assets/img/noimage.jpg" alt="noimage" />
-              <h1 class="col-12 r-4">{{ value.name }}</h1>
+              <h2 class="col-12 r-4 py-0 my-0">{{ value.name }}</h2>
             </div>
             <div class="col-8 row" id="content-sort">
-              <div class="col-12 mx-auto" id="text-solid">
-                <div>
+              <div class="col-10 mx-auto" id="text-solid">
+                <div style="height:50px" class="pt-3">
                   이메일
                 </div>
                 <hr />
@@ -23,8 +22,8 @@
                   {{ value.email }}
                 </span>
               </div>
-              <div class="col-12 mx-auto" id="text-solid">
-                <div>
+              <div class="col-10 mx-auto" id="text-solid">
+                <div style="height:50px" class="pt-3">
                   전화번호
                 </div>
                 <hr />
@@ -35,7 +34,7 @@
             </div>
             <div class="row mx-auto">
               <div class="col-11 mx-auto" id="text-solid-advise">
-                <div>
+                <div style="height:50px" class="pt-3">
                   최근 자문요청
                 </div>
                 <hr />
@@ -144,29 +143,23 @@ ul {
   width: auto;
   height: auto;
   margin-top: 2rem;
-  border: 1px solid gray;
-  border-radius: 1rem;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   padding: 0px;
 }
 #text-solid > div {
   background: skyblue;
-  border: 2px solid skyblue;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
+
   padding-left: 1rem;
 }
 #text-solid-intro {
   width: auto;
   height: auto;
-  border: 1px solid skyblue;
-  border-radius: 1rem;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   padding: 0px;
 }
 #text-solid-intro > div {
   background: skyblue;
-  border: 2px solid skyblue;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
+
   padding-left: 2rem;
 }
 #text-solid-margin {
@@ -174,15 +167,12 @@ ul {
   height: auto;
   margin-top: 2rem;
   margin-right: 4.7rem;
-  border: 1px solid gray;
-  border-radius: 1rem;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   padding: 0px;
 }
 #text-solid-margin > div {
   background: skyblue;
-  border: 2px solid skyblue;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
+
   padding-left: 1rem;
   padding: auto;
 }
@@ -193,7 +183,9 @@ hr {
   margin: 3px;
 }
 .padding {
-  margin: 1rem;
+  margin: 2rem 1rem 1rem 1rem;
+
+  font-size: 20px;
 }
 #text-solids {
   background: white;
@@ -202,17 +194,15 @@ hr {
   height: auto;
   margin-top: 2rem;
   /* text-align: center; */
-  border: 1px solid gray;
-  border-radius: 1rem;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
+
   padding-bottom: 2rem;
   padding: 0;
   /* background: whitesmoke; */
 }
 #text-solid-advise > div {
   background: skyblue;
-  border: 2px solid skyblue;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
+
   padding-left: 1rem;
 }
 </style>
