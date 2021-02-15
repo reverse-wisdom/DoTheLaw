@@ -8,7 +8,7 @@
         <div class="container text-center">
           <div class="md-layout">
             <div class="md-layout-item my-2">
-              <v-btn x-large color="rgb(248,228,204)" dark @click="goRegisterUser">
+              <v-btn x-large color="rgb(68,114, 148)" dark @click="goRegisterUser">
                 일반 회원
                 <v-icon right dark>
                   mdi-account-check
@@ -16,7 +16,7 @@
               </v-btn>
             </div>
             <div class="md-layout-item my-2">
-              <v-btn x-large color="success" dark @click="goRegisterLawyer">
+              <v-btn x-large color="rgb(68,114, 148)" dark @click="goRegisterLawyer">
                 변호사
                 <v-icon right dark>
                   mdi-account-check
