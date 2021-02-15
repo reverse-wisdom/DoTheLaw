@@ -38,7 +38,6 @@ export default {
     RangeCounter,
   },
   props: {
-    // id: Number && String,
     header: {
       type: String,
       default: require('@/assets/img/bg_lawtest.jpg'),
@@ -166,10 +165,7 @@ export default {
       setTimeout(() => {
         this.resultLoading = false;
         this.finish = true;
-        // if (isMobile().any) {
-        //   this.scrollEl(this.$refs.QuizContainer);
-        // }
-      }, 4000);
+      }, 2000);
     },
     restart() {
       this.pickedArray = [];
@@ -178,18 +174,10 @@ export default {
       this.step = 1;
       this.finish = false;
       this.total = 0;
-
-      // if (isMobile().any) {
-      //   this.scrollEl(this.$refs.QuizContainer);
-      // }
     },
     reset() {
       this.intro = true;
       this.restart();
-
-      // if (isMobile().any) {
-      //   this.scrollEl(this.$refs.QuizContainer);
-      // }
     },
     checkPenalty(updatePenalty) {
       this.total += updatePenalty;

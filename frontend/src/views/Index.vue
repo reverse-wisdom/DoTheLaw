@@ -177,7 +177,7 @@ export default {
       this.$router.push({ name: 'controversylist' });
     },
     moveScourtExp() {
-      location.href = 'https://i4d103.p.ssafy.io/exp/main.html';
+      window.open('about:blank').location.href = 'https://i4d103.p.ssafy.io/exp/main.html';
     },
     moveEasyLaw() {
       this.$router.push({ name: 'easyLaw' });
@@ -220,8 +220,6 @@ div.row.menu {
 .menu {
   @media (min-width: 1200px) {
     margin-right: 50rem !important;
-    // margin-left: 10rem !important;
-    // padding: 1rem !important;
   }
 }
 #searchWordMain {
