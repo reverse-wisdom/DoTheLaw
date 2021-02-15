@@ -2,9 +2,9 @@
   <!-- 게시판 페이지 -->
   <div class="wrapper">
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
-    <div class="main main-raised">
+    <div class="main main-raised board">
       <div class="section profile-content">
-        <h2 class="title text-center kor">게시판</h2>
+        <h2 class="title-solid text-center">게시판</h2>
         <hr class="div-hr" />
         <div class="container">
           <v-card>
@@ -94,14 +94,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// .title-solid {
+//   border: 0.2rem solid;
+//   font-size: 2.3rem;
+//   border-radius: 3rem;
+//   padding: 1rem;
+//   color: white;
+//   background-color: rgb(21, 52, 80);
+//   font-weight: bold;
+//   margin-left: 20rem;
+//   margin-right: 20rem;
+//   font-family: 'S-CoreDream-6Bold';
+// }
+
 // hr 설정
 .div-hr {
   width: 80%;
 }
 
 // 한글 폰트 설정
-.kor {
-  font-family: 'Nanum Gothic', sans-serif;
+.board {
+  font-family: 'S-CoreDream-6Bold';
 }
 .btn-right {
   text-align: right;
@@ -111,7 +124,6 @@ export default {
   border-collapse: collapse;
   margin: 25px 0;
   font-size: 0.9em;
-  font-family: sans-serif;
   min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }

@@ -3,7 +3,7 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title text-center kor">추천 변호사 상세</h2>
+        <h2 class="title-solid text-center">추천 변호사 상세</h2>
         <hr class="div-hr" />
         <div class="container">
           <div class="row">
@@ -12,10 +12,11 @@
               <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + lawyer.uuid + '/512'" alt="" />
               <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
               <h2>{{ lawyer.name }}</h2>
+              <h2>{{ uuid }}</h2>
             </div>
             <div class="col-8 row">
               <div class="col-12 r-4 mx-auto">
-                <chart :list="values" style="height: 250px"></chart>
+                <chart v-bind:lawyer_uuid="uuid" style="height: 250px"></chart>
               </div>
               <br />
 
@@ -111,9 +112,10 @@ export default {
   data() {
     return {
       values: [],
-      lawyer: '',
+      lawyer: {},
       advise: [],
       search: '',
+      uuid: '',
     };
   },
   props: {
@@ -126,15 +128,11 @@ export default {
     const email = this.$route.query.email;
     const res = await LawyerDetail(email);
     this.lawyer = res.data;
-    this.$store.commit('setLawuuid', res.data.uuid);
+    this.uuid = res.data.uuid;
+    const userData = this.uuid;
+    const { data } = await fetchAdviseLawyer(userData);
 
-    {
-      const userData = this.$store.state.lawuuid;
-      const { data } = await fetchAdviseLawyer(userData);
-
-      this.advise = data.reverse();
-      console.log(data);
-    }
+    this.advise = data.reverse();
 
     var query = res.data.address;
     axios

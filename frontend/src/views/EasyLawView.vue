@@ -6,12 +6,11 @@
       <div class="section profile-content">
         <hr />
         <div class="container">
+          <h2 class="text-center title-solid">
+            생활법령
+          </h2>
           <v-card>
-            <v-card-title class="text-center justify-center py-6">
-              <h2 class="font-weight-bold display-3">
-                생활법령
-              </h2>
-            </v-card-title>
+            <v-card-title class="text-center justify-center py-6"></v-card-title>
             <v-tabs v-model="tab" background-color="#ebf3fe " class="primary--text" centered icons-and-text>
               <v-tabs-slider></v-tabs-slider>
 

@@ -1,8 +1,9 @@
 <template>
   <!-- 로그인 페이지 테이블 컴포넌트 -->
-  <div class="wrapper">
-    <login-card header-color="info" style="padding-bottom:-3px;" v-if="isLoad">
-      <h4 slot="title" class="title kor" style="font-size:250%;">로그인</h4>
+  <div class="wrapper kor" id="login">
+    <!-- <login-card header-color="info" style="padding-bottom:-3px;" v-if="isLoad"> -->
+    <login-card style="padding-bottom:-3px;" v-if="isLoad">
+      <h4 slot="title" class="kor" style="font-size:250%;">로그인</h4>
       <template slot="inputs">
         <br />
         <md-field class="md-form-group">
@@ -13,11 +14,11 @@
         <md-field class="md-form-group">
           <md-icon>lock_outline</md-icon>
           <label>비밀번호</label>
-          <md-input v-model="password" type="password" id="input_pwd" @keypress="caps_lock"></md-input>
+          <md-input v-model="password" type="password" id="input_pwd" @keypress="caps_lock" @keypress.enter="login()"></md-input>
 
-          <p id="capslock" style="position:relative; border:2px solid #003b83; width:300px; bottom:0px; display:none">
+          <p id="capslock" style="position:relative; width:300px; bottom:0px; display:none">
             &nbsp;
-            <b>CapsLock</b>
+            <b>!. CapsLock</b>
             키가 눌려있습니다.&nbsp;
           </p>
         </md-field>
@@ -216,9 +217,15 @@ export default {
 };
 </script>
 
+<style lang="scss">
+#login > .md-card > .md-card-header {
+  background-color: rgb(143, 188, 219);
+}
+</style>
 <style lang="scss" scoped>
 .kor {
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: 'S-CoreDream-6Bold';
+  font-size: 0.7rem;
 }
 .md-card img {
   width: 250px;
