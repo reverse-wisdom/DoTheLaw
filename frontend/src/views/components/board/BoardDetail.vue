@@ -1,10 +1,8 @@
 <template>
   <div class="wrapper">
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
-    <div class="main main-raised">
+    <div class="main main-raised board">
       <div class="section profile-content">
-        <h2 class="title text-center kor">게시판 상세 내용</h2>
-
         <hr class="div-hr" />
         <div class="container">
           <table class="styled-table" style="width: 100%">
@@ -141,15 +139,14 @@ export default {
 }
 
 // 한글 폰트 설정
-.kor {
-  font-family: 'Nanum Gothic', sans-serif;
+.board {
+  font-family: 'S-CoreDream-6Bold';
 }
 // table css
 .styled-table {
   border-collapse: collapse;
   margin: 25px 0;
   font-size: 0.9em;
-  font-family: sans-serif;
   min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
