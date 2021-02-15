@@ -1,6 +1,6 @@
 <template>
   <!-- 회원가입 페이지 테이블 컴포넌트 -->
-  <div class="wrapper">
+  <div class="wrapper kor">
     <login-card header-color="green" style="padding-bottom:-3px;">
       <h4 slot="title" class="title kor" style="font-size:250%;">변호사 회원가입</h4>
 
@@ -11,7 +11,7 @@
           <md-icon>face</md-icon>
           <label>닉네임...</label>
           <md-input required v-model="name"></md-input>
-          <md-button class="md-success md-wd md-sm" @click="nameCheckFun()">닉네임 중복확인</md-button>
+          <md-button class="md-wd md-sm" style="background-color: rgb(21, 52, 80) !important;" @click="nameCheckFun()">닉네임 중복확인</md-button>
         </md-field>
 
         <!-- 이메일 -->
@@ -29,7 +29,7 @@
               <md-icon>priority_high</md-icon>
             </div>
           </template>
-          <md-button class="md-success md-wd md-sm" @click="emailCheckFun()">이메일 중복확인</md-button>
+          <md-button class="md-wd md-sm" style="background-color: rgb(21, 52, 80) !important;" @click="emailCheckFun()">이메일 중복확인</md-button>
         </md-field>
 
         <!-- 비밀번호 -->
@@ -85,7 +85,7 @@
         </md-field>
       </template>
 
-      <md-button slot="footer" class="md-success md-wd" @click="register()">가입하기</md-button>
+      <md-button slot="footer" class="md-wd" style="background-color: rgb(21, 52, 80) !important;" @click="register()">가입하기</md-button>
     </login-card>
   </div>
 </template>
@@ -292,6 +292,6 @@ export default {
 
 <style lang="scss" scoped>
 .kor {
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: 'paybooc-Bold' !important;
 }
 </style>
