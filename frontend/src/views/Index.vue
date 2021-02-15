@@ -162,7 +162,8 @@ export default {
       this.$router.push({ name: 'adviseList' });
     },
     moveWebRTC() {
-      this.$router.push({ name: 'webrtc' });
+      window.open('webrtc', '_blank');
+      // this.$router.push({ name: 'webrtc' });
     },
     moveSearch() {
       this.$router.push({ name: 'dicttest' });
