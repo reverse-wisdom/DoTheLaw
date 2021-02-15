@@ -8,7 +8,7 @@
         <div class="container text-center">
           <div class="md-layout">
             <div class="md-layout-item my-2">
-              <v-btn x-large color="blue-grey" dark @click="goRegisterUser">
+              <v-btn x-large color="rgb(248,228,204)" dark @click="goRegisterUser">
                 일반 회원
                 <v-icon right dark>
                   mdi-account-check
