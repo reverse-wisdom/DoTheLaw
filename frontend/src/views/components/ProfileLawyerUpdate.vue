@@ -31,7 +31,7 @@
                 <circle8></circle8>
                 <br />
               </div>
-              <div class="col-11 mx-auto " id="text-solid-1">
+              <div class="col-11 mx-auto text-solid-1">
                 <div>
                   한줄 소개
                 </div>
@@ -39,35 +39,35 @@
               </div>
             </div>
             <div class="row ml-10">
-              <div class="col-5 mx-auto" id="text-solid-margin">
+              <div class="col-5 mx-auto text-solid-margin">
                 <div>
                   관심분야
                 </div>
 
                 <input class="col-12 text-solid-input" v-model="value.bailiwick" />
               </div>
-              <div class="col-5 mx-auto " id="text-solid">
+              <div class="col-5 mx-auto text-solid">
                 <div>
                   전화번호
                 </div>
 
                 <input class="col-12 text-solid-input" v-model="value.phone" />
               </div>
-              <div class="col-5 mx-auto" id="text-solid-margin">
+              <div class="col-5 mx-auto text-solid-margin">
                 <div>
                   경력
                 </div>
 
                 <textarea class="col-12 text-solid-input" v-model="value.career" style="height:120px" />
               </div>
-              <div class="col-5 mx-auto " id="text-solid">
+              <div class="col-5 mx-auto text-solid">
                 <div>
                   이메일
                 </div>
 
                 {{ value.email }}
               </div>
-              <div class="col-11 mx-auto" id="text-solid-one">
+              <div class="col-11 mx-auto text-solid-one">
                 최근답변
               </div>
 
@@ -154,11 +154,6 @@ export default {
     const { data } = await searchLawyer(email);
     this.value = data;
     console.log('회원정보', this.value);
-
-    // const lawyerId = this.$store.state.uuid;
-    // const res = await searchLawyerAdvise(lawyerId);
-    // console.log('자문', res);
-    // this.advise = res.data;
   },
   watch: {
     // watch를 통해 mounted가 실패하더라도 다시호출함 지도가 랜더링 안되는 현상 방지함
@@ -208,9 +203,7 @@ export default {
       // const imageres = await imageUpload(this.value.uuid, form);
       // console.log(imageres);
 
-      console.log('인풋데이터 확인', userdata);
       const res = await editLawyer(userdata);
-      console.log(res);
       this.$router.push({ name: 'profileLawyer' });
     },
     searchMap() {
@@ -293,7 +286,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #profile {
   border-radius: 70%;
 }
@@ -304,32 +297,31 @@ export default {
 #button-sort {
   justify-items: center;
 }
-#text-solid {
+.text-solid {
   width: 200px;
   height: auto;
   padding: 0;
   margin-top: 2rem;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
-}
-#text-solid > div {
-  background: skyblue;
-  border: 2px solid skyblue;
-  padding-left: 1rem;
-}
-#text-solid .divId {
+  > div {
+    background: skyblue;
+    border: 2px solid skyblue;
+    padding-left: 1rem;
+  }
 }
 
-#text-solid-1 {
+.text-solid-1 {
   width: auto;
   height: auto;
   padding: 0;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
+  > div {
+    background: skyblue;
+    border: 2px solid skyblue;
+    padding-left: 1rem;
+  }
 }
-#text-solid-1 > div {
-  background: skyblue;
-  border: 2px solid skyblue;
-  padding-left: 1rem;
-}
+
 .text-solid-input {
   border: 1px solid black;
   width: 90%;
@@ -342,20 +334,21 @@ export default {
   height: auto;
   margin: 2rem 1rem 1rem 1rem;
 }
-#text-solid-margin {
+.text-solid-margin {
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   width: auto;
   height: auto;
   padding: 0;
   margin-top: 2rem;
   margin-right: 4.7rem;
+  > div {
+    background: skyblue;
+    border: 2px solid skyblue;
+    padding-left: 1rem;
+  }
 }
-#text-solid-margin > div {
-  background: skyblue;
-  border: 2px solid skyblue;
-  padding-left: 1rem;
-}
-#text-solid-one {
+
+.text-solid-one {
   border: 1px solid black;
   height: auto;
   margin-top: 2rem;
