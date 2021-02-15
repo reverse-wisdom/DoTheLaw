@@ -309,7 +309,7 @@ export default {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 .styled-table th {
-  background-color: #98cec3;
+  background-color: rgb(68, 114, 148);
   color: #ffffff;
   width: 10rem;
   text-align: center;
