@@ -3,7 +3,7 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title text-center kor">자문 상세 내용</h2>
+        <h2 class="title-solid text-center">자문상세</h2>
 
         <hr class="div-hr" />
         <div class="container">
@@ -44,11 +44,11 @@
 
           <!-- 수정, 삭제는 자신이 쓴글일경우만 나타나게 처리함 -->
           <div v-if="$store.state.role == 'USER'" style="text-align:right">
-            <md-button class="md-rose" @click="adviseDelete">자문삭제</md-button>
-            <md-button class="md-warning" @click="updateAdvise(value)">자문수정</md-button>
-            <md-button class="md-primary" style="float: left;" @click="webrtc()">화상미팅</md-button>
-            <md-button class="md-success" style="float: left;" @click="modal2()">화상채팅기록</md-button>
-            <md-button class="md-info" @click="$router.go(-1)">뒤로가기</md-button>
+            <v-btn color="rgb(33,133,89)" class="mr-1" dark @click="updateAdvise(value)">자문수정</v-btn>
+            <v-btn color="#e52b50" class="mr-1" dark @click="adviseDelete">자문삭제</v-btn>
+            <v-btn color="#FF5722" dark style="float: left;" @click="webrtc()">화상미팅</v-btn>
+            <v-btn color="#FF5722" dark class="ml-1" style="float: left;" @click="modal2()">화상채팅기록</v-btn>
+            <v-btn color="rgb(68, 114, 148)" dark @click="$router.go(-1)">뒤로가기</v-btn>
           </div>
           <!-- else -->
           <div v-if="$store.state.role == 'LAWYER'" style="text-align:right">
