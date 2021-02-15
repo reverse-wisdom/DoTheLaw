@@ -3,7 +3,7 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title text-center kor">추천 변호사 매칭</h2>
+        <h2 class="title-solid text-center">추천 변호사 매칭</h2>
         <hr class="div-hr" />
         <div class="container">
           <div class="row">
