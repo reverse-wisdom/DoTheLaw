@@ -3,10 +3,8 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title text-center kor">추천 변호사 매칭</h2>
-        <hr class="div-hr" />
         <div class="container">
-          <div class="row">
+          <div class="row" id="overflow">
             <LawyermatchList v-for="lawyer in lawyerlists.data" :key="lawyer.uuid" :lawyer="lawyer" :color="lawyer.color"></LawyermatchList>
           </div>
         </div>
@@ -60,4 +58,10 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+#overflow {
+  overflow: auto;
+}
+#listBlock {
+}
+</style>
