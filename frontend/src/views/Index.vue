@@ -10,8 +10,8 @@
           </v-row>
           <v-row class="text-center searchBox">
             <v-col class="nonPadding" cols="12" xs="10" sm="10" md="10" style="height: 0.1rem">
-              <form class=" " @submit="detailSearch()" autocomplete="off" background-color="black">
-                <fieldset id="" class="text-center">
+              <form @submit="detailSearch()" autocomplete="off" background-color="black">
+                <fieldset class="text-center">
                   <v-text-field id="searchWordMain" clearable color="black" height="50px" v-model="query" style="backgroundcolor: white; ">
                     <template v-slot:label>
                       <strong>검색어</strong>
@@ -27,7 +27,7 @@
             <v-col class="nonPadding" cols="6" xs="2" sm="2" md="2">
               <v-btn class="searchBtn mx-2" fab dark small color="rgb(21, 52, 80)" @click="detailSearch">
                 <v-icon color="white" style="vertical-align: middle">
-                  mdi-text-search
+                  fas fa-search
                 </v-icon>
               </v-btn>
             </v-col>
@@ -86,6 +86,9 @@
           <v-row class="menu">
             <v-col cols="6" md="6" class="text-right">
               <input @click="moveEasyLaw" class="button" value="생활법령" readonly onfocus="this.blur();" />
+            </v-col>
+            <v-col cols="6" md="6">
+              <input @click="moveLawTest" class="button" value="법상식테스트" readonly onfocus="this.blur();" />
             </v-col>
           </v-row>
         </div>
@@ -181,6 +184,9 @@ export default {
     },
     moveEasyLaw() {
       this.$router.push({ name: 'easyLaw' });
+    },
+    moveLawTest() {
+      this.$router.push({ name: 'lawtest' });
     },
   },
 };
@@ -350,7 +356,7 @@ input {
 .searchBox {
   font-size: 50px;
   background-color: white;
-  border: 0.2rem solid;
+  // border: 0.2rem solid;
   border-radius: 3rem;
 }
 .searchForm {

@@ -20,8 +20,7 @@
             <br />
 
             <v-card class="mx-auto" tile elevation="5">
-              <v-subheader>검색기록</v-subheader>
-              <hr />
+              <v-subheader class="subheader" style="color: white; !important">검색기록</v-subheader>
               <v-list-item v-for="(word, i) in history" :key="i">
                 <v-list-item-content>
                   <v-list-item-title class="hvr-underline-from-center" @click="historySearch(word)" style="height: 30px;">{{ i + 1 }}.&nbsp; {{ word }}</v-list-item-title>
@@ -31,8 +30,7 @@
 
             <br />
             <v-card class="mx-auto " max-width="auto" tile elevation="5">
-              <v-subheader>판례목록</v-subheader>
-              <hr />
+              <v-subheader class="subheader">판례목록</v-subheader>
               <v-list style="max-height: 400px" class="overflow-y-auto">
                 <template v-for="content in contents">
                   <v-list-item :key="content.no">
@@ -50,7 +48,7 @@
           <v-col cols="12" md="8" class="mr">
             <v-card class="pa-2 overflow-y-auto" max-height="1024" max-width="1400" style="margin : 5px" outlined tile elevation="5">
               <template v-if="render">
-                <h1 v-html="judgment.PrecService.사건명" class="text-center font-weight-bold display-1"></h1>
+                <h3 v-html="judgment.PrecService.사건명" class="text-center display-1"></h3>
                 <v-simple-table>
                   <tbody>
                     <tr>
@@ -282,9 +280,16 @@ tbody {
     background-color: transparent !important;
   }
 }
+.theme--light.v-subheader {
+  color: white;
+}
+.subheader {
+  background: rgb(68, 114, 148);
+  color: white;
+}
 
 // 라디오 버튼 스타일
-$accentcolor: #a8a6a3;
+$accentcolor: rgb(21, 52, 80);
 $lightcolor: #fff;
 $darkcolor: #444;
 
@@ -294,7 +299,7 @@ $darkcolor: #444;
   label {
     display: block;
     background: lighten($accentcolor, 30%);
-    color: $darkcolor;
+    color: white;
     border-radius: 5px;
     padding: 10px 20px;
     border: 2px solid lighten($accentcolor, 20%);
@@ -330,7 +335,8 @@ $darkcolor: #444;
     width: 100%;
     appearance: none;
     &:checked + label {
-      background: lighten($accentcolor, 15%);
+      // background: lighten($accentcolor, 15%);
+      background: rgb(21, 52, 80);
       animation-name: blink;
       animation-duration: 1s;
       border-color: $accentcolor;
