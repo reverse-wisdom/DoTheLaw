@@ -5,9 +5,6 @@
       <template v-slot:activator="{ on, attrs }">
         <br />
         <span class="rank-title" v-bind="attrs" v-on="on">
-          <v-icon right dark>
-            mdi-format-list-numbered
-          </v-icon>
           검색어 순위
         </span>
       </template>
@@ -96,9 +93,9 @@ export default {
   transition: all 0.2s ease-in-out;
   text-decoration: none;
   color: white !important;
-  font-size: 30px;
+  font-size: 1.3rem;
   font-family: 'paybooc-Bold';
-  padding-top: 30px;
+  padding-top: 10px;
   display: 'inline-block';
 }
 .rank-title {
