@@ -141,7 +141,7 @@ export default {
         uuid: this.value.uuid,
       };
 
-      console.log(editData);
+      console.log('ㄷㄷㄷ', editData);
       const uuid = this.$store.state.uuid;
       const { data } = await editAdvise(editData, uuid);
 
