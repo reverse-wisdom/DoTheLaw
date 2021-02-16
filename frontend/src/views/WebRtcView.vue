@@ -5,7 +5,7 @@
       <div class="section profile-content">
         <hr />
         <div class="container">
-          <h2>Room</h2>
+          <h2 class="title-solid text-center">화상 자문 매칭</h2>
           <v-input v-model="roomId" />
           <v-text-field label="방이름" v-model="roomId"></v-text-field>
 
