@@ -75,7 +75,7 @@
                 <label>주소입력</label>
                 <md-input id="address" type="text" ref="address" v-model="value.address"></md-input>
               </md-field>
-              <md-button class="md-info" style="margin: auto" @click="searchMap">주소로검색</md-button>
+              <v-btn color="rgb(68, 114, 148)" dark style="margin: auto" @click="searchMap">주소로검색</v-btn>
               <div id="map" ref="map" class="mx-auto" style="width: 100%; height: 400px; margin: 2rem;"></div>
               <div class="col-11"></div>
               <div class="btn btn-info col-1" style="float: right;" @click="LawyerUpdate">수정완료</div>
@@ -301,6 +301,7 @@ export default {
   width: 200px;
   height: auto;
   padding: 0;
+  color: white;
   margin-top: 2rem;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   > div {
@@ -314,10 +315,11 @@ export default {
   width: auto;
   height: auto;
   padding: 0;
+  color: white;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   > div {
     background: rgb(68, 114, 148);
-    border: 2px solid skyblue;
+    border: 2px solid rgb(68, 114, 148);
     padding-left: 1rem;
   }
 }
@@ -340,10 +342,11 @@ export default {
   height: auto;
   padding: 0;
   margin-top: 2rem;
+  color: white;
   margin-right: 4.7rem;
   > div {
     background: rgb(68, 114, 148);
-    border: 2px solid skyblue;
+    border: 2px solid rgb(68, 114, 148);
     padding-left: 1rem;
   }
 }

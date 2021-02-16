@@ -124,7 +124,6 @@
 
 <script>
 import { detailAdvise, deleteAdvise, editAdvise } from '@/api/advise';
-import { createWebChatClient } from '@/api/chat';
 import ChatRoomHistory from '@/views/components/advise/ChatRoomHistory.vue';
 import { Modal } from '@/components';
 import DateTimePicker from '@/views/components/advise/DateTimePicker.vue';
@@ -141,6 +140,7 @@ export default {
       value: '',
       state: '',
       remarks: '',
+      roomId: true,
       comments: [],
       classicModal: false,
       classicModal2: false,

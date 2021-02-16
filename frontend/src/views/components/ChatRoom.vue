@@ -15,8 +15,9 @@
         </li>
       </ul>
       <footer>
-        <textarea v-model="content" placeholder="Type your message"></textarea>
-        <button @click="sendMessage()">SEND</button>
+        <v-textarea background-color="light-blue lighten-5" v-model="content" placeholder="내용을 입력해주세요" color="orange orange-darken-4"></v-textarea>
+        <!-- <textarea v-model="content" placeholder="Type your message"></textarea> -->
+        <v-btn color="light-blue lighten-2" style="margin-top:17px; padding: 45px 0px 45px 0px;" dark @click="sendMessage()">전송</v-btn>
       </footer>
     </main>
     <!-- <hr />
@@ -182,7 +183,8 @@ main header h3 {
   background-color: #58b666;
 }
 #chat .me .message {
-  background-color: #6fbced;
+  background-color: #e1f5fe;
+  color: black;
 }
 #chat .triangle {
   width: 0;
@@ -195,7 +197,7 @@ main header h3 {
   margin-left: 15px;
 }
 #chat .me .triangle {
-  border-color: transparent transparent #6fbced transparent;
+  border-color: transparent transparent #e1f5fe transparent;
   margin-left: 280px;
 }
 
