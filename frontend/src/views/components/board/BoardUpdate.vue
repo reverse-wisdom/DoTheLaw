@@ -30,12 +30,12 @@
           </form>
 
           <div class="btn-right">
-            <md-button class="md-dense md-raised md-warning" type="submit" @click="modifyBoard()">
-              등록
-            </md-button>
-            <md-button class="md-dense md-raised md-info" type="button" @click="moveBoard">
+            <v-btn color="rgb(33,133,89)" class="mr-1" dark type="submit" @click="modifyBoard()">
+              수정완료
+            </v-btn>
+            <v-btn type="button" color="rgb(68, 114, 148)" dark @click="moveBoard">
               뒤로가기
-            </md-button>
+            </v-btn>
           </div>
         </div>
       </div>

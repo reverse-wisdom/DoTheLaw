@@ -46,9 +46,9 @@
             </div>
             <div class="col-12"></div>
             <div class="col-9"></div>
-            <div style="display:flex;">
-              <v-btn color="rgb(142, 188, 219)" dark @click="moveUserUpdate">정보수정</v-btn>
-              <v-btn color="rgb(142, 188, 219)" dark class="user-delete" @click="deleteUser">회원탈퇴</v-btn>
+            <div>
+              <v-btn color="rgb(142, 188, 219)" style="float:right;" dark @click="moveUserUpdate">정보수정</v-btn>
+              <v-btn color="rgb(142, 188, 219)" dark style="float:right;" @click="deleteUser">회원탈퇴</v-btn>
             </div>
           </div>
         </div>
@@ -206,7 +206,5 @@ hr {
   background: rgb(68, 114, 148);
   color: white;
   padding-left: 1rem;
-}
-.user-delete {
 }
 </style>
