@@ -32,7 +32,7 @@
                 <br />
               </div>
               <div class="col-11 mx-auto text-solid-1">
-                <div>
+                <div style="color:white;">
                   한줄 소개
                 </div>
                 <input class="col-12 text-solid-input-intro" v-model="value.introduction" />
@@ -40,28 +40,28 @@
             </div>
             <div class="row ml-10">
               <div class="col-5 mx-auto text-solid-margin">
-                <div>
+                <div style="color:white;">
                   관심분야
                 </div>
 
                 <input class="col-12 text-solid-input" v-model="value.bailiwick" />
               </div>
               <div class="col-5 mx-auto text-solid">
-                <div>
+                <div style="color:white;">
                   전화번호
                 </div>
 
                 <input class="col-12 text-solid-input" v-model="value.phone" />
               </div>
               <div class="col-5 mx-auto text-solid-margin">
-                <div>
+                <div style="color:white;">
                   경력
                 </div>
 
                 <textarea class="col-12 text-solid-input" v-model="value.career" style="height:120px" />
               </div>
               <div class="col-5 mx-auto text-solid">
-                <div>
+                <div style="color:white;">
                   이메일
                 </div>
 
@@ -301,7 +301,7 @@ export default {
   width: 200px;
   height: auto;
   padding: 0;
-  color: white;
+
   margin-top: 2rem;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   > div {
@@ -315,7 +315,6 @@ export default {
   width: auto;
   height: auto;
   padding: 0;
-  color: white;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   > div {
     background: rgb(68, 114, 148);
@@ -342,7 +341,6 @@ export default {
   height: auto;
   padding: 0;
   margin-top: 2rem;
-  color: white;
   margin-right: 4.7rem;
   > div {
     background: rgb(68, 114, 148);
