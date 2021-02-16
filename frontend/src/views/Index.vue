@@ -54,10 +54,10 @@
           </div>
           <div class="md-layout-item md-medium-size-50 md-small-size-100">
             <v-card elevation="7" color="rgba(255, 255, 255, 0.1)" class="custom-card text-center">
-              <span class="main-title-solid text-center">유튜브공간?</span>
+              <span class="main-title-solid text-center">관련 동영상</span>
               <br />
               <button id="f5" @click="forceRerender">새로고침</button>
-              <law-rss-news :key="componentKey"></law-rss-news>
+              <law-youtube :key="componentKey"></law-youtube>
             </v-card>
           </div>
         </div>
@@ -99,6 +99,7 @@
 
 <script>
 import LawRssNews from './components/LawRssNews';
+import LawYoutube from './components/LawYoutube';
 import SearchRank from './components/SearchRank';
 
 import FullPage from 'vue-fullpage.js';
@@ -108,6 +109,7 @@ export default {
   components: {
     FullPage,
     LawRssNews,
+    LawYoutube,
     SearchRank,
   },
   data() {
