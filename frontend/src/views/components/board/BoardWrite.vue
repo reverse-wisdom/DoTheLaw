@@ -4,7 +4,7 @@
     <div class="main main-raised" style="z-index:1">
       <div class="section profile-content">
         <div style="padding:80px">
-          <h2 class="title text-center kor">게시판 글쓰기</h2>
+          <h2 class="title text-center kor" style="font-weight:bold;">게시판 글쓰기</h2>
           <hr class="div-hr" />
           <form v-on:submit.prevent="writeContent">
             <md-field>
@@ -30,12 +30,12 @@
           </form>
 
           <div class="btn-right">
-            <md-button class="md-dense md-raised md-warning" type="submit" @click="writeContent()">
+            <v-btn color="rgb(68, 114, 148)" dark type="submit" @click="writeContent()">
               등록
-            </md-button>
-            <md-button class="md-dense md-raised md-info" type="button" @click="moveList">
+            </v-btn>
+            <v-btn color="rgb(68, 114, 148)" class="ml-1" dark type="button" @click="moveList">
               뒤로가기
-            </md-button>
+            </v-btn>
           </div>
         </div>
       </div>
@@ -198,7 +198,6 @@ export default {
       console.log('게시글 작성 성공', response);
 
       this.$swal({
-        position: 'top-end',
         icon: 'success',
         title: '글 작성 완료!!',
         showConfirmButton: false,

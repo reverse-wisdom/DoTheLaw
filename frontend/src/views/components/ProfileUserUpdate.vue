@@ -3,7 +3,7 @@
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
-        <h2 class="title text-center kor">사용자 수정폼</h2>
+        <h2 class="title text-center kor" style="font-weight:bold">사용자 수정</h2>
         <hr class="div-hr" />
         <div class="container">
           <div class="row">

@@ -4,7 +4,7 @@
     <div class="main main-raised" style="z-index:1">
       <div class="section profile-content">
         <div style="padding:80px">
-          <h2 class="title text-center kor">자문게시판 글수정</h2>
+          <h2 class="title text-center kor" style="font-weight: bold;">자문게시판 글수정</h2>
           <hr class="div-hr" />
           <form @submit.prevent="modifyAdvise">
             <md-field>
@@ -54,12 +54,12 @@
               </v-row>
             </md-field>
             <div class="btn-right">
-              <md-button class="md-dense md-raised md-warning" style="float: right;" type="submit">
+              <v-btn color="rgb(68, 114, 148)" class="ml-1" dark style="float: right;" type="submit">
                 수정완료
-              </md-button>
-              <md-button class="md-dense md-raised md-info" style="float: right;" @click="moveAdviseList">
+              </v-btn>
+              <v-btn color="rgb(68, 114, 148)" dark style="float: right;" @click="moveAdviseList">
                 목록
-              </md-button>
+              </v-btn>
             </div>
           </form>
         </div>
@@ -83,6 +83,7 @@ export default {
       selected: '',
       state: '',
       remarks: '',
+      reservationDate: '',
       items: ['교통/운전', '가정', '근로/노동', '부동산', '금융', '정보통신/기술'],
     };
   },
@@ -140,8 +141,10 @@ export default {
         uuid: this.value.uuid,
       };
 
+      console.log(editData);
       const uuid = this.$store.state.uuid;
       const { data } = await editAdvise(editData, uuid);
+
       console.log('update', data);
       this.$swal({
         icon: 'success',
