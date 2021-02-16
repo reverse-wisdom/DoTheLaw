@@ -215,9 +215,9 @@ export default {
       this.dict.forEach((element) => {
         var regEx = new RegExp('#obj-' + count + '#', 'g');
 
-        this.judgment.PrecService.판결요지 = this.judgment.PrecService.판결요지.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
-        this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
-        this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
+        this.judgment.PrecService.판결요지 = this.judgment.PrecService.판결요지.replace(regEx, `<mark><a data-title="${element.mean}">${element.word}</a></mark>`);
+        this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(regEx, `<mark><a data-title="${element.mean}">${element.word}</a></mark>`);
+        this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, `<mark><a data-title="${element.mean}">${element.word}</a></mark>`);
         count++;
       });
       this.radio = this.judgment.PrecService.판결요지;
@@ -379,5 +379,14 @@ $darkcolor: #444;
   100% {
     background-color: lighten($accentcolor, 15%);
   }
+}
+</style>
+<style lang="scss">
+.md-theme-default a:not(.md-button) {
+  color: black;
+}
+mark {
+  font-weight: bold;
+  background-color: rgba(245, 227, 110);
 }
 </style>
