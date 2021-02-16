@@ -25,6 +25,10 @@ function newsParsing() {
   return posts.get('/api/rss/news');
 }
 
+function getTodayYoutube() {
+  return posts.get('/api/youtube');
+}
+
 // 이미지 업로드
 function imageUpload(uuid, form) {
   return posts.post(`/api/member/image/update/${uuid}`, form, { 'Content-Type': 'multipart/form-data' });
@@ -34,4 +38,4 @@ function imageUpload(uuid, form) {
 function saveImage(uuid) {
   return posts.get(`/api/member/image/${uuid}`);
 }
-export { top, lawService, lawSearch, lawDict, newsParsing, imageUpload, saveImage };
+export { top, lawService, lawSearch, lawDict, newsParsing, getTodayYoutube, imageUpload, saveImage };
