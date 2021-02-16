@@ -5,7 +5,7 @@
       <div class="section profile-content">
         <hr />
         <div class="container">
-          <h2 class="title-solid text-center">화상 자문 매칭</h2>
+          <h2 class="title-solid text-center">화상자문매칭</h2>
           <v-input v-model="roomId" />
           <v-text-field label="방이름" v-model="roomId"></v-text-field>
 
@@ -95,10 +95,8 @@ export default {
     },
   },
   async created() {
-    console.log(this.$route.query.matchingId);
+    console.log('test', this.$route.query.matchingId);
     this.roomId = this.$route.query.matchingId;
-    // const { data } = await fetchAdviseMe(this.$route.query.matchingId);
-    // console.log(data);
   },
 
   methods: {

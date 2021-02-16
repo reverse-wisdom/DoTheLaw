@@ -102,14 +102,14 @@
         </v-row>
         <br />
         <div class="text-center">
-          <md-button class="md-info" style="margin: 5px" @click="moveMatch">
+          <v-btn color="rgb(21, 52, 80)" dark style="margin: 5px" @click="moveMatch">
             <i class="material-icons">search</i>
             변호사찾기
-          </md-button>
-          <md-button class="md-info" style="margin: 5px" @click="moveBoard">
+          </v-btn>
+          <v-btn color="rgb(21, 52, 80)" dark style="margin: 5px" @click="moveBoard">
             <i class="material-icons">search</i>
             커뮤니티에 검색
-          </md-button>
+          </v-btn>
         </div>
       </div>
     </div>
@@ -215,9 +215,9 @@ export default {
       this.dict.forEach((element) => {
         var regEx = new RegExp('#obj-' + count + '#', 'g');
 
-        this.judgment.PrecService.판결요지 = this.judgment.PrecService.판결요지.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
-        this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
-        this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, `<a data-title="${element.mean}">${element.word}</a>`);
+        this.judgment.PrecService.판결요지 = this.judgment.PrecService.판결요지.replace(regEx, `<mark><a data-title="${element.mean}">${element.word}</a></mark>`);
+        this.judgment.PrecService.참조조문 = this.judgment.PrecService.참조조문.replace(regEx, `<mark><a data-title="${element.mean}">${element.word}</a></mark>`);
+        this.judgment.PrecService.판례내용 = this.judgment.PrecService.판례내용.replace(regEx, `<mark><a data-title="${element.mean}">${element.word}</a></mark>`);
         count++;
       });
       this.radio = this.judgment.PrecService.판결요지;
@@ -379,5 +379,14 @@ $darkcolor: #444;
   100% {
     background-color: lighten($accentcolor, 15%);
   }
+}
+</style>
+<style lang="scss">
+.md-theme-default a:not(.md-button) {
+  color: black;
+}
+mark {
+  font-weight: bold;
+  background-color: rgba(245, 227, 110);
 }
 </style>
