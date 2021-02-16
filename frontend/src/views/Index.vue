@@ -402,7 +402,7 @@ input {
 .button {
   width: 9rem;
   height: 9rem;
-  font-family: 'MaplestoryOTFBold';
+  font-family: 'GongGothicMedium';
   font-size: 1rem;
   text-transform: uppercase;
   text-align: center;
