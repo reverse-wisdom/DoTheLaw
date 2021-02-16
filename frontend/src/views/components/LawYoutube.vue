@@ -11,9 +11,9 @@
           <v-container fill-height>
             <v-layout column fill-height>
               <v-layout row style="flex: 1 1 50%; overflow: hidden">
-                <div v-for="(video, index) in videos.slice(1, 3)" :key="index" class="ma-3">
+                <div v-for="(video, index) in videos.slice(1, 3)" :key="index" class="my-2 mx-1">
                   <a :href="'https://www.youtube.com/watch?v=' + video.id" target="_blank">
-                    <v-card class="mx-auto" max-width="350">
+                    <v-card max-width="320">
                       <v-img class="card-img-top white--text align-end" height="200px" :src="video.thumbnail" alt="YouTube thumbnail" />
                       <v-card-title class=" pa-0">
                         <div class="txt_line">{{ video.title }}</div>
@@ -26,9 +26,9 @@
                 </div>
               </v-layout>
               <v-layout row style="flex: 1 1 50%; overflow: hidden">
-                <div v-for="(video, index) in videos.slice(3, 5)" :key="index" class="ma-3">
+                <div v-for="(video, index) in videos.slice(3, 5)" :key="index" class="my-2 mx-1">
                   <a :href="'https://www.youtube.com/watch?v=' + video.id" target="_blank">
-                    <v-card class="mx-auto" max-width="350">
+                    <v-card max-width="320">
                       <v-img class="card-img-top white--text align-end" height="200px" :src="video.thumbnail" alt="YouTube thumbnail" />
                       <v-card-title class=" pa-0">
                         <div class="txt_line">{{ video.title }}</div>
@@ -136,7 +136,7 @@ export default {
   font-family: 'S-CoreDream-6Bold';
 }
 .txt_line {
-  width: 350px;
+  // width: 350px;
   padding: 0 5px;
   // white-space: nowrap;
   word-break: normal;
@@ -148,45 +148,5 @@ export default {
 #rss_time {
   font-size: 15px;
   margin-bottom: 10px;
-}
-ul,
-ol {
-  /*margin: 0;padding: 0;*/
-  list-style: none;
-}
-li {
-  // background: #37bc9b;
-  background: rgb(68, 114, 148);
-  color: #fff;
-  counter-increment: myCounter;
-  margin: 0 0 30px 0;
-  padding: 13px;
-  position: relative;
-  top: 1em;
-  border-radius: 0em 2px 1em 1em;
-  padding-left: 2em;
-  font-size: 1.2em;
-  font-family: Constantia;
-}
-li:before {
-  content: counter(myCounter, decimal-leading-zero);
-  display: inline-block;
-  text-align: center;
-  font-size: 2em;
-  line-height: 1.3em;
-  background-color: rgb(41, 64, 82);
-  // background-color: rgb(68, 114, 148);
-  padding: 10px;
-  font-weight: bold;
-  position: absolute;
-  top: 0;
-  left: -40px;
-  border-radius: 50%;
-  font-family: exo;
-}
-
-li:nth-child(even) {
-  // background-color: #434a54;
-  background-color: rgb(143, 188, 219);
 }
 </style>
