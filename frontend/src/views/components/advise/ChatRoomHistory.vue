@@ -35,7 +35,7 @@ export default {
   },
   props: {
     roomId: {
-      type: String,
+      type: Number,
       required: true,
     },
   },
@@ -68,7 +68,7 @@ export default {
           idx = index;
         }
       }
-      console.log(idx);
+      // console.log(idx);
       var el = document.getElementById('message-' + idx);
       // console.log(el);
       //  var el = this.$el.getElementsByClassName("actual-month")[0];

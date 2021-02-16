@@ -32,11 +32,9 @@
 
             <div>
               <div>
-                <div>
-                  <!-- <md-button class="md-success" @click="onJoin">Join</md-button> -->
-                  <md-button class="md-success" @click="onLeave">나가기</md-button>
-                  <!-- <md-button class="md-success" @click="onCapture">Capture Photo</md-button> -->
-                  <md-button class="md-success" @click="onShareScreen">Share Screen</md-button>
+                <div class="mb-5">
+                  <v-btn color="error" dark style="margin-right: 10px; padding: 25px 25px; font-size: 17px;" @click="onLeave">나가기</v-btn>
+                  <v-btn color="light-blue lighten-2" dark style="padding: 25px 25px; font-size: 17px;" @click="onShareScreen">화면공유</v-btn>
                 </div>
               </div>
             </div>
