@@ -134,7 +134,7 @@ export default {
         remarks: this.value.remarks,
         content: $('#summernote').summernote('code'),
         title: this.value.title,
-        reservationDate: this.value.reservationDate,
+        reservationDate: this.reservationDate,
         state: this.state,
         name: this.value.name,
         uuid: this.value.uuid,
