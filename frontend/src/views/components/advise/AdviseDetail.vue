@@ -166,18 +166,10 @@ export default {
   async created() {
     const adviseId = this.$route.query.matchingId;
     const { data } = await detailAdvise(adviseId);
-    // console.log(data);
     this.value = data;
   },
-  mounted() {
-    if (new Date(this.reservationDate) < Date.now()) {
-      this.checkDate = false;
-    }
-  },
+
   methods: {
-    // moveBoard() {
-    //   this.$router.go('/board');
-    // },
     async adviseDelete() {
       const uuid = this.$store.state.uuid;
       const matchingId = this.value.matchingId;
@@ -195,7 +187,7 @@ export default {
       this.$router.push({ name: 'AdviseUpdate', query: { matchingId: matchingId } });
     },
     webrtc() {
-      if (new Date(this.reservationDate) < Date.now()) {
+      if (new Date(this.value.reservationDate) < Date.now()) {
         this.checkDate = true;
       }
 
@@ -243,7 +235,6 @@ export default {
         return input.substr(0, index) + character + input.substr(index + character.length);
       };
       this.reservationDate = replaceAt(olddate, 10, 'T');
-      console.log(this.reservationDate);
     },
     //수정 axios
     async modifyAdvise() {
@@ -258,7 +249,6 @@ export default {
         name: this.value.name,
         uuid: this.value.uuid,
       };
-      console.log('zzz', editData);
       const uuid = this.$store.state.uuid;
       const { data } = await editAdvise(editData, uuid);
 
@@ -271,7 +261,6 @@ export default {
         const adviseId = this.$route.query.matchingId;
         const { data } = await detailAdvise(adviseId);
         this.value = data;
-        console.log('1111', this.value);
       }
     },
   },
