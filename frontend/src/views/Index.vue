@@ -2,10 +2,10 @@
   <div class="home">
     <full-page :options="options">
       <div class="section pb-0" :style="image_1" data-width="1200" data-height="730">
-        <v-container fluid grid-list-sm pa-0 style="padding-left: 5rem !important; margin-top: -200px;">
-          <v-row class="text-center" no-gutters>
+        <v-container fluid grid-list-sm pa-0 style="margin-top: -200px;" class="text-center">
+          <v-row class="" no-gutters>
             <v-col>
-              <v-img contain max-height="300" max-width="1000" :src="logo" style="margin-left: 30px;"></v-img>
+              <v-img contain max-height="300" max-width="1000" :src="logo" class="logoImg"></v-img>
             </v-col>
           </v-row>
           <v-row class="text-center searchBox">
@@ -228,6 +228,11 @@ div.row.menu {
     margin-right: 50rem !important;
   }
 }
+.logoImg {
+  @media (min-width: 1200px) {
+    margin-left: 80px !important;
+  }
+}
 #searchWordMain {
   color: black;
 }
@@ -242,17 +247,24 @@ input#searchWordMain {
   text-align: center;
 }
 .title-solid {
-  letter-spacing: 5px;
-  border: 0.2rem solid;
-  font-size: 2.3rem;
-  border-radius: 3rem;
-  padding: 0.2rem;
-  color: white;
-  background-color: rgb(21, 52, 80);
-  // font-weight: bold;
-  margin-left: 20rem;
-  margin-right: 20rem;
-  font-family: 'NEXON Lv1 Gothic OTF';
+  @media (max-width: 1200px) {
+    letter-spacing: 0.3rem;
+    border: 0.2rem solid;
+    font-size: 2.3rem;
+    border-radius: 3rem;
+    padding: 0.2rem;
+    color: white;
+    background-color: rgb(21, 52, 80);
+    // font-weight: bold;
+    margin-left: 20rem;
+    margin-right: 20rem;
+    font-family: 'NEXON Lv1 Gothic OTF';
+  }
+  @media screen and (max-width: 800px) {
+    letter-spacing: none;
+    margin-left: 10rem;
+    margin-right: 10rem;
+  }
 }
 .searchBtn {
   margin-bottom: 10px;
