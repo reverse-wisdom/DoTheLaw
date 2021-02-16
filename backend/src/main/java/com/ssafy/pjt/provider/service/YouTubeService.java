@@ -34,7 +34,7 @@ public class YouTubeService {
 	private static final String apiKey = "AIzaSyBZByBbTnWIMt7nHQL-VPmY9-8a-O-XVqg";
 	private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	private static final JsonFactory JSON_FACTORY = new JacksonFactory();
-	private static final long NUMBER_OF_VIDEOS_RETURNED = 20;
+	private static final long NUMBER_OF_VIDEOS_RETURNED = 10;
 
 	private static YouTube youtube;
 	
@@ -63,7 +63,7 @@ public class YouTubeService {
 			search.setType("video");
 
 			search.setFields(
-					"items(id/kind,id/videoId,snippet/title,snippet/publishedAt,snippet/description,snippet/channelId,snippet/thumbnails/default/url)");
+					"items(id/kind,id/videoId,snippet/title,snippet/publishedAt,snippet/description,snippet/channelId,snippet/thumbnails/high/url)");
 			search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
 			SearchListResponse searchResponse = search.execute();
 
@@ -77,7 +77,7 @@ public class YouTubeService {
 
 					if (rId.getKind().equals("youtube#video")) {
 						YouTubeDTO dto = new YouTubeDTO();
-						Thumbnail thumbnail = (Thumbnail) item.getSnippet().getThumbnails().get("default");
+						Thumbnail thumbnail = (Thumbnail) item.getSnippet().getThumbnails().getHigh();
 						dto.setId(rId.getVideoId());
 						dto.setTitle(item.getSnippet().getTitle());
 						dto.setDescription(item.getSnippet().getDescription());
