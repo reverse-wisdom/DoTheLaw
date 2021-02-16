@@ -193,8 +193,8 @@ export default {
 
       if (this.checkDate) {
         var matchingId = this.value.matchingId;
-        this.$router.push({ name: 'webrtc', query: { matchingId: matchingId } });
-        window.open('webrtc', '_blank');
+        let routeData = this.$router.resolve({ name: 'webrtc', query: { matchingId: matchingId } });
+        window.open(routeData.href, '_blank');
       } else {
         this.$swal({
           icon: 'error',
