@@ -22,11 +22,11 @@
                   {{ value.email }}
                 </span>
               </div>
-              <div class="col-10 mx-auto" id="text-solid">
+              <div class="col-10 mx-auto" id="text-solid" stlye="float:right;">
                 <div style="height:50px" class="pt-3">
                   전화번호
                 </div>
-                <hr />
+
                 <span class="padding">
                   {{ value.phone }}
                 </span>

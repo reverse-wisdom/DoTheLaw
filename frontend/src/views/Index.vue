@@ -90,34 +90,6 @@
             </v-col>
           </v-row>
         </div>
-        <!-- <div>
-          <v-row class="menu">
-            <v-col cols="6" md="6" class="text-right">
-              <input @click="moveBoard" class="button" value="자유게시판" readonly onfocus="this.blur();" />
-            </v-col>
-            <v-col cols="6" md="6">
-              <input @click="moveMatch" class="button" value="변호사매칭" readonly onfocus="this.blur();" />
-            </v-col>
-          </v-row>
-
-          <v-row class="menu">
-            <v-col cols="6" md="6" class="text-right">
-              <input @click="moveControversy" class="button" value="찬반토론" readonly onfocus="this.blur();" />
-            </v-col>
-            <v-col cols="6" md="6">
-              <input @click="moveScourtExp" class="button" value="모의판사체험" readonly onfocus="this.blur();" />
-            </v-col>
-          </v-row>
-
-          <v-row class="menu">
-            <v-col cols="6" md="6" class="text-right">
-              <input @click="moveEasyLaw" class="button" value="생활법령" readonly onfocus="this.blur();" />
-            </v-col>
-            <v-col cols="6" md="6">
-              <input @click="moveLawTest" class="button" value="법상식테스트" readonly onfocus="this.blur();" />
-            </v-col>
-          </v-row>
-        </div> -->
       </div>
     </full-page>
   </div>
@@ -255,7 +227,18 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
-
+// @font-face {
+//   font-family: 'GmarketSansBold';
+//   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+//   font-weight: normal;
+//   font-style: normal;
+// }
+@font-face {
+  font-family: 'GongGothicMedium';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 div.row.menu {
   margin-right: 0px;
 }
@@ -293,7 +276,7 @@ input#searchWordMain {
   background-color: rgb(21, 52, 80);
   margin-left: 20rem;
   margin-right: 20rem;
-  font-family: 'NEXON Lv1 Gothic OTF';
+  font-family: 'GongGothicMedium';
 
   @media (max-width: 800px) {
     letter-spacing: none;
