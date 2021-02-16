@@ -4,25 +4,33 @@
       <!-- 뉴스 업데이트한(가져온) 시간 -->
       <div v-if="loadCheck">
         <br />
-
-        <md-button class="md-raised" disabled id="rss_time">{{ refresh_time }}</md-button>
         <br />
         <div class="list-type">
           <v-container fill-height>
             <v-layout column fill-height>
-              <v-layout row style="flex: 1 1 50%; overflow: hidden">
-                <div v-for="(video, index) in videos.slice(1, 3)" :key="index" class="my-2 mx-1">
-                  <a :href="'https://www.youtube.com/watch?v=' + video.id" target="_blank">
-                    <v-card max-width="320">
-                      <v-img class="card-img-top white--text align-end" height="200px" :src="video.thumbnail" alt="YouTube thumbnail" />
+              <v-layout row style="overflow: hidden">
+                <div v-for="(video, index) in videos.slice(1, 2)" :key="index" class="my-2 mx-1">
+                  <v-card width="640" height="480">
+                    <iframe
+                      width="640"
+                      height="480"
+                      :src="'https://www.youtube.com/embed/' + video.id"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen
+                    ></iframe>
+                  </v-card>
+
+                  <!-- <a :href="'https://www.youtube.com/watch?v=' + video.id" target="_blank">
+                    <v-card width="640" height="480">
+                      <v-img class="" :src="video.thumbnail" alt="YouTube thumbnail" />
+                      
                       <v-card-title class=" pa-0">
                         <div class="txt_line">{{ video.title }}</div>
-                      </v-card-title>
+                      </v-card-title> -->
 
-                      <h6 class="card-subtitle mb-2 text-muted">생성일 | {{ video.publishedAt | formatDate }}</h6>
-                      <!-- <p class="card-text">{{ video.description }}</p> -->
-                    </v-card>
-                  </a>
+                  <!-- <h6 class="card-subtitle mb-2 text-muted">생성일 | {{ video.publishedAt | formatDate }}</h6> -->
+                  <!-- <p class="card-text">{{ video.description }}</p> -->
+                  <!-- </v-card> -->
                 </div>
               </v-layout>
               <v-layout row style="flex: 1 1 50%; overflow: hidden">
@@ -30,11 +38,11 @@
                   <a :href="'https://www.youtube.com/watch?v=' + video.id" target="_blank">
                     <v-card max-width="320">
                       <v-img class="card-img-top white--text align-end" height="200px" :src="video.thumbnail" alt="YouTube thumbnail" />
-                      <v-card-title class=" pa-0">
+                      <!-- <v-card-title class=" pa-0">
                         <div class="txt_line">{{ video.title }}</div>
-                      </v-card-title>
+                      </v-card-title> -->
 
-                      <h6 class="card-subtitle mb-2 text-muted">생성일 | {{ video.publishedAt | formatDate }}</h6>
+                      <!-- <h6 class="card-subtitle mb-2 text-muted">생성일 | {{ video.publishedAt | formatDate }}</h6> -->
                       <!-- <p class="card-text">{{ video.description }}</p> -->
                     </v-card>
                   </a>
@@ -148,5 +156,8 @@ export default {
 #rss_time {
   font-size: 15px;
   margin-bottom: 10px;
+}
+iframe:not(.md-image) {
+  height: 100%;
 }
 </style>

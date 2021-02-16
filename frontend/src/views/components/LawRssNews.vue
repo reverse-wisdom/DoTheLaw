@@ -4,16 +4,15 @@
       <!-- 뉴스 업데이트한(가져온) 시간 -->
       <div v-if="loadCheck">
         <br />
-
-        <md-button class="md-raised" disabled id="rss_time">{{ refresh_time }}</md-button>
+        <div id="rss_time">{{ refresh_time }}</div>
         <br />
         <div class="list-type">
-          <ol>
+          <ul>
             <!-- 파싱한 데이터중 7개의 뉴스제목과 링크를 들고옴 -->
             <li v-for="index in 7" :key="index">
-              <a class="box-solid" :href="news[index].link" target="_blank">{{ news[index].title }}</a>
+              <a class="box-solid hvr-pulse-grow" :href="news[index].link" target="_blank">{{ news[index].title }}</a>
             </li>
-          </ol>
+          </ul>
         </div>
       </div>
       <div v-else class="md-layout-item md-size-4 mx-auto">
@@ -92,54 +91,69 @@ export default {
 .kor {
   font-family: 'Nanum Gothic', sans-serif;
 }
+.list-type {
+  flex-direction: column;
+}
 .list-type a {
   text-decoration: none;
   color: white !important;
   font-size: 17px;
-  font-family: 'S-CoreDream-6Bold';
+  font-family: 'Nanum Gothic', sans-serif;
 }
 #rss_time {
-  font-size: 15px;
-  margin-bottom: 10px;
+  text-align: right;
+  font-size: 0.9rem;
+  margin-bottom: 0.1rem;
+  color: white;
+  font-family: 'Nanum Gothic', sans-serif;
+  margin-right: -7rem;
 }
 ul,
 ol {
-  /*margin: 0;padding: 0;*/
   list-style: none;
+  text-align: left;
 }
 li {
-  // background: #37bc9b;
-  background: rgb(68, 114, 148);
-  color: #fff;
-  counter-increment: myCounter;
-  margin: 0 0 30px 0;
-  padding: 13px;
-  position: relative;
-  top: 1em;
-  border-radius: 0em 2px 1em 1em;
-  padding-left: 2em;
-  font-size: 1.2em;
-  font-family: Constantia;
-}
-li:before {
-  content: counter(myCounter, decimal-leading-zero);
-  display: inline-block;
-  text-align: center;
-  font-size: 2em;
-  line-height: 1.3em;
-  background-color: rgb(41, 64, 82);
-  // background-color: rgb(68, 114, 148);
   padding: 10px;
-  font-weight: bold;
-  position: absolute;
-  top: 0;
-  left: -40px;
-  border-radius: 50%;
-  font-family: exo;
 }
 
-li:nth-child(even) {
-  // background-color: #434a54;
-  background-color: rgb(143, 188, 219);
+a {
+  border-style: none none none solid;
+  padding-left: 30px;
 }
+
+// li {
+//   background: rgb(68, 114, 148);
+//   color: #fff;
+//   counter-increment: myCounter;
+//   margin: 0 0 30px 0;
+//   padding: 13px;
+//   position: relative;
+//   top: 1em;
+//   border-radius: 0em 2px 1em 1em;
+//   padding-left: 2em;
+//   font-size: 1rem;
+//   font-family: Constantia;
+// }
+// li:before {
+//   content: counter(myCounter, decimal-leading-zero);
+//   display: inline-block;
+//   text-align: center;
+//   font-size: 2em;
+//   line-height: 1.3em;
+//   background-color: rgb(41, 64, 82);
+//   // background-color: rgb(68, 114, 148);
+//   padding: 10px;
+//   font-weight: bold;
+//   position: absolute;
+//   top: 0;
+//   left: -40px;
+//   border-radius: 50%;
+//   font-family: exo;
+// }
+
+// li:nth-child(even) {
+//   // background-color: #434a54;
+//   background-color: rgb(143, 188, 219);
+// }
 </style>
