@@ -7,7 +7,7 @@
 	<insert id="setTodayYouTube" parameterType="YouTubeDTO">
 		INSERT INTO youtube(id, title, thumbnail, published_at, channel_id, description, reg_date)
 		VALUES(#{id}, #{title}, #{thumbnail}, #{publishedAt}, #{channelId}, #{description}, CURRENT_TIMESTAMP)
-		ON DUPLICATE KEY UPDATE id=#{id}
+		ON DUPLICATE KEY UPDATE title = #{title}, thumbnail = #{thumbnail}, published_at = #{publishedAt}, channel_id = #{channelId}, description = #{description}, reg_date = CURRENT_TIMESTAMP
 	</insert>
 	<select id="getTodayYouTube" resultType="YouTubeDTO">
 		SELECT id, title, thumbnail, published_at, channel_id, description
