@@ -33,20 +33,20 @@
             <div>
               <div>
                 <div>
-                  <md-button class="md-success" @click="onJoin">Join</md-button>
-                  <md-button class="md-success" @click="onLeave">Leave</md-button>
-                  <md-button class="md-success" @click="onCapture">Capture Photo</md-button>
+                  <!-- <md-button class="md-success" @click="onJoin">Join</md-button> -->
+                  <md-button class="md-success" @click="onLeave">나가기</md-button>
+                  <!-- <md-button class="md-success" @click="onCapture">Capture Photo</md-button> -->
                   <md-button class="md-success" @click="onShareScreen">Share Screen</md-button>
                 </div>
               </div>
             </div>
-            <div>
+            <!-- <div>
               <div class="col-md-12">
                 <figure class="figure">
                   <img :src="img" class="img-responsive" />
                 </figure>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -125,9 +125,6 @@ export default {
         } else {
         }
       });
-      // this.$refs.webrtc.leave();
-
-      // window.close();
     },
     onShareScreen() {
       this.img = this.$refs.webrtc.shareScreen();
