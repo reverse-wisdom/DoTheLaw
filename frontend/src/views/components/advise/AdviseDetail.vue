@@ -52,10 +52,10 @@
           </div>
           <!-- else -->
           <div v-if="$store.state.role == 'LAWYER'" style="text-align:right">
-            <md-button class="md-rose" @click="modal">자문일정</md-button>
-            <md-button class="md-primary" @click="webrtc()">화상미팅</md-button>
-            <md-button class="md-success" @click="modal2()">화상채팅기록</md-button>
-            <md-button class="md-info" @click="$router.go(-1)">뒤로가기</md-button>
+            <v-btn color="#FF5722" dark style="float: left;" @click="modal">자문일정</v-btn>
+            <v-btn color="#FF5722" dark style="float: left;" @click="webrtc()">화상미팅</v-btn>
+            <v-btn color="#FF5722" dark class="ml-1" style="float: left;" @click="modal2()">화상채팅기록</v-btn>
+            <v-btn color="rgb(68, 114, 148)" dark @click="$router.go(-1)">뒤로가기</v-btn>
             <!-- 모달 -->
             <div class="md-layout">
               <div class="md-layout-item md-size-33">

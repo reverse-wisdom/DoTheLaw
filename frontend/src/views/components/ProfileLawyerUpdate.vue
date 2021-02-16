@@ -304,8 +304,8 @@ export default {
   margin-top: 2rem;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   > div {
-    background: skyblue;
-    border: 2px solid skyblue;
+    background: rgb(68, 114, 148);
+    border: 2px solid rgb(68, 114, 148);
     padding-left: 1rem;
   }
 }
@@ -316,7 +316,7 @@ export default {
   padding: 0;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   > div {
-    background: skyblue;
+    background: rgb(68, 114, 148);
     border: 2px solid skyblue;
     padding-left: 1rem;
   }
@@ -342,7 +342,7 @@ export default {
   margin-top: 2rem;
   margin-right: 4.7rem;
   > div {
-    background: skyblue;
+    background: rgb(68, 114, 148);
     border: 2px solid skyblue;
     padding-left: 1rem;
   }
