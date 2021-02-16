@@ -8,17 +8,21 @@
               <v-img contain max-height="300" max-width="1000" :src="logo" class="logoImg"></v-img>
             </v-col>
           </v-row>
-          <v-row class="text-center searchBox">
+          <v-row class="text-center" style="height: 10px">
+            <div class="text-center searchRank">
+              <v-card color="rgba(255, 255, 255, 0.1)" max-height="100px">
+                <search-rank></search-rank>
+              </v-card>
+            </div>
+          </v-row>
+
+          <v-row class="text-center searchBox" style="margin-top: 130px;">
             <v-col class="nonPadding" cols="12" xs="10" sm="10" md="10" style="height: 0.1rem">
               <form @submit="detailSearch()" autocomplete="off" background-color="black">
                 <fieldset class="text-center">
                   <v-text-field id="searchWordMain" clearable color="black" height="50px" v-model="query" style="backgroundcolor: white; ">
                     <template v-slot:label>
-                      <strong>검색어</strong>
-                      를입력해주세요!
-                      <v-icon color="black" style="vertical-align: middle">
-                        mdi-file-find
-                      </v-icon>
+                      검색어를 입력해주세요!
                     </template>
                   </v-text-field>
                 </fieldset>
@@ -32,31 +36,28 @@
               </v-btn>
             </v-col>
           </v-row>
-
-          <v-row class="text-center" style="height: 10px">
-            <div class="text-center searchRank">
-              <v-card color="rgba(255, 255, 255, 0.1)" max-height="100px">
-                <search-rank></search-rank>
-              </v-card>
-            </div>
-          </v-row>
         </v-container>
       </div>
 
       <div class="section pb-0" :style="image_2" data-width="1200" data-height="730">
         <div class="md-layout" style="padding-left: 5rem">
           <div class="md-layout-item md-medium-size-50 md-small-size-100">
-            <v-card elevation="7" color="rgba(255, 255, 255, 0.1)" class="custom-card text-center">
-              <span class="main-title-solid text-center">실시간 법원/검찰 뉴스</span>
-              <button id="f5" @click="forceRerender">새로고침</button>
+            <v-card elevation="7" color="rgba(255, 255, 255, 0.0)" class="custom-card text-center">
+              <span class="news-title text-center">실시간 법원/검찰 뉴스</span>
               <law-rss-news :key="componentKey"></law-rss-news>
+              <button id="f5" @click="forceRerender">새로고침</button>
             </v-card>
           </div>
-          <div class="md-layout-item md-medium-size-50 md-small-size-100">
+          <div class="md-layout-item md-medium-size-50 md-small-size-100"></div>
+        </div>
+      </div>
+
+      <div class="section pb-0" :style="image_4" data-width="1200" data-height="730">
+        <div class="md-layout" style="padding-left: 5rem">
+          <div class="md-layout-item md-medium-size-50 md-small-size-100"></div>
+          <div class="md-layout-item md-medium-size-50 md-small-size-100 text-center">
             <v-card elevation="7" color="rgba(255, 255, 255, 0.1)" class="custom-card text-center">
-              <span class="main-title-solid text-center">관련 동영상</span>
-              <br />
-              <button id="f5" @click="forceRerender">새로고침</button>
+              <span class="main-title-solid" style="border: none;">교통사고 사례영상</span>
               <law-youtube :key="componentKey"></law-youtube>
             </v-card>
           </div>
@@ -64,7 +65,32 @@
       </div>
 
       <div class="section pb-0" :style="image_3" data-width="1200" data-height="730">
-        <div>
+        <div style="margin-left: 100px;">
+          <v-row class="menu">
+            <v-col cols="4" md="4">
+              <input @click="moveBoard" class="button" value="자유게시판" readonly onfocus="this.blur();" />
+            </v-col>
+            <v-col cols="4" md="4">
+              <input @click="moveMatch" class="button" value="변호사매칭" readonly onfocus="this.blur();" />
+            </v-col>
+            <v-col cols="4" md="4">
+              <input @click="moveControversy" class="button" value="찬반토론" readonly onfocus="this.blur();" />
+            </v-col>
+          </v-row>
+
+          <v-row class="menu">
+            <v-col cols="4" md="4">
+              <input @click="moveScourtExp" class="button" value="모의판사체험" readonly onfocus="this.blur();" />
+            </v-col>
+            <v-col cols="4" md="4">
+              <input @click="moveEasyLaw" class="button" value="생활법령" readonly onfocus="this.blur();" />
+            </v-col>
+            <v-col cols="4" md="4">
+              <input @click="moveLawTest" class="button" value="법상식테스트" readonly onfocus="this.blur();" />
+            </v-col>
+          </v-row>
+        </div>
+        <!-- <div>
           <v-row class="menu">
             <v-col cols="6" md="6" class="text-right">
               <input @click="moveBoard" class="button" value="자유게시판" readonly onfocus="this.blur();" />
@@ -91,7 +117,7 @@
               <input @click="moveLawTest" class="button" value="법상식테스트" readonly onfocus="this.blur();" />
             </v-col>
           </v-row>
-        </div>
+        </div> -->
       </div>
     </full-page>
   </div>
@@ -136,6 +162,10 @@ export default {
       type: String,
       default: require('@/assets/img/mainbg3.jpg'),
     },
+    image4: {
+      type: String,
+      default: require('@/assets/img/mainbg4.png'),
+    },
     logo: {
       type: String,
       default: require('@/assets/img/main1-logo.png'),
@@ -145,19 +175,24 @@ export default {
     $.fn.fullpage.destroy('all');
   },
   computed: {
-    image_2() {
-      return {
-        backgroundImage: `url(${this.image2})`,
-      };
-    },
     image_1() {
       return {
         backgroundImage: `url(${this.image1})`,
       };
     },
+    image_2() {
+      return {
+        backgroundImage: `url(${this.image2})`,
+      };
+    },
     image_3() {
       return {
         backgroundImage: `url(${this.image3})`,
+      };
+    },
+    image_4() {
+      return {
+        backgroundImage: `url(${this.image4})`,
       };
     },
   },
@@ -249,25 +284,24 @@ input#searchWordMain {
   text-align: center;
 }
 .title-solid {
-  @media (max-width: 1200px) {
-    letter-spacing: 0.3rem;
-    border: 0.2rem solid;
-    font-size: 2.3rem;
-    border-radius: 3rem;
-    padding: 0.2rem;
-    color: white;
-    background-color: rgb(21, 52, 80);
-    // font-weight: bold;
-    margin-left: 20rem;
-    margin-right: 20rem;
-    font-family: 'NEXON Lv1 Gothic OTF';
-  }
-  @media screen and (max-width: 800px) {
+  letter-spacing: 0.3rem;
+  border: 0.2rem solid;
+  font-size: 2.3rem;
+  border-radius: 3rem;
+  padding: 0.2rem;
+  color: white;
+  background-color: rgb(21, 52, 80);
+  margin-left: 20rem;
+  margin-right: 20rem;
+  font-family: 'NEXON Lv1 Gothic OTF';
+
+  @media (max-width: 800px) {
     letter-spacing: none;
     margin-left: 10rem;
     margin-right: 10rem;
   }
 }
+
 .searchBtn {
   margin-bottom: 10px;
 }
@@ -313,12 +347,13 @@ input#searchWordMain {
   margin-right: 50px;
 }
 #f5 {
-  border: 0.2rem solid white;
-  padding: 0.5rem;
+  border: 0.1rem solid white;
+  padding: 0.35rem;
   margin-top: 1rem;
   color: white;
-  border-radius: 1rem;
-  margin-left: 1rem;
+  border-radius: 0.5rem;
+  margin-left: 45rem;
+  font-size: 0.8rem;
 }
 #box-solid {
   box-sizing: border-box;
@@ -329,13 +364,12 @@ input#searchWordMain {
 }
 .main-title-solid {
   box-sizing: content-box;
-  border: 0.2rem solid white;
-  font-size: 2.3rem;
+  border: 0.1rem solid white;
+  font-size: 1.5rem;
   border-radius: 1.5rem;
   padding: 1rem;
   color: white;
   font-weight: bold;
-  margin-left: 50px;
 }
 .rank-title {
   font-size: 40px;
@@ -370,7 +404,6 @@ input {
 .searchBox {
   font-size: 50px;
   background-color: white;
-  // border: 0.2rem solid;
   border-radius: 3rem;
 }
 .searchForm {
@@ -384,20 +417,31 @@ input {
   padding: 0 !important;
 }
 .button {
-  width: 10rem;
-  height: 10rem;
+  width: 9rem;
+  height: 9rem;
   font-family: 'MaplestoryOTFBold';
   font-size: 1rem;
   text-transform: uppercase;
   text-align: center;
   letter-spacing: 0.5rem;
   color: black;
-
-  border: 0.18rem solid black;
+  border: 0.15rem solid black;
   border-radius: 1rem;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease 0s;
   cursor: pointer;
   outline: none;
+}
+.news-title {
+  font-size: 1.2rem;
+  padding-left: 3rem !important;
+  padding-right: 3rem !important;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  color: white;
+  background-color: black;
+  font-weight: bold;
+  // font-family: 'Nanum Gothic', sans-serif;
+  letter-spacing: 0.2rem;
 }
 </style>
