@@ -52,7 +52,7 @@
           </div>
           <!-- else -->
           <div v-if="$store.state.role == 'LAWYER'" style="text-align:right">
-            <v-btn color="#FF5722" dark style="float: left;" @click="modal">자문일정</v-btn>
+            <v-btn color="#FF5722" dark style="float: left;" class="mr-1" @click="modal">자문일정</v-btn>
             <v-btn color="#FF5722" dark style="float: left;" @click="webrtc()">화상미팅</v-btn>
             <v-btn color="#FF5722" dark class="ml-1" style="float: left;" @click="modal2()">화상채팅기록</v-btn>
             <v-btn color="rgb(68, 114, 148)" dark @click="$router.go(-1)">뒤로가기</v-btn>
