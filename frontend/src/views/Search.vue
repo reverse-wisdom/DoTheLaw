@@ -102,14 +102,14 @@
         </v-row>
         <br />
         <div class="text-center">
-          <md-button class="md-info" style="margin: 5px" @click="moveMatch">
+          <v-btn color="rgb(21, 52, 80)" dark style="margin: 5px" @click="moveMatch">
             <i class="material-icons">search</i>
             변호사찾기
-          </md-button>
-          <md-button class="md-info" style="margin: 5px" @click="moveBoard">
+          </v-btn>
+          <v-btn color="rgb(21, 52, 80)" dark style="margin: 5px" @click="moveBoard">
             <i class="material-icons">search</i>
             커뮤니티에 검색
-          </md-button>
+          </v-btn>
         </div>
       </div>
     </div>
