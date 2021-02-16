@@ -13,9 +13,11 @@
               <v-layout row style="flex: 1 1 50%; overflow: hidden">
                 <div v-for="(video, index) in videos.slice(1, 3)" :key="index" class="ma-3">
                   <a :href="'https://www.youtube.com/watch?v=' + video.id" target="_blank">
-                    <v-card class="mx-auto" max-width="400">
+                    <v-card class="mx-auto" max-width="350">
                       <v-img class="card-img-top white--text align-end" height="200px" :src="video.thumbnail" alt="YouTube thumbnail" />
-                      <v-card-title class="txt_line">{{ video.title }}</v-card-title>
+                      <v-card-title class=" pa-0">
+                        <div class="txt_line">{{ video.title }}</div>
+                      </v-card-title>
 
                       <h6 class="card-subtitle mb-2 text-muted">생성일 | {{ video.publishedAt | formatDate }}</h6>
                       <!-- <p class="card-text">{{ video.description }}</p> -->
@@ -26,9 +28,11 @@
               <v-layout row style="flex: 1 1 50%; overflow: hidden">
                 <div v-for="(video, index) in videos.slice(3, 5)" :key="index" class="ma-3">
                   <a :href="'https://www.youtube.com/watch?v=' + video.id" target="_blank">
-                    <v-card class="mx-auto" max-width="400">
+                    <v-card class="mx-auto" max-width="350">
                       <v-img class="card-img-top white--text align-end" height="200px" :src="video.thumbnail" alt="YouTube thumbnail" />
-                      <v-card-title class="txt_line">{{ video.title }}</v-card-title>
+                      <v-card-title class=" pa-0">
+                        <div class="txt_line">{{ video.title }}</div>
+                      </v-card-title>
 
                       <h6 class="card-subtitle mb-2 text-muted">생성일 | {{ video.publishedAt | formatDate }}</h6>
                       <!-- <p class="card-text">{{ video.description }}</p> -->
@@ -132,8 +136,10 @@ export default {
   font-family: 'S-CoreDream-6Bold';
 }
 .txt_line {
-  width: 300px;
+  width: 350px;
   padding: 0 5px;
+  // white-space: nowrap;
+  word-break: normal;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
