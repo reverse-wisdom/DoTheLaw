@@ -31,8 +31,8 @@
 
           <!-- 수정, 삭제는 자신이 쓴글일경우만 나타나게 처리함 -->
           <div v-if="$store.state.name == value.name" style="text-align:right">
-            <v-btn color="rgb(68, 114, 148)" dark @click="updatePage(value)">글수정</v-btn>
-            <v-btn color="rgb(68, 114, 148)" class="mx-2" dark @click="deletePage()">글 삭제</v-btn>
+            <v-btn color="rgb(33,133,89)" class="mr-1" dark @click="updatePage(value)">수정</v-btn>
+            <v-btn color="#e52b50" class="mr-1" dark @click="deletePage()">삭제</v-btn>
             <v-btn color="rgb(68, 114, 148)" dark @click="moveBoard()">뒤로가기</v-btn>
           </div>
           <!-- else -->
@@ -103,7 +103,7 @@ export default {
       const userId = this.$store.state.uuid;
       const { data } = await deleteBoard(boardId, role, userId);
       this.$swal({
-        position: 'top-end',
+        // position: 'top-end',
         icon: 'success',
         title: '삭제성공!!',
         showConfirmButton: false,

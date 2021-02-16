@@ -4,7 +4,7 @@
     <div class="main main-raised" style="z-index:1">
       <div class="section profile-content">
         <div style="padding:80px">
-          <h2 class="title text-center kor">자문요청</h2>
+          <h2 class="title text-center kor" style="font-weight: bold;">자문요청</h2>
           <hr class="div-hr" />
           <form>
             <md-field>
