@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper kor">
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
@@ -13,7 +13,7 @@
               <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
               <h2>{{ lawyer.name }}</h2>
               <div v-if="$store.state.role == 'USER'" style="">
-                <md-button class="col-1" @click="writeAdvise">자문요청</md-button>
+                <v-btn color="error" x-large @click="writeAdvise">자문요청</v-btn>
               </div>
             </div>
             <div class="col-8 row">
@@ -186,7 +186,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+// 한글 폰트 설정
+.kor {
+  font-family: 'Nanum Gothic', sans-serif;
+}
 ul {
   display: flex;
   flex-wrap: wrap;
@@ -207,41 +211,40 @@ ul {
   width: auto;
   height: auto;
   margin-top: 2rem;
-  /* border: 1px solid skyblue; */
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   padding: 0px;
 }
 #text-solid > div {
-  background: skyblue;
-  border: 2px solid skyblue;
+  background: #364f6b;
+  color: white;
+  border: 2px solid #364f6b;
 
   padding-left: 1rem;
 }
 #text-solid-intro {
   width: auto;
   height: auto;
-  /* border: 1px solid skyblue; */
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   padding: 0px;
 }
 #text-solid-intro > div {
-  background: skyblue;
-  border: 2px solid skyblue;
-
-  padding-left: 2rem;
+  color: white;
+  background: #364f6b;
+  border: 2px solid #364f6b;
+  padding-left: 1rem;
 }
 #text-solid-margin {
   width: auto;
   height: auto;
   margin-top: 2rem;
   margin-right: 4.7rem;
-  /* border: 1px solid skyblue; */
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   padding: 0px;
 }
 #text-solid-margin > div {
-  background: skyblue;
-  border: 2px solid skyblue;
+  color: white;
+  background: #364f6b;
+  border: 2px solid #364f6b;
 
   padding-left: 1rem;
   padding: auto;
@@ -249,16 +252,14 @@ ul {
 #text-solid-advise {
   height: auto;
   margin-top: 2rem;
-  /* text-align: center; */
-  /* border: 1px solid skyblue; */
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
-  /* background: whitesmoke; */
   padding: 0;
   padding-bottom: 2rem;
 }
 #text-solid-advise > div {
-  background: skyblue;
-  border: 2px solid skyblue;
+  color: white;
+  background: #364f6b;
+  border: 2px solid #364f6b;
 
   padding: 1rem;
 }
@@ -279,7 +280,7 @@ hr {
   text-align: center;
   width: 250px;
   height: auto;
-  background: skyblue;
+  background: #364f6b;
   position: relative;
 }
 </style>
