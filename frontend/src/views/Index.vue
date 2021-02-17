@@ -65,7 +65,7 @@
       </div>
 
       <div class="section pb-0" :style="image_3" data-width="1200" data-height="730">
-        <div style="margin-left: 100px;">
+        <!-- <div style="margin-left: 100px;">
           <v-row class="menu">
             <v-col cols="4" md="4">
               <input @click="moveBoard" class="button" value="자유게시판" readonly onfocus="this.blur();" />
@@ -89,6 +89,68 @@
               <input @click="moveLawTest" class="button" value="법상식테스트" readonly onfocus="this.blur();" />
             </v-col>
           </v-row>
+        </div> -->
+        <div class="main-section mb-3" style="margin-left: 100px;">
+          <button class="dashbord-bold">
+            <div class="icon-section">
+              <i class="fa fa-users" aria-hidden="true"></i>
+              <br />
+              <br />
+              <br />
+              <p style="font-weight:bold; font-size:20px;" @click="moveMatch">변호사매칭</p>
+            </div>
+            <div class="detail-section"></div>
+          </button>
+          <button class="dashbord-light dashbord-green">
+            <div class="icon-section">
+              <i class="fa fa-user" aria-hidden="true"></i>
+              <br />
+              <br />
+              <br />
+              <p style="font-weight:bold; font-size:20px;" @click="moveControversy">찬반토론</p>
+            </div>
+            <div class="detail-section"></div>
+          </button>
+          <button class="dashbord-bold dashbord-orange">
+            <div class="icon-section">
+              <i class="fa fa-bell" aria-hidden="true"></i>
+              <br />
+              <br />
+              <br />
+              <p style="font-weight:bold; font-size:20px;" @click="moveScourtExp">모의판사체험</p>
+            </div>
+            <div class="detail-section"></div>
+          </button>
+          <button class="dashbord-light dashbord-blue">
+            <div class="icon-section">
+              <i class="fa fa-tasks" aria-hidden="true"></i>
+              <br />
+              <br />
+              <br />
+              <p style="font-weight:bold; font-size:20px;" @click="moveEasyLaw">생활법령</p>
+            </div>
+            <div class="detail-section"></div>
+          </button>
+          <button class="dashbord-bold dashbord-red">
+            <div class="icon-section">
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+              <br />
+              <br />
+              <br />
+              <p style="font-weight:bold; font-size:20px;" @click="moveLawTest">법상식테스트</p>
+            </div>
+            <div class="detail-section"></div>
+          </button>
+          <button class="dashbord-light dashbord-skyblue">
+            <div class="icon-section">
+              <i class="fa fa-comments" aria-hidden="true"></i>
+              <br />
+              <br />
+              <br />
+              <p style="font-weight:bold; font-size:20px;" @click="moveBoard">자유게시판</p>
+            </div>
+            <div class="detail-section"></div>
+          </button>
         </div>
       </div>
     </full-page>
@@ -426,5 +488,88 @@ input {
   font-weight: bold;
   // font-family: 'Nanum Gothic', sans-serif;
   letter-spacing: 0.2rem;
+}
+.main-section {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0px 5px;
+}
+.dashbord-bold {
+  width: 32%;
+  display: inline-block;
+  background-color: rgb(68, 114, 148);
+  color: #fff;
+  margin-top: 50px;
+}
+
+.dashbord-light {
+  width: 32%;
+  display: inline-block;
+  background-color: rgb(68, 114, 148);
+  color: #fff;
+  margin-top: 50px;
+}
+
+.icon-section i {
+  font-size: 30px;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 50%;
+  margin-top: -25px;
+  margin-bottom: 10px;
+  background-color: #34495e;
+}
+.icon-section p {
+  margin: 0px;
+  font-size: 20px;
+  padding-bottom: 10px;
+}
+.detail-section {
+  background-color: rgb(68, 114, 148);
+  padding: 5px 0px;
+}
+.detail-section a {
+  color: #fff;
+  text-decoration: none;
+}
+.dashbord-green .icon-section,
+.dashbord-green .icon-section i {
+  background-color: rgb(255, 255, 255);
+  color: black;
+}
+.dashbord-green .detail-section {
+  background-color: #34495e;
+  color: black;
+}
+.dashbord-orange .icon-section,
+.dashbord-orange .icon-section i {
+  background-color: rgb(68, 114, 148);
+}
+.dashbord-orange .detail-section {
+  background-color: rgb(68, 114, 148);
+}
+.dashbord-blue .icon-section,
+.dashbord-blue .icon-section i {
+  background-color: rgb(255, 255, 255);
+  color: black;
+}
+.dashbord-blue .detail-section {
+  background-color: #34495e;
+}
+.dashbord-red .icon-section,
+.dashbord-red .icon-section i {
+  background-color: rgb(68, 114, 148);
+}
+.dashbord-red .detail-section {
+  background-color: rgb(68, 114, 148);
+}
+.dashbord-skyblue .icon-section,
+.dashbord-skyblue .icon-section i {
+  background-color: rgb(255, 255, 255);
+  color: black;
+}
+.dashbord-skyblue .detail-section {
+  background-color: #34495e;
 }
 </style>
