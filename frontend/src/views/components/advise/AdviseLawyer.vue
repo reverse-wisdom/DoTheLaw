@@ -2,16 +2,19 @@
   <!-- 자문 게시판 페이지 -->
   <li>
     <div class="post-title">
-      {{ data.title }}
+      <template v-if="data.title.length > 20">{{ data.title.substring(0, 10) }}...</template>
+      <template v-else>{{ data.title }}</template>
     </div>
     <div class="post-contents" v-html="data.content">
       {{ data.content }}
     </div>
-    <div>작성자 : {{ data.name }}</div>
-    <div class="post-time">
-      {{ this.$moment(data.createDate).format('llll') }}
-      <i class="icon ion-md-create" @click="adviseDetail"></i>
-      <!-- <i class="icon ion-md-trash" ></i> -->
+
+    <div style="border-style: groove none none none;">
+      <div class="post-name">작성자 : {{ data.name }}</div>
+      <div class="post-time">
+        {{ this.$moment(data.createDate).format('llll') }}
+        <i class="icon ion-md-create" @click="adviseDetail"></i>
+      </div>
     </div>
   </li>
 </template>
@@ -36,10 +39,6 @@ export default {
       var matchingId = this.data.matchingId;
       this.$router.push({ name: 'AdviseDetail', query: { matchingId: matchingId } });
     },
-    // getColor(name) {
-    //   var colors = ['red', 'green', 'blue', 'orange', 'yellow'];
-    //   return colors[Math.floor(Math.random() * colors.length)];
-    // },
   },
 };
 </script>
@@ -54,9 +53,12 @@ li {
   margin-bottom: 0.5rem;
 }
 .post-contents {
-  height: 160px;
-  overflow-y: auto;
+  height: 140px;
+  overflow: auto;
   font-size: 18px;
+}
+.post-name {
+  padding: auto;
 }
 .post-time {
   position: absolute;
