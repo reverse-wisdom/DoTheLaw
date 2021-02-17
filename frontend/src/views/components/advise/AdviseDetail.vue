@@ -72,11 +72,11 @@
                         <label for="state">자문 진행상태</label>
                         <md-select v-model="state" name="state" id="state">
                           <md-option value="신청">신청</md-option>
-                          <md-option value="접수">접수</md-option>
+                          <!-- <md-option value="접수">접수</md-option> -->
                           <md-option value="예약">예약</md-option>
                           <md-option value="진행">진행</md-option>
                           <md-option value="완료">완료</md-option>
-                          <md-option value="종료">종료</md-option>
+                          <!-- <md-option value="종료">종료</md-option> -->
                         </md-select>
                       </md-field>
                       <md-field>
