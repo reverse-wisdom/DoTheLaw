@@ -22,7 +22,7 @@
                 <fieldset class="text-center">
                   <v-text-field id="searchWordMain" clearable color="black" height="50px" v-model="query" style="backgroundcolor: white; ">
                     <template v-slot:label>
-                      검색어를 입력해주세요!
+                      어떤 판례가 궁금하세요?!
                     </template>
                   </v-text-field>
                 </fieldset>
@@ -56,42 +56,17 @@
         <div class="md-layout" style="padding-left: 5rem">
           <div class="md-layout-item md-medium-size-50 md-small-size-100"></div>
           <div class="md-layout-item md-medium-size-50 md-small-size-100 text-center">
-            <v-card elevation="7" color="rgba(255, 255, 255, 0.1)" class="custom-card text-center">
-              <span class="main-title-solid" style="border: none;">교통사고 사례영상</span>
-              <law-youtube :key="componentKey"></law-youtube>
-            </v-card>
+            <br />
+            <br />
+            <span class="main-title-solid" style="border: none;margin-top:30px">교통사고 사례영상</span>
+            <law-youtube :key="componentKey"></law-youtube>
           </div>
         </div>
       </div>
 
       <div class="section pb-0" :style="image_3" data-width="1200" data-height="730">
-        <!-- <div style="margin-left: 100px;">
-          <v-row class="menu">
-            <v-col cols="4" md="4">
-              <input @click="moveBoard" class="button" value="자유게시판" readonly onfocus="this.blur();" />
-            </v-col>
-            <v-col cols="4" md="4">
-              <input @click="moveMatch" class="button" value="변호사매칭" readonly onfocus="this.blur();" />
-            </v-col>
-            <v-col cols="4" md="4">
-              <input @click="moveControversy" class="button" value="찬반토론" readonly onfocus="this.blur();" />
-            </v-col>
-          </v-row>
-
-          <v-row class="menu">
-            <v-col cols="4" md="4">
-              <input @click="moveScourtExp" class="button" value="모의판사체험" readonly onfocus="this.blur();" />
-            </v-col>
-            <v-col cols="4" md="4">
-              <input @click="moveEasyLaw" class="button" value="생활법령" readonly onfocus="this.blur();" />
-            </v-col>
-            <v-col cols="4" md="4">
-              <input @click="moveLawTest" class="button" value="법상식테스트" readonly onfocus="this.blur();" />
-            </v-col>
-          </v-row>
-        </div> -->
         <div class="main-section mb-3" style="margin-left: 100px;">
-          <button class="dashbord-bold">
+          <button class="dashbord-bold hvr-float-shadow">
             <div class="icon-section">
               <i class="fa fa-users" aria-hidden="true"></i>
               <br />
@@ -101,7 +76,7 @@
             </div>
             <div class="detail-section"></div>
           </button>
-          <button class="dashbord-light dashbord-green">
+          <button class="dashbord-light dashbord-green hvr-float-shadow">
             <div class="icon-section">
               <i class="fa fa-user" aria-hidden="true"></i>
               <br />
@@ -111,7 +86,7 @@
             </div>
             <div class="detail-section"></div>
           </button>
-          <button class="dashbord-bold dashbord-orange">
+          <button class="dashbord-bold dashbord-orange hvr-float-shadow">
             <div class="icon-section">
               <i class="fa fa-bell" aria-hidden="true"></i>
               <br />
@@ -121,7 +96,7 @@
             </div>
             <div class="detail-section"></div>
           </button>
-          <button class="dashbord-light dashbord-blue">
+          <button class="dashbord-light dashbord-blue hvr-float-shadow">
             <div class="icon-section">
               <i class="fa fa-tasks" aria-hidden="true"></i>
               <br />
@@ -131,7 +106,7 @@
             </div>
             <div class="detail-section"></div>
           </button>
-          <button class="dashbord-bold dashbord-red">
+          <button class="dashbord-bold dashbord-red hvr-float-shadow">
             <div class="icon-section">
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
               <br />
@@ -141,7 +116,7 @@
             </div>
             <div class="detail-section"></div>
           </button>
-          <button class="dashbord-light dashbord-skyblue">
+          <button class="dashbord-light dashbord-skyblue hvr-float-shadow">
             <div class="icon-section">
               <i class="fa fa-comments" aria-hidden="true"></i>
               <br />
