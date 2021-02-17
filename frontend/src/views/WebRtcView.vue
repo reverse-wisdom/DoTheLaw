@@ -13,8 +13,10 @@
             <div class="row">
               <div class="col-8">
                 <vue-webrtc
+                  class="rtc"
                   ref="webrtc"
                   width="100%"
+                  :enableAudio="audioToggle"
                   :roomId="roomId"
                   :socketURL="socketURL"
                   v-on:joined-room="logEvent"
@@ -23,7 +25,7 @@
                   v-on:share-started="logEvent"
                   v-on:share-stopped="logEvent"
                   @error="onError"
-                />
+                ></vue-webrtc>
               </div>
               <div class="col-4">
                 <chat-room :roomId="roomId" v-if="roomId"></chat-room>
@@ -33,18 +35,12 @@
             <div>
               <div>
                 <div class="mb-5">
+                  <v-btn color="success" dark style="margin-right: 10px; padding: 25px 25px; font-size: 17px;" @click="audio">{{ audioToggle ? '오디오 끄기' : '오디오 켜기' }}</v-btn>
                   <v-btn color="error" dark style="margin-right: 10px; padding: 25px 25px; font-size: 17px;" @click="onLeave">나가기</v-btn>
                   <v-btn color="light-blue lighten-2" dark style="padding: 25px 25px; font-size: 17px;" @click="onShareScreen">화면공유</v-btn>
                 </div>
               </div>
             </div>
-            <!-- <div>
-              <div class="col-md-12">
-                <figure class="figure">
-                  <img :src="img" class="img-responsive" />
-                </figure>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
@@ -74,6 +70,7 @@ export default {
       img: null,
       roomId: '', // 방이름 (영어와 _만 가능)
       socketURL: 'https://rtcmulticonnection.herokuapp.com:443/',
+      audioToggle: true,
     };
   },
   props: {
@@ -97,6 +94,9 @@ export default {
   },
 
   methods: {
+    audio() {
+      this.audioToggle = !this.audioToggle;
+    },
     onCapture() {
       this.img = this.$refs.webrtc.capture();
     },
@@ -130,6 +130,8 @@ export default {
 };
 </script>
 
+<style lang="scss"></style>
+
 <style lang="scss" scoped>
 // 한글 폰트 설정
 .kor {
@@ -151,6 +153,8 @@ export default {
 
 video {
   border: 2px solid red;
+  height: 300px;
+  width: auto;
 }
 // .video-list > video {
 //   width: 50px;
