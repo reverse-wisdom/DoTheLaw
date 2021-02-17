@@ -334,7 +334,6 @@ router.beforeEach((to, from, next) => {
   if (to.meta.auth && !store.getters.isLogin) {
     Vue.swal({
       icon: 'error',
-      position: 'top-end',
       title: '로그인후 사용가능한 서비스입니다.!!',
       showConfirmButton: false,
       timer: 1500,
