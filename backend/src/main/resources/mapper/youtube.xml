@@ -6,8 +6,8 @@
 	namespace="com.ssafy.pjt.core.repository.mapper.YouTubeMapper">
 	<insert id="setTodayYouTube" parameterType="YouTubeDTO">
 		INSERT INTO youtube(id, title, thumbnail, published_at, channel_id, description, reg_date)
-		VALUES(#{id}, #{title}, #{thumbnail}, #{publishedAt}, #{channelId}, #{description}, CURRENT_TIMESTAMP)
-		ON DUPLICATE KEY UPDATE title = #{title}, thumbnail = #{thumbnail}, published_at = #{publishedAt}, channel_id = #{channelId}, description = #{description}, reg_date = CURRENT_TIMESTAMP
+		VALUES(#{id}, #{title}, #{thumbnail}, #{publishedAt}, #{channelId}, LEFT(#{description}, 200), CURRENT_TIMESTAMP)
+		ON DUPLICATE KEY UPDATE title = #{title}, thumbnail = #{thumbnail}, published_at = #{publishedAt}, channel_id = #{channelId}, description = LEFT(#{description},200), reg_date = CURRENT_TIMESTAMP
 	</insert>
 	<select id="getTodayYouTube" resultType="YouTubeDTO">
 		SELECT id, title, thumbnail, published_at, channel_id, description
