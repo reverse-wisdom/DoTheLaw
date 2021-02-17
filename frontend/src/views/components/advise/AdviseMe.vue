@@ -2,15 +2,18 @@
   <!-- 자문 게시판 페이지 -->
   <li>
     <div class="post-title">
-      {{ data.title }}
+      <template v-if="data.title.length > 20">{{ data.title.substring(0, 10) }}...</template>
+      <template v-else>{{ data.title }}</template>
     </div>
     <div class="post-contents" v-html="data.content">
       {{ data.content }}
     </div>
-    <div>작성자 : {{ data.name }}</div>
-    <div class="post-time">
-      {{ data.createDate }}
-      <i class="icon ion-md-create" @click="adviseDetail"></i>
+    <div style="border-style: groove none none none;">
+      <div>작성자 : {{ data.name }}</div>
+      <div class="post-time">
+        {{ this.$moment(data.createDate).format('llll') }}
+        <i class="icon ion-md-create" @click="adviseDetail"></i>
+      </div>
     </div>
   </li>
 </template>
