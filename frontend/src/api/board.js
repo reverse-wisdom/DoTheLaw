@@ -13,7 +13,6 @@ function editBoard(modifyData, memberRole) {
   return posts.put(`/api/board/update?role=${memberRole}`, modifyData);
 }
 function deleteBoard(boardId, roleData, userId) {
-  console.log(boardId, roleData, userId);
   return posts.delete(`/api/board/delete/?boardId=${boardId}&role=${roleData}&uuid=${userId}`);
 }
 export { fetchBoardList, createBoard, detailBoard, editBoard, deleteBoard };

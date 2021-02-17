@@ -38,7 +38,6 @@ export default {
   },
   methods: {
     isAnswer() {
-      console.log('111', this.picked);
       if (this.picked !== this.item.answer) {
         this.checkedPenalty = this.item.penalty;
       }

@@ -71,7 +71,6 @@ export default {
   async created() {
     const postData = this.$route.query.boardId;
     const { data } = await detailBoard(postData);
-    console.log({ data });
     this.value = data;
     $(function() {
       $('#summernote').summernote({
@@ -108,7 +107,6 @@ export default {
 
       const role = this.$store.state.role;
       const { data } = await editBoard(editData, role);
-      console.log(data);
 
       this.$swal({
         icon: 'success',

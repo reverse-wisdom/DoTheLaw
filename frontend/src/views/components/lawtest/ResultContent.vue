@@ -92,7 +92,6 @@ export default {
         if (i == 8) str += '억';
         if (i == 12) str += '조';
         result = str + result;
-        // console.log(result);
       }
       if (tmp != 0) result = result + '원';
       this.result = result;

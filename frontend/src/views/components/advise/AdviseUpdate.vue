@@ -141,11 +141,9 @@ export default {
         uuid: this.value.uuid,
       };
 
-      console.log('ㄷㄷㄷ', editData);
       const uuid = this.$store.state.uuid;
       const { data } = await editAdvise(editData, uuid);
 
-      console.log('update', data);
       this.$swal({
         icon: 'success',
         title: '글 수정 완료',
@@ -162,7 +160,6 @@ export default {
         return input.substr(0, index) + character + input.substr(index + character.length);
       };
       this.reservationDate = replaceAt(olddate, 10, 'T');
-      console.log(this.reservationDate);
     },
   },
 };

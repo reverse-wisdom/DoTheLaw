@@ -52,7 +52,6 @@ export default {
     try {
       this.token = this.$store.state.token;
       const { data } = await fetchBoardList();
-      console.log(data);
       for (let i = 0; i < data.length; i++) {
         this.values.push({
           boardId: data[i].boardId,
@@ -63,9 +62,7 @@ export default {
           uploadDate: this.$moment(data[i].uploadDate).format('llll'),
         });
       }
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   },
   props: {
     header: {
@@ -86,7 +83,6 @@ export default {
     },
     detailPage(value) {
       var query = value.boardId;
-      console.log(typeof query);
       this.$router.push({ name: 'boardDetail', query: { boardId: query } });
     },
   },

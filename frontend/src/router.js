@@ -339,7 +339,6 @@ router.beforeEach((to, from, next) => {
       showConfirmButton: false,
       timer: 1500,
     });
-    console.log('인증이 필요합니다.');
     next('/login');
     return;
   }

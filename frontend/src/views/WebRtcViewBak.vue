@@ -27,12 +27,8 @@
           <div>
             <md-button class="md-success" @click="onJoin">Join</md-button>
             <md-button class="md-success" @click="onLeave">Leave</md-button>
-            <md-button class="md-success" @click="onCapture"
-              >Capture Photo</md-button
-            >
-            <md-button class="md-success" @click="onShareScreen"
-              >Share Screen</md-button
-            >
+            <md-button class="md-success" @click="onCapture">Capture Photo</md-button>
+            <md-button class="md-success" @click="onShareScreen">Share Screen</md-button>
           </div>
         </div>
       </div>
@@ -82,12 +78,8 @@ export default {
     onShareScreen() {
       this.img = this.$refs.webrtc.shareScreen();
     },
-    onError(error, stream) {
-      console.log('On Error Event', error, stream);
-    },
-    logEvent(event) {
-      console.log('Event : ', event);
-    },
+    onError(error, stream) {},
+    logEvent(event) {},
   },
 };
 </script>

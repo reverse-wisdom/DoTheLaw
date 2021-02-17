@@ -105,7 +105,6 @@ export default new Vuex.Store({
       try {
         data = await loginUser(userData);
         if (data.data.code == 'LOGIN_SUCCESS') {
-          console.log('test');
           commit('setToken', data.data['message']);
           commit('setEmail', data.data.member.email);
           commit('setPassword', userData.password);
@@ -113,7 +112,6 @@ export default new Vuex.Store({
           commit('setUuid', data.data.member.uuid);
           commit('setPhone', data.data.member.phone);
           commit('setLawuuid', data.data.member.lawuuid);
-          // commit('setImage', data.data.member.image);
           commit('setRole', data.data.member.role.substring(5).trim());
           router.push('/');
         }
@@ -126,7 +124,6 @@ export default new Vuex.Store({
     },
     async SOCIALLOGIN({ commit }, userData) {
       const { data } = await socialLoginUser(userData);
-      console.log(data);
       if (data.code == 'LOGIN_SUCCESS') {
         commit('setToken', data['message']);
         commit('setEmail', userData.email);
