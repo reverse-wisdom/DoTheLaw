@@ -109,17 +109,11 @@ export default {
 
     // 파싱
     const { data } = await getTodayYoutube();
-    console.log(data);
 
     if (data) {
       this.loadCheck = false;
       for (let i = 0; i < data.length; i++) {
-        this.videos.push(
-          data[i]
-          // title: data[i].title,
-          // link: data[i].link,
-          // thumbnail: data[i].thumbnail,
-        );
+        this.videos.push(data[i]);
         this.loadCheck = true;
       }
     }

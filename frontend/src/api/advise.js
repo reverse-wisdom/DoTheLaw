@@ -7,7 +7,6 @@ function fetchAdviseMe(userData) {
   return posts.get(`/api/matching/contain?uuid=${userData}`);
 }
 function createAdvise(adviseData) {
-  console.log('api', adviseData);
   return posts.post('/api/matching/create', adviseData);
 }
 function detailAdvise(adviseData) {

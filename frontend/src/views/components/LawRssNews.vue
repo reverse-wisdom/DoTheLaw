@@ -71,7 +71,6 @@ export default {
 
     // 파싱
     const { data } = await newsParsing();
-    console.log(data);
 
     if (data['items']) {
       this.loadCheck = false;
@@ -106,7 +105,7 @@ export default {
   margin-bottom: 0.1rem;
   color: white;
   font-family: 'Nanum Gothic', sans-serif;
-  margin-right: -7rem;
+  margin-right: -5rem;
 }
 ul,
 ol {

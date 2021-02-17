@@ -72,11 +72,9 @@ function uploadSummernoteFile(file, editor) {
       console.log(file);
       if (listMimeImg.indexOf(file.type) > -1) {
         //Picture
-        console.log('이미지', reponse);
         $(editor).summernote('insertImage', reponse);
       } else if (listMimeAudio.indexOf(file.type) > -1) {
         //Audio
-        console.log('오디오', reponse);
         elem = document.createElement('audio');
         elem.setAttribute('src', reponse);
         elem.setAttribute('controls', 'controls');
@@ -84,7 +82,6 @@ function uploadSummernoteFile(file, editor) {
         $(editor).summernote('insertNode', elem);
       } else if (listMimeVideo.indexOf(file.type) > -1) {
         //Video
-        console.log('비디오', reponse);
         elem = document.createElement('video');
         elem.setAttribute('src', reponse);
         elem.setAttribute('controls', 'controls');
@@ -92,7 +89,6 @@ function uploadSummernoteFile(file, editor) {
         $(editor).summernote('insertNode', elem);
       } else {
         //Other file type
-        console.log('일반파일', reponse);
         elem = document.createElement('a');
         let linkText = document.createTextNode(file.name);
         elem.appendChild(linkText);
@@ -162,13 +158,11 @@ export default {
           //여기 부분이 이미지를 첨부하는 부분
           onFileUpload: function(files, editor, welEditable) {
             for (var i = files.length - 1; i >= 0; i--) {
-              // console.log(files[i]);
               uploadSummernoteFile(files[i], this);
             }
           },
           onImageUpload: function(files, editor, welEditable) {
             for (var i = files.length - 1; i >= 0; i--) {
-              // console.log(files[i]);
               uploadSummernoteFile(files[i], this);
             }
           },
@@ -195,7 +189,6 @@ export default {
         category: this.category,
       };
       const response = await createBoard(data);
-      console.log('게시글 작성 성공', response);
 
       this.$swal({
         icon: 'success',

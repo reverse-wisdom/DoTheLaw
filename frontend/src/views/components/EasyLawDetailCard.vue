@@ -30,8 +30,6 @@ export default {
   },
   props: ['no'],
   mounted() {
-    // console.log('전달받은 no', this.no);
-    // console.dir(
     getEasyLawDetail(this.no, (response) => {
       this.content = response.data.content;
       this.image = response.data.image;
@@ -39,7 +37,6 @@ export default {
       this.overlay = false;
       this.$root.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
-    // );
   },
 };
 </script>
