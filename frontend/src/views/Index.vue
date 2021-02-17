@@ -78,7 +78,7 @@
           </button>
           <button class="dashbord-light dashbord-green hvr-float-shadow">
             <div class="icon-section">
-              <i class="fa fa-user" aria-hidden="true"></i>
+              <i class="fa fa-comments" aria-hidden="true"></i>
               <br />
               <br />
               <br />
@@ -88,7 +88,7 @@
           </button>
           <button class="dashbord-bold dashbord-orange hvr-float-shadow">
             <div class="icon-section">
-              <i class="fa fa-bell" aria-hidden="true"></i>
+              <i class="fa fa-user" aria-hidden="true"></i>
               <br />
               <br />
               <br />
@@ -108,7 +108,7 @@
           </button>
           <button class="dashbord-bold dashbord-red hvr-float-shadow">
             <div class="icon-section">
-              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+              <i class="fa fa-gavel" aria-hidden="true"></i>
               <br />
               <br />
               <br />
@@ -118,7 +118,7 @@
           </button>
           <button class="dashbord-light dashbord-skyblue hvr-float-shadow">
             <div class="icon-section">
-              <i class="fa fa-comments" aria-hidden="true"></i>
+              <i class="fa fa-users" aria-hidden="true"></i>
               <br />
               <br />
               <br />
