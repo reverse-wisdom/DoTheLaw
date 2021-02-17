@@ -87,7 +87,6 @@ export default {
     const email = this.$store.state.email;
     const { data } = await searchUser(email);
     this.value = data;
-    console.log('회원정보', this.value);
   },
   methods: {
     async UserUpdata() {
@@ -97,7 +96,6 @@ export default {
         uuid: this.value.uuid,
       };
       const res = await editUser(userData);
-      console.log(res);
       this.$router.push({ name: 'profileUser' });
     },
     async handleFilesUpload(file) {
@@ -105,18 +103,13 @@ export default {
       if (file) {
         var frm = new FormData();
         frm.append('file', file);
-        console.log(frm);
 
         await axios
           .post(`api/member/image/update/${this.$store.state.uuid}`, frm, { 'Content-Type': 'multipart/form-data', headers: { 'x-auth-token': this.$store.state.token } })
           .then((response) => {
-            // console.log('프로필 업로드 성공', response);
-            console.log(this.value);
             this.$forceUpdate();
           })
           .catch((err) => console.log(err));
-        // const imageres = await imageUpload(this.value.uuid, form);
-        // console.log(imageres);
       }
     },
   },

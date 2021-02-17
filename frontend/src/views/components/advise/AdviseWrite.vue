@@ -91,14 +91,12 @@ function uploadSummernoteFile(file, editor) {
       let listMimeAudio = ['audio/mpeg', 'audio/ogg'];
       let listMimeVideo = ['video/mpeg', 'video/mp4', 'video/webm'];
       let elem;
-      console.log(file);
+
       if (listMimeImg.indexOf(file.type) > -1) {
         //Picture
-        console.log('이미지', reponse);
         $(editor).summernote('insertImage', reponse);
       } else if (listMimeAudio.indexOf(file.type) > -1) {
         //Audio
-        console.log('오디오', reponse);
         elem = document.createElement('audio');
         elem.setAttribute('src', reponse);
         elem.setAttribute('controls', 'controls');
@@ -106,7 +104,6 @@ function uploadSummernoteFile(file, editor) {
         $(editor).summernote('insertNode', elem);
       } else if (listMimeVideo.indexOf(file.type) > -1) {
         //Video
-        console.log('비디오', reponse);
         elem = document.createElement('video');
         elem.setAttribute('src', reponse);
         elem.setAttribute('controls', 'controls');
@@ -114,7 +111,6 @@ function uploadSummernoteFile(file, editor) {
         $(editor).summernote('insertNode', elem);
       } else {
         //Other file type
-        console.log('일반파일', reponse);
         elem = document.createElement('a');
         let linkText = document.createTextNode(file.name);
         elem.appendChild(linkText);
@@ -190,13 +186,11 @@ export default {
           //여기 부분이 이미지를 첨부하는 부분
           onFileUpload: function(files, editor, welEditable) {
             for (var i = files.length - 1; i >= 0; i--) {
-              // console.log(files[i]);
               uploadSummernoteFile(files[i], this);
             }
           },
           onImageUpload: function(files, editor, welEditable) {
             for (var i = files.length - 1; i >= 0; i--) {
-              // console.log(files[i]);
               uploadSummernoteFile(files[i], this);
             }
           },
@@ -227,9 +221,7 @@ export default {
         content: $('#summernote').summernote('code'),
         category: this.category,
       };
-      console.log('est1', adviseData);
       const res = await createAdvise(adviseData);
-      console.log(res.config.data);
       this.$swal({
         icon: 'success',
         title: '작성완료',
@@ -245,10 +237,8 @@ export default {
         return input.substr(0, index) + character + input.substr(index + character.length);
       };
       this.reservationDate = replaceAt(olddate, 10, 'T');
-      console.log(this.reservationDate);
     },
     detailGo() {
-      console.log(email);
       const email = this.$route.query.email;
       this.$router.push({ name: 'lawyermatchdetail', query: { email: email } });
     },

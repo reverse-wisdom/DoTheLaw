@@ -5,14 +5,13 @@ export function setInterceptors(instance) {
   instance.interceptors.request.use(
     function(config) {
       // Do something before request is sent
-      // console.log(config);
       config.headers['x-auth-token'] = store.state.token; //요청시 토큰 셋팅
       return config;
     },
     function(error) {
       // Do something with request error
       return Promise.reject(error);
-    },
+    }
   );
 
   // Add a response interceptor
@@ -26,7 +25,7 @@ export function setInterceptors(instance) {
       // Any status codes that falls outside the range of 2xx cause this function to trigger
       // Do something with response error
       return Promise.reject(error);
-    },
+    }
   );
   return instance;
 }

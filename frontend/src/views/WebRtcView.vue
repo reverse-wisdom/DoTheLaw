@@ -93,7 +93,6 @@ export default {
     },
   },
   async created() {
-    console.log('test', this.$route.query.matchingId);
     this.roomId = this.$route.query.matchingId;
   },
 
@@ -125,12 +124,8 @@ export default {
     onShareScreen() {
       this.img = this.$refs.webrtc.shareScreen();
     },
-    onError(error, stream) {
-      console.log('On Error Event', error, stream);
-    },
-    logEvent(event) {
-      console.log('Event : ', event);
-    },
+    onError(error, stream) {},
+    logEvent(event) {},
   },
 };
 </script>

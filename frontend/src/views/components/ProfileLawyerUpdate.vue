@@ -153,7 +153,6 @@ export default {
     const email = this.$store.state.email;
     const { data } = await searchLawyer(email);
     this.value = data;
-    console.log('회원정보', this.value);
   },
   watch: {
     // watch를 통해 mounted가 실패하더라도 다시호출함 지도가 랜더링 안되는 현상 방지함
@@ -170,7 +169,6 @@ export default {
             icon: require('@/assets/building.png'),
           });
         }
-        console.log('load by watch');
       }
     },
   },
@@ -189,19 +187,6 @@ export default {
         role: 'LAWYER',
         check: this.value.check,
       };
-
-      // var FormData = require('form-data');
-      // var form = new FormData();
-
-      // if (this.files != null) {
-      //   form.append('file', this.files);
-      // }
-
-      // // axios.post(`api/mamber/image/update/${this.value.uuid}`, form, { 'Content-Type': 'multipart/form-data', headers: this.$store.state.token }).then(function(response) {
-      // //   console.log(response);
-      // // });
-      // const imageres = await imageUpload(this.value.uuid, form);
-      // console.log(imageres);
 
       const res = await editLawyer(userdata);
       this.$router.push({ name: 'profileLawyer' });
@@ -236,18 +221,10 @@ export default {
       if (file) {
         var frm = new FormData();
         frm.append('file', file);
-        console.log(frm);
 
-        await axios
-          .post(`api/member/image/update/${this.$store.state.uuid}`, frm, { 'Content-Type': 'multipart/form-data', headers: { 'x-auth-token': this.$store.state.token } })
-          .then((response) => {
-            // console.log('프로필 업로드 성공', response);
-            console.log(this.value);
-            this.$forceUpdate();
-          })
-          .catch((err) => console.log(err));
-        // const imageres = await imageUpload(this.value.uuid, form);
-        // console.log(imageres);
+        await axios.post(`api/member/image/update/${this.$store.state.uuid}`, frm, { 'Content-Type': 'multipart/form-data', headers: { 'x-auth-token': this.$store.state.token } }).then((response) => {
+          this.$forceUpdate();
+        });
       }
     },
     async check(ocr) {
@@ -256,7 +233,6 @@ export default {
       if (ocr) {
         var form = new FormData();
         form.append('image', ocr);
-        console.log(form);
         await axios
           .post(`api/ocr?uuid=${this.value.uuid}`, form, { 'Content-Type': 'multipart/form-data', headers: { 'x-auth-token': this.$store.state.token } })
           .then((response) => {
@@ -269,7 +245,6 @@ export default {
             this.$forceUpdate();
           })
           .catch((err) => {
-            console.log(err);
             this.$swal({
               icon: 'error',
               title: '인증실패',
@@ -277,9 +252,6 @@ export default {
             this.value.check = 'N';
             this.loadCheck = true;
           });
-
-        // const imageres = await imageUpload(this.value.uuid, form);
-        // console.log(imageres);
       }
     },
   },

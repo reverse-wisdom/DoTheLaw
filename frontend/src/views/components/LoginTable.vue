@@ -137,7 +137,6 @@ export default {
     },
     loadCheck() {
       this.isLoad = true;
-      console.log(this.isLoad);
     },
     login() {
       if (this.email == null) {
@@ -191,7 +190,6 @@ export default {
           Kakao.API.request({
             url: '/v2/user/me',
             success: function(res) {
-              console.log(res);
               $vm.id = res.id;
               $vm.socialEmail = res.kakao_account.email;
               $vm.name = res.kakao_account.profile.nickname;
