@@ -126,7 +126,11 @@ export default {
     },
   },
   async created() {
-    var query = '경북 구미시 3공단 3로 302';
+    const email = this.$store.state.email;
+    const { data } = await searchLawyer(email);
+    this.value = data;
+
+    var query = this.value.address;
     axios
       .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_MAP_KEY + '&address=' + query)
       .then(({ data }) => {
@@ -149,10 +153,6 @@ export default {
         });
       })
       .catch();
-
-    const email = this.$store.state.email;
-    const { data } = await searchLawyer(email);
-    this.value = data;
   },
   watch: {
     // watch를 통해 mounted가 실패하더라도 다시호출함 지도가 랜더링 안되는 현상 방지함
