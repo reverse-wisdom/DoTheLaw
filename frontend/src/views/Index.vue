@@ -5,7 +5,7 @@
         <v-container fluid grid-list-sm pa-0 style="margin-top: -200px;" class="text-center">
           <v-row class="" no-gutters>
             <v-col>
-              <v-img contain max-height="300" max-width="1000" :src="logo" class="logoImg"></v-img>
+              <v-img contain max-height="300" max-width="1000" :src="logo" class="logoImg" style="margin-top: 30px"></v-img>
             </v-col>
           </v-row>
           <v-row class="text-center" style="height: 10px">
@@ -397,7 +397,7 @@ input#searchWordMain {
   margin-top: 1rem;
   color: white;
   border-radius: 0.5rem;
-  margin-left: 45rem;
+  margin-right: -40rem;
   font-size: 0.8rem;
 }
 #box-solid {

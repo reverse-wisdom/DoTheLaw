@@ -59,18 +59,15 @@ function findPassword(userEmail) {
 
 // 사용자 회원정보 수정
 function editUser(userData) {
-  // console.log(userData)
   return posts.put('/api/member/update', userData);
 }
 // 변호사 회원정보 수정
 function editLawyer(userData) {
-  // console.log(userData)
   return posts.put('/api/member/update/lawyer', userData);
 }
 
 //회원탈퇴
 function signoutUser(userData) {
-  console.log(userData);
   return posts.delete('/api/member/delete', {
     params: {
       uuid: userData,

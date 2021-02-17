@@ -32,7 +32,8 @@
                 </span>
               </div>
             </div>
-            <div class="row mx-auto">
+
+            <div class="row mx-auto" v-if="advise.length != 0">
               <div class="col-11 mx-auto" id="text-solid-advise">
                 <div style="height:50px" class="pt-3">
                   최근 자문요청
@@ -48,7 +49,7 @@
             <div class="col-9"></div>
             <div>
               <v-btn color="rgb(142, 188, 219)" style="float:right;" dark @click="moveUserUpdate">정보수정</v-btn>
-              <v-btn color="rgb(142, 188, 219)" dark style="float:right;" @click="deleteUser">회원탈퇴</v-btn>
+              <v-btn color="error" class="mr-3" dark style="float:right;" @click="deleteUser">회원탈퇴</v-btn>
             </div>
           </div>
         </div>
@@ -91,14 +92,10 @@ export default {
     const email = this.$store.state.email;
     const { data } = await searchUser(email);
     this.value = data;
-    console.log('회원정보', this.value);
-
     {
       const userData = this.$store.state.uuid;
       const { data } = await fetchAdviseMe(userData);
-
       this.advise = data.client.reverse();
-      console.log(data);
     }
   },
   methods: {
@@ -106,19 +103,40 @@ export default {
       this.$router.push({ name: 'profileUserUpdate' });
     },
     async deleteUser() {
-      const res = await signoutUser(this.value.uuid);
-      console.log(res);
-      this.$store.commit('clearEmail');
-      this.$store.commit('clearToken');
-      this.$store.commit('clearNickname');
-      this.$store.commit('clearPassword');
-      this.$store.commit('clearName');
-      this.$store.commit('clearUuid');
-      // this.$store.commit('clearImage');
-      localStorage.clear();
-      sessionStorage.clear();
-      $cookies.keys().forEach((cookie) => $cookies.remove(cookie));
-      this.$router.push({ name: 'RegisterIndex' });
+      this.$swal({
+        icon: 'warning',
+        title: '회원탈퇴하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonText: `탈퇴`,
+        cancelButtonText: `취소`,
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await signoutUser(this.value.uuid);
+          this.$store.commit('clearEmail');
+          this.$store.commit('clearToken');
+          this.$store.commit('clearNickname');
+          this.$store.commit('clearPassword');
+          this.$store.commit('clearName');
+          this.$store.commit('clearUuid');
+          localStorage.clear();
+          sessionStorage.clear();
+          $cookies.keys().forEach((cookie) => $cookies.remove(cookie));
+          this.$swal({
+            position: 'top-end',
+            icon: 'success',
+            title: '탈퇴성공.!!',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.$router.push({ name: 'RegisterIndex' });
+        } else if (result.isDismissed) {
+          this.$swal({
+            icon: 'success',
+            title: '탈퇴취소',
+            confirmButtonText: `확인`,
+          });
+        }
+      });
     },
   },
 };

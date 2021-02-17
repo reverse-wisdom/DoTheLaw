@@ -85,11 +85,9 @@ export default {
   },
   methods: {
     getItemDetail(no) {
-      // console.log('받은 no', no);
       const data = (async () => {
         return await getEasyLawDetail(no, (response) => response);
       })();
-      // console.log(data);
     },
   },
   bodyClass: 'profile-page',

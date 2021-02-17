@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper kor">
     <parallax class="section page-header header-filter" :style="headerStyle"></parallax>
     <div class="main main-raised">
       <div class="section profile-content">
@@ -37,9 +37,6 @@ export default {
     const res = await LawyerList();
     this.lawyerlists = res;
     for (let index = 0; index < this.lawyerlists.data.length; index++) {
-      // var r = Math.floor(Math.random() * 255);
-      // var g = Math.floor(Math.random() * 255);
-      // var b = Math.floor(Math.random() * 255);
       this.lawyerlists.data[index].color = 'rgb(68, 114, 148)';
     }
   },
@@ -61,5 +58,11 @@ export default {
 <style lang="scss">
 #overflow {
   overflow: auto;
+}
+</style>
+<style lang="scss" scoped>
+// 한글 폰트 설정
+.kor {
+  font-family: 'Nanum Gothic', sans-serif;
 }
 </style>

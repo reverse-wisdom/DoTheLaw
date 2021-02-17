@@ -197,7 +197,6 @@ export default {
     EventBus.$on('checkPenalty', (v) => {
       this.checkPenalty(v);
     });
-    console.log(this.total);
   },
 };
 </script>

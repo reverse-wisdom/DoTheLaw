@@ -18,10 +18,6 @@ class WebChatClient {
 
   // 채팅방 기존 내용 가져오기
   getChatBeforeMessage() {
-    // console.log('채팅방 내용을 가져오고 있습니다.');
-    // console.log(this.roomId);
-    // console.log(this.uuid);
-    // console.log(this.msg);
     posts.get(`/api/chat/room/message/${this.roomId}`).then((res) => {
       this.msg.length = 0; //기존 메세지들 모두 삭제
       for (let i = res.data.length - 1; i > -1; i--) {
@@ -35,7 +31,6 @@ class WebChatClient {
       }
     }),
       (err) => {
-        console.log(err);
         alert('error : 이전 채팅을 가져오는데 실패했어요. 새로고침하세요');
       };
   }
@@ -48,7 +43,6 @@ class WebChatClient {
     this.stompClient.connect(
       {},
       (frame) => {
-        console.log('success', frame);
         this.stompClient.subscribe(`/sub/${this.roomId}`, (res) => {
           let jsonBody = JSON.parse(res.body);
           let m = {
@@ -59,9 +53,7 @@ class WebChatClient {
           this.msg.push(m);
         });
       },
-      (err) => {
-        console.log('fail', err);
-      }
+      (err) => {}
     );
   }
   sendMessage(msg) {

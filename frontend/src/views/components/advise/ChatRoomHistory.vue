@@ -68,10 +68,7 @@ export default {
           idx = index;
         }
       }
-      // console.log(idx);
       var el = document.getElementById('message-' + idx);
-      // console.log(el);
-      //  var el = this.$el.getElementsByClassName("actual-month")[0];
       //takes a bit for dom to actually update
       el.scrollIntoView({ behavior: 'smooth' });
     },

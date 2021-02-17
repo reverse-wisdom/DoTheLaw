@@ -128,14 +128,12 @@ export default {
 
     this.lawyer = data;
     this.$store.commit('setLawuuid', data.uuid);
-    console.log('회원정보', this.lawyer);
 
     {
       const userData = this.$store.state.lawuuid;
       const { data } = await fetchAdviseLawyer(userData);
 
       this.advise = data.reverse();
-      console.log(data);
     }
 
     var query = this.lawyer.address;
@@ -187,7 +185,6 @@ export default {
     },
     async deleteLawyer() {
       const res = await signoutUser(this.lawyer.uuid);
-      console.log(res);
       this.$store.commit('clearEmail');
       this.$store.commit('clearToken');
       this.$store.commit('clearNickname');
