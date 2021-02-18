@@ -14,7 +14,6 @@ import RegisterLawyer from './views/RegisterLawyer.vue';
 import RegisterIndex from './views/RegisterIndex.vue';
 
 import WebrtcView from './views/WebRtcView.vue';
-import DictTest from './views/DictTest.vue';
 
 import Board from './views/Board.vue';
 import BoardDetail from './views/components/board/BoardDetail.vue';
@@ -243,16 +242,6 @@ const router = new Router({
       path: '/webrtc',
       name: 'webrtc',
       components: { default: WebrtcView, header: MainNavbar, footer: MainFooter },
-      props: {
-        header: { colorOnScroll: 100 },
-        footer: { backgroundColor: 'black' },
-      },
-      meta: { auth: true },
-    },
-    {
-      path: '/dicttest',
-      name: 'dicttest',
-      components: { default: DictTest, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 100 },
         footer: { backgroundColor: 'black' },
