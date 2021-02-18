@@ -6,7 +6,10 @@
           <div class="content center">
             <v-img class="i" :src="'/api/member/image/' + lawyer.uuid + '/512'" height="200px" v-if="$store.state.uuid"></v-img>
             <v-img class="i" src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" height="200px" v-else></v-img>
-            <h2 class="">{{ lawyer.name }}</h2>
+            <h2 class="">
+              {{ lawyer.name }}
+              <v-icon v-if="lawyer.chck === 'Y'" style="color: green; font-size: 32px;">fas fa-check-circle</v-icon>
+            </h2>
             <div class="">{{ lawyer.email }}</div>
             <p>{{ lawyer.bailiwick }}</p>
             <!-- <p>{{ lawyer.introduction }}</p> -->
