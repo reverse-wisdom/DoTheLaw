@@ -9,7 +9,10 @@
             <div class="col-3 colum mx-auto text-center">
               <img v-if="$store.state.uuid" class="col-12 r-10" id="profile" :src="'/api/member/image/' + lawyer.uuid + '/512'" alt="" />
               <img v-else id="profile" class="col-12 r-10" src="@/assets/img/noimage.jpg" alt="noimage" />
-              <h2>{{ lawyer.name }}</h2>
+              <h2>
+                {{ lawyer.name }}
+                <v-icon v-if="lawyer.chck === 'Y'" style="color: green; font-size: 32px;">fas fa-check-circle</v-icon>
+              </h2>
             </div>
             <div class="col-8 row">
               <div class="col-12 r-4 mx-auto">
