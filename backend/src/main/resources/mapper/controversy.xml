@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssafy.pjt.core.repository.mapper.ControversyMapper">
+
+	<select id="all" resultType="ControversyDTO">
+		select controversy_id, uuid,
+		start_date, end_date, title, agree, opposition, content
+		from controversy
+	</select>
+
+	<select id="detail" parameterType="int"
+		resultType="ControversyDTO">
+		select *
+		from controversy c
+		where c.controversy_id =
+		#{controversyId};
+	</select>
+
+	<update id="hit">
+		update controversy
+		<if test='check.equals("Y")'> set agree = agree+1</if>
+		<if test='check.equals("N")'> set opposition = opposition+1</if>
+		where controversy_id = #{controversyId};
+	</update>
+
+	<insert id="insert" parameterType="ControversyDTO">
+		INSERT INTO controversy
+		(uuid,
+		end_date, title, content)
+		VALUES(#{uuid},
+		#{endDate,jdbcType=TIMESTAMP}, #{title}, #{content});
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from controversy
+		where
+		controversy_id = #{controversyId};
+	</delete>
+
+	<update id="update" parameterType="ControversyDTO">
+		update controversy
+		set
+		title =
+		#{title},
+		content = #{content},
+		end_date = #{endDate,jdbcType=TIMESTAMP}
+		where controversy_id =
+		#{controversyId}
+	</update>
+	<insert id="overlab">
+		INSERT INTO overlap
+		(controversy_id, uuid)
+		VALUES(#{controversyId}, #{uuid});
+	</insert>
+</mapper>

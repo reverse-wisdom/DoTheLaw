@@ -1,39 +1,25 @@
 <template>
-  <footer
-    class="footer"
-    :class="{ [`footer-${type}`]: type }"
-    :data-background-color="backgroundColor"
-  >
+  <footer class="footer" :class="{ [`footer-${type}`]: type }" :data-background-color="backgroundColor">
     <div class="container">
+      <div class="copyright">
+        &copy; {{ year }}, made with
+        <md-icon>favorite</md-icon>
+        by Team Perfect for a better web.
+      </div>
       <nav>
         <ul>
           <li>
-            <a href="https://www.creative-tim.com">
-              Creative Tim
+            <a href="">
+              개인정보 처리방침
             </a>
           </li>
           <li>
-            <a href="https:///presentation.creative-tim.com">
-              About Us
-            </a>
-          </li>
-          <li>
-            <a href="https:///blog.creative-tim.com">
-              Blog
-            </a>
-          </li>
-          <li>
-            <a href="https://www.creative-tim.com/license">
-              Licenses
+            <a href="">
+              사이트 이용안내
             </a>
           </li>
         </ul>
       </nav>
-      <div class="copyright">
-        &copy; {{ year }}, made with <md-icon>favorite</md-icon> by
-        <a href="https://www.creative-tim.com/" target="_blank">Creative Tim</a>
-        for a better web.
-      </div>
     </div>
   </footer>
 </template>
@@ -41,13 +27,14 @@
 export default {
   props: {
     backgroundColor: String,
-    type: String
+    type: String,
   },
   data() {
     return {
-      year: new Date().getFullYear()
+      year: new Date().getFullYear(),
+      items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
     };
-  }
+  },
 };
 </script>
 <style></style>

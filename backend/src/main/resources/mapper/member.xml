@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssafy.pjt.core.repository.mapper.MemberMapper">
+
+	<insert id="joinMember" parameterType="SignupRequestDTO">
+		INSERT INTO member (email,
+		password, phone, name, role, image)
+		VALUES (#{email}, #{password},
+		#{phone}, #{name}, #{role.code}, #{image});
+	</insert>
+
+	<insert id="joinLawyer" parameterType="MemberRequestDTO">
+		BEGIN;
+		INSERT INTO member
+		(email, password, name, phone, role, image)
+		VALUES(#{email},
+		#{password}, #{name}, #{phone}, #{role}, #{image});
+		INSERT INTO lawyer
+		(uuid, 
+		<if test="career != null">career, </if>
+		<if test="introduction != null">introduction, </if>
+		<if test="dept != null">dept, </if>
+		<if test="bailiwick != null">bailiwick, </if>
+		address)
+		VALUES(LAST_INSERT_ID(),
+		<if test="career != null"> #{career},</if>
+		<if test="introduction != null"> #{introduction},</if>
+		<if test="dept != null">#{dept},</if>
+		<if test="bailiwick != null">#{bailiwick},</if>
+		 #{address});
+		COMMIT;
+	</insert>
+
+	<select id="lawyer" parameterType="String"
+		resultType="MemberRequestDTO">
+		select m.uuid , m.email, m.password, m.name, m.phone,
+		m.role, m.join_date, m.image
+		, l.career, l.introduction, l.address,
+		l.dept, l.chck, l.bailiwick
+		from member m join lawyer l
+		on m.uuid = l.uuid
+		where
+		m.email = #{email}
+	</select>
+	
+	<select id="lawyerAll" resultType="MemberRequestDTO">
+		select m.uuid , m.email, m.password, m.name, m.phone,
+		m.role, m.join_date, m.image
+		, l.career, l.introduction, l.address,
+		l.dept, l.chck, l.bailiwick
+		from member m join lawyer l
+		on m.uuid = l.uuid
+	</select>
+	
+	<select id="selectMemberByUUID" parameterType="int" resultType="MemberRequestDTO">
+		SELECT *
+		FROM member WHERE uuid = #{uuid};
+	</select>
+
+	<update id="signout" parameterType="int">
+		UPDATE `member`
+		SET password='', email=CONCAT(uuid, '@remove.rm'), name=CONCAT('탈퇴한회원#', uuid), phone='', `role`='UNKNOWN', join_date=CURRENT_TIMESTAMP, image=null
+		WHERE uuid = #{uuid}
+	</update>
+
+	<update id="signoutLawyer" parameterType="int">
+		UPDATE lawyer
+		SET career='', introduction='', address='', dept='', chck='N', bailiwick=''
+		WHERE uuid=#{uuid};
+	</update>
+
+	<select id="uuid" parameterType="String" resultType="int">
+		select uuid
+		from member
+		where member.email = #{email}
+	</select>
+	<update id="updateUser" parameterType="MemberRequestDTO" >
+		update member
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="name != null"> name = #{name},</if>
+			<if test="phone != null">phone = #{phone},</if>
+			<if test="image != null">image = #{image},</if>		
+		</trim>
+		where uuid = #{uuid};
+	</update>
+	<update id="updateLawyer" parameterType="MemberRequestDTO" >
+		update lawyer
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="career != null">career = #{career},</if>
+			<if test="introduction != null">introduction = #{introduction},</if>
+			<if test="address != null">address = #{address},</if>
+      		<if test="dept != null"> dept = #{dept},</if>
+      		<if test="bailiwick != null">bailiwick = #{bailiwick},</if>
+        </trim>
+		where uuid = #{uuid};
+	</update>
+	
+	<update id="passwordUpdate">
+		update member
+		set
+		password = #{password}
+		where uuid = #{uuid};
+	</update>
+	
+	<update id="checkUpdate">
+		update lawyer
+		set
+		chck = #{chck}
+		where uuid = #{uuid};
+	</update>
+	
+</mapper>

@@ -1,21 +1,17 @@
 <template>
-  <md-toolbar
-    id="toolbar"
-    md-elevation="0"
-    class="md-transparent md-absolute"
-    :class="extraNavClasses"
-    :color-on-scroll="colorOnScroll"
-  >
+  <md-toolbar id="toolbar" md-elevation="0" class="md-transparent md-absolute kor" :class="extraNavClasses" :color-on-scroll="colorOnScroll">
     <div class="md-toolbar-row md-collapse-lateral">
       <div class="md-toolbar-section-start">
-        <h3 class="md-title">Vue Material Kit</h3>
+        <h3 class="md-title">
+          <router-link to="/" class="md-title kor">
+            <i class="material-icons">gavel</i>
+            <!-- 法대로 합시다 -->
+            법대로 합시다
+          </router-link>
+        </h3>
       </div>
       <div class="md-toolbar-section-end">
-        <md-button
-          class="md-just-icon md-simple md-toolbar-toggle"
-          :class="{ toggled: toggledClass }"
-          @click="toggleNavbarMobile()"
-        >
+        <md-button class="md-just-icon md-simple md-toolbar-toggle" :class="{ toggled: toggledClass }" @click="toggleNavbarMobile()">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -23,134 +19,122 @@
 
         <div class="md-collapse">
           <div class="md-collapse-wrapper">
-            <mobile-menu nav-mobile-section-start="false">
-              <!-- Here you can add your items from the section-start of your toolbar -->
-            </mobile-menu>
+            <mobile-menu nav-mobile-section-start="false"></mobile-menu>
             <md-list>
-              <li class="md-list-item" v-if="!showDownload">
-                <a
-                  href="javascript:void(0)"
-                  class="md-list-item-router md-list-item-container md-button-clean dropdown"
-                >
+              <li class="md-list-item">
+                <router-link to="/lawyermatch" class="md-list-item-router md-list-item-container md-button-clean">
+                  <!-- <router-link to="/adviseList" class="md-list-item-router md-list-item-container md-button-clean"> -->
                   <div class="md-list-item-content">
-                    <drop-down direction="down">
-                      <md-button
-                        slot="title"
-                        class="md-button md-button-link md-white md-simple dropdown-toggle"
-                        data-toggle="dropdown"
-                      >
-                        <i class="material-icons">apps</i>
-                        <p>Components</p>
-                      </md-button>
-                      <ul class="dropdown-menu dropdown-with-icons">
-                        <li>
-                          <a href="#/">
-                            <i class="material-icons">layers</i>
-                            <p>All Components</p>
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="https://demos.creative-tim.com/vue-material-kit/documentation/"
-                          >
-                            <i class="material-icons">content_paste</i>
-                            <p>Documentation</p>
-                          </a>
-                        </li>
-                      </ul>
-                    </drop-down>
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">assignment_turned_in</i>
+                      변호사자문매칭
+                    </md-button>
                   </div>
-                </a>
+                </router-link>
               </li>
 
-              <md-list-item
-                href="https://demos.creative-tim.com/vue-material-kit/documentation/"
-                target="_blank"
-                v-if="showDownload"
-              >
-                <i class="material-icons">content_paste</i>
-                <p>Documentation</p>
-              </md-list-item>
-
-              <md-list-item
-                href="javascript:void(0)"
-                @click="scrollToElement()"
-                v-if="showDownload"
-              >
-                <i class="material-icons">cloud_download</i>
-                <p>Download</p>
-              </md-list-item>
-
-              <li class="md-list-item" v-else>
-                <a
-                  href="javascript:void(0)"
-                  class="md-list-item-router md-list-item-container md-button-clean dropdown"
-                >
+              <li class="md-list-item">
+                <router-link to="" class="md-list-item-router md-list-item-container md-button-clean">
+                  <!-- <router-link to="/adviseList" class="md-list-item-router md-list-item-container md-button-clean"> -->
                   <div class="md-list-item-content">
-                    <drop-down direction="down">
-                      <md-button
-                        slot="title"
-                        class="md-button md-button-link md-white md-simple dropdown-toggle"
-                        data-toggle="dropdown"
-                      >
-                        <i class="material-icons">view_carousel</i>
-                        <p>Examples</p>
-                      </md-button>
-                      <ul class="dropdown-menu dropdown-with-icons">
-                        <li>
-                          <a href="#/landing">
-                            <i class="material-icons">view_day</i>
-                            <p>Landing Page</p>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#/login">
-                            <i class="material-icons">fingerprint</i>
-                            <p>Login Page</p>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#/profile">
-                            <i class="material-icons">account_circle</i>
-                            <p>Profile Page</p>
-                          </a>
-                        </li>
-                      </ul>
-                    </drop-down>
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <a @click="moveScourtExp" target="_blank">
+                        <i class="material-icons">gavel</i>
+                        모의판사체험
+                      </a>
+                    </md-button>
                   </div>
-                </a>
+                </router-link>
+              </li>
+              <li class="md-list-item">
+                <router-link to="/controversylist" class="md-list-item-router md-list-item-container md-button-clean">
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">supervisor_account</i>
+                      찬반토론
+                    </md-button>
+                  </div>
+                </router-link>
+              </li>
+              <li class="md-list-item">
+                <router-link to="/lawtest" class="md-list-item-router md-list-item-container md-button-clean">
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">quiz</i>
+                      법상식테스트
+                    </md-button>
+                  </div>
+                </router-link>
+              </li>
+              <li class="md-list-item">
+                <router-link to="/easylaw" class="md-list-item-router md-list-item-container md-button-clean">
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">info</i>
+                      생활법령
+                    </md-button>
+                  </div>
+                </router-link>
               </li>
 
-              <md-list-item
-                href="https://twitter.com/CreativeTim"
-                target="_blank"
-              >
-                <i class="fab fa-twitter"></i>
-                <p class="hidden-lg">Twitter</p>
-                <md-tooltip md-direction="bottom"
-                  >Follow us on Twitter</md-tooltip
-                >
-              </md-list-item>
-              <md-list-item
-                href="https://www.facebook.com/CreativeTim"
-                target="_blank"
-              >
-                <i class="fab fa-facebook-square"></i>
-                <p class="hidden-lg">Facebook</p>
-                <md-tooltip md-direction="bottom"
-                  >Like us on Facebook</md-tooltip
-                >
-              </md-list-item>
-              <md-list-item
-                href="https://www.instagram.com/CreativeTimOfficial"
-                target="_blank"
-              >
-                <i class="fab fa-instagram"></i>
-                <p class="hidden-lg">Instagram</p>
-                <md-tooltip md-direction="bottom"
-                  >Follow us on Instagram</md-tooltip
-                >
-              </md-list-item>
+              <li class="md-list-item">
+                <router-link to="/board" class="md-list-item-router md-list-item-container md-button-clean">
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                      <i class="material-icons">assignment_turned_in</i>
+                      게시판
+                    </md-button>
+                  </div>
+                </router-link>
+              </li>
+              <template v-if="this.$store.state.token">
+                <li class="md-list-item">
+                  <!-- USER프로필 완성되면 to경로 바꾸깅 -->
+                  <router-link :to="this.$store.state.role == 'USER' ? { name: 'profileUser' } : { name: 'profileLawyer' }" class="md-list-item-router md-list-item-container md-button-clean">
+                    <div class="md-list-item-content">
+                      <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                        <i class="material-icons">account_circle</i>
+                        {{ $store.state.name }}의 프로필
+                      </md-button>
+                    </div>
+                  </router-link>
+                </li>
+
+                <li class="md-list-item">
+                  <div class="md-list-item-content">
+                    <md-button slot="title" class="md-button md-button-link md-white md-simple" @click="logoutUser()">
+                      <i class="material-icons">account_circle</i>
+                      로그아웃
+                    </md-button>
+                  </div>
+                </li>
+              </template>
+
+              <!-- 비로그인 -->
+              <template v-else>
+                <!-- 로그인 부분 -->
+                <li class="md-list-item">
+                  <router-link to="/login" class="md-list-item-router md-list-item-container md-button-clean">
+                    <div class="md-list-item-content">
+                      <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                        <i class="material-icons">account_circle</i>
+                        로그인
+                      </md-button>
+                    </div>
+                  </router-link>
+                </li>
+
+                <li class="md-list-item">
+                  <router-link to="/registerindex" class="md-list-item-router md-list-item-container md-button-clean">
+                    <div class="md-list-item-content">
+                      <md-button slot="title" class="md-button md-button-link md-white md-simple">
+                        <i class="material-icons">person_add</i>
+                        회원가입
+                      </md-button>
+                    </div>
+                  </router-link>
+                </li>
+              </template>
             </md-list>
           </div>
         </div>
@@ -173,56 +157,66 @@ function resizeThrottler(actualResizeHandler) {
   }
 }
 
-import MobileMenu from "@/layout/MobileMenu";
+import MobileMenu from '@/layout/MobileMenu';
 export default {
   components: {
-    MobileMenu
+    MobileMenu,
   },
   props: {
     type: {
       type: String,
-      default: "white",
+      default: 'white',
       validator(value) {
-        return [
-          "white",
-          "default",
-          "primary",
-          "danger",
-          "success",
-          "warning",
-          "info"
-        ].includes(value);
-      }
+        return ['white', 'default', 'primary', 'danger', 'success', 'warning', 'info'].includes(value);
+      },
     },
     colorOnScroll: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
   data() {
     return {
-      extraNavClasses: "",
-      toggledClass: false
+      extraNavClasses: '',
+      toggledClass: false,
+      role: this.$store.state.role,
     };
   },
   computed: {
     showDownload() {
-      const excludedRoutes = ["login", "landing", "profile"];
-      return excludedRoutes.every(r => r !== this.$route.name);
-    }
+      const excludedRoutes = ['login', 'landing', 'profile'];
+      return excludedRoutes.every((r) => r !== this.$route.name);
+    },
   },
   methods: {
+    moveScourtExp() {
+      window.open('about:blank').location.href = 'https://i4d103.p.ssafy.io/exp/main.html';
+    },
+    logoutUser() {
+      this.$store.commit('clearEmail');
+      this.$store.commit('clearToken');
+      this.$store.commit('clearNickname');
+      this.$store.commit('clearName');
+      this.$store.commit('clearPassword');
+      this.$store.commit('clearUuid');
+      // this.$store.commit('clearImage');
+      this.$store.commit('clearLawuuid');
+      localStorage.clear();
+      sessionStorage.clear();
+      $cookies.keys().forEach((cookie) => $cookies.remove(cookie));
+      this.$router.push({ name: 'login' });
+    },
     bodyClick() {
-      let bodyClick = document.getElementById("bodyClick");
+      let bodyClick = document.getElementById('bodyClick');
 
       if (bodyClick === null) {
-        let body = document.querySelector("body");
-        let elem = document.createElement("div");
-        elem.setAttribute("id", "bodyClick");
+        let body = document.querySelector('body');
+        let elem = document.createElement('div');
+        elem.setAttribute('id', 'bodyClick');
         body.appendChild(elem);
 
-        let bodyClick = document.getElementById("bodyClick");
-        bodyClick.addEventListener("click", this.toggleNavbarMobile);
+        let bodyClick = document.getElementById('bodyClick');
+        bodyClick.addEventListener('click', this.toggleNavbarMobile);
       } else {
         bodyClick.remove();
       }
@@ -233,17 +227,16 @@ export default {
       this.bodyClick();
     },
     handleScroll() {
-      let scrollValue =
-        document.body.scrollTop || document.documentElement.scrollTop;
-      let navbarColor = document.getElementById("toolbar");
+      let scrollValue = document.body.scrollTop || document.documentElement.scrollTop;
+      let navbarColor = document.getElementById('toolbar');
       this.currentScrollValue = scrollValue;
       if (this.colorOnScroll > 0 && scrollValue > this.colorOnScroll) {
         this.extraNavClasses = `md-${this.type}`;
-        navbarColor.classList.remove("md-transparent");
+        navbarColor.classList.remove('md-transparent');
       } else {
         if (this.extraNavClasses) {
-          this.extraNavClasses = "";
-          navbarColor.classList.add("md-transparent");
+          this.extraNavClasses = '';
+          navbarColor.classList.add('md-transparent');
         }
       }
     },
@@ -251,17 +244,23 @@ export default {
       resizeThrottler(this.handleScroll);
     },
     scrollToElement() {
-      let element_id = document.getElementById("downloadSection");
+      let element_id = document.getElementById('downloadSection');
       if (element_id) {
-        element_id.scrollIntoView({ block: "end", behavior: "smooth" });
+        element_id.scrollIntoView({ block: 'end', behavior: 'smooth' });
       }
-    }
+    },
   },
   mounted() {
-    document.addEventListener("scroll", this.scrollListener);
+    document.addEventListener('scroll', this.scrollListener);
   },
   beforeDestroy() {
-    document.removeEventListener("scroll", this.scrollListener);
-  }
+    document.removeEventListener('scroll', this.scrollListener);
+  },
 };
 </script>
+
+<style lang="scss" scoped>
+.kor {
+  font-family: 'cwTeXHei', 'S-CoreDream-6Bold'; // 한자폰트 + 한글폰트
+}
+</style>

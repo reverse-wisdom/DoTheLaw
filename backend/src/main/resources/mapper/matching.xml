@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.pjt.core.repository.mapper.MatchingMapper">
+
+	<select id="search" parameterType="int" resultType="MatchingRequestDTO">
+		select b.matching_id, b.uuid, b.lawyer_uuid, m.name as name,
+		b.create_date, b.content, b.state, b.reservation_date, b.title, b.category
+		from matching b left
+		join member m
+		on b.uuid = m.uuid
+		where b.lawyer_uuid = #{lawyerUuid}
+	</select>
+	
+	<select id="selectByUUID" parameterType="int" resultType="MatchingRequestDTO">
+		select b.matching_id, b.uuid, b.lawyer_uuid, m.name as name,
+		b.create_date, b.content, b.state, b.reservation_date, b.title, b.category
+		from matching b left
+		join member m
+		on b.uuid = m.uuid
+		where b.uuid = #{uuid} or b.lawyer_uuid = #{uuid}
+	</select>
+
+	<select id="detail" parameterType="int"
+		resultType="MatchingRequestDTO">
+		select b.matching_id, b.uuid, b.lawyer_uuid, m.name as name,
+		b.create_date, b.content, b.state, b.reservation_date, b.title, b.category, b.remarks 
+		from matching b left
+		join member m
+		on b.uuid = m.uuid
+		where b.matching_id = #{matchingId}
+	</select>
+	
+	<insert id="insert" parameterType="MatchingRequestDTO">
+		INSERT INTO
+		matching(`uuid`,`lawyer_uuid`,`title`,`content`,`state`,`reservation_date`,`category`)
+		VALUES
+		(#{uuid},#{lawyerUuid},#{title},#{content},#{state},#{reservationDate},#{category});	
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from matching
+		where matching_id = #{matchingId}
+	</delete>
+
+	<update id="update" parameterType="MatchingRequestDTO">
+		update matching
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="title != null"> title = #{title},</if>
+			<if test="content != null">	content = #{content},</if>
+			<if test="state != null">state = #{state},</if>
+			<if test="reservationDate != null">reservation_date = #{reservationDate},</if>
+			<if test="remarks != null">remarks = #{remarks},</if>
+			<if test="category != null">category = #{category},</if>
+		</trim>
+		where matching_id = #{matchingId}
+	</update>
+	
+	<select id="checkUser" parameterType="int" resultType="int">
+		select uuid from matching where matching.matching_id = #{matchingId}
+	</select>
+	
+	<select id="checkLawyer" parameterType="int" resultType="int">
+		select lawyer_uuid from matching where matching.matching_id = #{matchingId}
+	</select>
+	
+	<select id="searchMember" parameterType="int" resultType="MemberRequestDTO">
+		select * from member where member.uuid=#{uuid}
+	</select>
+	
+</mapper>

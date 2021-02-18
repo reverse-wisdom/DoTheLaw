@@ -1,11 +1,13 @@
 <template>
   <div id="material-kit">
-    <div :class="{ 'nav-open': NavbarStore.showNavbar }">
-      <router-view name="header" />
-      <div>
-        <router-view />
+    <v-app id="app">
+      <div :class="{ 'nav-open': NavbarStore.showNavbar }">
+        <router-view name="header" />
+        <div>
+          <router-view />
+        </div>
+        <router-view name="footer" />
       </div>
-      <router-view name="footer" />
-    </div>
+    </v-app>
   </div>
 </template>

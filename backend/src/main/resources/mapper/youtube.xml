@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssafy.pjt.core.repository.mapper.YouTubeMapper">
+	<insert id="setTodayYouTube" parameterType="YouTubeDTO">
+		INSERT INTO youtube(id, title, thumbnail, published_at, channel_id, description, reg_date)
+		VALUES(#{id}, #{title}, #{thumbnail}, #{publishedAt}, #{channelId}, LEFT(#{description}, 200), CURRENT_TIMESTAMP)
+		ON DUPLICATE KEY UPDATE title = #{title}, thumbnail = #{thumbnail}, published_at = #{publishedAt}, channel_id = #{channelId}, description = LEFT(#{description},200), reg_date = CURRENT_TIMESTAMP
+	</insert>
+	<select id="getTodayYouTube" resultType="YouTubeDTO">
+		SELECT id, title, thumbnail, published_at, channel_id, description
+		FROM youtube
+		WHERE reg_date > DATE_SUB(NOW(), INTERVAL 1 DAY)
+		ORDER BY published_at 
+		LIMIT 30
+	</select>
+</mapper>
