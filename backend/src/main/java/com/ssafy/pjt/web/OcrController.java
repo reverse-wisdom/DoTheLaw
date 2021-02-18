@@ -69,10 +69,13 @@ public class OcrController {
 			return new ResponseEntity<>("Error while reading image", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		System.out.println(result);	
-		for (String s : Arrays.asList("명 서", "의 사람은", "변호사", "합격")) {
-			if (!result.contains(s))
-				return new ResponseEntity<>("잘못된 증명서 입니다.", HttpStatus.BAD_REQUEST);
+		int point = 0;
+		for (String s : Arrays.asList("명 서", "의 사람은", "변호사", "합격", "합 격", "성 명", "성 띵", "주민등록번호", "법무부")) {
+			if (result.contains(s))
+				point++;
 		}
+		if(point < 3)
+			return new ResponseEntity<>("잘못된 증명서 입니다.", HttpStatus.BAD_REQUEST);
 		
 		try {
 			memberMapper.checkUpdate(uuid, "Y");
