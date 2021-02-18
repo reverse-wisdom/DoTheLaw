@@ -38,7 +38,7 @@
             </md-field>
             <md-field>
               <!-- 파일의 경우 change 리스너로 감지해야함 -->
-              <input type="file" name="uploadFile" ref="fileData" />
+              <!-- <input type="file" name="uploadFile" ref="fileData" /> -->
               <!-- <input type="file" name="uploadFile" ref="fileData" @change="handleFilesUpload" /> -->
             </md-field>
             <md-field>
