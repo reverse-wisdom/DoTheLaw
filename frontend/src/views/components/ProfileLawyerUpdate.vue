@@ -20,7 +20,10 @@
                   @change="handleFilesUpload"
                 ></v-file-input>
               </div>
-              <h2 class="col-12 my-0 py-0 pl-10 mx-auto">{{ value.name }}</h2>
+              <h2 class="col-12 my-0 py-0 pl-10 mx-auto">
+                {{ value.name }}
+                <v-icon v-if="value.chck === 'Y'" style="color: green; font-size: 32px;">fas fa-check-circle</v-icon>
+              </h2>
             </div>
             <div class="col-8 row" id="content-sort">
               <div class="col-6 mt-10" v-if="loadCheck">
