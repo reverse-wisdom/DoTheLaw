@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.pjt.core.repository.mapper.ProposalMapper">
+	
+	<select id="search" parameterType="int" resultType="ProposalRequestDTO">
+		select * from proposal where proposal.controversy_id=#{controversyId}
+	</select>
+
+	<insert id="insert" parameterType="ProposalRequestDTO">
+		INSERT INTO proposal (controversy_id, uuid, content)
+		VALUES (#{controversyId}, #{uuid}, #{content})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete
+		from proposal
+		where
+		proposal.opinion_id
+		= #{opinionId}
+	</delete>
+	
+	<update id="update" parameterType="ProposalRequestDTO">
+		update proposal
+		set
+		content = #{content},
+		agree = #{agree}
+		where proposal.opinion_id = #{opinionId};
+	</update>
+	
+	<select id="searchMember" parameterType="int" resultType="MemberRequestDTO">
+		select * from member where member.uuid=#{uuid}
+	</select>
+	
+	<select id="check" parameterType="int" resultType="ProposalRequestDTO">
+		select * from proposal where proposal.opinion_id=#{opinionId}
+	</select>
+	
+</mapper>

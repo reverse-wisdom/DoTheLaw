@@ -2,7 +2,7 @@
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
-        <div class="modal-container" v-click-outside="closeModal">
+        <div class="modal-container">
           <div class="modal-header">
             <slot name="header"></slot>
           </div>
@@ -22,12 +22,12 @@
 
 <script>
 export default {
-  name: "modal",
+  name: 'modal',
   methods: {
     closeModal: function() {
-      this.$emit("close");
-    }
-  }
+      this.$emit('close');
+    },
+  },
 };
 </script>
 
@@ -53,5 +53,6 @@ export default {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+  max-width: 1000px;
 }
 </style>
