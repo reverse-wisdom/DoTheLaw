@@ -115,6 +115,11 @@ public class ImageController {
 		}
 	}
 
+	@GetMapping("/member/image/undefined/{imageSize}")
+	public ResponseEntity<?> serveProfileUndefinedImage(@PathVariable int imageSize){
+		return self.serveProfileDefaultImage(imageSize);
+	}
+	
 	@Autowired
 	private boolean isWindows;
 
