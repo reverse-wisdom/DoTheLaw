@@ -4,7 +4,7 @@
     <span class="font-weight-bold h4">
       &lt; 요약 &gt;
     </span>
-    <v-img :src="image"></v-img>
+    <v-img :src="image" max-width="30rem" height="auto"></v-img>
     <span>{{ summary }}</span>
     <hr />
     <span class="font-weight-bold h4">
