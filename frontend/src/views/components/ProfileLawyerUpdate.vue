@@ -20,7 +20,10 @@
                   @change="handleFilesUpload"
                 ></v-file-input>
               </div>
-              <h2 class="col-12 my-0 py-0 pl-10 mx-auto">{{ value.name }}</h2>
+              <h2 class="col-12 my-0 py-0 pl-10 mx-auto">
+                {{ value.name }}
+                <v-icon v-if="chck" style="color: green; font-size: 32px;">fas fa-check-circle</v-icon>
+              </h2>
             </div>
             <div class="col-8 row" id="content-sort">
               <div class="col-6 mt-10" v-if="loadCheck">
@@ -108,8 +111,9 @@ export default {
         lat: 37.5665734,
         lng: 126.978179,
       },
-      value: [],
+      value: {},
       advise: [],
+      chck: false,
     };
   },
   props: {
@@ -170,6 +174,9 @@ export default {
           });
         }
       }
+    },
+    chck: function(val) {
+      this.chck = val;
     },
   },
   methods: {
@@ -241,6 +248,7 @@ export default {
               title: '인증성공',
             });
             this.value.check = 'Y';
+            this.chck = true;
             this.loadCheck = true;
             this.$forceUpdate();
           })
@@ -249,6 +257,7 @@ export default {
               icon: 'error',
               title: '인증실패',
             });
+            this.chck = false;
             this.value.check = 'N';
             this.loadCheck = true;
           });
