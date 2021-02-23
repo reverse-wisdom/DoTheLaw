@@ -33,7 +33,7 @@ public class YouTubeService {
 	YouTubeMapper mapper;
 
 	private static final String apiKey = "AIzaSyBZByBbTnWIMt7nHQL-VPmY9-8a-O-XVqg";
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD'T'hh:mm:ss.s'Z'");
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
 	private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	private static final JsonFactory JSON_FACTORY = new JacksonFactory();
 	private static final long NUMBER_OF_VIDEOS_RETURNED = 10;
@@ -70,9 +70,9 @@ public class YouTubeService {
 						dto.setDescription(
 								item.getSnippet().getDescription().replaceFirst("유료광고 포함", "").replace('\n', ' '));
 						dto.setThumbnail(thumbnail.getUrl());
-						dto.setPublishedAt(sdf.parse(item.getSnippet().getPublishedAt().toString()));
+						dto.setPublishedAt(sdf.parse(item.getSnippet().getPublishedAt().toString().trim()));
 						dto.setChannelId(item.getSnippet().getChannelId());
-						System.out.println(dto);
+//						System.out.println(dto);
 						result.add(dto);
 					}
 				}
