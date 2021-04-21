@@ -48,7 +48,7 @@ Linux 환경에서 Jenkins 설치 후, Jenkinsfile을 Groovy 플러그인에 스
 
 ![images/05.png](images/05.png)
 
-# :dev개발 변경사항
+# 💻개발 변경사항
 
 Feb 9, 2021 : 찬반논쟁 기능 수정
 
@@ -80,11 +80,11 @@ SSAFY 4th PERFECT TEAM. – whxorb44@gmail.com
 
 Distributed under the MIT license. See `LICENSE` for more information.
 
-[https://lab.ssafy.com/s04-webmobile1-sub2/s04p12d103](https://github.com/s04p12d103/)
+Original : [https://lab.ssafy.com/s04-webmobile1-sub2/s04p12d103](https://github.com/s04p12d103/)
 
 ## 참여
 
-1. Fork it ([https://lab.ssafy.com/s04-webmobile1-sub2/s04p12d103/fork](https://lab.ssafy.com/s04-webmobile1-sub2/s04p12d103/fork))
+1. Fork it
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
