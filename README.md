@@ -2,11 +2,11 @@
 
 > 국민이 가장 많이 필요로 하는 생활법령을 쉽게 찾아주는 서비스
 
-![images/Untitled.png](images/Untitled.png)
+![images/logo.png](images/logo.png)
 
 # 🛠️제공기능
 
-![images/Untitled%201.png](images/Untitled%201.png)
+![images/01.png](images/01.png)
 
 ![images/1.gif](images/1.gif)
 
@@ -16,7 +16,7 @@
 
 ![images/3.gif](images/3.gif)
 
-![images/41.gif](images/41.gif)
+![images/4.gif](images/4.gif)
 
 ![images/5.gif](images/5.gif)
 
@@ -36,17 +36,17 @@ Linux 환경에서 Jenkins 설치 후, Jenkinsfile을 Groovy 플러그인에 스
 
 ## 📜 개발 일정
 
-![images/Untitled%202.png](images/Untitled%202.png)
+![images/02.png](images/02.png)
 
-![images/Untitled%203.png](images/Untitled%203.png)
+![images/03.png](images/03.png)
 
 ## 🔍기술스택
 
-![images/Untitled%204.png](images/Untitled%204.png)
+![images/04.png](images/04.png)
 
 # 💯팀원소개
 
-![images/Untitled%205.png](images/Untitled%205.png)
+![images/05.png](images/05.png)
 
 # :dev개발 변경사항
 
@@ -89,5 +89,3 @@ Distributed under the MIT license. See `LICENSE` for more information.
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
 5. Create a new Pull Request
-
-[pjt-logo] : https://lab.ssafy.com/s04-webmobile1-sub2/s04p12d103/images/logo.png [wiki]: https://lab.ssafy.com/s04-webmobile1-sub2/s04p12d103/wiki
